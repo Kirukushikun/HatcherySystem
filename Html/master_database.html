@@ -67,11 +67,15 @@
             grid-template-areas: 
             "c1 c1 c1 c2 c2 c2"
             "c3 c3 c3 c4 c4 c4"
-            "c5 c5 c6 c6 c6 c6";
+            "c5 c5 c6 c6 c6 c6"
+            "c5 c5 c6 c6 c6 c6"
+            "c7 c7 c8 c8 c9 c9"
+            "c10 c10 c10 c10 c11 c11"
+            "c10 c10 c10 c10 c12 c12"
+            "c13 c13 c13 c13 c13 c13";
             gap: 20px;
 
             width: 100%;
-            height: 100%;
             overflow-y: scroll;
 
             padding-right: 20px;
@@ -94,6 +98,21 @@
             
             border-style: solid;
             border-width: 3px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+
+  
+        }
+
+        .form-entries .card-label{
+            display: flex;
+            font-size: 18px;
+            font-weight: 600;
+            gap: 10px;
+        }.form-entries .card-label span{
+            color: #EC8B18;
         }
 
         .c1{
@@ -118,10 +137,80 @@
 
         .c5{
             grid-area: c5;
+            border-color: #3949AB;
         }
 
         .c6{
             grid-area: c6;
+            border-color: #00796B;
+        }
+        .c7{
+            grid-area: c7;
+            border-color: #8E24AA;
+        }
+        .c8{
+            grid-area: c8;
+            border-color: #673AB7;
+        }
+        .c9{
+            grid-area: c9;
+            border-color: #D81B60;
+        }
+        .c10{
+            grid-area: c10;
+            border-color: #757575;
+        }
+        .c11{
+            grid-area: c11;
+            border-color: #AA6B24;
+        }
+        .c12{
+            grid-area: c12;
+            border-color: #757575;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            height: 250px;
+        }
+        .c13{
+            grid-area: c13;
+            margin-top: 20px;
+        }
+
+        .c12 h1{
+            font-size: 45px;
+            font-weight: 600;
+            color: #EC8B18;
+        }.c12 p{
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .form-entries .input-container{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            gap: 20px;
+
+        }
+        .form-entries .input-group.prcnt{
+            width: 40%;
+        }
+        .form-entries .input-group input{
+            background-color: #F6F4F1;
+            border: solid 2px #e2e2e2;
+            border-radius: 5px;
+            padding: 8px 12px;
+
+            font-size: 15px;
+            font-weight: 300;
+
+            width: 100%;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -151,32 +240,532 @@
 
         <div class="form-entries">
             <div class="card c1">
+                <div class="card-label">
+                    <span>1</span>
+                    <p>Collected Eggs</p>
+                </div>
 
+                <div class="card-form col-2">
+                    <div class="input-group">
+                        <label for="">PS no.</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Collected Quantity</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Production Date (From)</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Production Date (To)</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <!-- <div class="card-action">
+
+                </div> -->
             </div>
 
             <div class="card c2">
+                <div class="card-label">
+                    <span>2</span>
+                    <p>Classification for Storage</p>
+                </div>
 
+                <div class="card-form">
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Day 10 Candling Quantity</label>
+                            <input type="text">
+                        </div>
+                        <div class="input-group">
+                            <label for="">Day 10 Candling Quantity</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <label for="">Day 10 Candling Quantity</label>
+                        <input type="text">
+                    </div>
+                </div>
             </div>
 
             <div class="card c3">
+                <div class="card-label">
+                    <span>3</span>
+                    <p>Storage Pullout Process</p>
+                </div>
 
+                <div class="card-form col-2">
+                    <div class="input-group">
+                        <label for="">Pullout Date</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Set. Egg Quantity</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Inc. No.</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Prime Quantity</label>
+                            <input type="text">
+                        </div>   
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>                     
+                    </div>
+                    <br>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">JP Quantity</label>
+                            <input type="text">
+                        </div>   
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>                     
+                    </div>
+
+                </div>
+
+                <!-- <div class="card-action">
+
+                </div> -->
             </div>
 
             <div class="card c4">
+                <div class="card-label">
+                    <span>4</span>
+                    <p>Setter Process Entry</p>
+                </div>
+                <div class="card-form col-2">
+                    <div class="input-group">
+                        <label for="">Day 10 Candling Date</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Day 10 Candling Quantity</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Day 10 Breakout Quantity</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Day 10 Breaout %</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="">Day 10  Inc Quantity</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+
+                                <!-- <div class="card-action">
+
+                </div> -->
 
             </div>
             <div class="card c5">
+                <div class="card-label">
+                    <span>5</span>
+                    <p>Candling Process Entry</p>
+                </div>
+                <div class="card-form">
+                    <div class="input-group">
+                        <label for="">Day 18.5 Candling Date</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="">Infertiles Quantity</label>
+                        <input type="text">
+                    </div>
+                    <br>    
+                    <div class="input-group">
+                        <label for="">Embryonic Eggs Quantity</label>
+                        <input type="text">
+                    </div>
+
+                </div>
 
             </div>
 
             <div class="card c6">
+                <div class="card-label">
+                    <span>5.1</span>
+                    <p>Egg Shell Temperature Check</p>
+                </div>
+                <div class="card-form">
+                    <div class="input-container">
+                
+                        <label for="">TOP LOCATION </label>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.8</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.7</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+ 
+                    </div>
+                    <br>
+                    <div class="input-container">
+                        <label for="">MID LOCATION </label>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.8</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.7</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+ 
+                    </div>
+                    <br>
+                    <div class="input-container">
+                        <label for="">LOW LOCATION </label>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.8</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="">37.7</label>
+                                <input type="text">
+                            </div>   
+                            <div class="input-group prcnt">
+                                <label for="">%</label>
+                                <input type="text">
+                            </div>                    
+                        </div>
+ 
+                    </div>
+
+                
+                </div>
+                
+
 
             </div>
 
-            
+            <div class="card c7">
+                <div class="card-label">
+                    <span>6</span>
+                    <p>Hatcher Pullout Process</p>
+                </div>
 
-            
+                <div class="card-form col-2">
+                    <div class="input-group">
+                        <label for="">Hatcher</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Hatcher Date</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Rejected Hatch Qty</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Good Hatch Qty</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <!-- <div class="card-action">
+
+                </div> -->
+            </div>
+
+            <div class="card c8">
+                <div class="card-label">
+                    <span>7</span>
+                    <p>Sexing</p>
+                </div>
+
+                <div class="card-form">
+                    <div class="input-group">
+                        <label for="">Cockerels Quantity</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="">DOP Quantity</label>
+                        <input type="text">
+                    </div>
+
+                </div>
+
+                <!-- <div class="card-action">
+
+                </div> -->
+            </div>
+
+            <div class="card c9">
+                <div class="card-label">
+                    <span>8</span>
+                    <p>QC/QA Process Entry</p>
+                </div>
+
+                <div class="card-form">
+                    <div class="input-group">
+                        <label for="">QC Qty</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Rejected DOP Qty</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="">Good DOP Qty</label>
+                            <input type="text">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="card-action">
+
+                </div> -->
+            </div>
+
+            <div class="card c10">
+                <div class="card-label">
+                    <p>Forecast Base on Last Hatch</p>
+                </div>
+                <div class="card-form col-3">
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Infertile Qty</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Cock Qty</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Rejected Hatch Qty</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="">Rejected DOP Qty</label>
+                            <input type="text">
+                        </div>
+                        
+                        <div class="input-group prcnt">
+                            <label for="">%</label>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="">Total Qty</label>
+                        <input type="text">
+                    </div>
+                    
+
+                </div>
+
+                <div class="card-label">
+                    <p>Forecast # of Boxes</p>
+                </div>
+                <div class="card-form col-3">
+                    <div class="input-group">
+                        <label for="">Total</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">%</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="">Prime</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">Junior Prime</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <label for="">DOP Booking</label>
+                        <button style="width: 100%; margin-top: 10px; color: white; background-color: #EC8B18; border: none; padding: 10px; border-radius: 7px; cursor: pointer; font-size: 15px;">View / Entry</button>
+                    </div>
+                </div>
+                
+
+                <!-- <div class="card-action">
+
+                </div> -->
+            </div>
+
+            <div class="card c11">
+                <div class="card-label">
+                    <span>9</span>
+                    <p>Dispath Process Entry</p>
+                </div>
+
+                <div class="card-form">
+                    <div class="input-group">
+                        <label for="">Cockerels Quantity</label>
+                        <input type="text">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label for="">DOP Quantity</label>
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card c12">
+                <h1>20</h1>
+                <p>Forcasted Number of <br> Boxes</p>
+            </div>
+
+            <div class="datalist c13">
+                <div class="table-header">
+                    <h4>Data List</h4>
+        
+                    <div class="table-action">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search...">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+        
+                        <select class="sort-btn">
+                            <option value=""> Sort By</option>
+                        </select>
+        
+                        <div class="table-icons">
+                            <i class="fa-solid fa-print"></i>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </div>
+                        
+                    </div>
+        
+                </div>
+                <div class="table-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>PS no.</th>
+                                <th>House No.</th>
+                                <th>Production Date</th>
+                                <th>Collection Time</th>
+                                <th>Collected QTY</th>
+                                <th>Encoded/Modified By</th>
+                                <th>Date Encoded/Modified</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>#93</td>
+                                <td>4</td>
+                                <td>09/12/25</td>
+                                <td>16:00</td>
+                                <td>1200</td>
+                                <td>IT Head</td>
+                                <td>09/12/25</td>
+                                <td class="datalist-actions">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                    <i class="fa-regular fa-trash-can"></i>
+                                    <i class="fa-solid fa-print"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="pagination">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#"><i class="fa-solid fa-caret-right"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </div>
+
+    
 </body>
 </html>

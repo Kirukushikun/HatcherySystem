@@ -21,6 +21,7 @@ body{
 }
 label{
     white-space:nowrap;
+
 }
 
 .header{
@@ -72,6 +73,16 @@ label{
     font-weight: 500;
     font-size: 18px;
 }
+.col-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.col-3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
 .col-4{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -83,19 +94,19 @@ label{
     gap: 20px;
 }
 
-.input-container.row{
+.body .input-container.row{
     display: flex;
     flex-direction: row;
     gap: 10px;
 }
 
-.input-container.column{
+.body .input-container.column{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.input-container input{
+.body .input-container input{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
     border-radius: 5px;
@@ -107,12 +118,12 @@ label{
     width: 100%;
 }
 
-.input-group{
+.body .input-group{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.input-group.prcnt{
+.body .input-group.prcnt{
     width: 40%;
 }
 .form-result{
