@@ -10,234 +10,6 @@
 
     <style>
 
-        .body-split{
-            display: flex;
-            gap: 20px;
-
-
-            overflow: hidden;
-            height: 100%;
-        }
-        
-        .sidebar{
-            border-radius: 10px;
-            background-color: white;
-            height: fit-content;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            width: 70px;
-            height: 100%;
-            padding: 20px 0;
-            
-        }
-        .sidebar i{
-            color: #E4B379;
-        }
-        .sidebar a{
-            text-decoration: none;
-            width: 100%;
-            padding: 15px 0;
-            text-align: center;
-
-            font-size: 20px;
-            font-weight: 600;
-            color: #E4B379;
-            position: relative;
-
-        }.sidebar a.active i{ 
-            color: #EC8B18;
-            transform: scale(1.1);
-        }.sidebar a.active p{ 
-            color: #EC8B18;
-            transform: scale(1.1);
-        }.sidebar a.active div{
-            position: absolute;
-            height: 100%;
-            width: 7px;
-            background-color: #EC8B18;
-            top: 0;
-            left: 0;
-            border-radius: 0 5px 5px 0;
-        }
-
-        .sidebar a:hover i, a:hover p{
-            color: #EC8B18;
-            transform: scale(1.2);
-        }
-        .sidebar p{
-            color: #E4B379;
-        }
-
-        .form-entries{
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-            grid-template-areas: 
-            "c1 c1 c1 c2 c2 c2"
-            "c3 c3 c3 c4 c4 c4"
-            "c5 c5 c6 c6 c6 c6"
-            "c5 c5 c6 c6 c6 c6"
-            "c7 c7 c8 c8 c9 c9"
-            "c10 c10 c10 c10 c11 c11"
-            "c10 c10 c10 c10 c12 c12"
-            "c13 c13 c13 c13 c13 c13";
-            gap: 20px;
-
-            width: 100%;
-            overflow-y: scroll;
-
-            padding-right: 20px;
-
-            scroll-behavior: smooth;
-        }
-        .form-entries::-webkit-scrollbar{
-            width: 15px;
-        }.form-entries::-webkit-scrollbar-track {
-            background: #ebebeb; /* Background of the scrollbar track */
-            border-radius: 6px;
-        }.form-entries::-webkit-scrollbar-thumb {
-            background: #d6d6d6; /* Color of the scrollbar thumb */
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .form-entries .card{
-            border-radius: 10px;
-            background-color: white;
-            padding: 40px;
-            
-            border-style: solid;
-            border-width: 3px;
-
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-
-        .form-entries .card-label{
-            display: flex;
-            align-items: center;
-            
-            font-size: 18px;
-            font-weight: 600;
-        }.form-entries .card-label span{
-            color: #EC8B18;
-            display: flex;
-            justify-content: center;
-            border-radius: 50%;
-            padding: 3px 10px;
-        }
-
-        .form-entries .card-label.active span{
-            padding: 3px 10px;
-            margin-right: 10px;
-            background-color: #EC8B18;
-            color: white;
-            display: flex;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .c1{
-            grid-area: c1;
-            border-color: #FF7043;
-        }
-
-        .c2{
-            grid-area: c2;
-            border-color: #FBBC05;
-        }
-
-        .c3{
-            grid-area: c3;
-            border-color: #34A853;
-        }
-
-        .c4{
-            grid-area: c4;
-            border-color: #00BCD4;
-        }
-
-        .c5{
-            grid-area: c5;
-            border-color: #3949AB;
-        }
-
-        .c6{
-            grid-area: c6;
-            border-color: #00796B;
-        }
-        .c7{
-            grid-area: c7;
-            border-color: #8E24AA;
-        }
-        .c8{
-            grid-area: c8;
-            border-color: #673AB7;
-        }
-        .c9{
-            grid-area: c9;
-            border-color: #D81B60;
-        }
-        .c10{
-            grid-area: c10;
-            border-color: #757575;
-        }
-        .c11{
-            grid-area: c11;
-            border-color: #AA6B24;
-        }
-        .c12{
-            grid-area: c12;
-            border-color: #757575;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            height: 250px;
-        }
-        .c13{
-            grid-area: c13;
-            margin-top: 20px;
-        }
-
-        .c12 h1{
-            font-size: 45px;
-            font-weight: 600;
-            color: #EC8B18;
-        }.c12 p{
-            font-size: 20px;
-            font-weight: 500;
-            text-align: center;
-        }
-        
-        .form-entries .input-container{
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            gap: 20px;
-
-        }
-        .form-entries .input-group.prcnt{
-            width: 40%;
-        }
-        .form-entries .input-group input{
-            background-color: #F6F4F1;
-            border: solid 2px #e2e2e2;
-            border-radius: 5px;
-            padding: 8px 12px;
-
-            font-size: 15px;
-            font-weight: 300;
-
-            width: 100%;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
@@ -718,7 +490,7 @@
                 <p>Forcasted Number of <br> Boxes</p>
             </div>
 
-            <div class="datalist c13" id="card13">
+            <div class="card c13" id="card13">
                 <div class="table-header">
                     <h4>Data List</h4>
         
@@ -795,31 +567,42 @@
         document.addEventListener("DOMContentLoaded", function () {
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             const cardLabels = document.querySelectorAll(".card-label");
+            const inputFields = document.querySelectorAll(".card input");
 
+            // Function to handle sidebar and card-label activation
+            function activateSection(targetCard) {
+                // Remove 'active' class from all sidebar links and card labels
+                sidebarLinks.forEach(link => link.classList.remove("active"));
+                cardLabels.forEach(label => label.classList.remove("active"));
+
+                if (targetCard) {
+                    // Activate corresponding sidebar link
+                    const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
+                    if (targetSidebarLink) targetSidebarLink.classList.add("active");
+
+                    // Activate card label
+                    const targetLabel = targetCard.querySelector(".card-label");
+                    if (targetLabel) targetLabel.classList.add("active");
+                }
+            }
+
+            // Click event for sidebar links
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
-
-                    // Remove 'active' class from all sidebar links
-                    sidebarLinks.forEach(link => link.classList.remove("active"));
-
-                    // Remove 'active' class from all card labels
-                    cardLabels.forEach(label => label.classList.remove("active"));
-
-                    // Add 'active' class to the clicked sidebar link
-                    this.classList.add("active");
-
-                    // Get the corresponding card ID
                     const targetCard = document.querySelector(this.getAttribute("href"));
+                    activateSection(targetCard);
+                });
+            });
 
-                    if (targetCard) {
-                        const targetLabel = targetCard.querySelector(".card-label");
-                        if (targetLabel) {
-                            targetLabel.classList.add("active");
-                        }
-                    }
+            // Input event for text fields inside cards
+            inputFields.forEach(input => {
+                input.addEventListener("focus", function () {
+                    const parentCard = this.closest(".card");
+                    activateSection(parentCard);
                 });
             });
         });
+
 
     </script>
 </body>
