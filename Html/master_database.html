@@ -49,8 +49,10 @@
 
         }.sidebar a.active i{ 
             color: #EC8B18;
+            transform: scale(1.1);
         }.sidebar a.active p{ 
             color: #EC8B18;
+            transform: scale(1.1);
         }.sidebar a.active div{
             position: absolute;
             height: 100%;
@@ -112,17 +114,31 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
-
-  
         }
+
 
         .form-entries .card-label{
             display: flex;
+            align-items: center;
+            
             font-size: 18px;
             font-weight: 600;
-            gap: 10px;
         }.form-entries .card-label span{
             color: #EC8B18;
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
+            padding: 3px 10px;
+        }
+
+        .form-entries .card-label.active span{
+            padding: 3px 10px;
+            margin-right: 10px;
+            background-color: #EC8B18;
+            color: white;
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         .c1{
@@ -250,7 +266,7 @@
 
         <div class="form-entries">
             <div class="card c1" id="card1">
-                <div class="card-label">
+                <div class="card-label active">
                     <span>1</span>
                     <p>Collected Eggs</p>
                 </div>
@@ -778,18 +794,33 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sidebarLinks = document.querySelectorAll(".sidebar a");
+            const cardLabels = document.querySelectorAll(".card-label");
 
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
 
-                    // Remove 'active' class from all links
+                    // Remove 'active' class from all sidebar links
                     sidebarLinks.forEach(link => link.classList.remove("active"));
 
-                    // Add 'active' class to the clicked link
+                    // Remove 'active' class from all card labels
+                    cardLabels.forEach(label => label.classList.remove("active"));
+
+                    // Add 'active' class to the clicked sidebar link
                     this.classList.add("active");
+
+                    // Get the corresponding card ID
+                    const targetCard = document.querySelector(this.getAttribute("href"));
+
+                    if (targetCard) {
+                        const targetLabel = targetCard.querySelector(".card-label");
+                        if (targetLabel) {
+                            targetLabel.classList.add("active");
+                        }
+                    }
                 });
             });
         });
+
     </script>
 </body>
 </html>
