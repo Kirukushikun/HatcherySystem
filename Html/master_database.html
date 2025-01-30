@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/Css/styles.css">
 
     <style>
+
         .body-split{
             display: flex;
             gap: 20px;
@@ -32,6 +33,9 @@
             padding: 20px 0;
             
         }
+        .sidebar i{
+            color: #E4B379;
+        }
         .sidebar a{
             text-decoration: none;
             width: 100%;
@@ -43,7 +47,9 @@
             color: #E4B379;
             position: relative;
 
-        }.sidebar a.active{
+        }.sidebar a.active i{ 
+            color: #EC8B18;
+        }.sidebar a.active p{ 
             color: #EC8B18;
         }.sidebar a.active div{
             position: absolute;
@@ -55,10 +61,12 @@
             border-radius: 0 5px 5px 0;
         }
 
-        .sidebar a i{
-            color: #E4B379;
-        }.sidebar a.active i{
+        .sidebar a:hover i, a:hover p{
             color: #EC8B18;
+            transform: scale(1.2);
+        }
+        .sidebar p{
+            color: #E4B379;
         }
 
         .form-entries{
@@ -79,6 +87,8 @@
             overflow-y: scroll;
 
             padding-right: 20px;
+
+            scroll-behavior: smooth;
         }
         .form-entries::-webkit-scrollbar{
             width: 15px;
@@ -225,21 +235,21 @@
 
     <div class="body-split">
         <div class="sidebar">
-            <a href="" class="active"><div></div>1</a>
-            <a href=""><div></div>2</a>
-            <a href=""><div></div>3</a>
-            <a href=""><div></div>4</a>
-            <a href=""><div></div>5</a>
-            <a href=""><div></div>6</a>
-            <a href=""><div></div>7</a>
-            <a href=""><div></div>8</a>
-            <a href=""><div></div>9</a>
-            <a href=""><div></div><i class="fa-solid fa-clipboard-list"></i></a>
-            <a href=""><div></div><i class="fa-solid fa-table"></i></a>
+            <a href="#card1" class="active"><div></div><p>1</p></a>
+            <a href="#card2"><div></div><p>2</p></a>
+            <a href="#card3"><div></div><p>3</p></a>
+            <a href="#card4"><div></div><p>4</p></a>
+            <a href="#card5"><div></div><p>5</p></a>
+            <a href="#card6"><div></div><p>6</p></a>
+            <a href="#card7"><div></div><p>7</p></a>
+            <a href="#card8"><div></div><p>8</p></a>
+            <a href="#card9"><div></div><p>9</p></a>
+            <a href="#card10"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
+            <a href="#card13"><div></div><i class="fa-solid fa-table"></i></a>
         </div>
 
         <div class="form-entries">
-            <div class="card c1">
+            <div class="card c1" id="card1">
                 <div class="card-label">
                     <span>1</span>
                     <p>Collected Eggs</p>
@@ -269,7 +279,7 @@
                 </div> -->
             </div>
 
-            <div class="card c2">
+            <div class="card c2" id="card2">
                 <div class="card-label">
                     <span>2</span>
                     <p>Classification for Storage</p>
@@ -295,7 +305,7 @@
                 </div>
             </div>
 
-            <div class="card c3">
+            <div class="card c3" id="card3">
                 <div class="card-label">
                     <span>3</span>
                     <p>Storage Pullout Process</p>
@@ -343,7 +353,7 @@
                 </div> -->
             </div>
 
-            <div class="card c4">
+            <div class="card c4" id="card4">
                 <div class="card-label">
                     <span>4</span>
                     <p>Setter Process Entry</p>
@@ -378,7 +388,7 @@
                 </div> -->
 
             </div>
-            <div class="card c5">
+            <div class="card c5" id="card5">
                 <div class="card-label">
                     <span>5</span>
                     <p>Candling Process Entry</p>
@@ -403,7 +413,7 @@
 
             </div>
 
-            <div class="card c6">
+            <div class="card c6" id="card5">
                 <div class="card-label">
                     <span>5.1</span>
                     <p>Egg Shell Temperature Check</p>
@@ -492,7 +502,7 @@
 
             </div>
 
-            <div class="card c7">
+            <div class="card c7" id="card6">
                 <div class="card-label">
                     <span>6</span>
                     <p>Hatcher Pullout Process</p>
@@ -522,7 +532,7 @@
                 </div> -->
             </div>
 
-            <div class="card c8">
+            <div class="card c8" id="card7">
                 <div class="card-label">
                     <span>7</span>
                     <p>Sexing</p>
@@ -546,7 +556,7 @@
                 </div> -->
             </div>
 
-            <div class="card c9">
+            <div class="card c9" id="card8">
                 <div class="card-label">
                     <span>8</span>
                     <p>QC/QA Process Entry</p>
@@ -577,7 +587,7 @@
                 </div> -->
             </div>
 
-            <div class="card c10">
+            <div class="card c10" id="card10">
                 <div class="card-label">
                     <p>Forecast Base on Last Hatch</p>
                 </div>
@@ -668,7 +678,7 @@
                 </div> -->
             </div>
 
-            <div class="card c11">
+            <div class="card c11" id="card9">
                 <div class="card-label">
                     <span>9</span>
                     <p>Dispath Process Entry</p>
@@ -687,12 +697,12 @@
                 </div>
             </div>
 
-            <div class="card c12">
+            <div class="card c12" id="card10">
                 <h1>20</h1>
                 <p>Forcasted Number of <br> Boxes</p>
             </div>
 
-            <div class="datalist c13">
+            <div class="datalist c13" id="card13">
                 <div class="table-header">
                     <h4>Data List</h4>
         
@@ -763,9 +773,23 @@
             </div>
         </div>
 
-
     </div>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sidebarLinks = document.querySelectorAll(".sidebar a");
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener("click", function (event) {
+
+                    // Remove 'active' class from all links
+                    sidebarLinks.forEach(link => link.classList.remove("active"));
+
+                    // Add 'active' class to the clicked link
+                    this.classList.add("active");
+                });
+            });
+        });
+    </script>
 </body>
 </html>
