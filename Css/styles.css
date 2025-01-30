@@ -290,9 +290,11 @@ input[type=number] {
 }
 
 .table-body{
+    overflow-x: auto; /* Allow horizontal scrolling */
     overflow-y: hidden;
     border-radius: 10px 10px 0 0;
     border-bottom: solid 3px #e2e2e2;
+    position: relative;
 }
 .table-body::-webkit-scrollbar{
     height: 12px;
@@ -318,7 +320,35 @@ input[type=number] {
     padding: 15px 25px;
     font-weight: 500;
     color: #AB9E91;
-}.table-body table td{
+}
+
+thead th:first-child {
+    position: sticky;
+    left: 0;
+    background: #f0f0f0;
+    z-index: 2;
+}
+tbody td:first-child {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
+}
+
+thead th:last-child {
+    position: sticky;
+    right: 0; /* Stick exactly to the right */
+    background: #f0f0f0;
+    z-index: 2;
+}
+tbody td:last-child {
+    position: sticky;
+    right: 0; /* Stick exactly to the right */
+    background: white;
+    z-index: 1;
+}
+
+.table-body table td{
     padding: 17px 25px;
     background-color: white;
     border-top: solid #f8f8f8 2px;
