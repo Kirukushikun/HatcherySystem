@@ -117,6 +117,29 @@ label{
 
     width: 100%;
 }
+.body .input-container select{
+    background-color: #F6F4F1;
+    border: solid 2px #e2e2e2;
+    border-radius: 5px;
+    padding: 8px 12px;
+
+    font-size: 15px;
+    font-weight: 300;
+
+    width: 100%;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 .body .input-group{
     display: flex;
@@ -314,9 +337,18 @@ label{
     cursor: pointer;
 }
 
-
-
-
+#edit-action:hover{
+    color: #F28B30;
+    transform: scale(1.2);
+}
+#delete-action:hover{
+    color: #EA4335;
+    transform: scale(1.2);
+}
+#print-action:hover{
+    color: #00796B;
+    transform: scale(1.2);
+}
 
 
 
