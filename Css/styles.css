@@ -156,7 +156,7 @@ input[type=number] {
 }
 
 .form-action{
-    display: flex;
+    display: none;
     justify-content: end;
     gap: 15px;
 

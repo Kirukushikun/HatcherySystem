@@ -17,9 +17,7 @@
         </div>
     </div>
 
-
-
-    <div class="body">
+    <form class="body">
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
@@ -65,10 +63,10 @@
 
         <div class="form-action">
             <button class="save-btn">Save</button>
-            <button class="reset-btn">Reset</button>
+            <button class="reset-btn" type="button">Reset</button>
         </div>
 
-    </div>
+    </form>
 
     <div class="datalist">
         <div class="table-header">
@@ -144,6 +142,47 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".body"); // Main form container
+            const inputs = form.querySelectorAll("input, select"); // All form fields
+            const formAction = form.querySelector(".form-action"); // Form action buttons
+            const resetButton = form.querySelector(".reset-btn"); // Reset button
+
+            // Function to check if any input has a value
+            function checkFormValues() {
+                let hasValue = false;
+
+                inputs.forEach(input => {
+                    if (input.value.trim() !== "") {
+                        hasValue = true;
+                    }
+                });
+
+                // Show or hide the form-action buttons
+                formAction.style.display = hasValue ? "flex" : "none";
+            }
+
+            // Event listeners for inputs and selects
+            inputs.forEach(input => {
+                input.addEventListener("input", checkFormValues);
+                input.addEventListener("change", checkFormValues); // For select and date/time inputs
+            });
+
+            // Reset button functionality
+            resetButton.addEventListener("click", function () {
+                inputs.forEach(input => {
+                    input.value = ""; // Clear input fields
+                });
+
+                checkFormValues(); // Recheck values to hide form-action
+            });
+
+            // Initial check to hide the form-action if empty
+            checkFormValues();
+        });
+    </script>
     
 </body>
 </html>
