@@ -53,7 +53,7 @@
 
         <div class="form-action">
             <button class="save-btn">Save</button>
-            <button class="reset-btn">Reset</button>
+            <button class="reset-btn" type="button">Reset</button>
         </div>
     </form>
 
@@ -131,6 +131,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector(".body"); // Main form container
             const inputs = form.querySelectorAll("input, select"); // All form fields
+
             const formAction = form.querySelector(".form-action"); // Form action buttons
             const resetButton = form.querySelector(".reset-btn"); // Reset button
 
@@ -164,12 +165,8 @@
             });
 
             // Initial check to hide the form-action if empty
-            checkFormValues();
+            // checkFormValues();
         });
-    </script>
-
-    <script>
-        
     </script>
 </body>
 </html>
