@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #1C1C1C;
+            font-family: "Poppins", serif;
+        }
+        .modal{
+            display: none;
+        }
+        .modal.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content{
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            border-radius: 10px;
+            background-color: white;
+            padding: 40px 40px;
+
+            gap: 20px;
+
+            /* width: 80%;
+            max-width: 600px; */
+        }
+
+        .modal-footer{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .modal-footer button{
+            padding: 8px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        #close-button{  
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            cursor: pointer;
+            font-size: 23px;
+        }
+
+        .modal-header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 10px;
+        }
+        .modal-header i{
+            font-size: 30px;
+            padding: 15px;
+            border-radius: 10px;
+        }.modal-header h2{
+            font-size: 30px;
+            letter-spacing: 1px;
+        }.modal-header h4{
+            font-size: 17px;
+            font-weight: 500;
+            color: #868686;
+        }
+        .danger{
+            color: #EA4335;
+            background-color: rgb(255, 230, 230);
+        }
+
+        .cancel-button{
+            background-color: rgb(238, 233, 225);
+            border: 2px solid #c5c5c5;
+        }
+
+        .delete-btn{
+            color: white;
+            border: solid 2px #EA4335;
+            background-color: #EA4335;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="modal active">
+        <div class="modal-content"> 
+            <i class="fa-solid fa-xmark" id="close-button"></i>
+            <div class="modal-header">
+                <i class="fa-solid fa-trash-can danger"></i>
+                <h2>Delete Item</h2>
+                <h4>Are you sure you want to delete this data?</h4>
+            </div>
+            <div class="modal-footer">
+                <button class="confirm-button delete-btn">Delete</button>
+                <button class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

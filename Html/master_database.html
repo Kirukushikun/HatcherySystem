@@ -6,7 +6,7 @@
     <title>Hatchery Master Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
-    <link rel="stylesheet" href="/Css/styles.css">
+    <link rel="stylesheet" href="/Css/master-db-style.css">
 </head>
 <body>
     <div class="header">
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-entries">
-            <div class="card c1" id="card1">
+            <form class="card c1" id="card1">
                 <div class="card-label active">
                     <span>1</span>
                     <p>Collected Eggs</p>
@@ -42,26 +42,29 @@
                 <div class="card-form col-2">
                     <div class="input-group">
                         <label for="">PS no.</label>
-                        <input type="text">
+                        <select name="" id="">
+                            <option value=""></option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="">Collected Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-group">
                         <label for="">Production Date (From)</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                     <div class="input-group">
                         <label for="">Production Date (To)</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                 </div>
 
                 <!-- <div class="card-action">
-
+                    <button class="save-btn">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
                 </div> -->
-            </div>
+            </form>
 
             <div class="card c2" id="card2">
                 <div class="card-label">
@@ -72,21 +75,22 @@
                 <div class="card-form">
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Day 10 Candling Quantity</label>
-                            <input type="text">
+                            <label for="">Non-settable Eggs</label>
+                            <input type="number">
                         </div>
                         <div class="input-group">
-                            <label for="">Day 10 Candling Quantity</label>
-                            <input type="text">
+                            <label for="">Settable Eggs</label>
+                            <input type="number">
                         </div>
                     </div>
                     <br>
 
                     <div class="input-group">
-                        <label for="">Day 10 Candling Quantity</label>
-                        <input type="text">
+                        <label for="">Remaining Balance</label>
+                        <input type="number">
                     </div>
                 </div>
+
             </div>
 
             <div class="card c3" id="card3">
@@ -98,43 +102,40 @@
                 <div class="card-form col-2">
                     <div class="input-group">
                         <label for="">Pullout Date</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                     <div class="input-group">
                         <label for="">Set. Egg Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-group">
                         <label for="">Inc. No.</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-container">
                         <div class="input-group">
                             <label for="">Prime Quantity</label>
-                            <input type="text">
+                            <input type="number">
                         </div>   
                         <div class="input-group prcnt">
                             <label for="">%</label>
-                            <input type="text">
+                            <input type="text" readonly>
                         </div>                     
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
                             <label for="">JP Quantity</label>
-                            <input type="text">
+                            <input type="number">
                         </div>   
                         <div class="input-group prcnt">
                             <label for="">%</label>
-                            <input type="text">
+                            <input type="text" readonly>
                         </div>                     
                     </div>
 
                 </div>
 
-                <!-- <div class="card-action">
-
-                </div> -->
             </div>
 
             <div class="card c4" id="card4">
@@ -145,24 +146,24 @@
                 <div class="card-form col-2">
                     <div class="input-group">
                         <label for="">Day 10 Candling Date</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                     <div class="input-group">
                         <label for="">Day 10 Candling Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-group">
                         <label for="">Day 10 Breakout Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-group">
                         <label for="">Day 10 Breaout %</label>
-                        <input type="text">
+                        <input type="text" readonly>
                     </div>
                     <br>
                     <div class="input-group">
                         <label for="">Day 10  Inc Quantity</label>
-                        <input type="text">
+                        <input type="text" readonly>
                     </div>
                 </div>
 
@@ -180,17 +181,17 @@
                 <div class="card-form">
                     <div class="input-group">
                         <label for="">Day 18.5 Candling Date</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                     <br>
                     <div class="input-group">
                         <label for="">Infertiles Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <br>    
                     <div class="input-group">
                         <label for="">Embryonic Eggs Quantity</label>
-                        <input type="text">
+                        <input type="text" disabled>
                     </div>
 
                 </div>
@@ -209,21 +210,21 @@
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.8</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.7</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
  
@@ -234,21 +235,21 @@
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.8</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.7</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
  
@@ -259,21 +260,21 @@
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.8</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
                                 <label for="">37.7</label>
-                                <input type="text">
+                                <input type="number">
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="">%</label>
-                                <input type="text">
+                                <input type="text" readonly>
                             </div>                    
                         </div>
  
@@ -299,15 +300,15 @@
                     </div>
                     <div class="input-group">
                         <label for="">Hatcher Date</label>
-                        <input type="text">
+                        <input type="date">
                     </div>
                     <div class="input-group">
                         <label for="">Rejected Hatch Qty</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <div class="input-group">
                         <label for="">Good Hatch Qty</label>
-                        <input type="text">
+                        <input type="text" readonly>
                     </div>
                 </div>
 
@@ -325,12 +326,12 @@
                 <div class="card-form">
                     <div class="input-group">
                         <label for="">Cockerels Quantity</label>
-                        <input type="text">
+                        <input type="number">
                     </div>
                     <br>
                     <div class="input-group">
                         <label for="">DOP Quantity</label>
-                        <input type="text">
+                        <input type="text" readonly>
                     </div>
 
                 </div>
@@ -348,19 +349,19 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">QC Qty</label>
-                        <input type="text">
+                        <label for="">QC Date</label>
+                        <input type="date">
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
                             <label for="">Rejected DOP Qty</label>
-                            <input type="text">
+                            <input type="number">
                         </div>
                         
                         <div class="input-group">
                             <label for="">Good DOP Qty</label>
-                            <input type="text">
+                            <input type="text" readonly>
                         </div>
                     </div>
 
@@ -470,13 +471,13 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">Cockerels Quantity</label>
-                        <input type="text">
+                        <label for="">Prime Qty</label>
+                        <input type="number">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">DOP Quantity</label>
-                        <input type="text">
+                        <label for="">Jr Prime Qty</label>
+                        <input type="number">
                     </div>
                 </div>
             </div>

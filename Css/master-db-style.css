@@ -402,6 +402,39 @@ tbody td:last-child {
     }
 }
 
+@media(max-width:1700px){
+    body{
+
+        padding: 40px 2%;
+
+    }
+}
+
+@media(max-width:1400px){
+    .form-entries{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        "c1 c1 c1 c2 c2 c2"
+        "c3 c3 c3 c4 c4 c4"
+        "c5 c5 c6 c6 c6 c6"
+        "c5 c5 c6 c6 c6 c6"
+        "c7 c7 c7 c8 c9 c9"
+        "c10 c10 c10 c10 c11 c11"
+        "c10 c10 c10 c10 c12 c12"
+        "c13 c13 c13 c13 c13 c13";
+        gap: 20px;
+    
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    
+        padding-right: 20px;
+    
+        scroll-behavior: smooth;
+    }
+}
+
 /* @media(max-width:900px){
     .body{
         padding-bottom: 110px;
@@ -659,7 +692,7 @@ tbody td:last-child {
 .form-entries .input-container{
     display: flex;
     align-items: center;
-    justify-content: end;
+    /* justify-content: end; */
     gap: 20px;
 
 }
@@ -690,4 +723,93 @@ tbody td:last-child {
 
     width: 100%;
     margin-top: 10px;
+}
+
+@media(max-width:1800px){
+    body{
+
+        padding: 40px 10%;
+
+    }
+}
+
+@media(max-width:1400px){
+    body{
+
+        padding: 40px 5%;
+
+    }
+}
+
+@media(max-width:1700px){
+    body{
+
+        padding: 40px 2%;
+
+    }
+}
+
+@media(max-width:1400px){
+    .form-entries{
+        grid-template-areas: 
+        "c1 c1 c1 c2 c2 c2"
+        "c3 c3 c3 c4 c4 c4"
+        "c5 c5 c6 c6 c6 c6"
+        "c5 c5 c6 c6 c6 c6"
+        "c7 c7 c7 c8 c9 c9"
+        "c10 c10 c10 c10 c11 c11"
+        "c10 c10 c10 c10 c12 c12"
+        "c13 c13 c13 c13 c13 c13";
+    }
+}
+@media(max-width:1400px){
+    .form-entries{
+        grid-template-areas: 
+        "c1 c1 c1 c2 c2 c2"
+        "c3 c3 c3 c4 c4 c4"
+        "c5 c5 c6 c6 c6 c6"
+        "c5 c5 c6 c6 c6 c6"
+        "c7 c7 c7 c7 c8 c8"
+        "c9 c9 c9 c11 c11 c11"
+        "c10 c10 c10 c10 c10 c10"
+        "c10 c10 c10 c10 c10 c10"
+        "c12 c12 c12 c12 c12 c12"
+        "c13 c13 c13 c13 c13 c13";
+    }
+}
+
+@media(max-width:1200px){
+    .form-entries{
+        grid-template-areas: 
+        "c1 c1 c1 c1 c1 c1"
+        "c2 c2 c2 c2 c2 c2"
+        "c3 c3 c3 c3 c3 c3"
+        "c4 c4 c4 c4 c4 c4"
+        "c5 c5 c6 c6 c6 c6"
+        "c5 c5 c6 c6 c6 c6"
+        "c7 c7 c7 c7 c8 c8"
+        "c9 c9 c9 c11 c11 c11"
+        "c10 c10 c10 c10 c10 c10"
+        "c10 c10 c10 c10 c10 c10"
+        "c12 c12 c12 c12 c12 c12"
+        "c13 c13 c13 c13 c13 c13";
+    }
+}
+
+@media(max-width:1150px){
+    .form-entries{
+        grid-template-areas: 
+        "c1 c1 c1 c1 c1 c1"
+        "c2 c2 c2 c2 c2 c2"
+        "c3 c3 c3 c3 c3 c3"
+        "c4 c4 c4 c4 c4 c4"
+        "c5 c5 c5 c5 c5 c5"
+        "c6 c6 c6 c6 c6 c6"
+        "c7 c7 c7 c7 c8 c8"
+        "c9 c9 c9 c11 c11 c11"
+        "c10 c10 c10 c10 c10 c10"
+        "c10 c10 c10 c10 c10 c10"
+        "c12 c12 c12 c12 c12 c12"
+        "c13 c13 c13 c13 c13 c13";
+    }
 }
