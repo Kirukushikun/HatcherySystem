@@ -29,3 +29,17 @@ Route::middleware('auth')->group(function() {
 Route::get('/gs', function () {
 	return GS::service1();
 });
+
+Route::get('/admin', function () {
+	return view('hatchery.admin_UI');
+});
+
+Route::get('/egg-collection-entry', function () {
+	return view('hatchery.egg_collection');
+});
+Route::get('/egg-temperature-check-entry', function () {
+	return view('hatchery.egg_temp');
+});
+Route::get('/home', function () {
+	return view('hatchery.main_module');
+});
