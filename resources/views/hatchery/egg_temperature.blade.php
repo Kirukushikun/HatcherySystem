@@ -17,52 +17,60 @@
         </div>
     </div>
 
-    <form class="body">
+    <form class="body" action="{{ route('egg.temperature.store') }}" method="POST">
+        @csrf
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
 
         <div class="form-input col-4">
             <div class="input-container column">
-                <label for="">PS no.</label>
-                <select name="" id="" required>
+                <label for="ps_no">PS no.</label>
+                <select name="ps_no" id="ps_no" required>
                     <option value=""></option>
+                    <option value="#93">#93</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Setting Date</label>
-                <input type="date" required>
+                <label for="setting_date">Setting Date</label>
+                <input type="date" name="setting_date" id="setting_date" required>
             </div>
             <div class="input-container column">
-                <label for="">Incubator #</label>
-                <select name="" id="" required>
+                <label for="incubator_no">Incubator #</label>
+                <select name="incubator_no" id="incubator_no" required>
                     <option value=""></option>
+                    <option value="5">5</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Location</label>
-                <select name="" id="" required>
+                <label for="location">Location</label>
+                <select name="location" id="location" required>
                     <option value=""></option>
+                    <option value="Top">Top</option>
+                    <option value="Mid">Mid</option>
+                    <option value="Low">Low</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Temperature Check Date</label>
-                <input type="date" required>
+                <label for="temp_check_date">Temperature Check Date</label>
+                <input name="temp_check_date" id="temp_check_date" type="date" required>
             </div>
             <div class="input-container column">
-                <label for="">Temperature</label>
-                <select name="" id="" required>
+                <label for="temperature">Temperature</label>
+                <select name="temperature" id="temperature" required>
                     <option value=""></option>
+                    <option value="37.8 Above">37.8 Above</option>
+                    <option value="37.7 Below">37.7 Below</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Quantity</label>
-                <input type="number" required>
+                <label for="quantity">Quantity</label>
+                <input name="quantity" id="quantity" type="number" required>
             </div>
         </div>
 
         <div class="form-action">
-            <button class="save-btn">Save</button>
+            <button class="save-btn" type="submit">Save</button>
             <button class="reset-btn" type="button">Reset</button>
         </div>
 

@@ -9,6 +9,8 @@ use App\Http\Controllers\DashboardController;
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
+use App\Http\Controllers\EggTemperatureController;
+
 // Fixed Route for all new application that will use Auth
 Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->name('app.login');
 // Login Route
@@ -25,6 +27,7 @@ Route::middleware('auth')->group(function() {
 	 * DO NOT ALTER ABOVE CODE
 	 */
 });
+
 
 Route::get('/gs', function () {
 	return GS::service1();
@@ -43,10 +46,6 @@ Route::get('/egg-collection-entry', function () {
 	return view('hatchery.egg_collection');
 });
 
-Route::get('/egg-temperature-check-entry', function () {
-	return view('hatchery.egg_temperature');
-});
-
 Route::get('/rejected-hatch', function () {
 	return view('hatchery.rejected_hatch');
 });
@@ -59,3 +58,7 @@ Route::get('/master-database', function () {
 	return view('hatchery.master_database');
 });
 
+
+Route::get('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_index'])->name('egg.temperature.index');
+
+Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store');
