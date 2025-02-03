@@ -25,9 +25,12 @@ return new class extends Migration
             $table->date("temperature_check_date");
             $table->integer("quantity");
 
-            $table->string("encoded_by")->nullable();
-            $table->string("modified_by")->nullable();
+            $table->unsignedBigInteger("encoded_by")->nullable();
+            $table->unsignedBigInteger("modified_by")->nullable();
             $table->timestamps();
+
+            $table->foreign('encoded_by')->references('id')->on('users');
+            $table->foreign('modified_by')->references('id')->on('users');
         });
     }
 
