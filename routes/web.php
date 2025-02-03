@@ -35,25 +35,27 @@ Route::get('/admin', function () {
 	return view('hatchery.admin_UI');
 });
 
-Route::get('/egg-collection-entry', function () {
-	return view('hatchery.egg_collection');
-});
-Route::get('/egg-temperature-check-entry', function () {
-	return view('hatchery.egg_temp');
-});
 Route::get('/home', function () {
 	return view('hatchery.main_module');
 });
 
-Route::get('/master_database', function () {
-	return view('hatchery.master_database');
+Route::get('/egg-collection-entry', function () {
+	return view('hatchery.egg_collection');
 });
 
-Route::get('/rejected_hatch', function () {
+Route::get('/egg-temperature-check-entry', function () {
+	return view('hatchery.egg_temperature');
+});
+
+Route::get('/rejected-hatch', function () {
 	return view('hatchery.rejected_hatch');
 });
 
-Route::get('/rejected_pullets', function () {
+Route::get('/rejected-pullets', function () {
 	return view('hatchery.rejected_pullets');
+});
+
+Route::get('/master-database', function () {
+	return view('hatchery.master_database');
 });
 
