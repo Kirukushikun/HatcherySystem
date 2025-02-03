@@ -96,7 +96,7 @@
         <div class="card">
             <img src="/Images/Egg_Reject.png" alt="">
             <h3>REJECTED HATCH <br> ENTRY</h3>
-            <button onclick="window.location.href='/Html/rejected_hatch.html'">OPEN</button>
+            <button onclick="window.location.href='/rejected-hatch'">OPEN</button>
         </div>
     </div>
 
@@ -104,12 +104,12 @@
         <div class="card">
             <img src="/Images/Hatch_Reject.png" alt="">
             <h3>REJECTED PULLETS <br> ENTRY</h3>
-            <button onclick="window.location.href='/Html/rejected_pullets.html'">OPEN</button>
+            <button onclick="window.location.href='/rejected-pullets'">OPEN</button>
         </div>
         <div class="card">
             <img src="/Images/Master_Database.png" alt="">
             <h3>HATCHERY MASTER<br> DATABASE</h3>
-            <button onclick="window.location.href='/Html/master_database.html'">OPEN</button>
+            <button onclick="window.location.href='/master-database'">OPEN</button>
         </div>
     </div>
 

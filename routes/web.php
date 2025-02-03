@@ -32,7 +32,7 @@ Route::get('/gs', function () {
 
 
 Route::get('/admin', function () {
-	return view('hatchery.admin_UI');
+	return view('admin.admin_UI');
 });
 
 Route::get('/home', function () {
