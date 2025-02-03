@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string('house_no');
             $table->date('production_date');
             $table->time('collection_time');
-            $table->int('collected_qty');
-            $table->unsignedBigIntegers('encoded_by')->nullable();
-            $table->unsignedBigIntegers('modified_by')->nullable();
+            $table->integer('collected_qty');
+            $table->unsignedBigInteger('encoded_by')->nullable();
+            $table->unsignedBigInteger('modified_by')->nullable();
             $table->timestamps();
 
-            $table->foreign('encoded_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('modified_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('encoded_by')->references('id')->on('users');
+            $table->foreign('modified_by')->references('id')->on('users');
         });
     }
 

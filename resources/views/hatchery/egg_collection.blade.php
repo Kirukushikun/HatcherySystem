@@ -19,7 +19,8 @@
 
 
 
-    <form class="body">
+    <form class="body" action="{{route('egg.collection.store')}}" method="POST">
+        @csrf
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
@@ -27,32 +28,32 @@
         <div class="form-input col-4">
             <div class="input-container column">
                 <label for="">PS no.</label>
-                <select name="" id="" required>
-                    <option value=""></option>
+                <select name="ps_no" id="ps_no" required>
+                    <option value="98">98</option>
                 </select>
             </div>
             <div class="input-container column">
                 <label for="">House no.</label>
-                <select name="" id="" required>
-                    <option value=""></option>
+                <select name="house_no" id="house_no" required>
+                    <option value="98">1</option>
                 </select>
             </div>
             <div class="input-container column">
                 <label for="">Production Date</label>
-                <input type="date" required>
+                <input type="date" name="production_date" id="production_date" required>
             </div>
             <div class="input-container column">
                 <label for="">Collection Time (hh:mm)</label>
-                <input type="time" required>
+                <input type="time" name="collection_time" id="collection_time" required>
             </div>
             <div class="input-container column">
                 <label for="">Collection Eggs Quantity</label>
-                <input type="number" required>
+                <input type="number" name="collection_eggs_quantity" id="collection_eggs_quantity" placeholder="0" required>
             </div>
         </div>
 
         <div class="form-action">
-            <button class="save-btn">Save</button>
+            <button class="save-btn" type="submit">Save</button>
             <button class="reset-btn" type="button">Reset</button>
         </div>
     </form>
