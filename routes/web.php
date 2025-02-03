@@ -38,7 +38,6 @@ Route::get('/rejected_hatch', function () {
 	return view('hatchery.rejected_hatch');
 });
 
-
 Route::get('/rejected_pullets', function () {
 	return view('hatchery.rejected_pullets');
 });
