@@ -28,7 +28,7 @@ class EggCollectionController extends Controller
             'collection_time' => $validateData['collection_time'],
             'collected_qty' => $validateData['collection_eggs_quantity'],
         ]);
-        return back();
+        return back()->with('success', 'Saved Successfully')->with('success_message', 'Egg Collection Entry Recorded Successfully');
     }
 
 }
