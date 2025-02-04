@@ -107,6 +107,19 @@ label{
     gap: 10px;
 }
 
+.body .input-container label{
+    position: relative;
+}
+.body .input-container label span{
+    position: absolute;
+    left: 10px;
+    bottom: -20px;
+    color: #ea4435d7;
+    font-weight: 600;
+    font-size: 12px;
+    background-color: white;
+}
+
 .body .input-container input{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
@@ -117,6 +130,7 @@ label{
     font-weight: 300;
 
     width: 100%;
+    outline: none;
 }
 .body .input-container select{
     background-color: #F6F4F1;
@@ -380,11 +394,6 @@ tbody td:last-child {
     color: #00796B;
     transform: scale(1.2);
 }
-
-
-
-
-
 
 
 @media(max-width:1800px){

@@ -33,6 +33,6 @@ class EggTemperatureController extends Controller
             'quantity' => $validatedData['quantity'],
         ]);
 
-        return back()->with('success', 'Egg Temperature Recorded Successfully');
+        return back()->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
     }
 }
