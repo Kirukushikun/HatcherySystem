@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
@@ -14,7 +15,7 @@ Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->n
 // Login Route
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'cors'])->group(function() {
 	// Main Session Check for Authetication
 	Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 	// Dash/Dashboard
@@ -24,38 +25,42 @@ Route::middleware('auth')->group(function() {
 	 * YOUR CODE STARTS HERE
 	 * DO NOT ALTER ABOVE CODE
 	 */
-});
 
-Route::get('/gs', function () {
-	return GS::service1();
-});
+    Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
+    Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
 
 
-Route::get('/admin', function () {
-	return view('admin.admin_UI');
+
+    // Route::get('/admin', function () {
+    //     return view('admin.admin_UI');
+    // });
+
+    Route::get('/home', function () {
+        return view('hatchery.main_module');
+    });
+
+    Route::get('/egg-collection-entry', function () {
+        return view('hatchery.egg_collection');
+    });
+
+    Route::get('/egg-temperature-check-entry', function () {
+        return view('hatchery.egg_temperature');
+    });
+
+    Route::get('/rejected-hatch', function () {
+        return view('hatchery.rejected_hatch');
+    });
+
+    Route::get('/rejected-pullets', function () {
+        return view('hatchery.rejected_pullets');
+    });
+
+    Route::get('/master-database', function () {
+        return view('hatchery.master_database');
+    });
 });
 
-Route::get('/home', function () {
-	return view('hatchery.main_module');
-});
-
-Route::get('/egg-collection-entry', function () {
-	return view('hatchery.egg_collection');
-});
-
-Route::get('/egg-temperature-check-entry', function () {
-	return view('hatchery.egg_temperature');
-});
-
-Route::get('/rejected-hatch', function () {
-	return view('hatchery.rejected_hatch');
-});
-
-Route::get('/rejected-pullets', function () {
-	return view('hatchery.rejected_pullets');
-});
-
-Route::get('/master-database', function () {
-	return view('hatchery.master_database');
-});
+// Route::get('/gs', function () {
+// 	return GS::service1();
+// });
 
