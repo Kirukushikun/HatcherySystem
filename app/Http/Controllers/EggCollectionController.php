@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Models\EggCollection;
 
@@ -13,13 +15,34 @@ class EggCollectionController extends Controller
     }
 
     function egg_collection_store(Request $request) {
-        $validateData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'ps_no' => 'required|string|max:255',
             'house_no' => 'required|string|max:255',
             'production_date' => 'required|date',
             'collection_time' => 'required|date_format:H:i',
             'collection_eggs_quantity' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            $errorMessages = $validator->errors();
+            session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
+
+            if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
+                return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
+            }   
+            if ($errorMessages->hasAny(['production_date'])) {
+                return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
+            }      
+            if ($errorMessages->hasAny(['collection_time'])) {
+                return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
+            }               
+            if ($errorMessages->has('collection_eggs_quantity')) {
+                return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
+            } 
+    
+        }
+        $validatedData = $validator->validated();
+
 
         EggCollection::create([
             'ps_no' => $validateData['ps_no'],
@@ -28,7 +51,7 @@ class EggCollectionController extends Controller
             'collection_time' => $validateData['collection_time'],
             'collected_qty' => $validateData['collection_eggs_quantity'],
         ]);
-        return back()->with('success', 'Saved Successfully')->with('success_message', 'Egg Collection Entry Recorded Successfully');
+        return redirect('/egg-temperature')->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
     }
 
 }
