@@ -256,9 +256,13 @@ input[type=number] {
     color: #ffffff;
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
-    background-color: #EC8B18;
+    padding: 8px 8px;
+    color: #EC8B18;
+    border: solid 2px #ffd6a5;
+    /* background-color: #EC8B18; */
     cursor: pointer;
+    font-weight: 600;
+    outline: none;
 }
 
 .table-icons{
@@ -329,12 +333,14 @@ input[type=number] {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
-    background-color: #fafafa;
+}
 
-}.table-body table th{
+.table-body table th{
     padding: 15px 25px;
     font-weight: 500;
     color: #AB9E91;
+    background-color: #fafafa;
+    white-space: nowrap;
 }
 
 thead th:first-child {
@@ -700,3 +706,4 @@ tbody td:last-child {
 
     width: 100%;
     margin-top: 10px;
+}

@@ -11,6 +11,8 @@ use App\Services\GenericServices as GS;
 
 use App\Http\Controllers\EggTemperatureController;
 
+use App\Http\Livewire\EggTemperatureTable;
+
 // Fixed Route for all new application that will use Auth
 Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->name('app.login');
 // Login Route
@@ -58,7 +60,7 @@ Route::get('/master-database', function () {
 	return view('hatchery.master_database');
 });
 
+Route::get('/fetch-egg-temperature-data', [EggTemperatureTable::class, 'fetchData'])->name('egg.temperature.fetch'); // Egg Temperature Table Data Fetch
 
-Route::get('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_index'])->name('egg.temperature.index');
-
-Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store');
+Route::get('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_index'])->name('egg.temperature.index'); // View
+Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store'); // Store
