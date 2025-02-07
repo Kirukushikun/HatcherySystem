@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
-        
+
 *{
     font-family: "Lexend";
     margin: 0;
@@ -62,7 +62,7 @@ label{
     flex-direction: column;
     gap: 25px;
 
-   background-color: white; 
+   background-color: white;
    border-radius: 10px;
    padding: 25px 30px;
 
@@ -185,7 +185,7 @@ input[type=number] {
     flex-direction: column;
     gap: 25px;
 
-   background-color: white; 
+   background-color: white;
    border-radius: 10px;
    padding: 25px 30px;
 }
@@ -253,7 +253,7 @@ input[type=number] {
 }
 .table-icons i{
     cursor: pointer;
-}    
+}
 
 
 .table-footer{
@@ -278,7 +278,7 @@ input[type=number] {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    
+
     border-radius: 7px;
 }.pagination a.active{
     color: white;
@@ -310,7 +310,7 @@ input[type=number] {
     cursor: pointer;
 }
 /* .table-body::-webkit-scrollbar-thumb:hover {
-    background: #d6d6d6; 
+    background: #d6d6d6;
 } */
 
 .table-body table{
@@ -362,26 +362,40 @@ tbody td:last-child {
 .table-body table .datalist-actions{
     white-space:nowrap;
     user-select: none;
+    text-align: center;
 }
 .table-body table .datalist-actions i{
     color: #958888;
     font-size: 20px;
     margin-right: 7px;
     cursor: pointer;
+    text-align: center;
 }
 
 #edit-action:hover{
     color: #F28B30;
-    transform: scale(1.2);
+    transform: scale(1.5);
 }
 #delete-action:hover{
     color: #EA4335;
-    transform: scale(1.2);
+    transform: scale(1.5);
+}
+#revoke-action:hover{
+    color: #EA4335;
+    transform: scale(1.5);
+    width: 20px;
+    height: 20px;
 }
 #print-action:hover{
     color: #00796B;
-    transform: scale(1.2);
+    transform: scale(1.5);
 }
+#grant-action:hover{
+    color: #00FF00;
+    transform: scale(1.5);
+}
+
+
 
 
 
@@ -442,7 +456,7 @@ tbody td:last-child {
     gap: 20px;
     width: 70px;
     padding: 20px 0;
-    
+
 }
 .sidebar i{
     color: #E4B379;
@@ -458,10 +472,10 @@ tbody td:last-child {
     color: #E4B379;
     position: relative;
 
-}.sidebar a.active i{ 
+}.sidebar a.active i{
     color: #EC8B18;
     transform: scale(1.1);
-}.sidebar a.active p{ 
+}.sidebar a.active p{
     color: #EC8B18;
     transform: scale(1.1);
 }.sidebar a.active div{
@@ -506,7 +520,7 @@ tbody td:last-child {
     border-radius: 10px;
     background-color: white;
     padding: 40px;
-    
+
     /* border-style: solid;
     border-width: 3px; */
 
@@ -514,5 +528,89 @@ tbody td:last-child {
     flex-direction: column;
     gap: 25px;
 
+    /* height: 100%; */
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none;
+}
+
+.floating-image {
+    width: 250px; /* Adjust size */
+    height: 250px; /* Adjust size */
+}
+
+/* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */
+
+.loading-screen{
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: white; */
+    z-index: 9999;
+}
+
+.loading-screen.active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading{
+    display: none;
+    width: 100%;
     height: 100%;
+    padding: 200px 0;
+}.loading.active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.loader {
+    width: 200px;
+    height: 200px;
+    border: 20px solid rgb(255, 222, 184); /* #7b5cad color with 0.5 opacity */
+    border-top: 20px solid #EC8B18; /* Transparent part of the loader */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; /* 1s for animation duration, loops infinitely */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Skeleton Loader */
+.skeleton-loader {
+    height: 16px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+
+/* -------------------------------------------------- Button No Background -------------------------------------------------- */
+
+.no-background {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }

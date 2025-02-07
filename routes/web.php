@@ -28,6 +28,8 @@ Route::middleware(['auth', 'cors'])->group(function() {
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
     Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
+    Route::get('/users/grant-access/{id}/{role}', [UserController::class, 'grantAccess'])->name('grant.access');
+
 
 
 

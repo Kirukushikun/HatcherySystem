@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
 use Auth;
 use DataTables;
 use App\Http\Controllers\GeneralController as GC;
@@ -33,7 +37,8 @@ class UserController extends Controller
      * [userJsons Return Format in JSON]
      * @param  Request $request HTTP Request
      * @return JSON Format
-     */public function userJson(Request $request)
+     */
+    public function userJson(Request $request)
     {
         // if ($request->ajax()) {
             $url = config('app.root_domain') . config('app.users_api_slug');
@@ -42,23 +47,43 @@ class UserController extends Controller
             $data = json_decode($response);
             $users = [];
 
-            if (count($data) > 0) {
+            if (!empty($data)) {
                 foreach ($data as $d) {
                     $id = GC::decryptString($d->id);
+                    $full_name = $d->first_name . ' ' . $d->last_name;
                     $users[] = [
                         'id' => $id,
                         'first_name' => $d->first_name,
                         'last_name' => $d->last_name,
-                        'system_access' => GC::checkUserAccess($id) ? 'Granted' : 'No Access',
+                        'system_access' => GC::checkUserAccess($id) ? '<span style="color: green;"><i class="fa-solid fa-check" style="color: green;"></i> Granted</span>' : '<span style="color: red;"><i class="fa-regular fa-circle-xmark" style="color: red;"></i> No Access</span>',
                         'role' => GC::checkUserRole($id),
-                        'action' => '<button> Grant Access </button>',
+                        'action' => GC::checkUserAccess($id) ?
+                            '<button class="no-background AccessBtn" data-id="' . $d->id . '" data-name="' . $full_name . '" data-action="revoke" data-role="user">
+                                <i class="fa-regular fa-circle-xmark" id="revoke-action" toggle="tooltip" data-toggle="tooltip" data-placement="top" title="Revoke Access"></i>
+                            </button>'
+                            :
+                            '<button class="no-background AccessBtn" data-id="' . $d->id . '" data-name="' . $full_name . '" data-action="grant" data-role="user">
+                                <i class="fa-solid fa-check" id="grant-action" toggle="tooltip" data-toggle="tooltip" data-placement="top" title="Grant Access"></i>
+                            </button>'
+                        ,
                     ];
                 }
             }
-            return response()->json($users);
-        // }
 
-        return view('users.user');
+            // Convert array to Laravel Collection for pagination
+            $usersCollection = collect($users);
+            $perPage = 10; // Number of users per page
+            $currentPage = $request->input('page', 1);
+            $currentItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+            // Create LengthAwarePaginator instance
+            $paginatedUsers = new LengthAwarePaginator($currentItems, count($usersCollection), $perPage, $currentPage, [
+                'path' => url()->current(),
+                'query' => $request->query(),
+            ]);
+
+            return response()->json($paginatedUsers);
+        // }
     }
 
 
@@ -69,10 +94,11 @@ class UserController extends Controller
      */
     public function grantAccess($id = null, $role = null)
     {
-        $user = User::find($id);
+        $id = GC::decryptString($id);
+        $user = User::findOrFail($id);
         $name = GC::getUserFullName($id);
         $old_value = $user;
-        if(isset($user)) {
+        if($user){
             $user->name = $name;
             $user->role = $role;
             if($user->save()) {
@@ -100,9 +126,9 @@ class UserController extends Controller
                     $user,
                 ];
                 AC::logEntry($log_entry);
-                return redirect('/user')->with('success_message', 'Access Granted!');
+                return redirect('/users')->with('success_message', 'Access Granted!');
             }
-            return redirect('/user')->with('success_message', 'Access Granted!');
+            return redirect('/users')->with('success_message', 'Access Granted!');
         }
 
     }
