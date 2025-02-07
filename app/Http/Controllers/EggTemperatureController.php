@@ -60,4 +60,14 @@ class EggTemperatureController extends Controller
         return redirect('/egg-temperature')->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
     }
 
+    public function egg_temperature_delete(Request $request, $targetID)
+    {
+        $eggTemperature = EggTemperature::find($targetID);
+
+        $eggTemperature->is_deleted = true;
+        $eggTemperature->save();
+
+        return redirect('/egg-temperature')->with('success', 'Deleted Successfully')->with('success_message', 'Egg Temperature Entry Deleted Successfully');
+    }
+
 }

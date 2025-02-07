@@ -8,6 +8,10 @@
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <!-- Crucial Part on every forms -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Crucial Part on every forms/ -->
+
 </head>
 <body>
         <!-- PUSH NOTIFICATION -->
@@ -146,6 +150,5 @@
 
     
     <script src="{{asset('js/egg_temperature.js')}}" defer></script>
-
 </body>
 </html>

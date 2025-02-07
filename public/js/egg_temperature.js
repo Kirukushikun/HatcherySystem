@@ -4,6 +4,13 @@ const inputs = form.querySelectorAll("input, select"); // All form fields
 const formAction = form.querySelector(".form-action"); // Form action buttons
 const resetButton = form.querySelector(".reset-btn"); // Reset button
 
+//make every input type number prevent user from entering special characters just purely number
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    })  
+})
+
 // Function to check if any input has a value
 function checkFormValues() {
     let hasValue = false;
@@ -77,53 +84,46 @@ document.querySelector("form").addEventListener("submit", function (event) {
 function showModal(button, targetID = null) {
     const modal = document.getElementById("modal");
     modal.classList.add("active");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     modal.innerHTML = `
-        <div class="modal-content">
+        <form class="modal-content" action="/egg-temperature/${button}/${targetID}" method="POST">
+            <input type="hidden" name="_token" value="${csrfToken}">
+            <input type="hidden" name="_method" value="PATCH">
+
             <i class="fa-solid fa-xmark" id="close-button"></i>
             <div class="modal-header">
                 ${
-                    button === "save" ? '<i class="fa-solid fa-circle-check success"></i><h2>Save Record</h2><h4>Are you sure you want to save this data?</h4>'
-                    : button === "delete" ? '<i class="fa-solid fa-circle-xmark danger"></i><h2>Delete Record</h2><h4>Are you sure you want to delete this data?</h4>'
-                    : '<i class="fa-solid fa-circle-info edit"></i><h2>Edit Record</h2><h4>Are you sure you want to edit this data?</h4>'
+                    button === "save"
+                        ? '<i class="fa-solid fa-circle-check success"></i><h2>Save Record</h2><h4>Are you sure you want to save this data?</h4>'
+                        : button === "delete"
+                        ? '<i class="fa-solid fa-circle-xmark danger"></i><h2>Delete Record</h2><h4>Are you sure you want to delete this data?</h4>'
+                        : '<i class="fa-solid fa-circle-info edit"></i><h2>Edit Record</h2><h4>Are you sure you want to edit this data?</h4>'
                 }
             </div>
             <div class="modal-footer">
-                <button class="confirm-button ${
+                <button type="submit" class="confirm-button ${
                     button === "save" ? "save-btn" : button === "delete" ? "delete-btn" : "edit-btn"
-                }" data-id="${targetID}">${button.charAt(0).toUpperCase() + button.slice(1)}</button>
-                <button class="cancel-button">Cancel</button>
+                }" data-id="${targetID}">
+                    ${button.charAt(0).toUpperCase() + button.slice(1)}
+                </button>
+                <button type="button" class="cancel-button">Cancel</button>
             </div>
-        </div>
+        </form>
     `;
-
-    // Event delegation to avoid duplicate listeners
-    modal.removeEventListener("click", handleModalClick); // Remove previous listener
-    modal.addEventListener("click", handleModalClick);
 }
 
-// Event handler function
-function handleModalClick(event) {
+// Add a single event listener outside showModal to avoid duplication
+document.addEventListener("click", function (event) {
     const modal = document.getElementById("modal");
+
+    if (!modal.classList.contains("active")) return;
 
     if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
         modal.classList.remove("active");
     }
+});
 
-    if (event.target.classList.contains("save-btn")) {
-        modal.classList.remove("active");
-        document.querySelector("form").submit();
-    }
-
-    if (event.target.classList.contains("delete-btn")) {
-        event.preventDefault();
-        modal.classList.remove("active");
-        let targetID = event.target.getAttribute("data-id");
-        console.log("Delete action confirmed!", targetID);
-
-        // Here, you can add an AJAX request to delete the record
-    }
-}
 
 
 // Get the close icon element
