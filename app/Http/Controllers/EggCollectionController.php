@@ -45,14 +45,25 @@ class EggCollectionController extends Controller
 
 
         EggCollection::create([
-            'ps_no' => $validateData['ps_no'],
-            'house_no' => $validateData['house_no'],
-            'production_date' => $validateData['production_date'],
-            'collection_time' => $validateData['collection_time'],
-            'collected_qty' => $validateData['collection_eggs_quantity'],
+            'ps_no' => $validatedData['ps_no'],
+            'house_no' => $validatedData['house_no'],
+            'production_date' => $validatedData['production_date'],
+            'collection_time' => $validatedData['collection_time'],
+            'collected_qty' => $validatedData['collection_eggs_quantity'],
         ]);
-        return redirect('/egg-temperature')->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
+        return redirect('/egg-collection')->with('success', 'Saved Successfully')->with('success_message', 'Egg Collection Entry Recorded Successfully');
     }
 
+    public function egg_collection_delete(Request $request, $targetID)
+    {
+        $eggCollection = EggCollection::find($targetID);
+
+        $eggCollection->is_deleted = true;
+        $eggCollection->save();
+
+        return redirect('/egg-collection')->with('error', 'Deleted Successfully')->with('error_message', 'Egg Collection Entry Deleted Successfully');
+    }
+
+    
 }
 

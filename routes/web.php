@@ -7,6 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EggCollectionController;
 
+use App\Http\Livewire\EggCollectionTable;
+
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
@@ -44,6 +46,9 @@ Route::get('egg-collection', [EggCollectionController::class, 'egg_collection_in
 
 Route::post('egg-collection', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store');
 
+Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'])->name('egg.collection.fetch'); // Egg Collection Table Data Fetch
+
+Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete');
 
 
 
