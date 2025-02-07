@@ -107,6 +107,11 @@
     background-color: #e6ffe6;
 }
 
+.edit{
+    color: #F28B30;
+    background-color: #fff3e0;
+}
+
 .cancel-button{
     background-color: rgb(238, 233, 225);
     border: 2px solid #c5c5c5;
@@ -121,6 +126,11 @@
     color: white;
     border: solid 2px #34A853;
     background-color: #34A853;
+}
+.edit-btn{
+    color: white;
+    border: solid 2px #F28B30;
+    background-color: #F28B30;
 }
 
 

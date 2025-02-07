@@ -105,12 +105,12 @@
                             <td>${row.quantity}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">
-                                <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                                <i class="fa-regular fa-trash-can" id="delete-action"></i>
+                                <i class="fa-regular fa-pen-to-square" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
+                                <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
                                 <i class="fa-solid fa-print" id="print-action"></i>
                             </td>
                         </tr>
-                    `;
+                    `;   
                 });
 
                 updatePagination();

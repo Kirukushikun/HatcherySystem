@@ -13,7 +13,7 @@ class EggTemperatureTable extends Component
     
     public function fetchData(Request $request){
 
-        $query = EggTemperature::query();
+        $query = EggTemperature::where('is_deleted', false);
 
         //Search Handling
         if ($request->has('search') && !empty($request->search)) {

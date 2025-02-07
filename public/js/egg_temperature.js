@@ -27,7 +27,19 @@ inputs.forEach(input => {
 // Reset button functionality
 resetButton.addEventListener("click", function () {
     inputs.forEach(input => {
-        input.value = ""; // Clear input fields
+        // Find the closest `.input-container` for the current input
+        let inputContainer = input.closest(".input-container");
+
+        if (inputContainer) {
+            let labelSpan = inputContainer.querySelector("label span");
+
+            if (labelSpan) {
+                labelSpan.textContent = ""; // Clear the label span
+            }
+        }
+
+        input.style.border = "";  // Reset border styling
+        input.value = "";  // Clear input fields
     });
 
     checkFormValues(); // Recheck values to hide form-action
@@ -57,12 +69,12 @@ document.querySelector("form").addEventListener("submit", function (event) {
     });
 
     if (isValid) {
-        showModal(); // Show modal when all fields are filled
+        showModal("save"); // Show modal when all fields are filled
     }
     
 });
 
-function showModal() {
+function showModal(button, targetID = null) {
     const modal = document.getElementById("modal");
     modal.classList.add("active");
 
@@ -70,33 +82,47 @@ function showModal() {
         <div class="modal-content">
             <i class="fa-solid fa-xmark" id="close-button"></i>
             <div class="modal-header">
-                <i class="fa-solid fa-circle-check success"></i>
-                <h2>Save Record</h2>
-                <h4>Are you sure you want to save this data?</h4>
+                ${
+                    button === "save" ? '<i class="fa-solid fa-circle-check success"></i><h2>Save Record</h2><h4>Are you sure you want to save this data?</h4>'
+                    : button === "delete" ? '<i class="fa-solid fa-circle-xmark danger"></i><h2>Delete Record</h2><h4>Are you sure you want to delete this data?</h4>'
+                    : '<i class="fa-solid fa-circle-info edit"></i><h2>Edit Record</h2><h4>Are you sure you want to edit this data?</h4>'
+                }
             </div>
             <div class="modal-footer">
-                <button class="confirm-button save-btn">Save</button>
+                <button class="confirm-button ${
+                    button === "save" ? "save-btn" : button === "delete" ? "delete-btn" : "edit-btn"
+                }" data-id="${targetID}">${button.charAt(0).toUpperCase() + button.slice(1)}</button>
                 <button class="cancel-button">Cancel</button>
             </div>
         </div>
     `;
 
-    const closeButton = document.getElementById("close-button");
-    const confirmButton = document.querySelector(".confirm-button");
-    const cancelButton = document.querySelector(".cancel-button");
+    // Event delegation to avoid duplicate listeners
+    modal.removeEventListener("click", handleModalClick); // Remove previous listener
+    modal.addEventListener("click", handleModalClick);
+}
 
-    closeButton.addEventListener("click", function () {
-        modal.classList.remove("active");
-    });
+// Event handler function
+function handleModalClick(event) {
+    const modal = document.getElementById("modal");
 
-    confirmButton.addEventListener("click", function () {
+    if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
         modal.classList.remove("active");
-        form.submit(); // Submit the form when "Delete" is clicked
-    });
+    }
 
-    cancelButton.addEventListener("click", function () {
+    if (event.target.classList.contains("save-btn")) {
         modal.classList.remove("active");
-    });
+        document.querySelector("form").submit();
+    }
+
+    if (event.target.classList.contains("delete-btn")) {
+        event.preventDefault();
+        modal.classList.remove("active");
+        let targetID = event.target.getAttribute("data-id");
+        console.log("Delete action confirmed!", targetID);
+
+        // Here, you can add an AJAX request to delete the record
+    }
 }
 
 
