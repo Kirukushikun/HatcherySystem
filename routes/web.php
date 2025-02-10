@@ -68,6 +68,6 @@ Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperatu
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
 Route::get('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
-
+Route::patch('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_update'])->name('edit.record.update'); // Update
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
