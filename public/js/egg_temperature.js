@@ -4,6 +4,9 @@ const inputs = form.querySelectorAll("input, select"); // All form fields
 const formAction = form.querySelector(".form-action"); // Form action buttons
 const resetButton = form.querySelector(".reset-btn"); // Reset button
 
+const modal = document.getElementById("modal"); // Modal
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
+
 //make every input type number prevent user from entering special characters just purely number
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', function(e) {
@@ -82,40 +85,106 @@ document.querySelector("form").addEventListener("submit", function (event) {
 });
 
 function showModal(button, targetID = null) {
-    const modal = document.getElementById("modal");
-    modal.classList.add("active");
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    modal.innerHTML = `
-        <form class="modal-content" action="/egg-temperature/${button}/${targetID}" method="POST">
-            <input type="hidden" name="_token" value="${csrfToken}">
-            <input type="hidden" name="_method" value="PATCH">
+    if (button === "save") {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="modal-header">
+                    <i class="fa-solid fa-circle-check success"></i>
+                    <h2>Save Record</h2>
+                    <h4>Are you sure you want to save this data?</h4>
+                </div>
 
-            <i class="fa-solid fa-xmark" id="close-button"></i>
-            <div class="modal-header">
-                ${
-                    button === "save"
-                        ? '<i class="fa-solid fa-circle-check success"></i><h2>Save Record</h2><h4>Are you sure you want to save this data?</h4>'
-                        : button === "delete"
-                        ? '<i class="fa-solid fa-circle-xmark danger"></i><h2>Delete Record</h2><h4>Are you sure you want to delete this data?</h4>'
-                        : '<i class="fa-solid fa-circle-info edit"></i><h2>Edit Record</h2><h4>Are you sure you want to edit this data?</h4>'
-                }
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button save-btn">
+                        Save
+                    </button>
+                    <button type="button" class="cancel-button">Cancel</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="confirm-button ${
-                    button === "save" ? "save-btn" : button === "delete" ? "delete-btn" : "edit-btn"
-                }" data-id="${targetID}">
-                    ${button.charAt(0).toUpperCase() + button.slice(1)}
-                </button>
-                <button type="button" class="cancel-button">Cancel</button>
+        `;
+
+        document.querySelector('.save-btn').addEventListener('click', () => {
+            document.querySelector('form').submit();
+        });
+
+    } else if (button === "delete") {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="modal-header">
+                    <i class="fa-solid fa-circle-xmark danger"></i>
+                    <h2>Delete Record</h2>
+                    <h4>Are you sure you want to delete this data?</h4>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button delete-btn" onclick="deleteRecord(${targetID})">
+                        Delete
+                    </button>
+                    <button type="button" class="cancel-button">Cancel</button>
+                </div>
             </div>
-        </form>
-    `;
+        `;
+    } else { // Edit case
+        editRecord(targetID);
+    }
 }
 
-// Add a single event listener outside showModal to avoid duplication
+function deleteRecord(targetID) {
+    fetch(`/egg-temperature/delete/${targetID}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+            document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
+
+            // updatePagination();
+            // loadData();
+
+            // Trigger push notification
+            createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+        } else {
+            alert("Error deleting record");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
+function editRecord(targetID) {
+    fetch(`/api/encrypt-id`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+            targetID: targetID
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.encrypted_id) {
+            window.location.href = `/egg-temperature/edit/${encodeURIComponent(data.encrypted_id)}`;
+        } else {
+            console.error('Error encrypting ID');
+        }
+    })
+    .catch(error => console.error("Error:", error));
+
+    console.log("editing", targetID);
+}
+
 document.addEventListener("click", function (event) {
-    const modal = document.getElementById("modal");
 
     if (!modal.classList.contains("active")) return;
 
@@ -125,30 +194,3 @@ document.addEventListener("click", function (event) {
 });
 
 
-
-// Get the close icon element
-const closeNotification = document.getElementById('close-notification');
-// Get the push notification element (assuming it has a class 'push-notification')
-const pushNotification = document.querySelector('.push-notification');
-
-if (closeNotification) {
-    // Add a click event listener to the close icon
-    closeNotification.addEventListener('click', function() {
-        // Remove the 'active' class to hide the notification
-        if (pushNotification) {
-            pushNotification.classList.remove('active');
-        }
-    });
-}
-
-if (pushNotification) {
-    // Show the push notification by adding the 'active' class
-    setTimeout(() => {
-        pushNotification.classList.add('active');
-    }, 500);
-
-    // Automatically hide the notification after 5 seconds
-    setTimeout(() => {
-        pushNotification.classList.remove('active');
-    }, 5500);
-}

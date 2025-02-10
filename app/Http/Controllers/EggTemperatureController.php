@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Support\Facades\Crypt;
+
 use App\Models\EggTemperature;
 
 class EggTemperatureController extends Controller
@@ -63,11 +65,25 @@ class EggTemperatureController extends Controller
     public function egg_temperature_delete(Request $request, $targetID)
     {
         $eggTemperature = EggTemperature::find($targetID);
-
+    
+        if (!$eggTemperature) {
+            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+        }
+    
         $eggTemperature->is_deleted = true;
         $eggTemperature->save();
+    
+        return response()->json(['success' => true, 'message' => 'Egg Temperature Entry Deleted Successfully']);
+    }
 
-        return redirect('/egg-temperature')->with('success', 'Deleted Successfully')->with('success_message', 'Egg Temperature Entry Deleted Successfully');
+    public function edit_record_index($targetForm, $encryptedId){
+
+        $targetID = Crypt::decrypt($encryptedId);
+
+        return view('hatchery.edit_module', [
+            'targetForm' => $targetForm,
+            'targetID' => $targetID
+        ]);
     }
 
 }

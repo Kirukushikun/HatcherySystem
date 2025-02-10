@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\EggTemperatureController;
 
 use App\Http\Livewire\EggTemperatureTable;
@@ -65,3 +66,8 @@ Route::get('/fetch-egg-temperature-data', [EggTemperatureTable::class, 'fetchDat
 Route::get('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_index'])->name('egg.temperature.index'); // View
 Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store'); // Store
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
+
+Route::get('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
+
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
