@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EggCollectionController;
+use App\Http\Controllers\PDFController;
 
 use App\Http\Livewire\EggCollectionTable;
 
@@ -50,9 +51,9 @@ Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'
 
 Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete');
 
+Route::get('/{targetForm}/edit/{targetID}', [EggCollectionController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
 
-
-
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 
 

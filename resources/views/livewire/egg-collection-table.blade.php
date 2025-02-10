@@ -28,7 +28,7 @@
             skeletonLoader();
             setTimeout(() => {
                 loadData();
-            }, 3000);
+            }, 1000);
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("input", function (e) {
@@ -86,7 +86,7 @@
                             <td>${row.collected_qty}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">
-                                <i class="fa-regular fa-pen-to-square" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
+                                <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
                                 <i class="fa-solid fa-print" id="print-action"></i>
                             </td>
@@ -94,6 +94,7 @@
                     `;
                 });
                 updatePagination();
+                loadingScreen();
             })
             .catch(error => console.log("Error fetching data", error));
     }

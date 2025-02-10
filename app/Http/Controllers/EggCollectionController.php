@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Support\Facades\Crypt;
+
 use App\Models\EggCollection;
 
 class EggCollectionController extends Controller
@@ -57,13 +59,27 @@ class EggCollectionController extends Controller
     public function egg_collection_delete(Request $request, $targetID)
     {
         $eggCollection = EggCollection::find($targetID);
-
+    
+        if (!$eggCollection) {
+            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+        }
+    
         $eggCollection->is_deleted = true;
         $eggCollection->save();
-
-        return redirect('/egg-collection')->with('error', 'Deleted Successfully')->with('error_message', 'Egg Collection Entry Deleted Successfully');
+    
+        return response()->json(['success' => true, 'message' => 'Egg Collection Entry Deleted Successfully']);
     }
 
+    
+    public function edit_record_index($targetForm, $encryptedId){
+
+        $targetID = Crypt::decrypt($encryptedId);
+
+        return view('hatchery.edit_module', [
+            'targetForm' => $targetForm,
+            'targetID' => $targetID
+        ]);
+    }
     
 }
 
