@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EggCollectionController;
+use App\Http\Controllers\PDFController;
+
+use App\Http\Livewire\EggCollectionTable;
 
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
@@ -45,16 +49,37 @@ Route::get('/home', function () {
 	return view('hatchery.main_module');
 });
 
-Route::get('/egg-collection-entry', function () {
-	return view('hatchery.egg_collection');
-});
+Route::get('egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index');
+
+Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'])->name('egg.collection.fetch'); // Egg Collection Table Data Fetch
+
+Route::post('/egg-collection/store', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store'); // Store
+
+Route::get('/{targetForm}/edit/{targetID}', [EggCollectionController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
+
+Route::patch('/{targetForm}/edit/{targetID}', [EggCollectionController::class, 'edit_record_update'])->name('edit.record.update'); // Update
+
+Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/rejected-hatch', function () {
 	return view('hatchery.rejected_hatch');
 });
 
 Route::get('/rejected-pullets', function () {
-	return view('hatchery.rejected_pullets');
+	return view('hatchery.rejected_pullets');	
 });
 
 Route::get('/master-database', function () {

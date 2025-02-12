@@ -6,9 +6,41 @@
     <title>Egg Collection Entry</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
-    <link rel="stylesheet" href="/Css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <!-- Crucial Part on every forms -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Crucial Part on every forms/ -->
+
 </head>
 <body>
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+            <!-- PUSH NOTIFICATION -->
+        @if(session()->has('error'))
+        <div class="push-notification danger">
+            <i class="fa-solid fa-bell danger"></i>
+            <div class="notification-message">
+                <h4>{{session('error')}}</h4>
+                <p>{{session('error_message')}}</p>
+            </div>
+            <i class="fa-solid fa-xmark" id="close-notification"></i>
+        </div>
+        @elseif(session()->has('success'))
+            <div class="push-notification success">
+                <i class="fa-solid fa-bell success"></i>
+                <div class="notification-message">
+                    <h4>{{session('success')}}</h4>
+                    <p>{{session('success_message')}}</p>
+                </div>
+                <i class="fa-solid fa-xmark" id="close-notification"></i>
+            </div>
+        @endif
+    
+    <div class="modal" id="modal">
+    </div>
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
         <h2>EGG COLLECTION ENTRY</h2>
@@ -17,43 +49,61 @@
         </div>
     </div>
 
-
-
-    <form class="body">
+    <form class="body" action="{{route('egg.collection.store')}}" method="POST">
+        @csrf
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
+        <div class="form-input col-4">  
+            <div class="input-container column">
+                <label for="ps_no">PS no. <span></span></label>
+                <select name="ps_no" id="ps_no">
+                    <option value="" selected></option>
+                    <option value="93" {{ session('form_data.ps_no', '') == '93' ? 'selected' : ''}}>93</option>
+                    <option value="95" {{ session('form_data.ps_no', '') == '95' ? 'selected' : ''}}>95</option>
+                    <option value="98" {{ session('form_data.ps_no', '') == '98' ? 'selected' : ''}}>98</option>
+                </select>
+            </div>
+            <div class="input-container column">
+                <label for="house_no">House no. <span></span></label>
+                <select name="house_no" id="house_no">
+                    <option value=""selected></option>
+                    <option value="1" {{ session('form_data.house_no', '') == '1' ? 'selected' : ''}}>1</option>
+                    <option value="2" {{ session('form_data.house_no', '') == '2' ? 'selected' : ''}}>2</option>
+                    <option value="3" {{ session('form_data.house_no', '') == '3' ? 'selected' : ''}}>3</option>
+                </select>
+            </div>
+            <div class="input-container column">
+                <label for="production_date">
+                    Production Date <span></span>
+                </label>
+                <input 
+                    type="date" 
+                    name="production_date" 
+                    id="production_date" 
+                    value="{{ session('form_data.production_date', date('Y-m-d')) }}"
+                >
+            </div>
 
-        <div class="form-input col-4">
             <div class="input-container column">
-                <label for="">PS no.</label>
-                <select name="" id="" required>
-                    <option value=""></option>
-                </select>
+                <label for="collection_time">
+                    Collection Time (hh:mm) <span></span>
+                </label>
+                <input 
+                    type="time" 
+                    name="collection_time" 
+                    id="collection_time" 
+                    value="{{ session('form_data.collection_time', date('H:i')) }}"
+                >
             </div>
             <div class="input-container column">
-                <label for="">House no.</label>
-                <select name="" id="" required>
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="">Production Date</label>
-                <input type="date" required>
-            </div>
-            <div class="input-container column">
-                <label for="">Collection Time (hh:mm)</label>
-                <input type="time" required>
-            </div>
-            <div class="input-container column">
-                <label for="">Collection Eggs Quantity</label>
-                <input type="number" required>
+                <label for="collection_eggs_quantity">Collected Eggs Quantity <span></span></label>
+                <input type="number" name="collection_eggs_quantity" id="collection_eggs_quantity" value="{{ session('form_data.collection_eggs_quantity', '') }}" placeholder="0">
             </div>
         </div>
-
         <div class="form-action">
-            <button class="save-btn">Save</button>
-            <button class="reset-btn" type="button">Reset</button>
+            <button class="save-btn" type="submit">Save</button>
+            <button class="reset-btn" type="reset">Reset</button>
         </div>
     </form>
 
@@ -67,106 +117,35 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
 
-                <select class="sort-btn">
-                    <option value=""> Sort By</option>
+                <select class="sort-btn" name="sort_by" id="sort_by">
+                    <option value="production_date_desc">Sort By: Date (Newest)</option>
+                    <option value="production_date_asc">Sort By: Date (Oldest)</option>
+                    <option value="ps_no_asc">Sort By: PS No.</option>
+                    <option value="house_no_asc">Sort By: House No.</option>
+                    <option value="collected_qty_asc">Sort By: Quantity (Asc)</option>
+                    <option value="collected_qty_desc">Sort By: Quantity (Desc)</option>
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
+                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
             </div>
 
         </div>
         <div class="table-body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>PS no.</th>
-                        <th>House No.</th>
-                        <th>Production Date</th>
-                        <th>Collection Time</th>
-                        <th>Collected QTY</th>
-                        <th>Encoded/Modified By</th>
-                        <th>Date Encoded/Modified</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>#93</td>
-                        <td>4</td>
-                        <td>09/12/25</td>
-                        <td>16:00</td>
-                        <td>1200</td>
-                        <td>IT Head</td>
-                        <td>09/12/25</td>
-                        <td class="datalist-actions">
-                            <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                            <i class="fa-regular fa-trash-can" id="delete-action"></i>
-                            <i class="fa-solid fa-print" id="print-action"></i>
-                        </td>
-                    </tr>
-                </tbody>
-                
-            </table>
+            <livewire:egg-collection-table />
         </div>
         <div class="table-footer">
             <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#"><i class="fa-solid fa-caret-right"></i></a>
             </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector(".body"); // Main form container
-            const inputs = form.querySelectorAll("input, select"); // All form fields
+    <script src="{{asset('js/egg-collection.js')}}" defer></script>
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
 
-            const formAction = form.querySelector(".form-action"); // Form action buttons
-            const resetButton = form.querySelector(".reset-btn"); // Reset button
-
-            // Function to check if any input has a value
-            function checkFormValues() {
-                let hasValue = false;
-
-                inputs.forEach(input => {
-                    if (input.value.trim() !== "") {
-                        hasValue = true;
-                    }
-                });
-
-                // Show or hide the form-action buttons
-                formAction.style.display = hasValue ? "flex" : "none";
-            }
-
-            // Event listeners for inputs and selects
-            inputs.forEach(input => {
-                input.addEventListener("input", checkFormValues);
-                input.addEventListener("change", checkFormValues); // For select and date/time inputs
-            });
-
-            // Reset button functionality
-            resetButton.addEventListener("click", function () {
-                inputs.forEach(input => {
-                    input.value = ""; // Clear input fields
-                });
-
-                checkFormValues(); // Recheck values to hide form-action
-            });
-
-            // Initial check to hide the form-action if empty
-            // checkFormValues();
-        });
-    </script>
 </body>
 </html>

@@ -17,5 +17,6 @@ class PDFController extends Controller
 
         $pdf = Pdf::loadView('pdf.egg-temperature-pdf', $data);
         return $pdf->download('egg-temperature-record.pdf'); // Or use stream() to preview in browser
+  
     }
 }

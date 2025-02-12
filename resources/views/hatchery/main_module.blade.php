@@ -86,7 +86,7 @@
         <div class="card">
             <img src="/Images/Egg_Add.png" alt="">
             <h3>EGG COLLECTION <br> ENTRY</h3>
-            <button onclick="window.location.href='/egg-collection-entry'">OPEN</button>
+            <button onclick="window.location.href='/egg-collection'">OPEN</button>
         </div>
         <div class="card">
             <img src="/Images/Egg_Temp.png" alt="">
