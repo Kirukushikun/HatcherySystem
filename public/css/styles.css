@@ -333,9 +333,9 @@ input[type=number] {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
-    background-color: #fafafa;
+}
 
-}.table-body table th{
+.table-body table th{
     padding: 15px 25px;
     font-weight: 500;
     color: #AB9E91;
@@ -400,11 +400,6 @@ tbody td:last-child {
     color: #00796B;
     transform: scale(1.2);
 }
-
-
-
-
-
 
 
 @media(max-width:1800px){

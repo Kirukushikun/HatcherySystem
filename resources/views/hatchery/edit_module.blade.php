@@ -11,8 +11,9 @@
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
+    
     <style>
-         body{
+        body{
             height: 100vh;
             background-color: #F6F4F1;
             padding: 40px 15%;
@@ -60,6 +61,8 @@
         }
     </style>
 </head>
+
+
 <body>
         <!-- PUSH NOTIFICATION -->
         @if(session()->has('error'))
@@ -84,123 +87,134 @@
     
     <div class="modal" id="modal">
     </div>
+  
+    <input type="hidden" class="tergetForm" value="{{$targetForm}}">
 
     @if($targetForm == 'egg-collection' && $targetForm != null)
-    <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'egg-collection', 'targetID' => $record->id]) }}" method="POST">
-        @csrf
-        @method('PATCH')
+        <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'egg-collection', 'targetID' => $record->id]) }}" method="POST">
+          @csrf
+          @method('PATCH')
 
-        <div class="form-header">
-            <img class="logo" src="/Images/BDL.png" alt="">
-                <h2>EGG COLLECTION ENTRY (EDIT FORM)</h2>
-                <div class="exit-icon">
-            <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'">
-        </div>
-        </div>
-        <div class="form-input col-3">  
-            <div class="input-container column">
-                <label for="record_id">ID <span></span></label>
-                <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
-            </div>
-            <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value="" selected></option>
-                    <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
-                    <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
-                    <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="house_no">House no. <span></span></label>
-                <select name="house_no" id="house_no">
-                    <option value=""selected></option>
-                    <option value="1" {{ $record->house_no == '1' ? 'selected' : ''}}>1</option>
-                    <option value="2" {{ $record->house_no == '2' ? 'selected' : ''}}>2</option>
-                    <option value="3" {{ $record->house_no == '3' ? 'selected' : ''}}>3</option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="production_date">Production Date <span></span></label>
-                <input type="date" name="production_date" id="production_date" value="{{ $record->production_date->format('Y-m-d') }}">
-            </div>
-            <div class="input-container column">
-                <label for="collection_time">Collection Time (hh:mm) <span></span></label>
-                <input type="time" name="collection_time" id="collection_time" value="{{ \Carbon\Carbon::parse($record->collection_time)->format('H:i') }}">
-            </div>
-            <div class="input-container column">
-                <label for="collection_eggs_quantity">Collected Eggs Quantity <span></span></label>
-                <input name="collection_eggs_quantity" id="collection_eggs_quantity" type="number" value="{{ $record->collected_qty }}">
-            </div>
-        </div>
-    
-        <div class="form-action">
-            <button class="save-btn" type="submit">Save</button>
-            <button class="reset-btn" type="button">Reset</button>
-        </div>
+          <div class="form-header">
+              <img class="logo" src="/Images/BDL.png" alt="">
+              <h2>EGG COLLECTION ENTRY (EDIT FORM)</h2>
+              <div class="exit-icon">
+                <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'">
+              </div>
+          </div>
+          <div class="form-input col-3">  
+              <div class="input-container column">
+                  <label for="record_id">ID <span></span></label>
+                  <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
+              </div>
+              <div class="input-container column">
+                  <label for="ps_no">PS no. <span></span></label>
+                  <select name="ps_no" id="ps_no">
+                      <option value="" selected></option>
+                      <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
+                      <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
+                      <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>
+                  </select>
+              </div>
+              <div class="input-container column">
+                  <label for="house_no">House no. <span></span></label>
+                  <select name="house_no" id="house_no">
+                      <option value=""selected></option>
+                      <option value="1" {{ $record->house_no == '1' ? 'selected' : ''}}>1</option>
+                      <option value="2" {{ $record->house_no == '2' ? 'selected' : ''}}>2</option>
+                      <option value="3" {{ $record->house_no == '3' ? 'selected' : ''}}>3</option>
+                  </select>
+              </div>
+              <div class="input-container column">
+                  <label for="production_date">Production Date <span></span></label>
+                  <input type="date" name="production_date" id="production_date" value="{{ $record->production_date->format('Y-m-d') }}">
+              </div>
+              <div class="input-container column">
+                  <label for="collection_time">Collection Time (hh:mm) <span></span></label>
+                  <input type="time" name="collection_time" id="collection_time" value="{{ \Carbon\Carbon::parse($record->collection_time)->format('H:i') }}">
+              </div>
+              <div class="input-container column">
+                  <label for="collection_eggs_quantity">Collected Eggs Quantity <span></span></label>
+                  <input name="collection_eggs_quantity" id="collection_eggs_quantity" type="number" value="{{ $record->collected_qty }}">
+              </div>
+          </div>
 
-    </form>
+          <div class="form-action">
+              <button class="save-btn" type="submit">Save</button>
+              <button class="reset-btn" type="button">Reset</button>
+          </div>
+      </form>
     @elseif ($targetForm == 'egg-temperature' && $targetForm != null)
-        <form class="body" method="POST">
+        <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'egg-temperature', 'targetID' => $record->id]) }}" method="POST">
             @csrf
+            @method('PATCH')
 
             <div class="form-header">
-                <h4>Edit Form (Egg Temperature) of {{ $targetID }}</h4>
+                <img class="logo" src="/Images/BDL.png" alt="">
+                <h2>EGG SHELL TEMPERATURE CHECK ENTRY (EDIT FORM)</h2>
+                <div class="exit-icon">
+                    <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'">
+                </div>
             </div>
 
-            <!-- <div class="form-input col-4">
-
+            <div class="form-input col-3">
+                <div class="input-container column">
+                    <label for="record_id">ID <span></span></label>
+                    <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
+                </div>
                 <div class="input-container column">
                     <label for="ps_no">PS no. <span></span></label>
                     <select name="ps_no" id="ps_no">
                         <option value=""></option>
-                        <option value="#93" {{ session('form_data.ps_no', '') == '#93' ? 'selected' : ''}}>#93</option>
-                        <option value="#94" {{ session('form_data.ps_no', '') == '#94' ? 'selected' : ''}}>#94</option>
+                        <option value="#93" {{ $record->ps_no == '#93' ? 'selected' : ''}}>#93</option>
+                        <option value="#94" {{ $record->ps_no == '#94' ? 'selected' : ''}}>#94</option>
                     </select>
                 </div>
                 
                 <div class="input-container column">
                     <label for="setting_date">Setting Date <span></span></label>
-                    <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', '') }}">
+                    <input type="date" name="setting_date" id="setting_date" value="{{ $record->setting_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
                     <label for="incubator">Incubator # <span></span></label>
                     <select name="incubator" id="incubator">
                         <option value=""></option>
-                        <option value="5" {{ session('form_data.incubator', '') == '5' ? 'selected' : ''}}>5</option>
+                        <option value="#1" {{ $record->incubator == '#1' ? 'selected' : ''}}>#1</option>
+                        <option value="#2" {{ $record->incubator == '#2' ? 'selected' : ''}}>#2</option>
+                        <option value="#3" {{ $record->incubator == '#3' ? 'selected' : ''}}>#3</option>
                     </select>
                 </div>
                 <div class="input-container column">
                     <label for="location">Location <span></span></label>
                     <select name="location" id="location">
                         <option value=""></option>
-                        <option value="Top" {{ session('form_data.location', '') == 'Top' ? 'selected' : ''}}>Top</option>
-                        <option value="Mid" {{ session('form_data.location', '') == 'Mid' ? 'selected' : ''}}>Mid</option>
-                        <option value="Low" {{ session('form_data.location', '') == 'Low' ? 'selected' : ''}}>Low</option>
+                        <option value="Top" {{ $record->location == 'Top' ? 'selected' : ''}}>Top</option>
+                        <option value="Mid" {{ $record->location == 'Mid' ? 'selected' : ''}}>Mid</option>
+                        <option value="Low" {{ $record->location == 'Low' ? 'selected' : ''}}>Low</option>
                     </select>
                 </div>
                 <div class="input-container column">
                     <label for="temp_check_date">Temperature Check Date <span></span></label>
-                    <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', '') }}">
+                    <input name="temp_check_date" id="temp_check_date" type="date" value="{{ $record->temperature_check_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
                     <label for="temperature">Temperature <span></span></label>
                     <select name="temperature" id="temperature">
                         <option value=""></option>
-                        <option value="37.8 Above" {{ session('form_data.temperature', '') == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
-                        <option value="37.7 Below" {{ session('form_data.temperature', '') == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
+                        <option value="37.8 Above" {{ $record->temperature == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
+                        <option value="37.7 Below" {{ $record->temperature == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
                     </select>
                 </div>
                 <div class="input-container column">
                     <label for="quantity">Quantity <span></span></label>
-                    <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}">
+                    <input name="quantity" id="quantity" type="number" value="{{ $record->quantity }}">
                 </div>
             </div>
 
             <div class="form-action">
                 <button class="save-btn" type="submit">Save</button>
                 <button class="reset-btn" type="button">Reset</button>
-            </div> -->
+            </div>
 
         </form>
     @endif
@@ -269,8 +283,13 @@
         document.querySelector("form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission initially
             let isValid = true;
-
-            const requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
+            
+            targetForm = document.querySelector(".targetForm").value;
+            if(targetForm == "egg-collection"){
+              const requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
+             elseif (targetForm == "egg-temperature"){
+              const requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
+             }
             
             requiredFields.forEach(id => {
                 let field = document.getElementById(id);
@@ -345,7 +364,6 @@
             });
 
         });
-
     </script>
 </body>
 </html>

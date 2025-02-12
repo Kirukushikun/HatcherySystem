@@ -33,10 +33,20 @@ function createPushNotification(type, title, message) {
     }, 5500);
 }
 
-
+// Get the close icon element
+let closeNotification = document.getElementById('close-notification');
 // Get the push notification element (assuming it has a class 'push-notification')
 let pushNotification = document.querySelector('.push-notification');
 
+if (closeNotification) {
+    // Add a click event listener to the close icon
+    closeNotification.addEventListener('click', function() {
+        // Remove the 'active' class to hide the notification
+        if (pushNotification) {
+            pushNotification.classList.remove('active');
+        }
+    });
+}
 
 if (pushNotification) {
     // Show the push notification by adding the 'active' class
@@ -49,19 +59,3 @@ if (pushNotification) {
         pushNotification.classList.remove('active');
     }, 5500);
 }
-
-// Get the close icon element
-let closeNotification = document.getElementById('close-notification');
-// Get the push notification element (assuming it has a class 'push-notification')
-
-
-if (closeNotification) {
-    // Add a click event listener to the close icon
-    closeNotification.addEventListener('click', function() {
-        // Remove the 'active' class to hide the notification
-        if (pushNotification) {
-            pushNotification.classList.remove('active');
-        }
-    });
-}
-

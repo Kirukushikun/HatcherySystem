@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Crypt;
 
 use Illuminate\Support\Facades\Crypt;
 
@@ -28,4 +29,6 @@ Route::post('/encrypt-id', function (Request $request) {
     } catch (\Exception $e) {
         return response()->json(['error' => 'Encryption failed'], 400);
     }
+
 });
+
