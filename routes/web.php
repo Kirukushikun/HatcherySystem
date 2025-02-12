@@ -86,10 +86,7 @@ Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_tem
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
 
-
-
-
-
+// Edit ---------
 
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View
 

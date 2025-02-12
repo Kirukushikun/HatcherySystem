@@ -25,7 +25,7 @@ class EggTemperatureSeeder extends Seeder
                 'location' => $faker->randomElement(['Top', 'Mid', 'Low']),
                 'temperature' => $faker->randomElement(['37.8 Above', '37.7 Below']),
                 'temperature_check_date' => $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
-                'quantity' => $faker->numberBetween(5000, 6000),
+                'quantity' => $faker->numberBetween(400, 600),
             ]);
         }
     }
