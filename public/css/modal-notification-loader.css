@@ -278,3 +278,52 @@
     border: 2px solid #F28838;
     background-color: #F28838;
 }
+
+.modal-content.export-options{
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px 40px;
+}
+.modal-content.export-options i{
+    font-size: 45px;
+}
+.modal-content.export-options .option{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-content.export-options button{
+    font-size: 20px;
+}
+.modal-content.export-options #separator{
+    width: 2px;
+    height: 100%;
+    background-color: #bcbcbc;
+}
+
+
+
+
+.csv{
+    color: #FBBC05;
+    background-color: #fff9de;
+}
+
+.report{
+    color: #FF7043;
+    background-color: #ffeee9;
+}
+
+
+
+
+.csv-btn{
+    color: white;
+    border: solid 2px #FBBC05;
+    background-color: #FBBC05;
+}
+.report-btn{
+    color: white;
+    border: solid 2px #FF7043;
+    background-color: #FF7043;
+}

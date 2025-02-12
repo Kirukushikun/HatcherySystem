@@ -74,12 +74,27 @@
                 </select>
             </div>
             <div class="input-container column">
-                <label for="production_date">Production Date <span></span></label>
-                <input type="date" name="production_date" id="production_date" value="{{ session('form_data.production_date', '') }}">
+                <label for="production_date">
+                    Production Date <span></span>
+                </label>
+                <input 
+                    type="date" 
+                    name="production_date" 
+                    id="production_date" 
+                    value="{{ session('form_data.production_date', date('Y-m-d')) }}"
+                >
             </div>
+
             <div class="input-container column">
-                <label for="collection_time">Collection Time (hh:mm) <span></span></label>
-                <input type="time" name="collection_time" id="collection_time" value="{{ session('form_data.collection_time', '') }}">
+                <label for="collection_time">
+                    Collection Time (hh:mm) <span></span>
+                </label>
+                <input 
+                    type="time" 
+                    name="collection_time" 
+                    id="collection_time" 
+                    value="{{ session('form_data.collection_time', date('H:i')) }}"
+                >
             </div>
             <div class="input-container column">
                 <label for="collection_eggs_quantity">Collected Eggs Quantity <span></span></label>
@@ -88,7 +103,7 @@
         </div>
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
-            <button class="reset-btn" type="button">Reset</button>
+            <button class="reset-btn" type="reset">Reset</button>
         </div>
     </form>
 
@@ -103,8 +118,8 @@
                 </div>
 
                 <select class="sort-btn" name="sort_by" id="sort_by">
-                    <option value="production_date_asc">Sort By: Date (Oldest)</option>
                     <option value="production_date_desc">Sort By: Date (Newest)</option>
+                    <option value="production_date_asc">Sort By: Date (Oldest)</option>
                     <option value="ps_no_asc">Sort By: PS No.</option>
                     <option value="house_no_asc">Sort By: House No.</option>
                     <option value="collected_qty_asc">Sort By: Quantity (Asc)</option>
@@ -112,8 +127,8 @@
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
+                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
             </div>

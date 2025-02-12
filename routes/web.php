@@ -45,13 +45,15 @@ Route::get('/home', function () {
 
 Route::get('egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index');
 
-Route::post('egg-collection', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store');
-
 Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'])->name('egg.collection.fetch'); // Egg Collection Table Data Fetch
 
-Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete');
+Route::post('/egg-collection/store', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store'); // Store
 
 Route::get('/{targetForm}/edit/{targetID}', [EggCollectionController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
+
+Route::patch('/{targetForm}/edit/{targetID}', [EggCollectionController::class, 'edit_record_update'])->name('edit.record.update'); // Update
+
+Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 

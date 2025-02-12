@@ -22,7 +22,7 @@
     let totalPages = 1;
     let searchQuery = "";
     let sortBy = "created_at";
-    let sortOrder = "asc";
+    let sortOrder = "desc";
 
         document.addEventListener("DOMContentLoaded", function () {
             skeletonLoader();
@@ -88,7 +88,6 @@
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
-                                <i class="fa-solid fa-print" id="print-action"></i>
                             </td>
                         </tr>
                     `;
@@ -127,4 +126,17 @@
             loadData();
         }
     }
+    function refreshTable() {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = '';
+
+        skeletonLoader();
+        
+        setTimeout(() => {
+            loadData();
+        }, 1000);
+
+        updatePagination();
+    }
+
 </script>

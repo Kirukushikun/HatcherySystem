@@ -29,22 +29,23 @@ inputs.forEach(input => {
 // Reset button functionality
 resetButton.addEventListener("click", function () {
     inputs.forEach(input => {
-        input.value = ""; // Clear input fields
+        // Find the closest `.input-container` for the current input
         let inputContainer = input.closest(".input-container");
 
         if (inputContainer) {
             let labelSpan = inputContainer.querySelector("label span");
-                if (labelSpan) {
-                    labelSpan.textContent = "";
-                }
+
+            if (labelSpan) {
+                labelSpan.textContent = ""; // Clear the label span
+            }
         }
-        input.style.border = "";
-        input.value = "";
+
+        input.style.border = "";  // Reset border styling
     });
 
-    checkFormValues(); // Recheck values to hide form-action
+    // hide the form-action buttons
+    formAction.style.display = "none";
 });
-
 // Initial check to hide the form-action if empty
 // checkFormValues();
 document.querySelector("form").addEventListener("submit", function (event) {
@@ -96,7 +97,7 @@ function showModal(button, targetID = null) {
         `;
 
         document.querySelector('.save-btn').addEventListener('click', () => {
-            document.querySelector('form').submit();
+            storeRecord();
         });
 
     } else if (button === "delete") {
@@ -118,10 +119,84 @@ function showModal(button, targetID = null) {
                 </div>
             </div>
         `;
-    } else { // Edit case
+    } else if (button === "edit") { 
         editRecord(targetID);
+    } else {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content export-options">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-csv csv"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button csv-btn" onclick="">
+                            Generate CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+                
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-invoice report"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button report-btn" onclick="">
+                            Generate Report
+                        </button>
+                    </div>                        
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.csv-btn').addEventListener('click', () => {
+            console.log("csv")
+        });
+
+        document.querySelector('.report-btn').addEventListener('click', () => {
+            console.log("report")
+        });
     }
 }
+function storeRecord(){
+    fetch("/egg-collection/store", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+            ps_no: document.getElementById("ps_no").value,
+            house_no: document.getElementById("house_no").value,
+            production_date: document.getElementById("production_date").value,
+            collection_time: document.getElementById("collection_time").value,
+            collection_eggs_quantity: document.getElementById("collection_eggs_quantity").value,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+            document.getElementById("ps_no").value = "";
+            document.getElementById("house_no").value = "";
+            document.getElementById("collection_time").value = "";
+            document.getElementById("collection_eggs_quantity").value = "";
+
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
+
+            // Trigger push notification
+            createPushNotification("success", "Saved Successfully", "Egg Collection Entry Saved Successfully");
+        } else {
+            alert("Error saving record");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
 
 function deleteRecord(targetID) {
     fetch(`/egg-collection/delete/${targetID}`, {
