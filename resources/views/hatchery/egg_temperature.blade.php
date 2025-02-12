@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <script src="{{asset('js/egg_temperature.js')}}" defer></script>
+    <script src="{{asset('js/egg-temperature.js')}}" defer></script>
     
     <script src="{{asset('js/push-notification.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
