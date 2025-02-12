@@ -91,7 +91,7 @@
         <div class="card">
             <img src="/Images/Egg_Temp.png" alt="">
             <h3>EGG TEMPERATURE CHECK <br> ENTRY</h3>
-            <button onclick="window.location.href='/egg-temperature-check-entry'">OPEN</button>
+            <button onclick="window.location.href='/egg-temperature'">OPEN</button>
         </div>
         <div class="card">
             <img src="/Images/Egg_Reject.png" alt="">

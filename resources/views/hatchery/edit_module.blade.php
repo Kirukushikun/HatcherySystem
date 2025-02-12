@@ -88,7 +88,7 @@
     <div class="modal" id="modal">
     </div>
   
-    <input type="hidden" class="tergetForm" value="{{$targetForm}}">
+    <input type="text" id="targetForm" value="{{$targetForm}}" hidden>
 
     @if($targetForm == 'egg-collection' && $targetForm != null)
         <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'egg-collection', 'targetID' => $record->id]) }}" method="POST">
@@ -283,35 +283,42 @@
         document.querySelector("form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission initially
             let isValid = true;
-            
-            targetForm = document.querySelector(".targetForm").value;
-            if(targetForm == "egg-collection"){
-              const requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
-             elseif (targetForm == "egg-temperature"){
-              const requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
-             }
-            
+
+            let targetForm = document.getElementById("targetForm").value;
+            let requiredFields = [];
+
+            if (targetForm === "egg-collection") {
+                requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
+            } else if (targetForm === "egg-temperature") {
+                requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
+            }
+
             requiredFields.forEach(id => {
                 let field = document.getElementById(id);
-                let labelSpan = field.closest(".input-container").querySelector("label span");
-                
-                if (!field.value.trim()) {
-                    field.style.border = "2px solid #ea4435d7";
-                    // field.style.marginTop = "5px";
-                    labelSpan.textContent = "(This field is required)";
-                    labelSpan.style.color = "#ea4435d7";
-                    isValid = false;
-                }else{
-                    field.style.border = "";
-                    labelSpan.textContent = "";
+                if (field) {
+                    let labelSpan = field.closest(".input-container")?.querySelector("label span");
+
+                    if (!field.value.trim()) {
+                        field.style.border = "2px solid #ea4435d7";
+                        if (labelSpan) {
+                            labelSpan.textContent = "(This field is required)";
+                            labelSpan.style.color = "#ea4435d7";
+                        }
+                        isValid = false;
+                    } else {
+                        field.style.border = "";
+                        if (labelSpan) {
+                            labelSpan.textContent = "";
+                        }
+                    }
                 }
             });
 
             if (isValid) {
                 showModal('save');
             }
-            
         });
+
 
         function showModal(){
             modal.classList.add("active");
