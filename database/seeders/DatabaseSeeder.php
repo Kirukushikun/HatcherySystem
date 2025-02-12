@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\EggTemperatureSeeder;
+use Database\Seeders\EggCollectionSeeder;
 use DB;
 
 class DatabaseSeeder extends Seeder
@@ -31,9 +32,11 @@ class DatabaseSeeder extends Seeder
 
         // Empty specific tables
         DB::table('egg_temperature')->truncate();
+        DB::table('egg_collection')->truncate();
 
         $this->call([
-            EggTemperatureSeeder::class
+            EggTemperatureSeeder::class,
+            EggCollectionSeeder::class
         ]);
     }
 }
