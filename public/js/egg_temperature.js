@@ -107,7 +107,9 @@ function showModal(button, targetID = null) {
         `;
 
         document.querySelector('.save-btn').addEventListener('click', () => {
-            document.querySelector('form').submit();
+            // document.querySelector('form').submit();
+
+            storeRecord();
         });
 
     } else if (button === "delete") {
@@ -129,9 +131,85 @@ function showModal(button, targetID = null) {
                 </div>
             </div>
         `;
-    } else { // Edit case
+    } else if (button === "edit") { 
         editRecord(targetID);
+    } else {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content export-options">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-csv csv"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button csv-btn" onclick="">
+                            Generate CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+                
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-invoice report"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button report-btn" onclick="">
+                            Generate Report
+                        </button>
+                    </div>                        
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.csv-btn').addEventListener('click', () => {
+            console.log("csv")
+        });
+
+        document.querySelector('.report-btn').addEventListener('click', () => {
+            console.log("report")
+        });
     }
+}
+
+function storeRecord(){
+    fetch("/egg-temperature/store", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+            ps_no: document.getElementById("ps_no").value,
+            setting_date: document.getElementById("setting_date").value,
+            incubator: document.getElementById("incubator").value,
+            location: document.getElementById("location").value,
+            temp_check_date: document.getElementById("temp_check_date").value,
+            temperature: document.getElementById("temperature").value,
+            quantity: document.getElementById("quantity").value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+
+            document.getElementById("location").value = "";
+            document.getElementById("temperature").value = "";
+            document.getElementById("quantity").value = "";
+
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
+
+            // Trigger push notification
+            createPushNotification("success", "Saved Successfully", "Egg Temperature Entry Saved Successfully");
+        } else {
+            alert("Error saving record");
+        }
+    })
+    .catch(error => console.error("Error:", error));
 }
 
 function deleteRecord(targetID) {
@@ -148,8 +226,8 @@ function deleteRecord(targetID) {
             document.getElementById("modal").classList.remove("active");
             document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
 
-            // updatePagination();
-            // loadData();
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
 
             // Trigger push notification
             createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");

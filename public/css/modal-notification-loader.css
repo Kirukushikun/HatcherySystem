@@ -11,6 +11,7 @@
 
 /* -------------------------------------------------- MODAL STYLING -------------------------------------------------- */
 
+
 .modal{
     display: none;
 }
@@ -52,6 +53,28 @@
 
     /* Add bounce animation */
     animation: bounce 0.2s ease-out;
+}
+
+.modal-content.export-options{
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px 40px;
+}
+.modal-content.export-options i{
+    font-size: 45px;
+}
+.modal-content.export-options .option{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-content.export-options button{
+    font-size: 20px;
+}
+.modal-content.export-options #separator{
+    width: 2px;
+    height: 100%;
+    background-color: #bcbcbc;
 }
 
 .modal-footer {
@@ -131,6 +154,16 @@
     background-color: #fff3e0;
 }
 
+.csv{
+    color: #FBBC05;
+    background-color: #fff9de;
+}
+
+.report{
+    color: #FF7043;
+    background-color: #ffeee9;
+}
+
 .cancel-button{
     background-color: rgb(238, 233, 225);
     border: 2px solid #c5c5c5;
@@ -150,6 +183,16 @@
     color: white;
     border: solid 2px #F28B30;
     background-color: #F28B30;
+}
+.csv-btn{
+    color: white;
+    border: solid 2px #FBBC05;
+    background-color: #FBBC05;
+}
+.report-btn{
+    color: white;
+    border: solid 2px #FF7043;
+    background-color: #FF7043;
 }
 
 /* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */

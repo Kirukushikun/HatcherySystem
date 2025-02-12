@@ -65,8 +65,10 @@ class EggTemperatureController extends Controller
         ];
         AC::logEntry($log_entry);
 
-        // return back()->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
-        return redirect('/egg-temperature')->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Egg Temperature Entry Recorded Successfully'
+        ]);
     }
 
     public function egg_temperature_delete(Request $request, $targetID)

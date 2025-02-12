@@ -64,10 +64,10 @@ Route::get('/master-database', function () {
 Route::get('/fetch-egg-temperature-data', [EggTemperatureTable::class, 'fetchData'])->name('egg.temperature.fetch'); // Egg Temperature Table Data Fetch
 
 Route::get('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_index'])->name('egg.temperature.index'); // View
-Route::post('/egg-temperature', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store'); // Store
-Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
-Route::get('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_index'])->name('edit.record.index'); // Edit
+Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_temperature_store'])->name('egg.temperature.store'); // Store
+Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
+Route::get('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_index'])->name('edit.record.index'); // Edit Index
 Route::patch('/{targetForm}/edit/{targetID}', [EggTemperatureController::class, 'edit_record_update'])->name('edit.record.update'); // Update
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);

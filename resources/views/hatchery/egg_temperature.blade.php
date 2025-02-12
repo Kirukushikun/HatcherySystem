@@ -54,9 +54,7 @@
         </div>
     </div>
 
-    <form class="body" action="{{ route('egg.temperature.store') }}" method="POST">
-        @csrf
-
+    <form class="body">
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
@@ -74,7 +72,7 @@
             
             <div class="input-container column">
                 <label for="setting_date">Setting Date <span></span></label>
-                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', '') }}">
+                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
                 <label for="incubator">Incubator # <span></span></label>
@@ -94,7 +92,7 @@
             </div>
             <div class="input-container column">
                 <label for="temp_check_date">Temperature Check Date <span></span></label>
-                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', '') }}">
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
                 <label for="temperature">Temperature <span></span></label>
@@ -129,8 +127,8 @@
 
                 <!-- <label for="sort-btn">Sort By:</label> -->
                 <select class="sort-btn" name="sort-btn" id="sort-btn">
-                    <option value="created_at_asc">Sort By: Date (Oldest)</option>
                     <option value="created_at_desc">Sort By: Date (Newest)</option>
+                    <option value="created_at_asc">Sort By: Date (Oldest)</option>
                     <option value="temperature_asc">Sort By: Temperature (High-Low)</option>
                     <option value="temperature_desc">Sort By: Temperature (Low-High)</option>
                     <option value="quantity_desc">Sort By: Quantity (Desc)</option>
@@ -138,7 +136,7 @@
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
                     <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
