@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\AuditController as AC;
 
 use Illuminate\Support\Facades\Crypt;
 
@@ -27,7 +28,6 @@ class EggTemperatureController extends Controller
             'quantity' => 'required|integer',
         ]);
 
-       
 
         if ($validator->fails()) {
             $errorMessages = $validator->errors();
@@ -46,17 +46,24 @@ class EggTemperatureController extends Controller
 
         $validatedData = $validator->validated();
 
-        EggTemperature::create([
-            'ps_no' => $validatedData['ps_no'],
-            'setting_date' => $validatedData['setting_date'],
-            'incubator' => $validatedData['incubator'],
-            'location' => $validatedData['location'],
-            'temperature' => $validatedData['temperature'],
-            'temperature_check_date' => $validatedData['temp_check_date'],
-            'quantity' => $validatedData['quantity'],
-        ]);
+        $eggTemperature = new EggTemperature();
+        $eggTemperature->ps_no = $validatedData['ps_no'];
+        $eggTemperature->setting_date = $validatedData['setting_date']; 
+        $eggTemperature->incubator = $validatedData['incubator'];
+        $eggTemperature->location = $validatedData['location'];
+        $eggTemperature->temperature = $validatedData['temperature'];
+        $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
+        $eggTemperature->quantity = $validatedData['quantity'];
+        $eggTemperature->save();
 
-        
+        //Audit Trails
+        $log_entry = [
+            'Egg Shell Temperature Entry',
+            'egg_temperature',
+            '',
+            $eggTemperature,
+        ];
+        AC::logEntry($log_entry);
 
         // return back()->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');
         return redirect('/egg-temperature')->with('success', 'Saved Successfully')->with('success_message', 'Egg Temperature Entry Recorded Successfully');

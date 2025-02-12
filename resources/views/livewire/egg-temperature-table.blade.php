@@ -60,7 +60,6 @@
 
     });
 
-
     function loadData() {
         fetch(`/fetch-egg-temperature-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
             .then(response => response.json())

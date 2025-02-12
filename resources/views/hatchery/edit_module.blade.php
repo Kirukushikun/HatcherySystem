@@ -13,8 +13,51 @@
     <!-- Crucial Part on every forms/ -->
 
     <style>
+        body{
+            height: 100vh;
+            background-color: #F6F4F1;
+            padding: 40px 15%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;    
+            gap: 20px;
+        }
+
         .body{
             padding-bottom: 80px;
+        }
+
+        .form-header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 15px 30px;
+
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .form-header h2{
+            text-align: center;
+            font-weight: 500;
+            font-size: 22px;
+        }
+
+        .form-header .logo{
+            width: 100px;
+        }
+
+        .form-header .exit-icon{
+            display: flex;
+            justify-content: end;
+            width: 100px;
+        }
+
+        .form-header .exit-icon img{
+            width: 30px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -43,13 +86,9 @@
     <div class="modal" id="modal">
     </div>
 
-    <div class="header">
-        <img class="logo" src="/Images/BDL.png" alt="">
-        <h2>EGG SHELL TEMPERATURE CHECK ENTRY</h2>
-        <div class="exit-icon">
-            <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/home'">
-        </div>
-    </div>
+    <!-- <div class="header">
+
+    </div> -->
 
     @if($targetForm == 'egg-collection' && $targetForm != null)
         <form class="body" method="POST">
@@ -120,10 +159,14 @@
             @method('PATCH')
 
             <div class="form-header">
-                <h4>Edit Form (Egg Temperature)</h4>
+                <img class="logo" src="/Images/BDL.png" alt="">
+                <h2>EGG SHELL TEMPERATURE CHECK ENTRY (EDIT FORM)</h2>
+                <div class="exit-icon">
+                    <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'">
+                </div>
             </div>
 
-            <div class="form-input col-4">
+            <div class="form-input col-3">
                 <div class="input-container column">
                     <label for="record_id">ID <span></span></label>
                     <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
@@ -222,25 +265,28 @@
             input.addEventListener("change", checkFormValues); // For select and date/time inputs
         });
 
+        // Store the original values of the form fields
+        const originalValues = {};
+        form.querySelectorAll("input, select").forEach(input => {
+            if (input.type === "checkbox" || input.type === "radio") {
+                originalValues[input.name] = input.checked;
+            } else {
+                originalValues[input.name] = input.value;
+            }
+        });
+
         // Reset button functionality
         resetButton.addEventListener("click", function () {
-            inputs.forEach(input => {
-                // Find the closest `.input-container` for the current input
-                let inputContainer = input.closest(".input-container");
-
-                if (inputContainer) {
-                    let labelSpan = inputContainer.querySelector("label span");
-
-                    if (labelSpan) {
-                        labelSpan.textContent = ""; // Clear the label span
-                    }
+            form.querySelectorAll("input, select").forEach(input => {
+                if (input.type === "checkbox" || input.type === "radio") {
+                    input.checked = originalValues[input.name];
+                } else {
+                    input.value = originalValues[input.name];
                 }
-
-                input.style.border = "";  // Reset border styling
-                input.value = "";  // Clear input fields
             });
 
-            checkFormValues(); // Recheck values to hide form-action
+            // hide the form-action buttons
+            formAction.style.display = "none";
         });
 
         document.querySelector("form").addEventListener("submit", function (event) {
@@ -266,10 +312,64 @@
             });
 
             if (isValid) {
-                document.querySelector('form').submit();
+                showModal('save');
             }
             
         });
+
+        function showModal(){
+            modal.classList.add("active");
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <i class="fa-solid fa-xmark" id="close-button"></i>
+                    <div class="modal-header">
+                        <i class="fa-solid fa-circle-check success"></i>
+                        <h2>Update Record</h2>
+                        <h4>Are you sure you want to update this record?</h4>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button save-btn">
+                            Update
+                        </button>
+                        <button type="button" class="cancel-button">Cancel</button>
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.save-btn').addEventListener('click', () => {
+                document.querySelector('form').submit();
+            });
+        }
+
+        document.addEventListener("click", function (event) {
+
+            if (!modal.classList.contains("active")) return;
+
+            if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
+                modal.classList.remove("active");
+            }
+
+        });
+
+        // Reset button functionality
+        resetButton.addEventListener("click", function () {
+            inputs.forEach(input => {
+                let inputContainer = input.closest(".input-container");
+
+                if (inputContainer) {
+                    let labelSpan = inputContainer.querySelector("label span");
+                    if (labelSpan) {
+                        labelSpan.textContent = ""; // Clear the label span
+                    }
+                }
+
+                input.style.border = "";  // Reset border styling
+            });
+
+        });
+
+
     </script>
 </body>
 </html>

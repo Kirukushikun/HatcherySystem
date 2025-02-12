@@ -49,10 +49,10 @@ resetButton.addEventListener("click", function () {
         }
 
         input.style.border = "";  // Reset border styling
-        input.value = "";  // Clear input fields
     });
 
-    checkFormValues(); // Recheck values to hide form-action
+    // hide the form-action buttons
+    formAction.style.display = "none";
 });
 
 
