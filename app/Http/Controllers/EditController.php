@@ -62,12 +62,20 @@ class EditController extends Controller
             $validatedData = $validator->validated();
     
             $eggCollection = EggCollection::find($targetID);
+
+            $beforeState = $eggCollection->toArray(); // Get the old values
+            $beforeState = json_encode($beforeState);
+
             $eggCollection->ps_no = $validatedData['ps_no'];
             $eggCollection->house_no = $validatedData['house_no'];
             $eggCollection->production_date = $validatedData['production_date'];
             $eggCollection->collection_time = $validatedData['collection_time'];
             $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
+
             $eggCollection->save();
+
+            // Log the action with before state
+            $this->logAction('update', $eggCollection, $beforeState, $targetForm);
 
             return redirect('/egg-collection')->with('success', 'Updated Successfully')->with('success_message', 'Egg Collection Entry Updated Successfully');
         }
@@ -101,6 +109,10 @@ class EditController extends Controller
             $validatedData = $validator->validated();
     
             $eggTemperature = EggTemperature::find($targetID);
+
+            $beforeState = $eggTemperature->toArray(); // Get the old values
+            $beforeState = json_encode($beforeState);
+
             $eggTemperature->ps_no = $validatedData['ps_no'];
             $eggTemperature->setting_date = $validatedData['setting_date'];
             $eggTemperature->incubator = $validatedData['incubator'];
@@ -108,11 +120,52 @@ class EditController extends Controller
             $eggTemperature->temperature = $validatedData['temperature'];
             $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
             $eggTemperature->quantity = $validatedData['quantity'];
+
             $eggTemperature->save();
+
+            // Log the action with before state
+            $this->logAction('update', $eggTemperature, $beforeState, $targetForm);
 
             return redirect('/egg-temperature')->with('success', 'Updated Successfully')->with('success_message', 'Egg Temperature Entry Updated Successfully');
         }
+    }
+    public function logAction($action, $currentState, $beforeState = null, $targetForm)
+    {
+        if ($targetForm == 'egg-collection') {
+        $messages = [
+            'update' => 'Egg Collection Record Updated',
+        ];
+        $log_entry = [
+            $messages[$action] ?? 'Egg Collection Record Modified',
+            'egg_collection',
+            $beforeState, // Stores previous state before the action
+            $currentState, // Stores the new state after the action
+        ];
+        AC::logEntry($log_entry);
+    }elseif ($targetForm == 'egg-temperature') {
+        $messages = [
+            'update' => 'Egg Temperature Record Updated',
+        ];
+        $log_entry = [
+            $messages[$action] ?? 'Egg Temperature Record Modified',
+            'egg_temperature',
+            $beforeState, // Stores previous state before the action
+            $currentState, // Stores the new state after the action
+        ];
+        AC::logEntry($log_entry);
+    }
+    
+    }
+    public function generateReport($targetForm){
 
+        if($targetForm == 'egg-collection')
+        {    
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
+        elseif($targetForm == 'egg-temperature')
+        {
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
         
     }
 }

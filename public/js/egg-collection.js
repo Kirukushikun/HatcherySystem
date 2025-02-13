@@ -144,7 +144,7 @@ function showModal(button, targetID = null) {
                         <i class="fa-solid fa-file-invoice report"></i>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="confirm-button report-btn" onclick="">
+                        <button type="button" class="confirm-button report-btn" onclick="window.location.href='/egg-collection/report'">
                             Generate Report
                         </button>
                     </div>                        

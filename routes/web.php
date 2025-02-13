@@ -89,7 +89,7 @@ Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::cl
 
 
 
-
+Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
 
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View
 
