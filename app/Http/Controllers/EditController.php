@@ -115,4 +115,15 @@ class EditController extends Controller
 
         
     }
+
+    public function generateReport($targetForm){
+
+        if($targetForm == 'egg-collection') {    
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
+        elseif($targetForm == 'egg-temperature') {    
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
+
+    }
 }

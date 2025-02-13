@@ -92,4 +92,10 @@ Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record
 
 Route::patch('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_update'])->name('edit.record.update'); // Update
 
+Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
+
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+Route::get('/test', function () {
+	return view('hatchery.report_module');
+});
