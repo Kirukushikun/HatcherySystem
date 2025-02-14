@@ -135,6 +135,29 @@ class GeneralController extends Controller
     }
 
     /**
+     * Batch check user access for multiple IDs
+     * @param array $ids List of User IDs
+     * @return array [id => true/false]
+     */
+    public static function batchCheckUserAccess(array $ids): array
+    {
+        $existingUserIds = User::whereIn('id', $ids)->pluck('id')->toArray();
+        return array_fill_keys($existingUserIds, true) + array_fill_keys($ids, false);
+    }
+
+    /**
+     * Batch check user roles for multiple IDs
+     * @param array $ids List of User IDs
+     * @return array [id => ROLE]
+     */
+    public static function batchCheckUserRole(array $ids): array
+    {
+        return User::whereIn('id', $ids)->pluck('role', 'id')->map(fn($role) => strtoupper($role))->toArray()
+            + array_fill_keys($ids, 'N/A');
+    }
+
+
+    /**
      * Get Full Name of User from Auth
      * @param Int $id User ID
      * @return   Full Name of User

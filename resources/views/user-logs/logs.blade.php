@@ -1,13 +1,13 @@
 @extends('admin.admin_UI')
 
 @section('title')
-    {{ __('Users List') }}
+    {{ __('Access Logs List') }}
 @endsection
 
-@section('user_content')
-<div class="table" id="table4">
+@section('user_logs_content')
+<div class="table" id="table3">
     <div class="table-header">
-        <h4>Users</h4>
+        <h4>Access Logs</h4>
 
         <div class="table-action">
             <div class="search-bar">
@@ -28,18 +28,16 @@
 
     </div>
     <div class="table-body" style="position: relative;">
-        <table id="users">
+        <table id="accessLogs">
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
-                    <th class="text-center">FIRST NAME</th>
-                    <th class="text-center">LAST NAME</th>
-                    <th class="text-center">SYSTEM ACCESS</th>
-                    <th class="text-center">ROLE</th>
-                    <th style="text-align: center">ACTION</th>
+                    <th class="text-center">USER ID</th>
+                    <th class="text-center">NAME</th>
+                    <th class="text-center">DATE/TIME</th>
                 </tr>
             </thead>
-            <tbody id="userTable">
+            <tbody id="accessLogs">
                 <!-- Skeleton Loader rows while fetching data -->
                 @for ($i = 0; $i < 10; $i++)
                     <tr class="skeleton-row">
@@ -47,8 +45,6 @@
                         <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
                         <td><div class="skeleton-loader" style="width: {{ rand(40, 80) }}%;"></div></td>
                         <td><div class="skeleton-loader" style="width: {{ rand(60, 100) }}%;"></div></td>
-                        <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
-                        <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
                     </tr>
                 @endfor
                 <!-- Additional skeleton rows if needed -->
@@ -61,27 +57,21 @@
     </div>
 
     <div class="table-footer">
-        <div class="pagination" id="userPagination">
+        <div class="pagination" id="accessLogsPagination">
         </div>
     </div>
 </div>
 @endsection
 
-@section('scriptss')
+@section('scripts_access_logs')
     <script>
-        //sweetalert2
-        // swal.fire({
-        //     icon: 'success',
-        //     title: 'Success',
-        //     text: 'Data has been fetched successfully.',
-        // })
 
         document.addEventListener("DOMContentLoaded", function () {
             let currentPage = 1;
 
             function fetchUsers(page = 1) {
-                let tableBody = document.getElementById('userTable');
-                let paginationContainer = document.querySelector('#userPagination');
+                let tableBody = document.getElementById('accessLogs');
+                let paginationContainer = document.querySelector('#accessLogsPagination');
 
                 // if (!Array.isArray(data.data)) {
                 //     data.data = Object.values(data.data);
@@ -93,8 +83,6 @@
                     tableBody.innerHTML += `
                         <tr class="skeleton-row">
                             <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 40) + 30}%;"></div></td>
-                            <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
-                            <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
                             <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
                             <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
                             <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
@@ -110,7 +98,7 @@
 
                 // document.querySelector('.loading-screen').classList.add('active');
 
-                fetch(`{{ route('users.json') }}?page=${page}`)
+                fetch(`{{ route('access-logs.json') }}?page=${page}`)
                     .then(response => response.json())
                     .then(data => {
                         tableBody.innerHTML = ""; // Clear skeleton loaders
@@ -123,11 +111,9 @@
                             let row = `
                                 <tr>
                                     <td>${user.id}</td>
-                                    <td>${user.first_name}</td>
-                                    <td>${user.last_name}</td>
-                                    <td>${user.system_access}</td>
-                                    <td>${user.role}</td>
-                                    <td class="datalist-actions">${user.action}</td>
+                                    <td>${user.user_id}</td>
+                                    <td>${user.full_name}</td>
+                                    <td>${user.date_time}</td>
                                 </tr>
                             `;
                             tableBody.innerHTML += row;
@@ -143,7 +129,7 @@
             }
 
             function updatePagination(data) {
-                let paginationContainer = document.querySelector('#userPagination');
+                let paginationContainer = document.querySelector('#accessLogsPagination');
                 paginationContainer.innerHTML = '';
 
                 let currentPage = data.current_page;
@@ -179,7 +165,7 @@
 
                     paginationContainer.innerHTML = paginationHTML;
 
-                    document.querySelectorAll('#userPagination a').forEach(link => {
+                    document.querySelectorAll('#accessLogsPagination a').forEach(link => {
                         link.addEventListener('click', function (e) {
                             e.preventDefault();
                             let page = parseInt(this.getAttribute('data-page'));
@@ -190,54 +176,6 @@
             }
 
             fetchUsers();
-        });
-
-        document.addEventListener("click", function (event) {
-            if (event.target.closest(".AccessBtn")) {
-                let button = event.target.closest(".AccessBtn");
-                let id = button.getAttribute("data-id");
-                let fullname = button.getAttribute("data-name");
-                let role = button.getAttribute("data-role");
-                let action = button.getAttribute("data-action");
-
-                Swal.fire({
-                    title: "Are You Sure?",
-                    text: `Do you want to ${action === "revoke" ? "Revoke" : "Grant"} access to ${fullname}?`,
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: action === "revoke" ? "Revoke" : "Grant",
-                    cancelButtonText: "Cancel",
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch(`/users/grant-access/${id}/${role}/${action}`, {
-                            method: "GET",
-                            headers: { "X-Requested-With": "XMLHttpRequest" },
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === "success") {
-                                Swal.fire({
-                                    title: `Access ${action === "revoke" ? "Revoked" : "Granted"}!`,
-                                    text: `${fullname} has ${action === "revoke" ? "no" : ""} access to the system.`,
-                                    icon: "success",
-                                    allowOutsideClick: false,
-                                }).then(() => {
-                                    window.location.reload(); // Reloads after the user clicks OK
-                                });
-                            } else {
-                                console.log(id);
-                                Swal.fire("Error!", "Failed to update access.", "error");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("Error:", error);
-                            Swal.fire("Error!", "Something went wrong.", "error");
-                        });
-                    }
-                });
-            }
         });
 
     </script>
