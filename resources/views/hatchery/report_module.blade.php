@@ -13,7 +13,17 @@
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 
     <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
 
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
+        }
 
         *{
             font-family: "Lexend";
@@ -201,24 +211,17 @@
             background-color: #f1f1f1; /* Hover effect */
         }
 
-        /* .custom-file-upload {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 14px;
-            cursor: pointer;
-            background-color: #eaeaea;
-            border: 1px solid #ccc;
-        }
-        .custom-file-upload:hover {
-            background-color:rgb(205, 205, 205);
-        } */
-
         .signature {
             display: block; 
             width: 110px;   
             height: 80px;   
             object-fit: contain; 
             margin-bottom: 5px; 
+        }
+
+        #prepared-by, #date-prepared{
+            background-color: transparent;
+            padding: 0 ;
         }
 
         /* .signature {
@@ -271,8 +274,12 @@
                             <input type="text" id="house-no">
                         </div>
                         <div class="form-group">
-                            <label for="production-date">Production Date:</label>
-                            <input type="date" id="production-date">
+                            <label for="production-date-from">Production Date (From):</label>
+                            <input type="date" id="production-date-from">
+                        </div>
+                        <div class="form-group">
+                            <label for="production-date-to">Production Date (To):</label>
+                            <input type="date" id="production-date-to">
                         </div>
                         <div class="form-group">
                             <label for="collection-time">Collection Time:</label>
@@ -288,12 +295,18 @@
                     <div class="form-container col-2">
                         <div class="form-group">
                             <label for="prepared-by">Prepared By:</label>
-                            <input type="text" id="prepared-by">
+
+                            <!-- Signature Image (Fixed Size) -->
+                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+
+                            <!-- Prepared By Input Field -->
+                            <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
                         </div>
+
                         <div class="form-group">
                             <label for="date-prepared">Date Prepared:</label>
-                            <input type="date" id="date-prepared">
-                        </div>   
+                            <input type="text" id="date-prepared" value="{{ date('d/m/Y') }} {{ date('H:i A') }}" readonly>
+                        </div>
                     </div>
                 </div>
 
@@ -387,7 +400,7 @@
 
                         <div class="form-group">
                             <label for="date-prepared">Date Prepared:</label>
-                            <input type="date" id="date-prepared" value="{{ date('Y-m-d') }}">
+                            <input type="text" id="date-prepared" value="{{ date('d/m/Y') }} {{ date('H:i A') }}" readonly>
                         </div>
                     </div>
                 </div>

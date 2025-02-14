@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
+use App\Http\Controllers\RejectedHatchController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
@@ -85,6 +87,12 @@ Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_tem
 
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
+
+// Rejected Hatch -------------------------------------------------------------------------------------------
+
+Route::get('/rejected-hatch', [RejectedHatchController::class, 'rejected_hatch_index'])->name('rejected.hatch.index'); // View
+
+Route::post('/rejected-hatch/store', [RejectedHatchController::class, 'rejected_hatch_store'])->name('rejected.hatch.store'); // Store
 
 // Edit ---------
 
