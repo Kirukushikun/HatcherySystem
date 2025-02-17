@@ -27,6 +27,7 @@ return new class extends Migration
             $table->date("hatch_date");
             $table->integer("rejected_total");
             $table->decimal('rejected_total_percentage', 4, 1);
+            // $table->decimal('rejected_total_percentage', 6, 2);
 
 
             $table->unsignedBigInteger('encoded_by')->nullable();

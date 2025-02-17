@@ -217,6 +217,148 @@
             </div>
 
         </form>
+    @elseif ($targetForm == 'rejected-hatch' && $targetForm != null)
+        <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'rejected-hatch', 'targetID' => $record->id]) }}" method="POST">
+            @csrf
+            @method('PATCH')
+
+            <div class="form-header">
+                <img class="logo" src="/Images/BDL.png" alt="">
+                <h2>REJECTED HATCH ENTRY (EDIT FORM)</h2>
+                <div class="exit-icon">
+                    <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'">
+                </div>
+            </div>
+
+            <div class="form-input col-5">
+                <div class="input-container column">
+                    <label for="ps_no">PS no. <span></span></label>
+                    <select name="ps_no" id="ps_no">
+                        <option value=""></option>
+                        <option value="#93" {{ $record->ps_no == '#93' ? 'selected' : ''}}>#93</option>
+                        <option value="#94" {{ $record->ps_no == '#94' ? 'selected' : ''}}>#94</option>
+                    </select>
+                </div>
+
+                <div class="input-container column">
+                    <label for="production_date">Production Date <span></span></label>
+                    <input type="date" id="production_date" name="production_date" value="{{ $record->production_date->format('Y-m-d') }}">
+                </div>
+
+                <div class="input-container column">
+                    <label for="set_eggs_qty">Set Egg Qty <span></span></label>
+                    <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0" value="{{ $record->set_eggs_qty }}">
+                </div>
+                <div class="input-container column">
+                    <label for="incubator_no">Incubator  <span></span></label>
+                    <select id="incubator_no" name="incubator_no">
+                        <option value=""></option>
+                        <option value="1" {{ $record->incubator_no == '1' ? 'selected' : ''}}>1</option>
+                    </select>
+                </div>
+                <div class="input-container column">
+                    <label for="hatcher_no">Hatch # <span></span></label>
+                    <select id="hatcher_no" name="hatcher_no">
+                        <option value=""></option>
+                        <option value="1" {{ $record->hatcher_no == '1' ? 'selected' : ''}}>1</option>
+                    </select>
+                </div>
+
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="unhatched">Unhatched <span></span></label>
+                        <input type="number" id="unhatched" name="unhatched" placeholder="0" 
+                            value="{{ $record->rejected_hatch_data['unhatched']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="unhatched_prcnt">%</label>
+                        <input type="number" id="unhatched_prcnt" name="unhatched_prcnt" placeholder="0" readonly
+                            value="{{ $record->rejected_hatch_data['unhatched']['percentage'] ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="pips">Pips <span></span></label>
+                        <input type="number" id="pips" name="pips" placeholder="0" 
+                            value="{{ $record->rejected_hatch_data['pips']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="pips_prcnt">%</label>
+                        <input type="number" id="pips_prcnt" name="pips_prcnt" placeholder="0" readonly
+                            value="{{ $record->rejected_hatch_data['pips']['percentage'] ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="rejected_chicks">Rejected Chicks <span></span></label>
+                        <input type="number" id="rejected_chicks" name="rejected_chicks" placeholder="0" 
+                            value="{{ $record->rejected_hatch_data['rejected_chicks']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="rejected_chicks_prcnt">%</label>
+                        <input type="number" id="rejected_chicks_prcnt" name="rejected_chicks_prcnt" placeholder="0" readonly
+                            value="{{ $record->rejected_hatch_data['rejected_chicks']['percentage'] ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="dead_chicks">Dead Chicks <span></span></label>
+                        <input type="number" id="dead_chicks" name="dead_chicks" placeholder="0" 
+                            value="{{ $record->rejected_hatch_data['dead_chicks']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="dead_chicks_prcnt">%</label>
+                        <input type="number" id="dead_chicks_prcnt" name="dead_chicks_prcnt" placeholder="0" readonly
+                            value="{{ $record->rejected_hatch_data['dead_chicks']['percentage'] ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="rotten">Rotten <span></span></label>
+                        <input type="number" id="rotten" name="rotten" placeholder="0" 
+                            value="{{ $record->rejected_hatch_data['rotten']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="rotten_prcnt">%</label>
+                        <input type="number" id="rotten_prcnt" name="rotten_prcnt" placeholder="0" readonly
+                            value="{{ $record->rejected_hatch_data['rotten']['percentage'] ?? 0 }}">
+                    </div>
+                </div>
+
+
+                <div class="input-container column">
+                    <label for="pullout_date">Pull-out Date <span></span></label>
+                    <input type="date" id="pullout_date" name="pullout_date" value="{{ $record->pullout_date->format('Y-m-d') }}">
+                </div>
+                <div class="input-container column">
+                    <label for="hatch_date">Hatch Date <span></span></label>
+                    <input type="date" id="hatch_date" name="hatch_date" value="{{ $record->hatch_date->format('Y-m-d') }}">
+                </div>
+                <div class="input-container row">
+
+                    <div class="input-group">
+                        <label for="rejected_total">Rejected Total</label>
+                        <input type="number" id="rejected_total" name="rejected_total" placeholder="0" readonly>
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="rejected_total_prcnt">%</label>
+                        <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" placeholder="0" readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-action">
+                <button class="save-btn">Save</button>
+                <button class="reset-btn" type="reset">Reset</button>
+            </div>
+
+        </form>
     @endif
 
     <script>
@@ -228,6 +370,8 @@
 
         const modal = document.getElementById("modal"); // Modal
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
+
+        let targetForm = document.getElementById("targetForm").value;
 
         //make every input type number prevent user from entering special characters just purely number
         document.querySelectorAll('input[type="number"]').forEach(input => {
@@ -284,13 +428,14 @@
             event.preventDefault(); // Prevent form submission initially
             let isValid = true;
 
-            let targetForm = document.getElementById("targetForm").value;
             let requiredFields = [];
 
             if (targetForm === "egg-collection") {
                 requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
             } else if (targetForm === "egg-temperature") {
                 requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
+            } else if (targetForm === "rejected-hatch") {
+                requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date"];;
             }
 
             requiredFields.forEach(id => {
@@ -371,6 +516,58 @@
             });
 
         });
+
+        if(targetForm === "rejected-hatch"){
+            document.addEventListener("DOMContentLoaded", function () {
+                const setEggsQtyInput = document.getElementById("set_eggs_qty");
+                const totalRejectedInput = document.getElementById("rejected_total");
+                const fields = ["unhatched", "pips", "rejected_chicks", "dead_chicks", "rotten"];
+
+                // Add event listeners for all fields
+                fields.forEach(field => {
+                    document.getElementById(field).addEventListener("input", updatePercentages);
+                });
+
+                // Update percentages when set_eggs_qty changes
+                setEggsQtyInput.addEventListener("input", updatePercentages);
+
+                function updatePercentages() {
+                    let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero
+                    let totalRejected = 0;
+
+                    // Reset if setEggsQty is empty or invalid
+                    if (!setEggsQtyInput.value.trim() || totalRejectedInput.value > setEggsQty) {
+                        fields.forEach(field => {
+                            document.getElementById(field).value = 0;
+                            document.getElementById(`${field}_prcnt`).value = "0.0"; // Keep decimal
+                        });
+                        totalRejectedInput.value = 0;
+                        document.getElementById("rejected_total_prcnt").value = "0.0"; // Keep decimal
+                        return;
+                    }
+
+                    fields.forEach(field => {
+                        let fieldInput = document.getElementById(field);
+                        let value = parseInt(fieldInput.value) || 0;
+
+                        // Prevent input values from exceeding setEggsQty
+                        if (value > setEggsQty) {
+                            fieldInput.value = setEggsQty;
+                            value = setEggsQty;
+                        }
+
+                        let percentage = ((value / setEggsQty) * 100).toFixed(1); // Keep 1 decimal
+                        document.getElementById(`${field}_prcnt`).value = percentage; // Keep decimal
+                        totalRejected += value;
+                    });
+
+                    // Update Rejected Total and Percentage
+                    totalRejectedInput.value = totalRejected;
+                    let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
+                    document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
+                }
+            });
+        }
     </script>
 </body>
 </html>

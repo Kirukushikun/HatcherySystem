@@ -12,6 +12,7 @@ use App\Http\Controllers\RejectedHatchController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
+use App\Http\Livewire\RejectedHatchTable;
 
 use App\Http\Controllers\EditController;
 
@@ -89,11 +90,13 @@ Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::cl
 
 
 // Rejected Hatch -------------------------------------------------------------------------------------------
+Route::get('/fetch-rejected-hatch-data', [RejectedHatchTable::class, 'fetchData'])->name('rejected.hatch.fetch'); // Rejected Hatch Table Data Fetch
 
 Route::get('/rejected-hatch', [RejectedHatchController::class, 'rejected_hatch_index'])->name('rejected.hatch.index'); // View
 
 Route::post('/rejected-hatch/store', [RejectedHatchController::class, 'rejected_hatch_store'])->name('rejected.hatch.store'); // Store
 
+Route::patch('/rejected-hatch/delete/{targetID}', [RejectedHatchController::class, 'rejected_hatch_delete'])->name('rejected.hatch.delete'); // Delete
 // Edit ---------
 
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View

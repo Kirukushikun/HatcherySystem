@@ -108,7 +108,23 @@ class RejectedHatchController extends Controller
         
         $rejectedHatch->save();
 
-        return back()->with('success', 'Saved Successfully')->with('success_message', 'Rejected Hatch Record has been successfully saved');
+        return response()->json([
+            'success' => true,
+            'message' => 'Rejected Hatch Entry Recorded Successfully'
+        ]);
 
     }
+
+    function rejected_hatch_delete($targetID){        
+        $rejectedHatch = RejectedHatch::find($targetID); // Find the RejectedHatch record by ID
+
+        if (!$rejectedHatch) {
+            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+        }
+
+        $rejectedHatch->is_deleted = true;
+        $rejectedHatch->save();
+    
+        return response()->json(['success' => true, 'message' => 'Rejected Hatch Entry Deleted Successfully']);    
+    }   
 }

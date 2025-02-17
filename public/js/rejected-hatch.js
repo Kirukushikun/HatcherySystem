@@ -93,7 +93,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const setEggsQtyInput = document.getElementById("set_eggs_qty"); // Make sure the ID matches in your HTML
+    const setEggsQtyInput = document.getElementById("set_eggs_qty");
     const totalRejectedInput = document.getElementById("rejected_total");
     const fields = ["unhatched", "pips", "rejected_chicks", "dead_chicks", "rotten"];
 
@@ -109,14 +109,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero
         let totalRejected = 0;
 
-        // If setEggsQty is empty or less than total rejected, reset everything
+        // Reset if setEggsQty is empty or invalid
         if (!setEggsQtyInput.value.trim() || totalRejectedInput.value > setEggsQty) {
             fields.forEach(field => {
                 document.getElementById(field).value = 0;
-                document.getElementById(`${field}_prcnt`).value = 0;
+                document.getElementById(`${field}_prcnt`).value = "0.0"; // Keep decimal
             });
             totalRejectedInput.value = 0;
-            document.getElementById("rejected_total_prcnt").value = 0;
+            document.getElementById("rejected_total_prcnt").value = "0.0"; // Keep decimal
             return;
         }
 
@@ -130,19 +130,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 value = setEggsQty;
             }
 
-            let percentage = ((value / setEggsQty) * 100).toFixed(1); // Store as 10.0 format
-            document.getElementById(`${field}_prcnt`).value = Math.round(percentage); // Display whole number
+            let percentage = ((value / setEggsQty) * 100).toFixed(1); // Keep 1 decimal
+            document.getElementById(`${field}_prcnt`).value = percentage; // Keep decimal
             totalRejected += value;
         });
 
         // Update Rejected Total and Percentage
         totalRejectedInput.value = totalRejected;
         let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
-        document.getElementById("rejected_total_prcnt").value = Math.round(rejectedPercentage); // Display as whole number
+        document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
     }
 });
 
-function showModal(button){
+function showModal(button, targetID = null) {
     if (button === "save") {
         modal.classList.add("active");
         modal.innerHTML = `
@@ -164,10 +164,173 @@ function showModal(button){
         `;
 
         document.querySelector('.save-btn').addEventListener('click', () => {
-            document.querySelector('form').submit();
+            storeRecord();
+        });
+    } else if (button === "delete") {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="modal-header">
+                    <i class="fa-solid fa-circle-xmark danger"></i>
+                    <h2>Delete Record</h2>
+                    <h4>Are you sure you want to delete this data?</h4>
+                </div>
 
-            // storeRecord();
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button delete-btn" onclick="deleteRecord(${targetID})">
+                        Delete
+                    </button>
+                    <button type="button" class="cancel-button">Cancel</button>
+                </div>
+            </div>
+        `;
+    }  else if (button === "edit") { 
+        editRecord(targetID);
+    } else {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content export-options">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-csv csv"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button csv-btn" onclick="">
+                            Generate CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+                
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-invoice report"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button report-btn" onclick="window.location.href='/rejected-hatch/report'">
+                            Generate Report
+                        </button>
+                    </div>                        
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.csv-btn').addEventListener('click', () => {
+            console.log("csv")
         });
 
+        document.querySelector('.report-btn').addEventListener('click', () => {
+            console.log("report")
+        });
     }
+}
+
+function storeRecord(){
+    fetch("/rejected-hatch/store", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+
+            ps_no: document.getElementById("ps_no").value,
+            production_date: document.getElementById("production_date").value,
+            set_eggs_qty: document.getElementById("set_eggs_qty").value,
+            incubator_no: document.getElementById("incubator_no").value,
+            hatcher_no: document.getElementById("hatcher_no").value,
+
+            unhatched: document.getElementById("unhatched").value,
+            unhatched_prcnt: document.getElementById("unhatched_prcnt").value,
+
+            pips: document.getElementById("pips").value,
+            pips_prcnt: document.getElementById("pips_prcnt").value,
+
+            rejected_chicks: document.getElementById("rejected_chicks").value,
+            rejected_chicks_prcnt: document.getElementById("rejected_chicks_prcnt").value,
+            
+            dead_chicks: document.getElementById("dead_chicks").value,
+            dead_chicks_prcnt: document.getElementById("dead_chicks_prcnt").value,
+            
+            rotten: document.getElementById("rotten").value,
+            rotten_prcnt: document.getElementById("rotten_prcnt").value,
+
+            pullout_date: document.getElementById("pullout_date").value,
+            hatch_date: document.getElementById("hatch_date").value,
+
+            rejected_total: document.getElementById("rejected_total").value,
+            rejected_total_prcnt: document.getElementById("rejected_total_prcnt").value
+
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+
+            form.reset();
+
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
+
+            // Trigger push notification
+            createPushNotification("success", "Saved Successfully", "Rejected Hatch Entry Saved Successfully");
+        } else {
+            alert("Error saving record");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
+function deleteRecord(targetID) {
+    fetch(`/rejected-hatch/delete/${targetID}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+            document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
+
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
+
+            // Trigger push notification
+            createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+        } else {
+            alert("Error deleting record");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
+function editRecord(targetID) {
+    fetch(`/api/encrypt-id`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+            targetID: targetID
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.encrypted_id) {
+            window.location.href = `/rejected-hatch/edit/${encodeURIComponent(data.encrypted_id)}`;
+        } else {
+            console.error('Error encrypting ID');
+        }
+    })
+    .catch(error => console.error("Error:", error));
+
+    console.log("editing", targetID);
 }

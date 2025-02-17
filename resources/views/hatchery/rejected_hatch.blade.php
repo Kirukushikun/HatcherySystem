@@ -190,139 +190,37 @@
             <h4>Data List</h4>
 
             <div class="table-action">
+
                 <div class="search-bar">
                     <input type="text" placeholder="Search...">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
 
-                <select class="sort-btn">
+                <select class="sort-btn" name="sort-btn" id="sort-btn">
                     <option value=""> Sort By</option>
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
+                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
             </div>
 
         </div>
         <div class="table-body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>PS no.</th>
-                        <th>Production Date</th>
-                        <th>Incubator #</th>
-                        <th>Hatcher #</th>
-                        <th>Pullout Date</th>
-                        <th>Hatch Date</th>
-                        <th>Set Egg QTY</th>
-                        <th>Unhatched</th>
-                        <th>Unhatched %</th>
-                        <th>Pips</th>
-                        <th>Pips %</th>
-                        <th>Rejected Chicks</th>
-                        <th>Rejected Chicks %</th>
-                        <th>Dead Chicks</th>
-                        <th>Dead Chicks %</th>
-                        <th>Rotten</th>
-                        <th>Rotten %</th>
-                        <th>Total</th>
-                        <th>Total Rejects %</th>
-                        <th>Encoded/Modified By</th>
-                        <th>Date Encoded/Modified</th>
-                        <th>Action Done</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>#93</td>
-                        <td>09/12/25</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>09/12/25</td>
-                        <td>09/12/25</td>
-                        <td>30240</td>
-                        <td>4005</td>
-                        <td>13.2</td>
-                        <td>948</td>
-                        <td>3.1</td>
-                        <td>79</td>
-                        <td>0.3</td>
-                        <td>10</td>
-                        <td>0.0</td>
-                        <td>35</td>
-                        <td>0.1</td>
-                        <td>5077</td>
-                        <td>16.8</td>
-                        <td>IT Head</td>
-                        <td>09/12/25</td>
-                        <td>New Input</td>
-                        <td class="datalist-actions">
-                            <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                            <i class="fa-regular fa-trash-can" id="delete-action"></i>
-                            <i class="fa-solid fa-print" id="print-action"></i>
-                        </td>
-                    </tr>
-                </tbody>
-                
-            </table>
+            <livewire:rejected-hatch-table />
         </div>
+
         <div class="table-footer">
             <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#"><i class="fa-solid fa-caret-right"></i></a>
             </div>
         </div>
     </div>
 
     <script src="{{asset('js/rejected-hatch.js')}}" defer></script>
-    <script>
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     const form = document.querySelector(".body"); // Main form container
-        //     const inputs = form.querySelectorAll("input, select"); // All form fields
-        //     const formAction = form.querySelector(".form-action"); // Form action buttons
-        //     const resetButton = form.querySelector(".reset-btn"); // Reset button
 
-        //     // Function to check if any input has a value
-        //     function checkFormValues() {
-        //         let hasValue = false;
-
-        //         inputs.forEach(input => {
-        //             if (input.value.trim() !== "") {
-        //                 hasValue = true;
-        //             }
-        //         });
-
-        //         // Show or hide the form-action buttons
-        //         formAction.style.display = hasValue ? "flex" : "none";
-        //     }
-
-        //     // Event listeners for inputs and selects
-        //     inputs.forEach(input => {
-        //         input.addEventListener("input", checkFormValues);
-        //         input.addEventListener("change", checkFormValues); // For select and date/time inputs
-        //     });
-
-        //     // Reset button functionality
-        //     resetButton.addEventListener("click", function () {
-        //         inputs.forEach(input => {
-        //             input.value = ""; // Clear input fields
-        //         });
-
-        //         checkFormValues(); // Recheck values to hide form-action
-        //     });
-
-        // });
-    </script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
 </body>
 </html>
