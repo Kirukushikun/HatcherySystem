@@ -7,9 +7,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
+use App\Http\Controllers\RejectedPulletsController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
+use App\Http\Livewire\RejectedPulletsTable;
 
 use App\Http\Controllers\EditController;
 
@@ -86,8 +88,18 @@ Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_tem
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
 
+// Rejected Pullets -------------------------------------------------------------------------------------------
+
+Route::get('/fetch-rejected-pullets-data', [RejectedPulletsTable::class, 'fetchData'])->name('rejected.pullets.fetch'); // Rejected Pullets Table Data Fetch
+
+Route::get('/rejected-pullets', [RejectedPulletsController::class, 'rejected_pullets_index'])->name('rejected.pullets.index'); // View
+
+Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejected_pullets_store'])->name('rejected.pullets.store'); // Store
+
+Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
 
 
+// Other Routes -------------------------------------------------------------------------------------------
 
 Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
 

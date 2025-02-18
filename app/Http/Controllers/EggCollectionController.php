@@ -55,6 +55,7 @@ class EggCollectionController extends Controller
         $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
         $eggCollection->save();
 
+        // Log the action
         $this->logEggCollectionAction('store', $eggCollection, null);
 
         return response()->json([
@@ -64,8 +65,7 @@ class EggCollectionController extends Controller
 
     }
 
-    public function egg_collection_delete(Request $request, $targetID)
-    {
+    public function egg_collection_delete(Request $request, $targetID){
         $eggCollection = EggCollection::find($targetID);
     
         if (!$eggCollection) {

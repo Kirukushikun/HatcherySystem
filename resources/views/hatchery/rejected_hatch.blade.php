@@ -14,7 +14,7 @@
         <img class="logo" src="/Images/BDL.png" alt="">
         <h2>REJECTED HATCH ENTRY</h2>
         <div class="exit-icon" >
-            <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/Html/main_module.html'">
+            <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/home'">
         </div>
     </div>
     <form class="body">

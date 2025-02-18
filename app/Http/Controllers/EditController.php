@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Models\EggCollection;
 use App\Models\EggTemperature;
+use App\Models\RejectedPullets;
 
 class EditController extends Controller
 {
@@ -23,6 +24,10 @@ class EditController extends Controller
         }
         elseif($targetForm == 'egg-temperature'){
             $dataRecord = EggTemperature::find($targetID);            
+        }
+        elseif($targetForm == 'rejected-pullets'){
+            $dataRecord = RejectedPullets::find($targetID);   
+            $dataRecord->rejected_pullets_data = json_decode($dataRecord->rejected_pullets_data, true); // Decode JSON into array         
         }
 
         return view('hatchery.edit_module', [
@@ -110,7 +115,8 @@ class EditController extends Controller
     
             $eggTemperature = EggTemperature::find($targetID);
 
-            $beforeState = $eggTemperature->toArray(); // Get the old values
+            // Get the old values
+            $beforeState = $eggTemperature->toArray(); 
             $beforeState = json_encode($beforeState);
 
             $eggTemperature->ps_no = $validatedData['ps_no'];
@@ -128,7 +134,135 @@ class EditController extends Controller
 
             return redirect('/egg-temperature')->with('success', 'Updated Successfully')->with('success_message', 'Egg Temperature Entry Updated Successfully');
         }
+        elseif($targetForm == 'rejected-pullets'){
+
+            $validator = Validator::make($request->all(), [
+                'ps_no' => 'required|string|max:255',
+                'production_date' => 'required|date',
+                'set_eggs_qty' => 'required|integer',
+                'incubator_no' => 'required|string|max:255',
+                'hatch_no' => 'required|string|max:255',
+            
+                'singkit_mata' => 'nullable|integer',
+                'singkit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'wala_mata' => 'nullable|integer',
+                'wala_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'maliit_mata' => 'nullable|integer',
+                'maliit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'malaki_mata' => 'nullable|integer',
+                'malaki_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'unhealed_navel' => 'nullable|integer',
+                'unhealed_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'cross_beak' => 'nullable|integer',
+                'cross_beak_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'small_chick' => 'nullable|integer',
+                'small_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'weak_chick' => 'nullable|integer',
+                'weak_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'black_bottons' => 'nullable|integer',
+                'black_bottons_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'string_navel' => 'nullable|integer',
+                'string_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+    
+                'bloated' => 'nullable|integer',
+                'bloated_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'pullout_date' => 'required|date',
+                'hatch_date' => 'required|date',
+                'qc_date' => 'required|date',
+            
+                'rejected_total' => 'required|integer',
+                'rejected_total_percentage' => 'required|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            ]);
+    
+            $validatedData = $validator->validated();
+
+            // Encode rejected hatch data as JSON
+            $rejected_pullets_data = json_encode([
+                'singkit_mata' => [
+                    'qty' => (int) ($validatedData['singkit_mata'] ?? 0),
+                    'percentage' => (float) ($validatedData['singkit_mata_prcnt'] ?? 0.0)
+                ],
+                'wala_mata' => [
+                    'qty' => (int) ($validatedData['wala_mata'] ?? 0),
+                    'percentage' => (float) ($validatedData['wala_mata_prcnt'] ?? 0.0)
+                ],
+                'maliit_mata' => [
+                    'qty' => (int) ($validatedData['maliit_mata'] ?? 0),
+                    'percentage' => (float) ($validatedData['maliit_mata_prcnt'] ?? 0.0)
+                ],
+                'malaki_mata' => [
+                    'qty' => (int) ($validatedData['malaki_mata'] ?? 0),
+                    'percentage' => (float) ($validatedData['malaki_mata_prcnt'] ?? 0.0)
+                ],
+                'unhealed_navel' => [
+                    'qty' => (int) ($validatedData['unhealed_navel'] ?? 0),
+                    'percentage' => (float) ($validatedData['unhealed_navel_prcnt'] ?? 0.0)
+                ],
+                'cross_beak' => [
+                    'qty' => (int) ($validatedData['cross_beak'] ?? 0),
+                    'percentage' => (float) ($validatedData['cross_beak_prcnt'] ?? 0.0)
+                ],
+                'small_chick' => [
+                    'qty' => (int) ($validatedData['small_chick'] ?? 0),
+                    'percentage' => (float) ($validatedData['small_chick_prcnt'] ?? 0.0)
+                ],
+                'weak_chick' => [
+                    'qty' => (int) ($validatedData['weak_chick'] ?? 0),
+                    'percentage' => (float) ($validatedData['weak_chick_prcnt'] ?? 0.0)
+                ],
+                'black_bottons' => [
+                    'qty' => (int) ($validatedData['black_bottons'] ?? 0),
+                    'percentage' => (float) ($validatedData['black_bottons_prcnt'] ?? 0.0)
+                ],
+                'string_navel' => [
+                    'qty' => (int) ($validatedData['string_navel'] ?? 0),
+                    'percentage' => (float) ($validatedData['string_navel_prcnt'] ?? 0.0)
+                ],
+                'bloated' => [
+                    'qty' => (int) ($validatedData['bloated'] ?? 0),
+                    'percentage' => (float) ($validatedData['bloated_prcnt'] ?? 0.0)
+                ]
+            ], JSON_NUMERIC_CHECK);
+
+            $rejectedPullets = RejectedPullets::find($targetID);
+
+            // Get the old values
+            $beforeState = $rejectedPullets->toArray(); 
+            $beforeState = json_encode($beforeState);
+
+            $rejectedPullets->ps_no = $validatedData['ps_no'];
+            $rejectedPullets->production_date = $validatedData['production_date'];
+            $rejectedPullets->set_eggs_qty = $validatedData['set_eggs_qty'];
+            $rejectedPullets->incubator_no = $validatedData['incubator_no'];
+            $rejectedPullets->hatch_no = $validatedData['hatch_no'];
+
+            $rejectedPullets->rejected_pullets_data = $rejected_pullets_data;
+
+            $rejectedPullets->pullout_date = $validatedData['pullout_date'];
+            $rejectedPullets->hatch_date = $validatedData['hatch_date'];
+            $rejectedPullets->qc_date = $validatedData['qc_date'];
+            $rejectedPullets->rejected_total = $validatedData['rejected_total'];
+            $rejectedPullets->rejected_total_percentage = $validatedData['rejected_total_percentage'];
+            
+            $rejectedPullets->save();
+
+            // Log the action with before state
+            $this->logAction('update', $rejectedPullets, $beforeState, 'rejected-pullets');
+
+            return redirect('/rejected-pullets')->with('success', 'Updated Successfully')->with('success_message', 'Rejected Pullets Entry Updated Successfully');
+        }
     }
+
     public function logAction($action, $currentState, $beforeState = null, $targetForm)
     {
         if ($targetForm == 'egg-collection') {
@@ -153,8 +287,19 @@ class EditController extends Controller
             $currentState, // Stores the new state after the action
         ];
         AC::logEntry($log_entry);
-    }
+    }elseif ($targetForm == 'rejected-pullets') {
+        $messages = [
+            'update' => 'Rejected Pullets Record Updated',
+        ];
+        $log_entry = [
+            $messages[$action] ?? 'Rejected Pullets Record Modified',
+            'rejected_pullets',
+            $beforeState, // Stores previous state before the action
+            $currentState, // Stores the new state after the action
+        ];
+        AC::logEntry($log_entry);
     
+        }
     }
     public function generateReport($targetForm){
 
