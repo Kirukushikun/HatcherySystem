@@ -5,12 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
+use App\Http\Controllers\RejectedHatchController;
 use App\Http\Controllers\RejectedPulletsController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
+use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
 
 use App\Http\Controllers\EditController;
@@ -87,6 +90,14 @@ Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_tem
 
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
+// Rejected Hatch -------------------------------------------------------------------------------------------
+Route::get('/fetch-rejected-hatch-data', [RejectedHatchTable::class, 'fetchData'])->name('rejected.hatch.fetch'); // Rejected Hatch Table Data Fetch
+
+Route::get('/rejected-hatch', [RejectedHatchController::class, 'rejected_hatch_index'])->name('rejected.hatch.index'); // View
+
+Route::post('/rejected-hatch/store', [RejectedHatchController::class, 'rejected_hatch_store'])->name('rejected.hatch.store'); // Store
+
+Route::patch('/rejected-hatch/delete/{targetID}', [RejectedHatchController::class, 'rejected_hatch_delete'])->name('rejected.hatch.delete'); // Delete
 
 // Rejected Pullets -------------------------------------------------------------------------------------------
 
@@ -97,14 +108,16 @@ Route::get('/rejected-pullets', [RejectedPulletsController::class, 'rejected_pul
 Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejected_pullets_store'])->name('rejected.pullets.store'); // Store
 
 Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
-
-
-// Other Routes -------------------------------------------------------------------------------------------
-
-Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
-
+  
+// Edit ---------
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View
 
 Route::patch('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_update'])->name('edit.record.update'); // Update
 
+Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
+
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+Route::get('/test', function () {
+	return view('hatchery.report_module');
+});

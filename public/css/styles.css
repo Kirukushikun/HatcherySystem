@@ -335,6 +335,15 @@ input[type=number] {
     border-collapse: collapse;
 }
 
+/* Table Row Hover Effects */
+.table-body table tr:hover {
+    background: #f7f7f7;
+    /* cursor: pointer; */
+}
+.table-body table tr:hover td:first-child, table tr:hover td:last-child{
+    background: #f7f7f7;
+}
+
 .table-body table th{
     padding: 15px 25px;
     font-weight: 500;
@@ -349,6 +358,7 @@ thead th:first-child {
     background: #f0f0f0;
     z-index: 2;
 }
+
 tbody td:first-child {
     position: sticky;
     left: 0;
@@ -371,10 +381,11 @@ tbody td:last-child {
 
 .table-body table td{
     padding: 17px 25px;
-    background-color: white;
-    border-top: solid #f8f8f8 2px;
+    /* background-color: white; */
+    border-top: solid #f3f3f3 2px;
     color: #583925;
 }
+
 
 
 .table-body table .datalist-actions{

@@ -57,13 +57,7 @@ class EggTemperatureController extends Controller
         $eggTemperature->save();
 
         //Audit Trails
-        $log_entry = [
-            'Egg Shell Temperature Entry',
-            'egg_temperature',
-            '',
-            $eggTemperature,
-        ];
-        AC::logEntry($log_entry);
+        $this->logEggTemperatureAction('store', $eggTemperature, null);
 
         return response()->json([
             'success' => true,
@@ -78,11 +72,36 @@ class EggTemperatureController extends Controller
         if (!$eggTemperature) {
             return response()->json(['success' => false, 'message' => 'Record not found'], 404);
         }
+
+        // Capture before state (store relevant attributes)
+        $beforeState = $eggTemperature->toJson();
     
         $eggTemperature->is_deleted = true;
         $eggTemperature->save();
+
+        // Log the action with before state
+        $this->logEggTemperatureAction('delete', $eggTemperature, $beforeState);
     
         return response()->json(['success' => true, 'message' => 'Egg Temperature Entry Deleted Successfully']);
+    }
+
+
+    public function logEggTemperatureAction($action, $currentState, $beforeState = null)
+    {
+        $messages = [
+            'store' => 'Egg Shell Temperature Record Added',
+            'update' => 'Egg Shell Temperature Record Updated',
+            'delete' => 'Egg Shell Temperature Record Deleted',
+        ];
+
+        $log_entry = [
+            $messages[$action] ?? 'Egg Shell Temperature Record Modified',
+            'egg_temperature',
+            $beforeState, // Stores previous state before the action
+            $currentState, // Stores the new state after the action
+        ];
+
+        AC::logEntry($log_entry);
     }
 
 
