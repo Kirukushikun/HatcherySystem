@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Egg Temperature Check Entry</title>
+    <title>Edit Form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="/css/styles.css">
@@ -215,7 +215,213 @@
                 <button class="save-btn" type="submit">Save</button>
                 <button class="reset-btn" type="button">Reset</button>
             </div>
+        </form>
 
+        @elseif ($targetForm == 'rejected-pullets' && $targetForm != null)
+        <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'rejected-pullets', 'targetID' => $record->id]) }}" method="POST">
+            @csrf @method('PATCH')
+            <div class="form-header">
+                <img class="logo" src="/Images/BDL.png" alt="" />
+                <h2>REJECTED PULLETS ENTRY (EDIT FORM)</h2>
+                <div class="exit-icon">
+                    <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/{{$targetForm}}'" />
+                </div>
+            </div>
+
+            <div class="form-input col-5">
+                <div class="input-container column">
+                    <label for="ID">ID</label>
+                    <input type="text" readonly value="{{$record->id}}">
+                </div>
+
+                <div class="input-container column">
+                    <label for="ps_no">PS no. <span></span></label>
+                    <select name="ps_no" id="ps_no">
+                        <option value="" selected></option>
+                        <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
+                        <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
+                        <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>
+                    </select>
+                </div>
+
+                <div class="input-container column">
+                    <label for="production_date"> Production Date <span></span> </label>
+                    <input type="date" name="production_date" id="production_date" value="{{ $record->production_date->format('Y-m-d') }}" />
+                </div>
+
+                <div class="input-container column">
+                    <label for="set_eggs_qty">Settable Eggs Quantity <span></span></label>
+                    <input type="number" name="set_eggs_qty" id="set_eggs_qty" value="{{ $record->set_eggs_qty }}" placeholder="0">
+                </div>
+
+                <div class="input-container column">
+                    <label for="incubator_no">Incubator # <span></span></label>
+                    <select name="incubator_no" id="incubator_no">
+                        <option value=""></option>
+                        <option value="5" {{ $record->incubator_no == '5' ? 'selected' : ''}}>5</option>
+                    </select>
+                </div>
+
+                <div class="input-container column">
+                    <label for="hatch_no">Hatch # <span></span></label>
+                    <select name="hatch_no" id="hatch_no">
+                        <option value=""></option>
+                        <option value="5" {{ $record->hatch_no == '5' ? 'selected' : ''}}>5</option>
+                    </select>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="singkit_mata">Singkit ang 1 Mata</label>
+                        <input type="number" name="singkit_mata" id="singkit_mata" placeholder="0" value="{{ $record->rejected_pullets_data['singkit_mata']['qty'] ?? 0 }}">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="singkit_mata_prcnt">%</label>
+                        <input type="number" placeholder="0" name="singkit_mata_prcnt" id="singkit_mata_prcnt" value="{{ $record->rejected_pullets_data['singkit_mata']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="wala_mata">Walang Mata</label>
+                        <input type="number" name="wala_mata" id="wala_mata" value="{{ $record->rejected_pullets_data['wala_mata']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="wala_mata_prcnt">%</label>
+                        <input type="number" placeholder="0" name="wala_mata_prcnt" id="wala_mata_prcnt" value="{{ $record->rejected_pullets_data['wala_mata']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="maliit_mata">Maliit ang Mata</label>
+                        <input type="number" name="maliit_mata" id="maliit_mata" value="{{ $record->rejected_pullets_data['maliit_mata']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="maliit_mata_prcnt">%</label>
+                        <input type="number" placeholder="0" name="maliit_mata_prcnt" id="maliit_mata_prcnt" value="{{ $record->rejected_pullets_data['maliit_mata']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="malaki_mata">Malaki ang Mata</label>
+                        <input type="number" name="malaki_mata" id="malaki_mata" value="{{ $record->rejected_pullets_data['malaki_mata']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="malaki_mata_prcnt">%</label>
+                        <input type="number" placeholder="0" name="malaki_mata_prcnt" id="malaki_mata_prcnt" value="{{ $record->rejected_pullets_data['malaki_mata']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="unhealed_navel">Unhealed Navel</label>
+                        <input type="number" name="unhealed_navel" id="unhealed_navel" value="{{ $record->rejected_pullets_data['unhealed_navel']['qty'] ?? 0 }}"  placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="unhealed_navel_prcnt">%</label>
+                        <input type="number" placeholder="0" name="unhealed_navel_prcnt" id="unhealed_navel_prcnt" value="{{ $record->rejected_pullets_data['unhealed_navel']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="cross_beak">Cross Beak</label>
+                        <input type="number" name="cross_beak" id="cross_beak" value= "{{ $record->rejected_pullets_data['cross_beak']['qty'] ?? 0 }}"  placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="cross_beak_prcnt">%</label>
+                        <input type="number" placeholder="0" name="cross_beak_prcnt" id="cross_beak_prcnt" value= "{{ $record->rejected_pullets_data['cross_beak']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="small_chick">Small Chick</label>
+                        <input type="number" name="small_chick" id="small_chick" value= "{{ $record->rejected_pullets_data['small_chick']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="small_chick_prcnt">%</label>
+                        <input type="number" placeholder="0" name="small_chick_prcnt" id="small_chick_prcnt" value= "{{ $record->rejected_pullets_data['small_chick']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="weak_chick">Weak Chick</label>
+                        <input type="number" name="weak_chick" id="weak_chick" value= "{{ $record->rejected_pullets_data['weak_chick']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="weak_chick_prcnt">%</label>
+                        <input type="number" placeholder="0" name="weak_chick_prcnt" id="weak_chick_prcnt" value="{{ $record->rejected_pullets_data['weak_chick']['percentage'] ?? 0 }}" readonly>
+                    </div> 
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="black_bottons">Black Bottons</label>
+                        <input type="number" name="black_bottons" id="black_bottons" value= "{{ $record->rejected_pullets_data['black_bottons']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="black_bottons_prcnt">%</label>
+                        <input type="number" placeholder="0" name="black_bottons_prcnt" id="black_bottons_prcnt" value= "{{ $record->rejected_pullets_data['black_bottons']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="string_navel">String Navel</label>
+                        <input type="number" name="string_navel" id="string_navel" value="{{ $record->rejected_pullets_data['string_navel']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="string_navel_prcnt">%</label>
+                        <input type="number" placeholder="0" name="string_navel_prcnt" id="string_navel_prcnt" value="{{ $record->rejected_pullets_data['string_navel']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="bloated">Bloated</label>
+                        <input type="number" name="bloated" id="bloated" value="{{ $record->rejected_pullets_data['bloated']['qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="bloated_prcnt">%</label>
+                        <input type="number" placeholder="0" name="bloated_prcnt" id="bloated_prcnt" value="{{ $record->rejected_pullets_data['bloated']['percentage'] ?? 0 }}" readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-result">
+                <div class="input-container column">
+                    <label for="pullout_date"> Pull-out Date <span></span> </label>
+                    <input type="date" name="pullout_date" id="pullout_date" value="{{ $record->pullout_date->format('Y-m-d') }}" />
+                </div>
+                <div class="input-container column">
+                    <label for="hatch_date"> Hatch Date <span></span> </label>
+                    <input type="date" name="hatch_date" id="hatch_date" value="{{ $record->hatch_date->format('Y-m-d') }}" />
+                </div>
+                <div class="input-container column">
+                    <label for="qc_date"> QC Date <span></span> </label>
+                    <input type="date" name="qc_date" id="qc_date" value="{{ $record->qc_date->format('Y-m-d') }}" />
+                </div>
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="rejected_total">Rejected Total </label>
+                        <input type="number" name="rejected_total" id="rejected_total" value="{{ $record->rejected_total }}" placeholder="0" readonly />
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="rejected_total_percentage">Rejected Total % </label>
+                        <input type="number" name="rejected_total_percentage" id="rejected_total_percentage" value="{{ $record->rejected_total_percentage }}" placeholder="0" readonly />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-action">
+                <button class="save-btn" type="submit">Save</button>
+                <button class="reset-btn" type="reset">Reset</button>
+            </div>
         </form>
     @elseif ($targetForm == 'rejected-hatch' && $targetForm != null)
         <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'rejected-hatch', 'targetID' => $record->id]) }}" method="POST">
@@ -437,6 +643,8 @@
                 requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
             } else if (targetForm === "rejected-hatch") {
                 requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date"];;
+            } else if (targetForm === "rejected-pullets") {
+                requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatch_no", "pullout_date", "hatch_date", "qc_date"];
             }
 
             requiredFields.forEach(id => {
@@ -568,7 +776,62 @@
                     document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
                 }
             });
+        } else if(targetForm === "rejected-pullets") {
+            document.addEventListener("DOMContentLoaded", function () {
+              const setEggsQtyInput = document.getElementById("set_eggs_qty"); // Make sure the ID matches in your HTML
+              const totalRejectedInput = document.getElementById("rejected_total");
+              const fields = ["singkit_mata", "wala_mata", "maliit_mata", "malaki_mata", "unhealed_navel", "cross_beak", "small_chick", "weak_chick", "black_bottons", "string_navel", "bloated"];
+
+              // Add event listeners for all fields
+              fields.forEach(field => {
+                  document.getElementById(field).addEventListener("input", updatePercentages);
+              });
+
+              // Update percentages when set_eggs_qty changes
+              setEggsQtyInput.addEventListener("change", updatePercentages);
+
+              function updatePercentages() {
+                  let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero
+                  let totalRejected = 0;
+
+                  // Reset if setEggsQty is empty or invalid
+                  if (!setEggsQtyInput.value.trim()) {
+                      return; // Do nothing if the input is empty
+                  }
+
+                  if (parseInt(totalRejectedInput.value) > setEggsQty) {
+                      // Only reset if total rejections exceed the new total eggs
+                      fields.forEach(field => {
+                          document.getElementById(field).value = 0;
+                          document.getElementById(`${field}_prcnt`).value = "0.0";
+                      });
+                      totalRejectedInput.value = 0;
+                      document.getElementById("rejected_total_percentage").value = "0.0";
+                  }
+
+                  fields.forEach(field => {
+                      let fieldInput = document.getElementById(field);
+                      let value = parseInt(fieldInput.value) || 0;
+
+                      // Prevent input values from exceeding setEggsQty
+                      if (value > setEggsQty) {
+                          fieldInput.value = setEggsQty;
+                          value = setEggsQty; 
+                      }
+
+                      let percentage = ((value / setEggsQty) * 100).toFixed(1); // Keep 1 decimal
+                      document.getElementById(`${field}_prcnt`).value = percentage; // Keep decimal
+                      totalRejected += value;
+                  });
+
+                  // Update Rejected Total and Percentage
+                  totalRejectedInput.value = totalRejected;
+                  let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
+                  document.getElementById("rejected_total_percentage").value = rejectedPercentage; // Keep decimal
+              }
+          });
         }
+        
     </script>
 </body>
 </html>

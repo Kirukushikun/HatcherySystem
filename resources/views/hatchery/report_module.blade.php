@@ -7,13 +7,14 @@
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
-    <title>Document</title>
+    
+    <title>Generate Report</title>
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 
     <style>
-        /* Chrome, Safari, Edge, Opera */
+       /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -270,7 +271,6 @@
         #result-table th:last-child, #result-table td:last-child {
             width: 30%; /* Second column takes 30% of the table width */
         }
-
     </style>
 </head>
 <body>
@@ -278,7 +278,7 @@
     <input type="text" class="targetForm" value="{{$targetForm}}" hidden>
 
     <div class="report-container">
-        @if($targetForm == "egg-collection" && $targetForm != null)
+                @if($targetForm == "egg-collection" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
                     <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
@@ -436,7 +436,7 @@
                 </div>
             </form>
         @elseif ($targetForm == "rejected-hatch" && $targetForm != null)
-        <form class="report-content">
+            <form class="report-content">
                 <div class="report-header">
                     <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
                     <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
