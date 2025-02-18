@@ -249,6 +249,7 @@
                     <label for="set_eggs_qty">Set Egg Qty <span></span></label>
                     <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0" value="{{ $record->set_eggs_qty }}">
                 </div>
+
                 <div class="input-container column">
                     <label for="incubator_no">Incubator  <span></span></label>
                     <select id="incubator_no" name="incubator_no">
@@ -256,6 +257,7 @@
                         <option value="1" {{ $record->incubator_no == '1' ? 'selected' : ''}}>1</option>
                     </select>
                 </div>
+
                 <div class="input-container column">
                     <label for="hatcher_no">Hatch # <span></span></label>
                     <select id="hatcher_no" name="hatcher_no">
@@ -263,7 +265,6 @@
                         <option value="1" {{ $record->hatcher_no == '1' ? 'selected' : ''}}>1</option>
                     </select>
                 </div>
-
 
                 <div class="input-container row">
                     <div class="input-group">
@@ -330,7 +331,6 @@
                     </div>
                 </div>
 
-
                 <div class="input-container column">
                     <label for="pullout_date">Pull-out Date <span></span></label>
                     <input type="date" id="pullout_date" name="pullout_date" value="{{ $record->pullout_date->format('Y-m-d') }}">
@@ -343,12 +343,13 @@
 
                     <div class="input-group">
                         <label for="rejected_total">Rejected Total</label>
-                        <input type="number" id="rejected_total" name="rejected_total" placeholder="0" readonly>
+                        <input type="number" id="rejected_total" name="rejected_total" value="{{ $record->rejected_total }}" placeholder="0" readonly>
                     </div>
                     <div class="input-group prcnt">
                         <label for="rejected_total_prcnt">%</label>
-                        <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" placeholder="0" readonly>
+                        <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" value="{{ $record->rejected_total_percentage }}" placeholder="0" readonly>
                     </div>
+                    
                 </div>
 
             </div>
@@ -529,7 +530,7 @@
                 });
 
                 // Update percentages when set_eggs_qty changes
-                setEggsQtyInput.addEventListener("input", updatePercentages);
+                setEggsQtyInput.addEventListener("change", updatePercentages);
 
                 function updatePercentages() {
                     let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero

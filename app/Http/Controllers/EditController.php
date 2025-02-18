@@ -226,6 +226,9 @@ class EditController extends Controller
         elseif($targetForm == 'egg-temperature') {    
             return view('hatchery.report_module', ['targetForm' => $targetForm]);
         }
+        elseif($targetForm == 'rejected-hatch') {    
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
 
     }
 }
