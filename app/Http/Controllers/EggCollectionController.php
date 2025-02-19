@@ -14,7 +14,8 @@ use App\Models\EggCollection;
 class EggCollectionController extends Controller
 {
     function egg_collection_index() {
-        return view('hatchery.egg_collection');
+        $egg_collections = EggCollection::where('is_deleted', false)->count();
+        return view('hatchery.egg_collection', ['egg_collections' => $egg_collections]);
     }
 
     function egg_collection_store(Request $request) {

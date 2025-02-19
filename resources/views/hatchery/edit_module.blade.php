@@ -176,8 +176,8 @@
                     <input type="date" name="setting_date" id="setting_date" value="{{ $record->setting_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="incubator">Incubator # <span></span></label>
-                    <select name="incubator" id="incubator">
+                    <label for="incubator_no">Incubator # <span></span></label>
+                    <select name="incubator_no" id="incubator_no">
                         <option value=""></option>
                         <option value="#1" {{ $record->incubator == '1' ? 'selected' : ''}}>1</option>
                         <option value="#2" {{ $record->incubator == '2' ? 'selected' : ''}}>2</option>
@@ -263,10 +263,10 @@
                 </div>
 
                 <div class="input-container column">
-                    <label for="hatch_no">Hatch # <span></span></label>
-                    <select name="hatch_no" id="hatch_no">
+                    <label for="hatcher_no">Hatch # <span></span></label>
+                    <select name="hatcher_no" id="hatcher_no">
                         <option value=""></option>
-                        <option value="5" {{ $record->hatch_no == '5' ? 'selected' : ''}}>5</option>
+                        <option value="5" {{ $record->hatcher_no == '5' ? 'selected' : ''}}>5</option>
                     </select>
                 </div>
 
@@ -640,11 +640,11 @@
             if (targetForm === "egg-collection") {
                 requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
             } else if (targetForm === "egg-temperature") {
-                requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
+                requiredFields = ["ps_no", "setting_date", "incubator_no", "location", "temp_check_date", "temperature", "quantity"];
             } else if (targetForm === "rejected-hatch") {
                 requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date"];;
             } else if (targetForm === "rejected-pullets") {
-                requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatch_no", "pullout_date", "hatch_date", "qc_date"];
+                requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date", "qc_date"];
             }
 
             requiredFields.forEach(id => {

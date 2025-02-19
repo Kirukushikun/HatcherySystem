@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>Production Date</th>
             <th>Set Eggs Quantity</th>
-            <th>Incubator #</th>
-            <th>Hatch #</th>
+            <th>Incubator No.</th>
+            <th>Hatcher No.</th>
             
             <th>One Eye closed</th>
             <th>One Eye closed %</th>
@@ -122,7 +122,7 @@
                             <td>${production_date}</td>
                             <td>${row.set_eggs_qty}</td>
                             <td>${row.incubator_no}</td>
-                            <td>${row.hatch_no}</td>
+                            <td>${row.hatcher_no}</td>
 
                             <td>${rejectedPulletsData.singkit_mata.qty}</td>
                             <td>${rejectedPulletsData.singkit_mata.percentage}</td>

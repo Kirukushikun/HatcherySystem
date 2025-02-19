@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>Production Date</th>
-            <th>Incubator #</th>
-            <th>Hatcher #</th>
+            <th>Incubator No.</th>
+            <th>Hatcher No.</th>
             <th>Pullout Date</th>
             <th>Hatch Date</th>
             <th>Set Egg QTY</th>

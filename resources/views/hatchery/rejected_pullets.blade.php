@@ -1,3 +1,5 @@
+@include('components.modal-notification-loader')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,34 +16,8 @@
 
 </head>
 <body>
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
 
-    <!-- PUSH NOTIFICATION -->
-    @if(session()->has('error'))
-        <div class="push-notification danger">
-            <i class="fa-solid fa-bell danger"></i>
-            <div class="notification-message">
-                <h4>{{session('error')}}</h4>
-                <p>{{session('error_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-    @elseif(session()->has('success'))
-        <div class="push-notification success">
-            <i class="fa-solid fa-bell success"></i>
-            <div class="notification-message">
-                <h4>{{session('success')}}</h4>
-                <p>{{session('success_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-    @endif
-    
-    <div class="modal" id="modal">
-
-    </div>
+    @yield('modal-notification-loader')
 
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
@@ -58,13 +34,8 @@
 
         <div class="form-input col-5">
             <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value="" selected></option>
-                    <option value="93" {{ session('form_data.ps_no', '') == '93' ? 'selected' : ''}}>93</option>
-                    <option value="95" {{ session('form_data.ps_no', '') == '95' ? 'selected' : ''}}>95</option>
-                    <option value="98" {{ session('form_data.ps_no', '') == '98' ? 'selected' : ''}}>98</option>
-                </select>
+                <label for="ps_no">PS No. <span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
             </div>
 
             <div class="input-container column">
@@ -78,19 +49,13 @@
             </div>
 
             <div class="input-container column">
-                <label for="incubator_no">Incubator # <span></span></label>
-                <select name="incubator_no" id="incubator_no">
-                    <option value=""></option>
-                    <option value="5" {{ session('form_data.incubator_no', '') == '5' ? 'selected' : ''}}>5</option>
-                </select>
+                <label for="incubator_no">Incubator No. <span></span></label>
+                <x-dropdown :data-category="'incubator_no'" />
             </div>
 
             <div class="input-container column">
-                <label for="hatch_no">Hatch # <span></span></label>
-                <select name="hatch_no" id="hatch_no">
-                    <option value=""></option>
-                    <option value="5" {{ session('form_data.hatch_no', '') == '5' ? 'selected' : ''}}>5</option>
-                </select>
+                <label for="hatcher_no">Hatcher No. <span></span></label>
+                <x-dropdown :data-category="'hatcher_no'" />
             </div>
 
             <div class="input-container row">
@@ -275,7 +240,7 @@
                     <option value="production_date_asc">Sort By: Date (Oldest)</option>
                     <option value="ps_no_asc">Sort By: PS No.</option>
                     <option value="incubator_no_asc">Sort By: Incubator No.</option>
-                    <option value="hatch_no_asc">Sort By: Hatch No.</option>
+                    <option value="hatcher_no_asc">Sort By: Hatch No.</option>
                     <option value="set_eggs_qty_desc">Sort By: Set Eggs Quantity (Highest)</option>
                     <option value="set_eggs_qty_asc">Sort By: Set Eggs Quantity (Lowest)</option>
                     <option value="rejected_total_desc">Sort By: Rejected Total (Highest)</option>

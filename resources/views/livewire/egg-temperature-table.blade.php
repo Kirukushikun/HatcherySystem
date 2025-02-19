@@ -2,9 +2,9 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>Setting Date</th>
-            <th>Incubator #</th>
+            <th>Incubator No.</th>
             <th>Location</th>
             <th>Temp Check Date</th>
             <th>Temperature</th>
@@ -77,7 +77,7 @@
                             <td>${row.id}</td>
                             <td>${row.ps_no}</td>
                             <td>${setting_date}</td>
-                            <td>${row.incubator}</td>
+                            <td>${row.incubator_no}</td>
                             <td>${row.location}</td>
                             <td>${temperature_check_date}</td>
                             <td>${row.temperature}</td>

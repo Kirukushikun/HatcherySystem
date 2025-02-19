@@ -1,3 +1,5 @@
+@include('components.modal-notification-loader')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,36 +13,28 @@
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
-
+    <style>
+        .empty-container{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 320px;
+        }
+        .empty-container img{
+            width: 100px;
+        }
+        .empty-container p{
+            font-size: 18px;
+            color:#c9c9c9;
+            font-weight: 600;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- PUSH NOTIFICATION -->
-    @if(session()->has('error'))
-    <div class="push-notification danger">
-        <i class="fa-solid fa-bell danger"></i>
-        <div class="notification-message">
-            <h4>{{session('error')}}</h4>
-            <p>{{session('error_message')}}</p>
-        </div>
-        <i class="fa-solid fa-xmark" id="close-notification"></i>
-    </div>
-    @elseif(session()->has('success'))
-        <div class="push-notification success">
-            <i class="fa-solid fa-bell success"></i>
-            <div class="notification-message">
-                <h4>{{session('success')}}</h4>
-                <p>{{session('success_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-    @endif
     
-    <div class="modal" id="modal">
-    </div>
+    @yield('modal-notification-loader')
 
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
@@ -116,18 +110,23 @@
                     <option value="collected_qty_asc">Sort By: Quantity (Asc)</option>
                     <option value="collected_qty_desc">Sort By: Quantity (Desc)</option>
                 </select>
-
+ 
                 <div class="table-icons">
                     <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
                     <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
-                
             </div>
-
         </div>
+
         <div class="table-body">
             <livewire:egg-collection-table />
         </div>
+
+        <!-- <div class="empty-container">
+            <img src="Images/empty-icon.png" alt="">
+            <p>NO DATA ENTRIES YET</p>
+        </div> -->
+
         <div class="table-footer">
             <div class="pagination">
             </div>

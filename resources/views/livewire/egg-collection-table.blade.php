@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>House No.</th>
             <th>Production Date</th>
             <th>Collection Time (hh:mm)</th>
@@ -75,6 +75,7 @@
                 const tableBody = document.getElementById('table-body');
                 tableBody.innerHTML = '';
                 data.data.forEach(row => {
+
                     let production_date = new Date(row.production_date).toLocaleDateString();
                     
                     // Parse "HH:mm:ss" format manually

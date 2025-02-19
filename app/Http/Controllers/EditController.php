@@ -94,7 +94,7 @@ class EditController extends Controller
             $validator = Validator::make($request->all(), [
                 'ps_no' => 'required|string|max:255',
                 'setting_date' => 'required|date',
-                'incubator' => 'required|string|max:255',
+                'incubator_no' => 'required|string|max:255',
                 'location' => 'required|string|max:255',
                 'temp_check_date' => 'required|date',
                 'temperature' => 'required|string|max:255',
@@ -103,9 +103,9 @@ class EditController extends Controller
     
             if ($validator->fails()) {
                 $errorMessages = $validator->errors();
-                session()->flash('form_data', $request->only(['ps_no', 'setting_date', 'incubator', 'location', 'temp_check_date', 'temperature', 'quantity']));
+                session()->flash('form_data', $request->only(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity']));
     
-                if ($errorMessages->hasAny(['ps_no', 'setting_date', 'incubator', 'location', 'temp_check_date', 'temperature', 'quantity'])) {
+                if ($errorMessages->hasAny(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity'])) {
                     return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
                 }   
                 if ($errorMessages->has('quantity')) {
@@ -126,7 +126,7 @@ class EditController extends Controller
 
             $eggTemperature->ps_no = $validatedData['ps_no'];
             $eggTemperature->setting_date = $validatedData['setting_date'];
-            $eggTemperature->incubator = $validatedData['incubator'];
+            $eggTemperature->incubator_no = $validatedData['incubator_no'];
             $eggTemperature->location = $validatedData['location'];
             $eggTemperature->temperature = $validatedData['temperature'];
             $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
@@ -245,7 +245,7 @@ class EditController extends Controller
                 'production_date' => 'required|date',
                 'set_eggs_qty' => 'required|integer',
                 'incubator_no' => 'required|string|max:255',
-                'hatch_no' => 'required|string|max:255',
+                'hatcher_no' => 'required|string|max:255',
             
                 'singkit_mata' => 'nullable|integer',
                 'singkit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
@@ -348,7 +348,7 @@ class EditController extends Controller
             $rejectedPullets->production_date = $validatedData['production_date'];
             $rejectedPullets->set_eggs_qty = $validatedData['set_eggs_qty'];
             $rejectedPullets->incubator_no = $validatedData['incubator_no'];
-            $rejectedPullets->hatch_no = $validatedData['hatch_no'];
+            $rejectedPullets->hatcher_no = $validatedData['hatcher_no'];
 
             $rejectedPullets->rejected_pullets_data = $rejected_pullets_data;
 

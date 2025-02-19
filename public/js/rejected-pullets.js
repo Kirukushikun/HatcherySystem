@@ -51,7 +51,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatch_no", "pullout_date", "hatch_date", "qc_date"];
+    const requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date", "qc_date"];
     
     requiredFields.forEach(id => {
         let field = document.getElementById(id);
@@ -234,7 +234,7 @@ function storeRecord(){
             production_date: document.getElementById("production_date").value,
             set_eggs_qty: document.getElementById("set_eggs_qty").value,
             incubator_no: document.getElementById("incubator_no").value,
-            hatch_no: document.getElementById("hatch_no").value,
+            hatcher_no: document.getElementById("hatcher_no").value,
 
             singkit_mata: document.getElementById("singkit_mata").value,
             singkit_mata_prcnt: document.getElementById("singkit_mata_prcnt").value,

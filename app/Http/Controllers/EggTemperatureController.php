@@ -49,7 +49,7 @@ class EggTemperatureController extends Controller
         $eggTemperature = new EggTemperature();
         $eggTemperature->ps_no = $validatedData['ps_no'];
         $eggTemperature->setting_date = $validatedData['setting_date']; 
-        $eggTemperature->incubator = $validatedData['incubator_no'];
+        $eggTemperature->incubator_no = $validatedData['incubator_no'];
         $eggTemperature->location = $validatedData['location'];
         $eggTemperature->temperature = $validatedData['temperature'];
         $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
