@@ -21,7 +21,7 @@ class EggTemperatureController extends Controller
         $validator = Validator::make($request->all(), [
             'ps_no' => 'required|string|max:255',
             'setting_date' => 'required|date',
-            'incubator' => 'required|string|max:255',
+            'incubator_no' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'temp_check_date' => 'required|date',
             'temperature' => 'required|string|max:255',
@@ -31,9 +31,9 @@ class EggTemperatureController extends Controller
 
         if ($validator->fails()) {
             $errorMessages = $validator->errors();
-            session()->flash('form_data', $request->only(['ps_no', 'setting_date', 'incubator', 'location', 'temp_check_date', 'temperature', 'quantity']));
+            session()->flash('form_data', $request->only(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity']));
 
-            if ($errorMessages->hasAny(['ps_no', 'setting_date', 'incubator', 'location', 'temp_check_date', 'temperature', 'quantity'])) {
+            if ($errorMessages->hasAny(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity'])) {
                 return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
             }   
             if ($errorMessages->has('quantity')) {
@@ -49,7 +49,7 @@ class EggTemperatureController extends Controller
         $eggTemperature = new EggTemperature();
         $eggTemperature->ps_no = $validatedData['ps_no'];
         $eggTemperature->setting_date = $validatedData['setting_date']; 
-        $eggTemperature->incubator = $validatedData['incubator'];
+        $eggTemperature->incubator = $validatedData['incubator_no'];
         $eggTemperature->location = $validatedData['location'];
         $eggTemperature->temperature = $validatedData['temperature'];
         $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
