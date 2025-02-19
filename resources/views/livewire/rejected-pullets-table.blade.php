@@ -54,11 +54,11 @@
     let sortBy = "created_at";
     let sortOrder = "desc";
 
-        document.addEventListener("DOMContentLoaded", function () {
-            skeletonLoader();
-            setTimeout(() => {
-                loadData();
-            }, 1000);
+    document.addEventListener("DOMContentLoaded", function () {
+        skeletonLoader();
+        setTimeout(() => {
+            loadData();
+        }, 1000);
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("input", function (e) {
@@ -185,6 +185,7 @@
             tableBody.appendChild(row);
         }
     }
+    
     function updatePagination() {
         const paginationContainer = document.querySelector(".pagination");
         paginationContainer.innerHTML = "";

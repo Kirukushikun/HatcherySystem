@@ -17,11 +17,13 @@ use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
 
 use App\Http\Controllers\EditController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\ReportController;
 
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
-use App\Http\Controllers\PDFController;
+
 
 
 
@@ -57,14 +59,6 @@ Route::get('/home', function () {
 	return view('hatchery.main_module');
 });
 
-Route::get('/rejected-hatch', function () {
-	return view('hatchery.rejected_hatch');
-});
-
-Route::get('/rejected-pullets', function () {
-	return view('hatchery.rejected_pullets');	
-});
-
 Route::get('/master-database', function () {
 	return view('hatchery.master_database');
 });
@@ -91,6 +85,7 @@ Route::post('/egg-temperature/store', [EggTemperatureController::class, 'egg_tem
 Route::patch('/egg-temperature/delete/{targetID}', [EggTemperatureController::class, 'egg_temperature_delete'])->name('egg.temperature.delete'); // Delete
 
 // Rejected Hatch -------------------------------------------------------------------------------------------
+
 Route::get('/fetch-rejected-hatch-data', [RejectedHatchTable::class, 'fetchData'])->name('rejected.hatch.fetch'); // Rejected Hatch Table Data Fetch
 
 Route::get('/rejected-hatch', [RejectedHatchController::class, 'rejected_hatch_index'])->name('rejected.hatch.index'); // View
@@ -110,11 +105,16 @@ Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejec
 Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
   
 // Edit ---------
+
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View
 
 Route::patch('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_update'])->name('edit.record.update'); // Update
 
-Route::get('/{targetForm}/report', [EditController::class, 'generateReport']);
+// Report ---------
+
+Route::get('/{targetForm}/report', [ReportController::class, 'generateReport']);
+
+// PDF ---------
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 

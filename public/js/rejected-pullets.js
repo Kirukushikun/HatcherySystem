@@ -74,55 +74,6 @@ document.querySelector("form").addEventListener("submit", function (event) {
     
 });
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const setEggsQtyInput = document.getElementById("set_eggs_qty"); // Make sure the ID matches in your HTML
-//     const totalRejectedInput = document.getElementById("rejected_total");
-//     const fields = ["singkit_mata", "wala_mata", "maliit_mata", "malaki_mata", "unhealed_navel", "cross_beak", "small_chick", "weak_chick", "black_bottons", "string_navel", "bloated"];
-
-//     // Add event listeners for all fields
-//     fields.forEach(field => {
-//         document.getElementById(field).addEventListener("input", updatePercentages);
-//     });
-
-//     // Update percentages when set_eggs_qty changes
-//     setEggsQtyInput.addEventListener("input", updatePercentages);
-
-//     function updatePercentages() {
-//         let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero
-//         let totalRejected = 0;
-
-//         // If setEggsQty is empty or less than total rejected, reset everything
-//         if (!setEggsQtyInput.value.trim() || totalRejectedInput.value > setEggsQty) {
-//             fields.forEach(field => {
-//                 document.getElementById(field).value = 0;
-//                 document.getElementById(`${field}_prcnt`).value = 0;
-//             });
-//             totalRejectedInput.value = 0;
-//             document.getElementById("rejected_total_prcnt").value = 0;
-//             return;
-//         }
-
-//         fields.forEach(field => {
-//             let fieldInput = document.getElementById(field);
-//             let value = parseInt(fieldInput.value) || 0;
-
-//             // Prevent input values from exceeding setEggsQty
-//             if (value > setEggsQty) {
-//                 fieldInput.value = setEggsQty;
-//                 value = setEggsQty;
-//             }
-
-//             let percentage = ((value / setEggsQty) * 100).toFixed(1); // Store as 10.0 format
-//             document.getElementById(`${field}_prcnt`).value = Math.round(percentage); // Display whole number
-//             totalRejected += value;
-//         });
-
-//         // Update Rejected Total and Percentage
-//         totalRejectedInput.value = totalRejected;
-//         let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
-//         document.getElementById("rejected_total_prcnt").value = Math.round(rejectedPercentage); // Display as whole number
-//     }
-// });
 document.addEventListener("DOMContentLoaded", function () {
     const setEggsQtyInput = document.getElementById("set_eggs_qty"); // Make sure the ID matches in your HTML
     const totalRejectedInput = document.getElementById("rejected_total");
@@ -334,14 +285,10 @@ function storeRecord(){
         if (data.success) {
             document.getElementById("modal").classList.remove("active");
 
-            // document.getElementById("location").value = "";
-            // document.getElementById("temperature").value = "";
-            // document.getElementById("quantity").value = "";
-
             form.reset();
 
-            // updatePagination(); // Update pagination
-            // loadData(); // Reload data
+            updatePagination(); // Update pagination
+            loadData(); // Reload data
 
             // Trigger push notification
             createPushNotification("success", "Saved Successfully", "Rejected Pullets Entry Saved Successfully");
