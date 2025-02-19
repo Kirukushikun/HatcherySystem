@@ -56,22 +56,12 @@
         </div>
         <div class="form-input col-4">  
             <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value="" selected></option>
-                    <option value="93" {{ session('form_data.ps_no', '') == '93' ? 'selected' : ''}}>93</option>
-                    <option value="95" {{ session('form_data.ps_no', '') == '95' ? 'selected' : ''}}>95</option>
-                    <option value="98" {{ session('form_data.ps_no', '') == '98' ? 'selected' : ''}}>98</option>
-                </select>
+                <label for="ps_no">PS No. <span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
             </div>
             <div class="input-container column">
-                <label for="house_no">House no. <span></span></label>
-                <select name="house_no" id="house_no">
-                    <option value=""selected></option>
-                    <option value="1" {{ session('form_data.house_no', '') == '1' ? 'selected' : ''}}>1</option>
-                    <option value="2" {{ session('form_data.house_no', '') == '2' ? 'selected' : ''}}>2</option>
-                    <option value="3" {{ session('form_data.house_no', '') == '3' ? 'selected' : ''}}>3</option>
-                </select>
+                <label for="house_no">House No. <span></span></label>
+                <x-dropdown :data-category="'house_no'" />
             </div>
             <div class="input-container column">
                 <label for="production_date">
