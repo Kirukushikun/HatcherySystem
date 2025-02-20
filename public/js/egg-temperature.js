@@ -60,7 +60,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "setting_date", "incubator", "location", "temp_check_date", "temperature", "quantity"];
+    const requiredFields = ["ps_no", "setting_date", "incubator_no", "location", "temp_check_date", "temperature", "quantity"];
     
     requiredFields.forEach(id => {
         let field = document.getElementById(id);
@@ -184,7 +184,7 @@ function storeRecord(){
         body: JSON.stringify({
             ps_no: document.getElementById("ps_no").value,
             setting_date: document.getElementById("setting_date").value,
-            incubator: document.getElementById("incubator").value,
+            incubator_no: document.getElementById("incubator_no").value,
             location: document.getElementById("location").value,
             temp_check_date: document.getElementById("temp_check_date").value,
             temperature: document.getElementById("temperature").value,

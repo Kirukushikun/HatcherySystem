@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>House No.</th>
             <th>Production Date</th>
             <th>Collection Time (hh:mm)</th>
@@ -75,14 +75,27 @@
                 const tableBody = document.getElementById('table-body');
                 tableBody.innerHTML = '';
                 data.data.forEach(row => {
+
                     let production_date = new Date(row.production_date).toLocaleDateString();
+                    
+                    // Parse "HH:mm:ss" format manually
+                    let [hours, minutes] = row.collection_time.split(':');
+                    let date = new Date();
+                    date.setHours(hours, minutes, 0); // Set extracted hours and minutes
+
+                    let collection_time = date.toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        hour12: true 
+                    });
+
                     tableBody.innerHTML += `
                         <tr>
                             <td>${row.id}</td>
                             <td>${row.ps_no}</td>
                             <td>${row.house_no}</td>
                             <td>${production_date}</td>
-                            <td>${row.collection_time}</td>
+                            <td>${collection_time}</td>
                             <td>${row.collected_qty}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">

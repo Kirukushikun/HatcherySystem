@@ -22,7 +22,7 @@ class RejectedPulletsTable extends Component
                     ->orWhere('production_date', 'like', "%{$searchTerm}%")
                     ->orWhere('set_eggs_qty', 'like', "%{$searchTerm}%")
                     ->orWhere('incubator_no', 'like', "%{$searchTerm}%")
-                    ->orWhere('hatch_no', 'like', "%{$searchTerm}%")
+                    ->orWhere('hatcher_no', 'like', "%{$searchTerm}%")
 
                     ->orWhere('rejected_pullets_data', 'like', "%{$searchTerm}%")
 

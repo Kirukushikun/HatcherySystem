@@ -1,3 +1,5 @@
+@include('components.modal-notification-loader')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,36 +13,29 @@
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
-
+    <style>
+        .empty-container{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 320px;
+        }
+        .empty-container img{
+            width: 100px;
+        }
+        .empty-container p{
+            font-size: 18px;
+            color:#c9c9c9;
+            font-weight: 600;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
-
-            <!-- PUSH NOTIFICATION -->
-        @if(session()->has('error'))
-        <div class="push-notification danger">
-            <i class="fa-solid fa-bell danger"></i>
-            <div class="notification-message">
-                <h4>{{session('error')}}</h4>
-                <p>{{session('error_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-        @elseif(session()->has('success'))
-            <div class="push-notification success">
-                <i class="fa-solid fa-bell success"></i>
-                <div class="notification-message">
-                    <h4>{{session('success')}}</h4>
-                    <p>{{session('success_message')}}</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-notification"></i>
-            </div>
-        @endif
     
-    <div class="modal" id="modal">
-    </div>
+    @yield('modal-notification-loader')
+
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
         <h2>EGG COLLECTION ENTRY</h2>
@@ -56,22 +51,12 @@
         </div>
         <div class="form-input col-4">  
             <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value="" selected></option>
-                    <option value="93" {{ session('form_data.ps_no', '') == '93' ? 'selected' : ''}}>93</option>
-                    <option value="95" {{ session('form_data.ps_no', '') == '95' ? 'selected' : ''}}>95</option>
-                    <option value="98" {{ session('form_data.ps_no', '') == '98' ? 'selected' : ''}}>98</option>
-                </select>
+                <label for="ps_no">PS No. <span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
             </div>
             <div class="input-container column">
-                <label for="house_no">House no. <span></span></label>
-                <select name="house_no" id="house_no">
-                    <option value=""selected></option>
-                    <option value="1" {{ session('form_data.house_no', '') == '1' ? 'selected' : ''}}>1</option>
-                    <option value="2" {{ session('form_data.house_no', '') == '2' ? 'selected' : ''}}>2</option>
-                    <option value="3" {{ session('form_data.house_no', '') == '3' ? 'selected' : ''}}>3</option>
-                </select>
+                <label for="house_no">House No. <span></span></label>
+                <x-dropdown :data-category="'house_no'" />
             </div>
             <div class="input-container column">
                 <label for="production_date">
@@ -125,18 +110,23 @@
                     <option value="collected_qty_asc">Sort By: Quantity (Asc)</option>
                     <option value="collected_qty_desc">Sort By: Quantity (Desc)</option>
                 </select>
-
+ 
                 <div class="table-icons">
                     <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
                     <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
-                
             </div>
-
         </div>
+
         <div class="table-body">
             <livewire:egg-collection-table />
         </div>
+
+        <!-- <div class="empty-container">
+            <img src="Images/empty-icon.png" alt="">
+            <p>NO DATA ENTRIES YET</p>
+        </div> -->
+
         <div class="table-footer">
             <div class="pagination">
             </div>

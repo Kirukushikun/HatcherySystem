@@ -23,7 +23,7 @@ class RejectedPulletsController extends Controller
             'production_date' => 'required|date',
             'set_eggs_qty' => 'required|integer',
             'incubator_no' => 'required|string|max:255',
-            'hatch_no' => 'required|string|max:255',
+            'hatcher_no' => 'required|string|max:255',
         
             'singkit_mata' => 'nullable|integer',
             'singkit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
@@ -68,9 +68,9 @@ class RejectedPulletsController extends Controller
 
         if($validator->fails()){
             $errorMessages = $validator->errors();
-            session()->flash('form_data', $request->only(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatch_no', 'pullout_date', 'hatch_date', 'qc_date', 'rejected_total', 'rejected_total_prcnt']));
+            session()->flash('form_data', $request->only(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatcher_no', 'pullout_date', 'hatch_date', 'qc_date', 'rejected_total', 'rejected_total_prcnt']));
 
-            if ($errorMessages->hasAny(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatch_no', 'pullout_date', 'hatch_date', 'qc_date', 'rejected_total', 'rejected_total_prcnt'])) {
+            if ($errorMessages->hasAny(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatcher_no', 'pullout_date', 'hatch_date', 'qc_date', 'rejected_total', 'rejected_total_prcnt'])) {
                 return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
             } 
             if($errorMessages->hasAny(['set_eggs_qty', 'singkit_mata', 'wala_mata', 'maliit_mata', 'malaki_mata', 'unhealed_navel', 'cross_beak', 'small_chick', 'weak_chick', 'black_bottons', 'string_navel', 'bloated', 'rejected_total'])){
@@ -144,7 +144,7 @@ class RejectedPulletsController extends Controller
         $rejectedPullets->production_date = $validatedData['production_date'];
         $rejectedPullets->set_eggs_qty = $validatedData['set_eggs_qty'];
         $rejectedPullets->incubator_no = $validatedData['incubator_no'];
-        $rejectedPullets->hatch_no = $validatedData['hatch_no'];
+        $rejectedPullets->hatcher_no = $validatedData['hatcher_no'];
 
         $rejectedPullets->rejected_pullets_data = $rejected_pullets_data;
 

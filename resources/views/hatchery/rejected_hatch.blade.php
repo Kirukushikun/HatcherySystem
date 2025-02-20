@@ -1,3 +1,5 @@
+@include('components.modal-notification-loader')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,35 +18,7 @@
 </head>
 <body>
 
-    <div class="loading-screen">
-        <div class="loader"></div>
-    </div>
-
-    <!-- PUSH NOTIFICATION -->
-    @if(session()->has('error'))
-        <div class="push-notification danger">
-            <i class="fa-solid fa-bell danger"></i>
-            <div class="notification-message">
-                <h4>{{session('error')}}</h4>
-                <p>{{session('error_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-    @elseif(session()->has('success'))
-        <div class="push-notification success">
-            <i class="fa-solid fa-bell success"></i>
-            <div class="notification-message">
-                <h4>{{session('success')}}</h4>
-                <p>{{session('success_message')}}</p>
-            </div>
-            <i class="fa-solid fa-xmark" id="close-notification"></i>
-        </div>
-    @endif
-    
-    <div class="modal" id="modal">
-
-    </div>
-
+    @yield('modal-notification-loader')
 
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
@@ -63,11 +37,7 @@
         <div class="form-input col-5">
             <div class="input-container column">
                 <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value=""></option>
-                    <option value="#93" {{ session('form_data.ps_no', '') == '#93' ? 'selected' : ''}}>#93</option>
-                    <option value="#94" {{ session('form_data.ps_no', '') == '#94' ? 'selected' : ''}}>#94</option>
-                </select>
+                <x-dropdown :data-category="'ps_no'" />
             </div>
 
             <div class="input-container column">
@@ -79,18 +49,12 @@
                 <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0">
             </div>
             <div class="input-container column">
-                <label for="incubator_no">Incubator  <span></span></label>
-                <select id="incubator_no" name="incubator_no">
-                    <option value=""></option>
-                    <option value="5" {{ session('form_data.incubator_no', '') == '1' ? 'selected' : ''}}>1</option>
-                </select>
+                <label for="incubator_no">Incubator No.  <span></span></label>
+                <x-dropdown :data-category="'incubator_no'" />
             </div>
             <div class="input-container column">
-                <label for="hatcher_no">Hatch # <span></span></label>
-                <select id="hatcher_no" name="hatcher_no">
-                    <option value=""></option>
-                    <option value="1" {{ session('form_data.hatcher_no', '') == '1' ? 'selected' : ''}}>1</option>
-                </select>
+                <label for="hatcher_no">Hatcher No. <span></span></label>
+                <x-dropdown :data-category="'hatcher_no'" />
             </div>
 
             <div class="input-container row">
@@ -205,8 +169,8 @@
                 </div>
                 
             </div>
-
         </div>
+
         <div class="table-body">
             <livewire:rejected-hatch-table />
         </div>

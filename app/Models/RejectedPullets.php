@@ -15,7 +15,7 @@ class RejectedPullets extends Model
         'production_date',
         'set_eggs_qty',
         'incubator_no',
-        'hatch_no',
+        'hatcher_no',
 
         'rejected_pullets_data',
 

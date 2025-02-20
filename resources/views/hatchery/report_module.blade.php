@@ -7,14 +7,13 @@
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
-    
-    <title>Generate Report</title>
+    <title>Document</title>
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 
     <style>
-       /* Chrome, Safari, Edge, Opera */
+        /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -111,7 +110,7 @@
         .report-form .col-5{
             display:grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 30px;            
+            gap: 25px;            
         }
 
 
@@ -271,6 +270,7 @@
         #result-table th:last-child, #result-table td:last-child {
             width: 30%; /* Second column takes 30% of the table width */
         }
+
     </style>
 </head>
 <body>
@@ -278,7 +278,7 @@
     <input type="text" class="targetForm" value="{{$targetForm}}" hidden>
 
     <div class="report-container">
-                @if($targetForm == "egg-collection" && $targetForm != null)
+        @if($targetForm == "egg-collection" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
                     <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
@@ -509,6 +509,116 @@
                         <table id="result-table">
                             <thead>
                                 <th>TOTAL HATCH</th>
+                                <th>PERCENTAGE</th>
+                            </thead>
+                            <tbody>
+                                <td>5000</td>
+                                <td>18.0</td>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-container col-2">
+                        <div class="form-group">
+                            <label for="prepared-by">Prepared By:</label>
+
+                            <!-- Signature Image (Fixed Size) -->
+                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+
+                            <!-- Prepared By Input Field -->
+                            <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date-prepared">Date Prepared:</label>
+                            <input type="text" id="date-prepared" value="{{ date('d/m/Y') }} {{ date('H:i A') }}" readonly>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="report-footer">
+                    Brookside Group of Companies | Brookdale Farms | Poultrypure Farms
+                </div>
+            </form>
+        @elseif ($targetForm == "rejected-pullets" && $targetForm != null)
+            <form class="report-content">
+                <div class="report-header">
+                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
+                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
+                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                </div>
+
+                <div class="report-title">REJECTED PULLETS REPORT</div>
+
+                <div class="report-form">
+
+                    <div class="form-container col-3">
+                        <div class="form-group">
+                            <label for="ps_no">PS No: <span></span></label>
+                            <select name="ps_no" id="ps_no">
+                                <option value=""></option>
+                                <option value="#93">#93</option>
+                                <option value="#94">#94</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="incubator_no">Incubator No: <span></span></label>
+                            <select name="incubator_no" id="incubator_no">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hatcher_no">Hatcher No: <span></span></label>
+                            <select name="hatcher_no" id="hatcher_no">
+                                <option value=""></option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="production_date">Production Date: <span></span></label>
+                            <input type="date" name="production_date" id="production_date" value="{{ date('Y-m-d') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pullout_date">Pull-out Date: <span></span></label>
+                            <input type="date" name="pullout_date" id="pullout_date" value="{{ date('Y-m-d') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="hatch_date">Hatch Date: <span></span></label>
+                            <input type="date" name="hatch_date" id="hatch_date" value="{{ date('Y-m-d') }}">
+                        </div> 
+                        <div class="form-group">
+                            <label for="qc_date">QC Date: <span></span></label>
+                            <input type="date" name="qc_date" id="qc_date" value="{{ date('Y-m-d') }}">
+                        </div> 
+                        <div class="form-group">
+                            <label for="set_eggs_qty">Settable Eggs Quantity:</label>
+                            <input type="number" id="set_eggs_qty" name="set_eggs_qty">
+                        </div>     
+                    </div>
+
+                    <div class="form-container col-5" id="rejected_hatch_table">
+                        @foreach(['ONE EYE CLOSED', 'NO EYES', 'SMALL EYES', 'LARGE EYES', 'UNHEALED NAVEL', 'CROSSED BEAK', 'SMALL CHICK', 'WEAK CHICK', 'BLACK BUTTONS', 'STRING NAVEL', 'BLOATED'] as $item)
+                            <div class="state">
+                                <table>
+                                    <thead>
+                                        <th>{{$item}}</th>
+                                        <th>(%)</th>
+                                    </thead>
+                                    <tbody>
+                                        <td>200</td>
+                                        <td>15.0</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="form-container">
+                        <table id="result-table">
+                            <thead>
+                                <th>TOTAL REJECTED DOP</th>
                                 <th>PERCENTAGE</th>
                             </thead>
                             <tbody>

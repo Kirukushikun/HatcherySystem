@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('production_date');
             $table->integer('set_eggs_qty');
             $table->string('incubator_no');
-            $table->string('hatch_no');
+            $table->string('hatcher_no');
 
             $table->json("rejected_pullets_data");
 
