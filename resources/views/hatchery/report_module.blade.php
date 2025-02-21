@@ -275,7 +275,7 @@
 </head>
 <body>
 
-    <input type="text" class="targetForm" value="{{$targetForm}}" hidden>
+    <input type="text" class="targetForm" value="{{$targetForm}}" id="targetForm" hidden>
 
     <div class="report-container">
         @if($targetForm == "egg-collection" && $targetForm != null)
@@ -293,27 +293,27 @@
                     <div class="form-container col-2">
                         <div class="form-group">
                             <label for="ps-no">PS No:</label>
-                            <input type="text" id="ps-no">
+                            <x-dropdown :data-category="'ps_no'" />
                         </div>
                         <div class="form-group">
                             <label for="house-no">House No:</label>
-                            <input type="text" id="house-no">
+                            <x-dropdown :data-category="'house_no'" />
                         </div>
                         <div class="form-group">
                             <label for="production-date-from">Production Date (From):</label>
-                            <input type="date" id="production-date-from">
+                            <input type="date" id="production_date_from">
                         </div>
                         <div class="form-group">
                             <label for="production-date-to">Production Date (To):</label>
-                            <input type="date" id="production-date-to">
+                            <input type="date" id="production_date_to">
                         </div>
                         <div class="form-group">
-                            <label for="collection-time">Collection Time:</label>
-                            <input type="time" id="collection-time">
+                            <label for="collection_time">Collection Time:</label>
+                            <input type="time" id="collection_time">
                         </div>
                         <div class="form-group">
-                            <label for="collection-quantity">Collection Quantity:</label>
-                            <input type="number" id="collection-quantity">
+                            <label for="collected_qty">Collection Quantity:</label>
+                            <input type="number" id="collected_qty">
                         </div>         
                     </div>
 
@@ -657,6 +657,75 @@
             <button type="submit" class="print">PRINT <i class="fa-solid fa-print"></i></button>
         </div>
     </div>
+    
+    <script>
+
+        let targetform = document.getElementById('targetForm').value;
+
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        if(targetform == 'egg-collection'){
+            // Function to fetch egg collection result
+            function getEggCollectionResult() {
+                const ps_no = document.getElementById("ps_no").value;
+                const production_date_from = document.getElementById("production_date_from").value;
+                const production_date_to = document.getElementById("production_date_to").value;
+
+                // Check if all required fields are filled
+                if (ps_no && production_date_from && production_date_to) {
+                    // Proceed with the fetch request only if all required fields are provided
+                    fetch("/egg-collection/report/result", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken  // Ensure you send the CSRF token if needed
+                        },
+                        body: JSON.stringify({
+                            ps_no: ps_no,
+                            production_date_from: production_date_from,
+                            production_date_to: production_date_to
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Assuming the result is returned as 'egg_quantity_result'
+                            console.log(data.egg_quantity_result);
+                            
+                            // Optionally you can also update the UI with the result
+                            document.getElementById("collected_qty").value = data.egg_quantity_result;
+                            document.getElementById("collection_time").value = data.collection_time;
+                        } else {
+                            alert("Error fetching egg collection result");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                } else {
+                    // Optionally, show a message if the required fields are not filled
+                    console.log("Please fill in all required fields");
+                }
+            }
+
+            // Attach event listeners to the fields
+            let requiredFields = document.querySelectorAll("#ps_no, #production_date_from, #production_date_to");
+
+            requiredFields.forEach(field => {
+                // Trigger getEggCollectionResult only when all fields are filled
+                field.addEventListener("input", () => {
+                    const ps_no = document.getElementById("ps_no").value;
+                    const production_date_from = document.getElementById("production_date_from").value;
+                    const production_date_to = document.getElementById("production_date_to").value;
+
+                    if (ps_no && production_date_from && production_date_to) {
+                        getEggCollectionResult(); // Call the function only when all fields are filled
+                    }
+                });
+            });
+        }
+        
+
+    </script>
     
 </body>
 </html>

@@ -114,6 +114,8 @@ Route::patch('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_reco
 
 Route::get('/{targetForm}/report', [ReportController::class, 'generateReport']);
 
+Route::post('/egg-collection/report/result', [ReportController::class, 'egg_collection_result']);
+
 // PDF ---------
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
