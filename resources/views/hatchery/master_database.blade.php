@@ -6,6 +6,7 @@
     <title>Hatchery Master Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="{{asset('images/BGC icon.ico')}}">
+
     <link rel="stylesheet" href="{{asset('css/styles_master_db.css')}}">
 </head>
 <body>
@@ -41,14 +42,12 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="">PS no.</label>
-                        <select name="" id="">
-                            <option value=""></option>
-                        </select>
+                        <label for="ps_no">PS no.</label>
+                        <x-dropdown :data-category="'ps_no'" />
                     </div>
                     <div class="input-group">
-                        <label for="">Collected Quantity</label>
-                        <input type="number">
+                        <label for="collected_qty">Collected Quantity</label>
+                        <input type="number" name="collected_qty" id="collected_qty">
                     </div>
                     <div class="input-group">
                         <label for="">Production Date (From)</label>
@@ -60,13 +59,13 @@
                     </div>
                 </div>
 
-                <!-- <div class="card-action">
+                <div class="card-action hidden">
                     <button class="save-btn">Save</button>
                     <button class="reset-btn" type="reset">Reset</button>
-                </div> -->
+                </div>
             </form>
 
-            <div class="card c2" id="card2">
+            <form class="card c2" id="card2">
                 <div class="card-label">
                     <span>2</span>
                     <p>Classification for Storage</p>
@@ -91,9 +90,14 @@
                     </div>
                 </div>
 
-            </div>
+                <div class="card-action hidden">
+                    <button class="save-btn">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
 
-            <div class="card c3" id="card3">
+            </form>
+
+            <form class="card c3" id="card3">
                 <div class="card-label">
                     <span>3</span>
                     <p>Storage Pullout Process</p>
@@ -136,7 +140,7 @@
 
                 </div>
 
-            </div>
+            </form>
 
             <div class="card c4" id="card4">
                 <div class="card-label">
@@ -173,6 +177,7 @@
                 </div> -->
 
             </div>
+
             <div class="card c5" id="card5">
                 <div class="card-label">
                     <span>5</span>
@@ -786,13 +791,38 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            let current_step = 1; // Simulated current step (this would come from the database later)
+
+            const forms = document.querySelectorAll(".card");
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             const cardLabels = document.querySelectorAll(".card-label");
             const inputFields = document.querySelectorAll(".card input");
-            
             const datalist = document.getElementById("card13");
 
-            // Click event for sidebar links
+            // Disable all fields beyond the current step
+            forms.forEach(form => {
+                let step = parseInt(form.id.replace("card", "")); // Extract step number
+                if (step > current_step) {
+                    disableForm(form);
+                }
+            });
+
+            function disableForm(form) {
+                form.querySelectorAll("input").forEach(input => input.setAttribute("disabled", true));
+            }
+
+            function enableForm(form) {
+                form.querySelectorAll("input").forEach(input => input.removeAttribute("disabled"));
+            }
+
+            function makeFormReadOnly(form) {
+                form.querySelectorAll("input, select").forEach(input => {
+                    input.setAttribute("readonly", true);
+                    input.setAttribute("disabled", false); // Ensure it's only read-only, not disabled
+                });
+            }
+
+            // Click event for sidebar navigation
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
                     const targetCard = document.querySelector(this.getAttribute("href"));
@@ -800,35 +830,85 @@
                 });
             });
 
-            // Input event for text fields inside cards
-            inputFields.forEach(input => {
-                input.addEventListener("focus", function () {
-                    const parentCard = this.closest(".card");
-                    activateSection(parentCard);
+            // Enable save button only when input has a value
+            forms.forEach(form => {
+                const inputs = form.querySelectorAll("input");
+                const saveButton = form.querySelector(".card-action");
+
+                inputs.forEach(input => {
+                    input.addEventListener("input", () => {
+                        let hasValue = Array.from(inputs).some(input => input.value.trim() !== "");
+                        saveButton.classList.toggle("hidden", !hasValue);
+                    });
                 });
             });
 
-            datalist.addEventListener("pointerdown", function () {
-                activateSection(this);
+            // Simulate saving process and unlocking the next step
+            document.querySelectorAll(".save-btn").forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const form = this.closest(".card");
+                    let step = parseInt(form.id.replace("card", ""));
+
+                    if (step === current_step) {
+                        current_step++;
+                        const nextForm = document.querySelector(`#card${current_step}`);
+                        if (nextForm) enableForm(nextForm);
+                    }
+
+                    // Hide action buttons and make the form read-only
+                    form.querySelector(".card-action").classList.add("hidden");
+                    makeFormReadOnly(form);
+                });
             });
 
-            // Function to handle sidebar and card-label activation
             function activateSection(targetCard) {
+                if (!targetCard) return;
+
+                forms.forEach(form => form.classList.remove("active"));
+                targetCard.classList.add("active");
+
                 // Remove 'active' class from all sidebar links and card labels
                 sidebarLinks.forEach(link => link.classList.remove("active"));
                 cardLabels.forEach(label => label.classList.remove("active"));
 
-                if (targetCard) {
-                    // Activate corresponding sidebar link
-                    const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
-                    if (targetSidebarLink) targetSidebarLink.classList.add("active");
+                // Activate corresponding sidebar link and label
+                const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
+                if (targetSidebarLink) targetSidebarLink.classList.add("active");
 
-                    // Activate card label
-                    const targetLabel = targetCard.querySelector(".card-label");
-                    if (targetLabel) targetLabel.classList.add("active");
-                }
+                const targetLabel = targetCard.querySelector(".card-label");
+                if (targetLabel) targetLabel.classList.add("active");
+            }
+
+            // Handle input focus highlighting
+            inputFields.forEach(input => {
+                input.addEventListener("focus", function () {
+                    highlightSection(this.closest(".card"));
+                });
+            });
+
+            if (datalist) {
+                datalist.addEventListener("pointerdown", function () {
+                    highlightSection(this.closest(".card"));
+                });
+            }
+
+            function highlightSection(targetCard) {
+                if (!targetCard) return;
+
+                // Remove 'active' class from all sidebar links and card labels
+                sidebarLinks.forEach(link => link.classList.remove("active"));
+                cardLabels.forEach(label => label.classList.remove("active"));
+
+                // Activate corresponding sidebar link and label
+                const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
+                if (targetSidebarLink) targetSidebarLink.classList.add("active");
+
+                const targetLabel = targetCard.querySelector(".card-label");
+                if (targetLabel) targetLabel.classList.add("active");
             }
         });
+
     </script>
 </body>
 </html>

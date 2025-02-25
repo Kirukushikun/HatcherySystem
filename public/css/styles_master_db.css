@@ -588,11 +588,11 @@ tbody td:last-child {
     width: 100%;
 }
 
-.card-action{
+.card-action.hidden{
     display: none;
 }
 
-.card-action.active{
+.card-action{
     display: flex;
     justify-content: end;
     gap: 15px;

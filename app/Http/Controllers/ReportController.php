@@ -77,7 +77,7 @@ class ReportController extends Controller
         }
 
         // Get the total collected quantity within the given filters
-        $egg_quantity_result = $egg_quantity_query->sum('egg_collection_qty');  // Ensure your column name is correct
+        $egg_quantity_result = $egg_quantity_query->sum('collected_qty');  // Ensure your column name is correct
 
         if ($egg_quantity_result !== null) {
             return response()->json([

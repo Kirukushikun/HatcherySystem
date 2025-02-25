@@ -201,6 +201,7 @@
             text-align: center;
         }
 
+
         th {
             background-color: #EC8B18; /* Orange header */
             color: white;
@@ -321,6 +322,52 @@
                         </div>         
                     </div>
 
+                    <!-- <div class="form-container">
+                        <table>
+                            <thead>
+                                <th>PS No.</th>
+                                <th>House No. 1</th>
+                                <th>House No. 2</th>
+                                <th>House No. 3</th>
+                                <th>House No. 4</th>
+                                <th>House No. 5</th>
+                                <th>Total:</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>93</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>95</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>98</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">Grand Total:</td>
+                                    <td>10000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
 
                     <div class="form-container col-2">
                         <div class="form-group">
