@@ -173,24 +173,17 @@
                             </thead>
                             
                             <tbody>
-                                <tr>
-                                    <td>PS No.</td>
-                                    <td>93</td>
-                                    <td class="datalist-actions">
-                                        <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                                        <i class="fa-regular fa-trash-can" id="delete-action"></i>
-                                        <i class="fa-solid fa-print" id="print-action"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>PS No.</td>
-                                    <td>94</td>
-                                    <td class="datalist-actions">
-                                        <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                                        <i class="fa-regular fa-trash-can" id="delete-action"></i>
-                                        <i class="fa-solid fa-print" id="print-action"></i>
-                                    </td>
-                                </tr>
+                                    @for ($i = 0; $i < 15; $i++)
+                                        <tr>
+                                            <td>PS No.</td>
+                                            <td>91</td>
+                                            <td class="datalist-actions">
+                                                <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
+                                                <i class="fa-regular fa-trash-can" id="delete-action"></i>
+                                                <i class="fa-solid fa-print" id="print-action"></i>
+                                            </td>
+                                        </tr>
+                                    @endfor
                                 
                             </tbody>
                             
