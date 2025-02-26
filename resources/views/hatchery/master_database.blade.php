@@ -50,12 +50,12 @@
                         <input type="number" name="collected_qty" id="collected_qty">
                     </div>
                     <div class="input-group">
-                        <label for="">Production Date (From)</label>
-                        <input type="date">
+                        <label for="production_date_from">Production Date (From)</label>
+                        <input type="date" name="production_date_from" id="production_date_from">
                     </div>
                     <div class="input-group">
-                        <label for="">Production Date (To)</label>
-                        <input type="date">
+                        <label for="production_date_to">Production Date (To)</label>
+                        <input type="date" name="production_date_to" id="production_date_to">
                     </div>
                 </div>
 
@@ -74,19 +74,19 @@
                 <div class="card-form">
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Non-settable Eggs</label>
-                            <input type="number">
+                            <label for="non_settable_eggs">Non-settable Eggs</label>
+                            <input type="number" name="non_settable_eggs" id="non_settable_eggs">
                         </div>
                         <div class="input-group">
-                            <label for="">Settable Eggs</label>
-                            <input type="number">
+                            <label for="settable_eggs">Settable Eggs</label>
+                            <input type="number" name="settable_eggs" id="settable_eggs">
                         </div>
                     </div>
                     <br>
 
                     <div class="input-group">
-                        <label for="">Remaining Balance</label>
-                        <input type="number">
+                        <label for="remaining_balance">Remaining Balance</label>
+                        <input type="number" name="remaining_balance" id="remaining_balance">
                     </div>
                 </div>
 
@@ -105,36 +105,36 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="">Pullout Date</label>
-                        <input type="date">
+                        <label for="pullout_date">Pullout Date</label>
+                        <input type="date" name="pullout_date" id="pullout_date">
                     </div>
                     <div class="input-group">
-                        <label for="">Set. Egg Quantity</label>
-                        <input type="number">
+                        <label for="settable_eggs_qty">Set. Egg Quantity</label>
+                        <input type="number" name="settable_eggs_qty" id="settable_eggs_qty">
                     </div>
                     <div class="input-group">
-                        <label for="">Inc. No.</label>
-                        <input type="number">
+                        <label for="incubator_no">Incubator No.</label>
+                        <x-dropdown :data-category="'incubator_no'" />
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Prime Quantity</label>
-                            <input type="number">
+                            <label for="prime_qty">Prime Quantity</label>
+                            <input type="number" name="prime_qty" id="prime_qty">
                         </div>   
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text" readonly>
+                            <label for="prime_prcnt">%</label>
+                            <input type="text" name="prime_prcnt" id="prime_prcnt" readonly>
                         </div>                     
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">JP Quantity</label>
-                            <input type="number">
+                            <label for="jp_qty">JP Quantity</label>
+                            <input type="number" name="jp_qty" id="jp_qty">
                         </div>   
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text" readonly>
+                            <label for="jp_prcnt">%</label>
+                            <input type="text" name="jp_prcnt" id="jp_prcnt" readonly>
                         </div>                     
                     </div>
 
@@ -149,32 +149,27 @@
                 </div>
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="">Day 10 Candling Date</label>
-                        <input type="date">
+                        <label for="d10_candling_date">Day 10 Candling Date</label>
+                        <input type="date" name="d10_candling_date" id="d10_candling_date">
                     </div>
                     <div class="input-group">
-                        <label for="">Day 10 Candling Quantity</label>
-                        <input type="number">
+                        <label for="d10_candling_qty">Day 10 Candling Quantity</label>
+                        <input type="number" name="d10_candling_qty" id="d10_candling_qty">
                     </div>
                     <div class="input-group">
-                        <label for="">Day 10 Breakout Quantity</label>
-                        <input type="number">
+                        <label for="d10_breakout_qty">Day 10 Breakout Quantity</label>
+                        <input type="number" name="d10_breakout_qty" id="d10_breakout_qty">
                     </div>
                     <div class="input-group">
-                        <label for="">Day 10 Breaout %</label>
-                        <input type="text" readonly>
+                        <label for="d10_breakout_prcnt">Day 10 Breaout %</label>
+                        <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" readonly>
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">Day 10  Inc Quantity</label>
-                        <input type="text" readonly>
+                        <label for="d10_inc_qty">Day 10  Inc Quantity</label>
+                        <input type="text" name="d10_inc_qty" id="d10_inc_qty" readonly>
                     </div>
                 </div>
-
-
-                                <!-- <div class="card-action">
-
-                </div> -->
 
             </div>
 
@@ -185,18 +180,18 @@
                 </div>
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">Day 18.5 Candling Date</label>
-                        <input type="date">
+                        <label for="d18_candling_date">Day 18.5 Candling Date</label>
+                        <input type="date" name="d18_candling_date" id="d18_candling_date">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">Infertiles Quantity</label>
-                        <input type="number">
+                        <label for="infertiles_qty">Infertiles Quantity</label>
+                        <input type="number" name="infertiles_qty" id="infertiles_qty">
                     </div>
                     <br>    
                     <div class="input-group">
-                        <label for="">Embryonic Eggs Quantity</label>
-                        <input type="text" disabled>
+                        <label for="embyonic_eggs_qty">Embryonic Eggs Quantity</label>
+                        <input type="text" name="embyonic_eggs_qty" id="embyonic_eggs_qty" readonly>
                     </div>
 
                 </div>
@@ -214,22 +209,22 @@
                         <label for="">TOP LOCATION </label>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.8</label>
-                                <input type="number">
+                                <label for="top_above_temp_qty">37.8</label>
+                                <input type="number" name="top_above_temp_qty" id="top_above_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
-                                <input type="text" readonly>
+                                <label for="top_above_temp_prcnt">%</label>
+                                <input type="text" name="top_above_temp_prcnt" id="top_above_temp_prcnt" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.7</label>
-                                <input type="number">
+                                <label for="top_below_temp_qty">37.7</label>
+                                <input type="number" name="top_below_temp_qty" id="top_below_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
-                                <input type="text" readonly>
+                                <label for="top_below_temp_prcnt">%</label>
+                                <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" readonly>
                             </div>                    
                         </div>
  
@@ -239,53 +234,49 @@
                         <label for="">MID LOCATION </label>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.8</label>
-                                <input type="number">
+                                <label for="mid_above_temp_qty">37.8</label>
+                                <input type="number" name="mid_above_temp_qty" id="mid_above_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
+                                <label for="mid_above_temp_prcnt">%</label>
                                 <input type="text" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.7</label>
-                                <input type="number">
+                                <label for="mid_below_temp_qty">37.7</label>
+                                <input type="number" name="mid_below_temp_qty" id="mid_below_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
-                                <input type="text" readonly>
+                                <label for="mid_below_temp_prcnt">%</label>
+                                <input type="text" name="mid_below_temp_prcnt" id="mid_below_temp_prcnt" readonly>
                             </div>                    
                         </div>
- 
                     </div>
                     <br>
                     <div class="input-container">
                         <label for="">LOW LOCATION </label>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.8</label>
-                                <input type="number">
+                                <label for="low_above_temp_qty">37.8</label>
+                                <input type="number" name="low_above_temp_qty" id="low_above_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
-                                <input type="text" readonly>
+                                <label for="low_above_temp_prcnt">%</label>
+                                <input type="text" name="low_above_temp_prcnt" id="low_above_temp_prcnt" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
                             <div class="input-group">
-                                <label for="">37.7</label>
-                                <input type="number">
+                                <label for="low_below_temp_qty">37.7</label>
+                                <input type="number" name="low_below_temp_qty" id="low_below_temp_qty">
                             </div>   
                             <div class="input-group prcnt">
-                                <label for="">%</label>
-                                <input type="text" readonly>
+                                <label for="low_below_temp_prcnt">%</label>
+                                <input type="text" name="low_below_temp_prcnt" id="low_below_temp_prcnt" readonly>
                             </div>                    
                         </div>
- 
                     </div>
-
-                
                 </div>
                 
 
@@ -300,20 +291,20 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="">Hatcher</label>
-                        <input type="text">
+                        <label for="hatcher_no">Hatcher No</label>
+                        <x-dropdown :data-category="'hatcher_no'" />
                     </div>
                     <div class="input-group">
-                        <label for="">Hatcher Date</label>
-                        <input type="date">
+                        <label for="hatcher_date">Hatcher Date</label>
+                        <input type="date" name="hatcher_date" id="hatcher_date">
                     </div>
                     <div class="input-group">
-                        <label for="">Rejected Hatch Qty</label>
-                        <input type="number">
+                        <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
+                        <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty">
                     </div>
                     <div class="input-group">
-                        <label for="">Good Hatch Qty</label>
-                        <input type="text" readonly>
+                        <label for="accepted_hatch_qty">Good Hatch Qty</label>
+                        <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" readonly>
                     </div>
                 </div>
 
@@ -330,13 +321,13 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">Cockerels Quantity</label>
-                        <input type="number">
+                        <label for="cock_qty">Cockerels Quantity</label>
+                        <input type="number" name="cock_qty" id="cock_qty">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">DOP Quantity</label>
-                        <input type="text" readonly>
+                        <label for="dop_qty">DOP Quantity</label>
+                        <input type="text" name="dop_qty" id="dop_qty">
                     </div>
 
                 </div>
@@ -354,19 +345,19 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">QC Date</label>
-                        <input type="date">
+                        <label for="qc_date">QC Date</label>
+                        <input type="date" name="qc_date" id="qc_date">
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Rejected DOP Qty</label>
-                            <input type="number">
+                            <label for="rejected_dop_qty">Rejected DOP Qty</label>
+                            <input type="number" name="rejected_dop_qty" id="rejected_dop_qty">
                         </div>
                         
                         <div class="input-group">
-                            <label for="">Good DOP Qty</label>
-                            <input type="text" readonly>
+                            <label for="accepted_dop_qty">Good DOP Qty</label>
+                            <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" readonly>
                         </div>
                     </div>
 
@@ -791,38 +782,13 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let current_step = 1; // Simulated current step (this would come from the database later)
-
-            const forms = document.querySelectorAll(".card");
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             const cardLabels = document.querySelectorAll(".card-label");
             const inputFields = document.querySelectorAll(".card input");
+            
             const datalist = document.getElementById("card13");
 
-            // Disable all fields beyond the current step
-            forms.forEach(form => {
-                let step = parseInt(form.id.replace("card", "")); // Extract step number
-                if (step > current_step) {
-                    disableForm(form);
-                }
-            });
-
-            function disableForm(form) {
-                form.querySelectorAll("input").forEach(input => input.setAttribute("disabled", true));
-            }
-
-            function enableForm(form) {
-                form.querySelectorAll("input").forEach(input => input.removeAttribute("disabled"));
-            }
-
-            function makeFormReadOnly(form) {
-                form.querySelectorAll("input, select").forEach(input => {
-                    input.setAttribute("readonly", true);
-                    input.setAttribute("disabled", false); // Ensure it's only read-only, not disabled
-                });
-            }
-
-            // Click event for sidebar navigation
+            // Click event for sidebar links
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
                     const targetCard = document.querySelector(this.getAttribute("href"));
@@ -830,90 +796,35 @@
                 });
             });
 
-            // Enable save button only when input has a value
-            forms.forEach(form => {
-                const inputs = form.querySelectorAll("input");
-                const saveButton = form.querySelector(".card-action");
-
-                inputs.forEach(input => {
-                    input.addEventListener("input", () => {
-                        let hasValue = Array.from(inputs).some(input => input.value.trim() !== "");
-                        saveButton.classList.toggle("hidden", !hasValue);
-                    });
-                });
-            });
-
-            // Simulate saving process and unlocking the next step
-            document.querySelectorAll(".save-btn").forEach(button => {
-                button.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const form = this.closest(".card");
-                    let step = parseInt(form.id.replace("card", ""));
-
-                    if (step === current_step) {
-                        current_step++;
-
-                        if(current_step == 2){
-                            current_step += 1; //Skip Step 2
-                        };
-
-                        const nextForm = document.querySelector(`#card${current_step}`);
-                        if (nextForm) enableForm(nextForm);
-                    }
-
-                    // Hide action buttons and make the form read-only
-                    form.querySelector(".card-action").classList.add("hidden");
-                    makeFormReadOnly(form);
-                });
-            });
-
-            function activateSection(targetCard) {
-                if (!targetCard) return;
-
-                forms.forEach(form => form.classList.remove("active"));
-                targetCard.classList.add("active");
-
-                // Remove 'active' class from all sidebar links and card labels
-                sidebarLinks.forEach(link => link.classList.remove("active"));
-                cardLabels.forEach(label => label.classList.remove("active"));
-
-                // Activate corresponding sidebar link and label
-                const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
-                if (targetSidebarLink) targetSidebarLink.classList.add("active");
-
-                const targetLabel = targetCard.querySelector(".card-label");
-                if (targetLabel) targetLabel.classList.add("active");
-            }
-
-            // Handle input focus highlighting
+            // Input event for text fields inside cards
             inputFields.forEach(input => {
                 input.addEventListener("focus", function () {
-                    highlightSection(this.closest(".card"));
+                    const parentCard = this.closest(".card");
+                    activateSection(parentCard);
                 });
             });
 
-            if (datalist) {
-                datalist.addEventListener("pointerdown", function () {
-                    highlightSection(this.closest(".card"));
-                });
-            }
+            datalist.addEventListener("pointerdown", function () {
+                activateSection(this);
+            });
 
-            function highlightSection(targetCard) {
-                if (!targetCard) return;
-
+            // Function to handle sidebar and card-label activation
+            function activateSection(targetCard) {
                 // Remove 'active' class from all sidebar links and card labels
                 sidebarLinks.forEach(link => link.classList.remove("active"));
                 cardLabels.forEach(label => label.classList.remove("active"));
 
-                // Activate corresponding sidebar link and label
-                const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
-                if (targetSidebarLink) targetSidebarLink.classList.add("active");
+                if (targetCard) {
+                    // Activate corresponding sidebar link
+                    const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
+                    if (targetSidebarLink) targetSidebarLink.classList.add("active");
 
-                const targetLabel = targetCard.querySelector(".card-label");
-                if (targetLabel) targetLabel.classList.add("active");
+                    // Activate card label
+                    const targetLabel = targetCard.querySelector(".card-label");
+                    if (targetLabel) targetLabel.classList.add("active");
+                }
             }
         });
-
     </script>
 </body>
 </html>
