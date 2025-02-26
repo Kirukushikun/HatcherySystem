@@ -59,10 +59,10 @@
                     </div>
                 </div>
 
-                <div class="card-action hidden">
+                <!-- <div class="card-action">
                     <button class="save-btn">Save</button>
                     <button class="reset-btn" type="reset">Reset</button>
-                </div>
+                </div> -->
             </form>
 
             <form class="card c2" id="card2">
@@ -90,10 +90,8 @@
                     </div>
                 </div>
 
-                <div class="card-action hidden">
-                    <button class="save-btn">Save</button>
-                    <button class="reset-btn" type="reset">Reset</button>
-                </div>
+                <!-- <div class="card-action ">
+                </div> -->
 
             </form>
 
@@ -140,6 +138,9 @@
 
                 </div>
 
+                <!-- <div class="card-action ">
+                </div> -->
+
             </form>
 
             <div class="card c4" id="card4">
@@ -171,6 +172,9 @@
                     </div>
                 </div>
 
+                <!-- <div class="card-action ">
+                </div> -->
+
             </div>
 
             <div class="card c5" id="card5">
@@ -195,6 +199,9 @@
                     </div>
 
                 </div>
+
+                <!-- <div class="card-action ">
+                </div> -->
 
             </div>
 
@@ -278,8 +285,9 @@
                         </div>
                     </div>
                 </div>
-                
 
+                <!-- <div class="card-action ">
+                </div> -->
 
             </div>
 
