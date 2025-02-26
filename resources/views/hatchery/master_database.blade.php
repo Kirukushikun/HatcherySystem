@@ -852,6 +852,11 @@
 
                     if (step === current_step) {
                         current_step++;
+
+                        if(current_step == 2){
+                            current_step += 1; //Skip Step 2
+                        };
+
                         const nextForm = document.querySelector(`#card${current_step}`);
                         if (nextForm) enableForm(nextForm);
                     }
