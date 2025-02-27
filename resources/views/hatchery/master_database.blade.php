@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-entries">
-            <form class="card c1" id="card1">
+            <div class="card c1" id="card1">
                 <div class="card-label active">
                     <span>1</span>
                     <p>Collected Eggs</p>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="input-group">
                         <label for="collected_qty">Collected Quantity</label>
-                        <input type="number" name="collected_qty" id="collected_qty">
+                        <input type="number" name="collected_qty" id="collected_qty" placeholder="0">
                     </div>
                     <div class="input-group">
                         <label for="production_date_from">Production Date (From)</label>
@@ -58,14 +58,9 @@
                         <input type="date" name="production_date_to" id="production_date_to">
                     </div>
                 </div>
+            </div>
 
-                <!-- <div class="card-action">
-                    <button class="save-btn">Save</button>
-                    <button class="reset-btn" type="reset">Reset</button>
-                </div> -->
-            </form>
-
-            <form class="card c2" id="card2">
+            <div class="card c2" id="card2">
                 <div class="card-label">
                     <span>2</span>
                     <p>Classification for Storage</p>
@@ -75,27 +70,27 @@
                     <div class="input-container">
                         <div class="input-group">
                             <label for="non_settable_eggs">Non-settable Eggs</label>
-                            <input type="number" name="non_settable_eggs" id="non_settable_eggs">
+                            <input type="number" name="non_settable_eggs" id="non_settable_eggs" placeholder="0" readonly>
                         </div>
                         <div class="input-group">
                             <label for="settable_eggs">Settable Eggs</label>
-                            <input type="number" name="settable_eggs" id="settable_eggs">
+                            <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" readonly>
                         </div>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <label for="remaining_balance">Remaining Balance</label>
-                        <input type="number" name="remaining_balance" id="remaining_balance">
+                        <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" readonly>
                     </div>
                 </div>
 
                 <!-- <div class="card-action ">
                 </div> -->
 
-            </form>
+            </div>
 
-            <form class="card c3" id="card3">
+            <div class="card c3" id="card3">
                 <div class="card-label">
                     <span>3</span>
                     <p>Storage Pullout Process</p>
@@ -108,7 +103,7 @@
                     </div>
                     <div class="input-group">
                         <label for="settable_eggs_qty">Set. Egg Quantity</label>
-                        <input type="number" name="settable_eggs_qty" id="settable_eggs_qty">
+                        <input type="number" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0">
                     </div>
                     <div class="input-group">
                         <label for="incubator_no">Incubator No.</label>
@@ -117,31 +112,33 @@
                     <div class="input-container">
                         <div class="input-group">
                             <label for="prime_qty">Prime Quantity</label>
-                            <input type="number" name="prime_qty" id="prime_qty">
+                            <input type="number" name="prime_qty" id="prime_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
                             <label for="prime_prcnt">%</label>
-                            <input type="text" name="prime_prcnt" id="prime_prcnt" readonly>
+                            <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" readonly>
                         </div>                     
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
                             <label for="jp_qty">JP Quantity</label>
-                            <input type="number" name="jp_qty" id="jp_qty">
+                            <input type="number" name="jp_qty" id="jp_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
                             <label for="jp_prcnt">%</label>
-                            <input type="text" name="jp_prcnt" id="jp_prcnt" readonly>
+                            <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" readonly>
                         </div>                     
                     </div>
+
+
 
                 </div>
 
                 <!-- <div class="card-action ">
                 </div> -->
 
-            </form>
+            </div>
 
             <div class="card c4" id="card4">
                 <div class="card-label">
@@ -162,7 +159,7 @@
                         <input type="number" name="d10_breakout_qty" id="d10_breakout_qty">
                     </div>
                     <div class="input-group">
-                        <label for="d10_breakout_prcnt">Day 10 Breaout %</label>
+                        <label for="d10_breakout_prcnt">Day 10 Breakout %</label>
                         <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" readonly>
                     </div>
                     <br>
@@ -246,7 +243,7 @@
                             </div>   
                             <div class="input-group prcnt">
                                 <label for="mid_above_temp_prcnt">%</label>
-                                <input type="text" readonly>
+                                <input type="text" name="mid_above_temp_prcnt" id="mid_above_temp_prcnt" readonly>
                             </div>                    
                         </div>
                         <div class="input-container">
@@ -383,52 +380,52 @@
                 <div class="card-form col-3">
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Infertile Qty</label>
-                            <input type="text">
+                            <label for="infertile_qty">Infertile Qty</label>
+                            <input type="text" name="infertile_qty" id="infertile_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text">
+                            <label for="infertile_prcnt">%</label>
+                            <input type="text" name="infertile_prcnt" id="infertile_prcnt">
                         </div>
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Cock Qty</label>
+                            <label for="cock_qty">Cock Qty</label>
                             <input type="text">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text">
+                            <label for="cock_prcnt">%</label>
+                            <input type="text" name="cock_prcnt" id="cock_prcnt">
                         </div>
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Rejected Hatch Qty</label>
-                            <input type="text">
+                            <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
+                            <input type="text" name="rejected_hatch_qty" id="rejected_hatch_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text">
+                            <label for="rejected_hatch_prcnt">%</label>
+                            <input type="text" name="rejected_hatch_prcnt" id="rejected_hatch_prcnt">
                         </div>
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="">Rejected DOP Qty</label>
-                            <input type="text">
+                            <label for="rejected_dop_qty">Rejected DOP Qty</label>
+                            <input type="text" name="rejected_dop_qty" id="rejected_dop_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="">%</label>
-                            <input type="text">
+                            <label for="rejected_dop_prcnt">%</label>
+                            <input type="text" name="rejected_dop_prcnt" id="rejected_dop_prcnt">
                         </div>
                     </div>
                     <div class="input-group">
-                        <label for="">Total Qty</label>
-                        <input type="text">
+                        <label for="total_qty">Total Qty</label>
+                        <input type="text" name="total_qty" id="total_qty">
                     </div>
                     
 
@@ -439,8 +436,8 @@
                 </div>
                 <div class="card-form col-3">
                     <div class="input-group">
-                        <label for="">Total</label>
-                        <input type="text">
+                        <label for="total_boxes">Total</label>
+                        <input type="text" name="total_boxes" id="total_boxes">
                     </div>
                     <div class="input-group">
                         <label for="">%</label>
@@ -460,11 +457,7 @@
                         <button style="width: 100%; margin-top: 10px; color: white; background-color: #EC8B18; border: none; padding: 10px; border-radius: 7px; cursor: pointer; font-size: 15px;">View / Entry</button>
                     </div>
                 </div>
-                
-
-                <!-- <div class="card-action">
-
-                </div> -->
+            
             </div>
 
             <div class="card c11" id="card9">
@@ -475,13 +468,13 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="">Prime Qty</label>
-                        <input type="number">
+                        <label for="dispatch_prime_qty">Prime Qty</label>
+                        <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">Jr Prime Qty</label>
-                        <input type="number">
+                        <label for="dispatch_jr_prime_qty">Jr Prime Qty</label>
+                        <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty">
                     </div>
                 </div>
             </div>
@@ -834,5 +827,7 @@
             }
         });
     </script>
+
+    <script src="{{asset('js/master_database.js')}}" defer></script>
 </body>
 </html>
