@@ -137,9 +137,9 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+/* input[type=number] {
   -moz-appearance: textfield;
-}
+} */
 
 .body .input-group{
     display: flex;
@@ -161,9 +161,10 @@ input[type=number] {
     gap: 15px;
 
     position: absolute;
-    right: 30px;
+    right: 25px;
     bottom: 25px;
 }
+
 
 .form-action button{
     padding: 10px 20px;

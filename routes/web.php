@@ -15,6 +15,9 @@ use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
 use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
+use App\Http\Livewire\MaintenanceValueTable;
+
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\PDFController;
@@ -104,6 +107,15 @@ Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejec
 
 Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
   
+
+// Admin Maintenance -------------------------------------------------------------------------------------------
+
+Route::get('/fetch-maintenance-value-data', [MaintenanceValueTable::class, 'fetchData'])->name('maintenance.value.fetch'); // Maintenance Value Table Data Fetch
+
+Route::post('/maintenance/store', [AdminController::class, 'update_module_store'])->name('maintenance.store'); // Store
+
+Route::delete('/maintenance/delete/{targetID}', [AdminController::class, 'update_module_delete'])->name('maintenance.delete'); // Delete
+
 // Edit ---------
 
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View

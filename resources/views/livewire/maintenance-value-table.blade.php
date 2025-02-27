@@ -1,22 +1,11 @@
 <table>
     <thead>
         <tr>
-            <th>No.</th>
-            <th>PS No.</th>
-            <th>Setting Date</th>
-            <th>Incubator No.</th>
-            <th>Location</th>
-            <th>Temp Check Date</th>
-            <th>Temperature</th>
-            <th>Quantity</th>
-            <th>Encoded/Modified By</th>
+            <th>Dynamic Field</th>
+            <th>Field Value</th>
             <th>Actions</th>
-
-            <!-- <th>Date Encoded/Modified</th> -->
-            <!-- <th>Action Done</th> -->
         </tr>
     </thead>
-    
     <tbody id="table-body">
     </tbody>
 </table>
@@ -57,11 +46,10 @@
 
             loadData(); // Pass correct values to your function
         });
-
     });
 
     function loadData() {
-        fetch(`/fetch-egg-temperature-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
+        fetch(`/fetch-maintenance-value-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
             .then(response => response.json())
             .then(data => {
                 totalPages = data.last_page;
@@ -74,15 +62,8 @@
 
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
-                            <td>${row.id}</td>
-                            <td>${row.ps_no}</td>
-                            <td>${setting_date}</td>
-                            <td>${row.incubator_no}</td>
-                            <td>${row.location}</td>
-                            <td>${temperature_check_date}</td>
-                            <td>${row.temperature}</td>
-                            <td>${row.quantity}</td>
-                            <td>${row.encoded_by}</td>
+                            <td>${row.data_category}</td>
+                            <td>${row.data_value}</td>
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
@@ -96,7 +77,6 @@
             })
             .catch(error => console.log("Error fetching data", error));
     }
-
     function refreshTable() {
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = '';
@@ -166,4 +146,5 @@
             tableBody.appendChild(row);
         }
     }
+
 </script>

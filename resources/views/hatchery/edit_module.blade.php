@@ -217,7 +217,7 @@
             </div>
         </form>
 
-        @elseif ($targetForm == 'rejected-pullets' && $targetForm != null)
+    @elseif ($targetForm == 'rejected-pullets' && $targetForm != null)
         <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'rejected-pullets', 'targetID' => $record->id]) }}" method="POST">
             @csrf @method('PATCH')
             <div class="form-header">
@@ -566,6 +566,43 @@
             </div>
 
         </form>
+    @elseif ($targetForm == 'maintenance-value' && $targetForm != null)
+        <div class="form-header">
+            <img class="logo" src="/Images/BDL.png" alt="">
+            <h2>MAINTENANCE VALUE (EDIT FORM)</h2>
+            <div class="exit-icon">
+                <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/admin'">
+            </div>
+        </div>
+            <form class="body" action="{{ route('edit.record.update', ['targetForm' => 'maintenance-value', 'targetID' => $record->id]) }}" method="POST">
+                @method('PATCH')
+                @csrf
+                <div class="table-form">
+                    <div class="form-header">
+                        <h4>Add Maintenance Value</h4>
+                    </div>
+                    <div class="form-input col-2">  
+                        <div class="input-container column">
+                            <label for="data_category">Dynamic Fields<span></span></label>
+                            <select name="data_category" id="data_category">
+                                <option value="" selected></option>
+                                <option value="ps_no" {{ $record->data_category == 'ps_no' ? 'selected' : ''}}>PS No.</option>
+                                <option value="hatcher_no" {{ $record->data_category == 'hatcher_no' ? 'selected' : ''}}>Hatcher No.</option>
+                                <option value="house_no" {{ $record->data_category == 'house_no' ? 'selected' : ''}}>House No.</option>
+                                <option value="incubator_no" {{ $record->data_category == 'incubator_no' ? 'selected' : ''}}>Incubator No.</option>
+                            </select>
+                        </div>
+                        <div class="input-container column">
+                            <label for="data_value">Value<span></span></label>
+                            <input type="text" name="data_value" id="data_value" value="{{ $record->data_value }}" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-action active">
+                        <button class="save-btn" type="submit">Save</button>
+                        <button class="reset-btn" type="reset">Reset</button>
+                    </div>
+                </div>
+            </form>
     @endif
 
     <script>

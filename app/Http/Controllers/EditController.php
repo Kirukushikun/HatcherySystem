@@ -13,6 +13,7 @@ use App\Models\EggCollection;
 use App\Models\EggTemperature;
 use App\Models\RejectedHatch;
 use App\Models\RejectedPullets;
+use App\Models\MaintenanceValues;
 
   
 class EditController extends Controller
@@ -34,6 +35,9 @@ class EditController extends Controller
         elseif($targetForm == 'rejected-pullets'){
             $dataRecord = RejectedPullets::find($targetID);   
             $dataRecord->rejected_pullets_data = json_decode($dataRecord->rejected_pullets_data, true); // Decode JSON into array         
+        }
+        elseif($targetForm == 'maintenance-value'){
+            $dataRecord = MaintenanceValues::find($targetID);
         }
         return view('hatchery.edit_module', [
             'targetForm' => $targetForm,
@@ -365,7 +369,26 @@ class EditController extends Controller
 
             return redirect('/rejected-pullets')->with('success', 'Updated Successfully')->with('success_message', 'Rejected Pullets Entry Updated Successfully');
         }
-        
+        elseif($targetForm == 'maintenance-value'){
+            $validator = Validator::make($request->all(), [
+                'data_category' => 'required',
+                'data_value' => 'required',
+            ]);
+    
+            if ($validator->fails()) {
+                return back()->with('error', 'Please fill in all the required fields.');
+            }
+    
+            $validatedData = $validator->validated();
+    
+            $adminInput = MaintenanceValues::find($targetID);
+            $adminInput->data_category = $validatedData['data_category'];
+            $adminInput->data_value = $validatedData['data_value'];
+            $adminInput->save();
+    
+            return redirect('/admin')->with('success', 'Updated Successfully')->with('success_message', 'Maintenance Value Updated Successfully');
+       
+        }
     }
 
     public function logAction($action, $currentState, $beforeState = null, $targetForm){
