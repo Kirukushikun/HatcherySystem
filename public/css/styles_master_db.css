@@ -83,6 +83,11 @@ label{
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
 }
+.col-33{
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 20px;
+}
 .col-4{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -141,6 +146,19 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.input-group label{
+    position: relative;
+}
+.input-group label span{
+    position: absolute;
+    left: 10px;
+    bottom: -20px;
+    color: #ea4435d7;
+    font-weight: 600;
+    font-size: 12px;
+    background-color: white;
+}
+
 .body .input-group{
     display: flex;
     flex-direction: column;
@@ -155,12 +173,14 @@ input[type=number] {
     gap: 20px;
 }
 
+/* .form-action{
+    display: none;
+} */
+
 .form-action{
     display: none;
     justify-content: end;
     gap: 15px;
-
-    position: absolute;
     right: 30px;
     bottom: 25px;
 }

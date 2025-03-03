@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-entries">
-            <div class="card c1" id="card1">
+            <form class="card c1" id="card1">
                 <div class="card-label active">
                     <span>1</span>
                     <p>Collected Eggs</p>
@@ -42,25 +42,30 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="ps_no">PS no.</label>
+                        <label for="ps_no">PS no. <span></span></label>
                         <x-dropdown :data-category="'ps_no'" />
                     </div>
                     <div class="input-group">
-                        <label for="collected_qty">Collected Quantity</label>
+                        <label for="collected_qty">Collected Quantity <span></span></label>
                         <input type="number" name="collected_qty" id="collected_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="production_date_from">Production Date (From)</label>
+                        <label for="production_date_from">Production Date (From) <span></span></label>
                         <input type="date" name="production_date_from" id="production_date_from">
                     </div>
                     <div class="input-group">
-                        <label for="production_date_to">Production Date (To)</label>
+                        <label for="production_date_to">Production Date (To) <span></span></label>
                         <input type="date" name="production_date_to" id="production_date_to">
                     </div>
                 </div>
-            </div>
 
-            <div class="card c2" id="card2">
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
+            </form>
+
+            <form class="card c2" id="card2">
                 <div class="card-label">
                     <span>2</span>
                     <p>Classification for Storage</p>
@@ -84,97 +89,97 @@
                         <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" readonly>
                     </div>
                 </div>
+            </form>
 
-                <!-- <div class="card-action ">
-                </div> -->
-
-            </div>
-
-            <div class="card c3" id="card3">
+            <form class="card c3" id="card3">
                 <div class="card-label">
                     <span>3</span>
                     <p>Storage Pullout Process</p>
                 </div>
 
                 <div class="card-form col-2">
+
                     <div class="input-group">
-                        <label for="pullout_date">Pullout Date</label>
+                        <label for="pullout_date">Pullout Date <span></span></label>
                         <input type="date" name="pullout_date" id="pullout_date">
                     </div>
+                    
                     <div class="input-group">
-                        <label for="settable_eggs_qty">Set. Egg Quantity</label>
+                        <label for="settable_eggs_qty">Set. Egg Quantity <span></span></label>
                         <input type="number" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="incubator_no">Incubator No.</label>
+                        <label for="incubator_no">Incubator No. <span></span></label>
                         <x-dropdown :data-category="'incubator_no'" />
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="prime_qty">Prime Quantity</label>
+                            <label for="prime_qty">Prime Quantity <span></span></label>
                             <input type="number" name="prime_qty" id="prime_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
-                            <label for="prime_prcnt">%</label>
+                            <label for="prime_prcnt">% <span></span></label>
                             <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" readonly>
                         </div>                     
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="jp_qty">JP Quantity</label>
+                            <label for="jp_qty">JP Quantity <span></span></label>
                             <input type="number" name="jp_qty" id="jp_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
-                            <label for="jp_prcnt">%</label>
+                            <label for="jp_prcnt">% <span></span></label>
                             <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" readonly>
                         </div>                     
                     </div>
-
-
-
                 </div>
 
-                <!-- <div class="card-action ">
-                </div> -->
 
-            </div>
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
 
-            <div class="card c4" id="card4">
+            </form>
+
+            <form class="card c4" id="card4">
                 <div class="card-label">
                     <span>4</span>
                     <p>Setter Process Entry</p>
                 </div>
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="d10_candling_date">Day 10 Candling Date</label>
+                        <label for="d10_candling_date">Day 10 Candling Date <span></span></label>
                         <input type="date" name="d10_candling_date" id="d10_candling_date">
                     </div>
                     <div class="input-group">
-                        <label for="d10_candling_qty">Day 10 Candling Quantity</label>
-                        <input type="number" name="d10_candling_qty" id="d10_candling_qty">
+                        <label for="d10_candling_qty">Day 10 Candling Quantity <span></span></label>
+                        <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="d10_breakout_qty">Day 10 Breakout Quantity</label>
-                        <input type="number" name="d10_breakout_qty" id="d10_breakout_qty">
+                        <label for="d10_breakout_qty">Day 10 Breakout Quantity <span></span></label>
+                        <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0">
                     </div>
                     <div class="input-group">
                         <label for="d10_breakout_prcnt">Day 10 Breakout %</label>
-                        <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" readonly>
+                        <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" readonly>
                     </div>
                     <br>
                     <div class="input-group">
                         <label for="d10_inc_qty">Day 10  Inc Quantity</label>
-                        <input type="text" name="d10_inc_qty" id="d10_inc_qty" readonly>
+                        <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" readonly>
                     </div>
                 </div>
 
-                <!-- <div class="card-action ">
-                </div> -->
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
 
-            </div>
+            </form>
 
-            <div class="card c5" id="card5">
+            <form class="card c5" id="card5">
                 <div class="card-label">
                     <span>5</span>
                     <p>Candling Process Entry</p>
@@ -197,12 +202,14 @@
 
                 </div>
 
-                <!-- <div class="card-action ">
-                </div> -->
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
 
-            </div>
+            </form>
 
-            <div class="card c6" id="card5">
+            <form class="card c6" id="card6">
                 <div class="card-label">
                     <span>5.1</span>
                     <p>Egg Shell Temperature Check</p>
@@ -231,7 +238,6 @@
                                 <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" readonly>
                             </div>                    
                         </div>
- 
                     </div>
                     <br>
                     <div class="input-container">
@@ -283,12 +289,13 @@
                     </div>
                 </div>
 
-                <!-- <div class="card-action ">
-                </div> -->
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
+            </form>
 
-            </div>
-
-            <div class="card c7" id="card6">
+            <form class="card c7" id="card7">
                 <div class="card-label">
                     <span>6</span>
                     <p>Hatcher Pullout Process</p>
@@ -313,12 +320,13 @@
                     </div>
                 </div>
 
-                <!-- <div class="card-action">
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
+            </form>
 
-                </div> -->
-            </div>
-
-            <div class="card c8" id="card7">
+            <form class="card c8" id="card8">
                 <div class="card-label">
                     <span>7</span>
                     <p>Sexing</p>
@@ -332,17 +340,19 @@
                     <br>
                     <div class="input-group">
                         <label for="dop_qty">DOP Quantity</label>
-                        <input type="text" name="dop_qty" id="dop_qty">
+                        <input type="text" name="dop_qty" id="dop_qty" readonly>
                     </div>
-
                 </div>
 
-                <!-- <div class="card-action">
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
 
-                </div> -->
-            </div>
+                
+            </form>
 
-            <div class="card c9" id="card8">
+            <form class="card c9" id="card9">
                 <div class="card-label">
                     <span>8</span>
                     <p>QC/QA Process Entry</p>
@@ -368,16 +378,17 @@
 
                 </div>
 
-                <!-- <div class="card-action">
+                <div class="form-action">
+                    <button class="save-btn" type="submit">Save</button>
+                    <button class="reset-btn" type="reset">Reset</button>
+                </div>
+            </form>
 
-                </div> -->
-            </div>
-
-            <div class="card c10" id="card10">
+            <form class="card c10" id="card10">
                 <div class="card-label">
                     <p>Forecast Base on Last Hatch</p>
                 </div>
-                <div class="card-form col-3">
+                <div class="card-form col-33">
                     <div class="input-container">
                         <div class="input-group">
                             <label for="infertile_qty">Infertile Qty</label>
@@ -389,68 +400,69 @@
                             <input type="text" name="infertile_prcnt" id="infertile_prcnt">
                         </div>
                     </div>
+
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="cock_qty">Cock Qty</label>
-                            <input type="text">
+                            <label for="frcst_cock_qty">Cock Qty</label>
+                            <input type="text" name="frcst_cock_qty" id="frcst_cock_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="cock_prcnt">%</label>
-                            <input type="text" name="cock_prcnt" id="cock_prcnt">
+                            <label for="frcst_cock_prcnt">%</label>
+                            <input type="text" name="frcst_cock_prcnt" id="frcst_cock_prcnt">
                         </div>
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
-                            <input type="text" name="rejected_hatch_qty" id="rejected_hatch_qty">
+                            <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
+                            <input type="text" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="rejected_hatch_prcnt">%</label>
-                            <input type="text" name="rejected_hatch_prcnt" id="rejected_hatch_prcnt">
+                            <label for="frcst_rejected_hatch_prcnt">%</label>
+                            <input type="text" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt">
                         </div>
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="rejected_dop_qty">Rejected DOP Qty</label>
-                            <input type="text" name="rejected_dop_qty" id="rejected_dop_qty">
+                            <label for="frcst_rejected_dop_qty">Rejected DOP Qty</label>
+                            <input type="text" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty">
                         </div>
                         
                         <div class="input-group prcnt">
-                            <label for="rejected_dop_prcnt">%</label>
-                            <input type="text" name="rejected_dop_prcnt" id="rejected_dop_prcnt">
+                            <label for="frcst_rejected_dop_prcnt">%</label>
+                            <input type="text" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt">
                         </div>
                     </div>
                     <div class="input-group">
-                        <label for="total_qty">Total Qty</label>
-                        <input type="text" name="total_qty" id="total_qty">
+                        <label for="forecast_total_qty">Total Qty</label>
+                        <input type="text" name="forecast_total_qty" id="forecast_total_qty">
                     </div>
                     
-
                 </div>
 
                 <div class="card-label">
                     <p>Forecast # of Boxes</p>
                 </div>
-                <div class="card-form col-3">
+
+                <div class="card-form col-33">
                     <div class="input-group">
-                        <label for="total_boxes">Total</label>
-                        <input type="text" name="total_boxes" id="total_boxes">
+                        <label for="frcst_total_boxes">Total</label>
+                        <input type="text" name="frcst_total_boxes" id="frcst_total_boxes">
                     </div>
                     <div class="input-group">
-                        <label for="">%</label>
-                        <input type="text">
+                        <label for="frcst_settable_eggs_prcnt">%</label>
+                        <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="">Prime</label>
-                        <input type="text">
+                        <label for="frcst_prime">Prime</label>
+                        <input type="text" name="frcst_prime" id="frcst_prime">
                     </div>
                     <div class="input-group">
-                        <label for="">Junior Prime</label>
-                        <input type="text">
+                        <label for="frcst_jr_prime">Junior Prime</label>
+                        <input type="text" name="frcst_jr_prime" id="frcst_jr_prime">
                     </div>
                     <div class="input-group">
                         <label for="">DOP Booking</label>
@@ -458,9 +470,9 @@
                     </div>
                 </div>
             
-            </div>
+            </form>
 
-            <div class="card c11" id="card9">
+            <form class="card c11" id="card11">
                 <div class="card-label">
                     <span>9</span>
                     <p>Dispath Process Entry</p>
@@ -477,12 +489,12 @@
                         <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty">
                     </div>
                 </div>
-            </div>
+            </form>
 
-            <div class="card c12" id="card10">
-                <h1>20</h1>
+            <form class="card c12" id="card12">
+                <h1 id="total_boxes">0</h1>
                 <p>Forcasted Number of <br> Boxes</p>
-            </div>
+            </form>
 
             <div class="card c13" id="card13">
                 <div class="table-header">
@@ -784,47 +796,192 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sidebarLinks = document.querySelectorAll(".sidebar a");
+            const cardSections = document.querySelectorAll(".card");
             const cardLabels = document.querySelectorAll(".card-label");
-            const inputFields = document.querySelectorAll(".card input");
-            
-            const datalist = document.getElementById("card13");
 
-            // Click event for sidebar links
+            let activeForm = null; // Store active form
+
+            function activateSection(targetCard) {
+                if (!targetCard) return;
+
+                // Remove 'active' class from all sections
+                sidebarLinks.forEach(link => link.classList.remove("active"));
+                cardLabels.forEach(label => label.classList.remove("active"));
+                cardSections.forEach(card => card.classList.remove("active"));
+
+                // Activate the target section
+                document.querySelector(`.sidebar a[href="#${targetCard.id}"]`)?.classList.add("active");
+                targetCard.querySelector(".card-label")?.classList.add("active");
+                targetCard.classList.add("active");
+
+                activeForm = targetCard; // Update active form
+
+                // Hide all form-action sections except inside the active form
+                document.querySelectorAll(".form-action").forEach(action => {
+                    action.style.display = targetCard.contains(action) ? "flex" : "none";
+                });
+
+                // Update event listeners for the new active form
+                updateFormListener();
+            }
+
+            // Sidebar click event
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (event) {
+                    // event.preventDefault();
                     const targetCard = document.querySelector(this.getAttribute("href"));
                     activateSection(targetCard);
                 });
             });
 
-            // Input event for text fields inside cards
-            inputFields.forEach(input => {
+            // Input focus event for automatic activation
+            document.querySelectorAll(".card input, .card select, .card textarea").forEach(input => {
                 input.addEventListener("focus", function () {
-                    const parentCard = this.closest(".card");
-                    activateSection(parentCard);
+                    activateSection(this.closest(".card"));
                 });
             });
 
-            datalist.addEventListener("pointerdown", function () {
-                activateSection(this);
-            });
+            // Initialize first form as active
+            if (cardSections.length > 0) {
+                activateSection(cardSections[0]);
+            }
 
-            // Function to handle sidebar and card-label activation
-            function activateSection(targetCard) {
-                // Remove 'active' class from all sidebar links and card labels
-                sidebarLinks.forEach(link => link.classList.remove("active"));
-                cardLabels.forEach(label => label.classList.remove("active"));
+            function updateFormListener() {
+                if (!activeForm) return;
 
-                if (targetCard) {
-                    // Activate corresponding sidebar link
-                    const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetCard.id}"]`);
-                    if (targetSidebarLink) targetSidebarLink.classList.add("active");
+                let formInputs = activeForm.querySelectorAll("input, select, textarea");
+                let resetButtons = activeForm.querySelectorAll(".form-action .reset-btn");
+                let formAction = activeForm.querySelector(".form-action");
 
-                    // Activate card label
-                    const targetLabel = targetCard.querySelector(".card-label");
-                    if (targetLabel) targetLabel.classList.add("active");
+                if (!formInputs.length || !formAction) return; // Avoid errors
+
+                // Function to check if form has values
+                function checkFormValues() {
+                    formAction.style.display = [...formInputs].some(input => input.value.trim() !== "") ? "flex" : "none";
+                }
+
+                // Remove previous event listeners (prevents duplicates)
+                formInputs.forEach(input => {
+                    input.oninput = checkFormValues;
+                    input.onchange = checkFormValues;
+                });
+
+                resetButtons.forEach(button => {
+                    button.onclick = function () {
+                        formInputs.forEach(input => {
+                            input.value = ""; // Clear all inputs
+                            input.style.border = ""; // Reset borders
+                            let labelSpan = input.closest(".input-group")?.querySelector("label span");
+                            if (labelSpan) labelSpan.textContent = "";
+                        });
+                        formAction.style.display = "none"; // Hide form actions
+                    };
+                });
+
+                // Remove existing submit event before adding a new one
+                activeForm.onsubmit = function (event) {
+                    event.preventDefault();
+                    if (validateForm()) {
+                        // showModal('save'); // Show modal when all fields are filled
+                        simulateFormSave();
+                    }
+                };
+
+                // Initial check (for pre-filled forms)
+                checkFormValues();
+            }
+
+            function validateForm() {
+                if (!activeForm) return false; // Ensure activeForm exists
+
+                let isValid = true;
+
+                // Define required fields per form ID
+                let requiredFields = {
+                    "card1": ["ps_no", "collected_qty", "production_date_from", "production_date_to"],
+                    "card3": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
+                    "card4": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
+                    "card5": ["d18_candling_date", "infertiles_qty"],
+                    "card6": ["top_above_temp_qty", "top_below_temp_qty", "mid_above_temp_qty", "mid_below_temp_qty", "low_above_temp_qty", "low_below_temp_qty"],
+                    "card7": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
+                    "card8": ["cock_qty"],
+                    "card9": ["qc_date", "rejected_dop_qty"],
+                    "card10": ["infertile_prcnt", "frcst_cock_prcnt", "frcst_rejected_hatch_prcnt", "frcst_rejected_dop_prcnt"],
+                    "card11": ["dispatch_prime_qty"],
+                };
+
+                // Get fields for the currently active form
+                let currentRequiredFields = requiredFields[activeForm.id] || [];
+
+                currentRequiredFields.forEach(id => {
+                    let field = activeForm.querySelector(`#${id}`); // Select field inside active form only
+                    if (!field) return; // Skip if field is not found
+
+                    let labelSpan = field.closest(".input-group")?.querySelector("label span");
+
+                    if (!field.value.trim()) {
+                        field.style.border = "2px solid #ea4435d7";
+
+                        if (labelSpan) {
+                            labelSpan.textContent = "This field is required";
+                            labelSpan.style.color = "#ea4435d7";
+                        }
+
+                        isValid = false;
+                    } else {
+                        field.style.border = "";
+                        if (labelSpan) labelSpan.textContent = "";
+                    }
+                });
+
+                return isValid;
+            }
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentStep = 1; // Fetch this dynamically from the backend
+
+            const skippableCards = ["card2", "card6"]; // Skippable but still fillable
+            const alwaysEnabledCards = ["card10", "card13"]; // Always enabled
+            const allCards = document.querySelectorAll(".card");
+
+            function disableFutureForms() {
+                allCards.forEach(card => {
+                    let stepNumber = parseInt(card.id.replace("card", ""));
+
+                    if (alwaysEnabledCards.includes(card.id)) {
+                        // Ensure alwaysEnabledCards remain active
+                        card.classList.remove("disabled");
+                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+                    } else if (stepNumber > currentStep) {
+                        // Disable non-skippable future steps
+                        card.classList.add("disabled");
+                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
+                    } else {
+                        card.classList.remove("disabled");
+                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+                    }
+                });
+            }
+
+            function autoSkipStep() {
+                while (skippableCards.includes(`card${currentStep}`)) {
+                    currentStep++; // Skip over skippable steps
                 }
             }
+
+            function proceedToNextStep() {
+                currentStep++;
+                autoSkipStep();
+                disableFutureForms();
+            }
+
+            // Run these functions initially
+            autoSkipStep();
+            disableFutureForms();
         });
     </script>
 

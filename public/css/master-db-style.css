@@ -157,10 +157,14 @@ input[type=number] {
 
 .form-action{
     display: none;
+}
+
+.form-action.active{
+    display: flex;
     justify-content: end;
     gap: 15px;
 
-    position: absolute;
+    /* position: absolute; */
     right: 30px;
     bottom: 25px;
 }

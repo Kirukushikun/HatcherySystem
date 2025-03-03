@@ -164,7 +164,7 @@ input[type=number] {
     justify-content: end;
     gap: 15px;
 
-    position: absolute;
+    /* position: absolute; */
     right: 25px;
     bottom: 25px;
 }
