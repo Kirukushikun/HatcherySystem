@@ -56,13 +56,23 @@
                 const tableBody = document.getElementById('table-body');
 
                 tableBody.innerHTML = '';
+
+                // Define a mapping object for renaming keys
+                const categoryMapping = {
+                    ps_no: "PS No.",
+                    hatcher_no: "Hatcher No.",
+                    house_no: "House No.",
+                    incubator_no: "Incubator No.",
+                };
+
                 data.data.forEach(row => {
-                    let setting_date = new Date(row.setting_date).toLocaleDateString();
-                    let temperature_check_date = new Date(row.temperature_check_date).toLocaleDateString();
+
+                // Use mapped value, fallback to original if not found
+                let displayCategory = categoryMapping[row.data_category] || row.data_category;
 
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
-                            <td>${row.data_category}</td>
+                            <td>${displayCategory}</td>
                             <td>${row.data_value}</td>
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
@@ -77,6 +87,7 @@
             })
             .catch(error => console.log("Error fetching data", error));
     }
+
     function refreshTable() {
         const tableBody = document.getElementById('table-body');
         tableBody.innerHTML = '';
@@ -134,7 +145,7 @@
         for (let i = 0; i < 10; i++) { // 10 rows
             const row = document.createElement("tr");
             
-            for (let j = 0; j < 10; j++) { // 10 columns per row
+            for (let j = 0; j < 3; j++) { // 3 columns per row
                 let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%";
                 const cell = document.createElement("td");
                 const skeleton = document.createElement("div");

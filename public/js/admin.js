@@ -183,7 +183,7 @@ function deleteRecord(targetID) {
     .then(data => {
         if (data.success) {
             document.getElementById("modal").classList.remove("active");
-            createPushNotification("danger", "Deleted Successfully", "Maintenance record deleted successfully");
+            createPushNotification("danger", "Deleted Successfully", "Maintenance Value deleted successfully");
 
             updatePagination(); // Update pagination
             loadData(); // Reload data
