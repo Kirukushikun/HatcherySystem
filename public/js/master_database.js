@@ -1,3 +1,10 @@
+//make every input type number prevent user from entering special characters just purely number
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    })  
+});
+
 let collectedEggs = {
     ps_no: document.getElementById('ps_no'),
     collected_qty: document.getElementById('collected_qty'),
@@ -29,8 +36,14 @@ let setterProcess = {
     d10_inc_qty: document.getElementById('d10_inc_qty'),
 };
 
+
+classificationStorage.non_settable_eggs.addEventListener('input', () => {
+    classificationStorage.settable_eggs.value = Number(collectedEggs.collected_qty.value) - Number(classificationStorage.non_settable_eggs.value);
+    classificationStorage.remaining_balance.value = Number(classificationStorage.settable_eggs.value);
+})
+
 //Collected Quantity function to generate settable eggs and balance
-collectedEggs.collected_qty.addEventListener('change', () => {
+collectedEggs.collected_qty.addEventListener('input', () => {
     let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
 
     classificationStorage.settable_eggs.value = collectedQty;
@@ -38,7 +51,7 @@ collectedEggs.collected_qty.addEventListener('change', () => {
 });
 
 // Pullout Quantity function to update remaining balance
-pulloutStorage.settable_eggs_qty.addEventListener('change', () => {
+pulloutStorage.settable_eggs_qty.addEventListener('input', () => {
     let settableEggs = Number(classificationStorage.settable_eggs.value) || 0;
     let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
 
@@ -53,10 +66,11 @@ pulloutStorage.settable_eggs_qty.addEventListener('change', () => {
     }
 
     calculateBoxes(pulloutQty);
+    calculateFrcstBoxes(pulloutQty);
 });
 
-pulloutStorage.prime_qty.addEventListener('change', updatePullout);
-pulloutStorage.jp_qty.addEventListener('change', updatePulloutByJP); // 🟢 New function
+pulloutStorage.prime_qty.addEventListener('input', updatePullout);
+pulloutStorage.jp_qty.addEventListener('input', updatePulloutByJP); // 🟢 New function
 
 function updatePullout() {
     let settableEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
@@ -68,6 +82,8 @@ function updatePullout() {
 
     // Update percentages
     updatePercentages(settableEggs, primeQty, jpQty);
+
+    calculatePJPBoxes(settableEggs, primeQty, jpQty)
 }
 
 // 🟢 New function: Triggered when JP Quantity is changed
@@ -80,6 +96,8 @@ function updatePulloutByJP() {
 
     // Update percentages
     updatePercentages(settableEggs, primeQty, jpQty);
+
+    calculatePJPBoxes(settableEggs, primeQty, jpQty)
 }
 
 // 🟢 New helper function to calculate percentages
@@ -89,7 +107,7 @@ function updatePercentages(settableEggs, primeQty, jpQty) {
 }
 
 
-setterProcess.d10_candling_qty.addEventListener('change', updateSetterProcess); // Update d10_inc
+setterProcess.d10_candling_qty.addEventListener('input', updateSetterProcess); // Update d10_inc
 
 function updateSetterProcess(){
     let settableEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
@@ -107,7 +125,7 @@ let candlingProcess = {
     embyonic_eggs_qty: document.getElementById('embyonic_eggs_qty')
 }
 
-candlingProcess.infertiles_qty.addEventListener('change', updateCandlingProcess);
+candlingProcess.infertiles_qty.addEventListener('input', updateCandlingProcess);
 
 function updateCandlingProcess(){
     candlingProcess.embyonic_eggs_qty.value = setterProcess.d10_inc_qty.value - candlingProcess.infertiles_qty.value;
@@ -123,7 +141,7 @@ const hatcherProcess = {
     accepted_hatch_qty: document.getElementById('accepted_hatch_qty')
 };
 
-hatcherProcess.rejected_hatch_qty.addEventListener('change', updateHatcherProcess);
+hatcherProcess.rejected_hatch_qty.addEventListener('input', updateHatcherProcess);
 
 function updateHatcherProcess(){
     hatcherProcess.accepted_hatch_qty.value = candlingProcess.embyonic_eggs_qty.value - hatcherProcess.rejected_hatch_qty.value;
@@ -136,7 +154,7 @@ const sexingProcess = {
     dop_qty: document.getElementById('dop_qty')
 };
 
-sexingProcess.cock_qty.addEventListener('change', updateSexingProcess);
+sexingProcess.cock_qty.addEventListener('input', updateSexingProcess);
 
 function updateSexingProcess(){
     sexingProcess.dop_qty.value = hatcherProcess.accepted_hatch_qty.value - sexingProcess.cock_qty.value;
@@ -149,7 +167,7 @@ const qualityControl = {
     accepted_dop_qty: document.getElementById('accepted_dop_qty')
 };
 
-qualityControl.rejected_dop_qty.addEventListener('change', updateQualityControl);
+qualityControl.rejected_dop_qty.addEventListener('input', updateQualityControl);
 
 function updateQualityControl(){
     qualityControl.accepted_dop_qty.value = sexingProcess.dop_qty.value - qualityControl.rejected_dop_qty.value;
@@ -161,8 +179,8 @@ const dispatchProcess = {
     dispatch_jr_prime_qty: document.getElementById('dispatch_jr_prime_qty')
 };
 
-dispatchProcess.dispatch_prime_qty.addEventListener('change', updateDispatchProcess);
-dispatchProcess.dispatch_jr_prime_qty.addEventListener('change', updateDispatchByJP); // 🟢 New event listener
+dispatchProcess.dispatch_prime_qty.addEventListener('input', updateDispatchProcess);
+dispatchProcess.dispatch_jr_prime_qty.addEventListener('input', updateDispatchByJP); // 🟢 New event listener
 
 function updateDispatchProcess() {
     let goodDOPQty = Number(qualityControl.accepted_dop_qty.value) || 0;
@@ -203,6 +221,12 @@ let BaseForecast = {
     frcst_jr_prime: document.getElementById('frcst_jr_prime')
 };
 
+// 🟢 Automatically Attach Event Listeners to All `_prcnt` Fields
+Object.keys(BaseForecast).forEach(key => {
+    if (key.includes('_prcnt')) {
+        BaseForecast[key].addEventListener('input', updateForecastQuantity);
+    }
+});
 
 // 🟢 General Function to Calculate Quantity from Percentage
 function updateForecastQuantity(event) {
@@ -211,7 +235,8 @@ function updateForecastQuantity(event) {
     let targetQtyField = BaseForecast[targetPercentField.id.replace('_prcnt', '_qty')]; // Map % field to qty field
 
     if (targetQtyField) {
-        targetQtyField.value = Math.round((targetPercentField.value / 100) * pulloutQty);
+        let percentage = Number(targetPercentField.value) || 0;
+        targetQtyField.value = Math.round((percentage / 100) * pulloutQty) || 0;
     }
 
     updateForcastPercentage();
@@ -223,25 +248,58 @@ function updateForcastPercentage() {
     let frcstRejectedHatchQty = Number(BaseForecast.frcst_rejected_hatch_qty.value) || 0;
     let frcstRejectedDopQty = Number(BaseForecast.frcst_rejected_dop_qty.value) || 0;
 
-    BaseForecast.forecast_total_qty.value = infertileQty + frcstCockQty + frcstRejectedHatchQty + frcstRejectedDopQty;
+    let totalForecast = infertileQty + frcstCockQty + frcstRejectedHatchQty + frcstRejectedDopQty;
+    BaseForecast.forecast_total_qty.value = totalForecast || 0;
 
-    let totalSettable = pulloutStorage.settable_eggs_qty.value - BaseForecast.forecast_total_qty.value;
-    BaseForecast.frcst_total_boxes.value = Math.ceil(totalSettable / 100);
+    let totalSettable = (Number(pulloutStorage.settable_eggs_qty.value) || 0) - totalForecast;
+    totalSettable = Math.max(totalSettable, 0); // Prevent negative values
 
-    BaseForecast.frcst_settable_eggs_prcnt.value = Math.round((totalSettable / pulloutStorage.settable_eggs_qty.value) * 100);
+    calculateFrcstBoxes(totalSettable);
+
+    calculatePJPBoxes(
+        Number(pulloutStorage.settable_eggs_qty.value) || 0,
+        Number(pulloutStorage.prime_qty.value) || 0,
+        Number(pulloutStorage.jp_qty.value) || 0,
+        totalForecast
+    );
 }
 
-// 🟢 Automatically Attach Event Listeners to All `_prcnt` Fields
-Object.keys(BaseForecast).forEach(key => {
-    if (key.includes('_prcnt')) {
-        BaseForecast[key].addEventListener('change', updateForecastQuantity);
+function calculateBoxes(settableEggs, eggsPerBox = 104) {
+    document.getElementById('total_boxes').innerText = Math.floor((Number(settableEggs) || 0) / eggsPerBox) || 0;
+}
+
+function calculateFrcstBoxes(totalSettable) {
+    let eggsPerBox = 104;
+    BaseForecast.frcst_total_boxes.value = Math.floor(totalSettable / eggsPerBox) || 0;
+
+    let totalEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
+    BaseForecast.frcst_settable_eggs_prcnt.value = totalEggs > 0 ? Math.round((totalSettable / totalEggs) * 100) : 0;
+}
+
+function calculatePJPBoxes(settableEggs, primeQty, jpQty, additionalDeduction = 0) {
+    settableEggs = Number(settableEggs) || 0;
+    primeQty = Number(primeQty) || 0;
+    jpQty = Number(jpQty) || 0;
+    additionalDeduction = Number(additionalDeduction) || 0;
+
+    if (settableEggs <= 0) {
+        BaseForecast.frcst_prime.value = 0;
+        BaseForecast.frcst_jr_prime.value = 0;
+        return;
     }
-});
 
-function calculateBoxes(settableEggs, eggsPerBox = 100) {
-    // return Math.ceil(settableEggs / eggsPerBox);
-    document.getElementById('total_boxes').innerText = Math.ceil(settableEggs / eggsPerBox);
+    let eggsPerBox = 104;
+    let usableEggs = Math.max(settableEggs - additionalDeduction, 0); // Prevent negative usable eggs
+    let totalBoxes = Math.floor(usableEggs / eggsPerBox) || 0;
+
+    let primePercentage = (settableEggs > 0) ? (primeQty / settableEggs) * 100 : 0;
+    let primeBoxes = Math.floor(totalBoxes * (primePercentage / 100)) || 0;
+    let jpBoxes = totalBoxes - primeBoxes; // Remaining goes to JP
+
+    BaseForecast.frcst_prime.value = primeBoxes;
+    BaseForecast.frcst_jr_prime.value = Math.max(jpBoxes, 0); // Ensure no negative values
 }
+
 
 let temperatureCheck = {
     //TOP ABOVE 37.8
@@ -268,7 +326,7 @@ let temperatureCheck = {
 
 Object.keys(temperatureCheck).forEach(key => {
     if (key.includes('_qty')) {
-        temperatureCheck[key].addEventListener('change', updateTemperatureCheck);
+        temperatureCheck[key].addEventListener('input', updateTemperatureCheck);
     }
 });
 
@@ -281,3 +339,4 @@ function updateTemperatureCheck(event) {
         targetPercentField.value = ((targetQtyField.value / incQty) * 100).toFixed(2);
     }
 }   
+
