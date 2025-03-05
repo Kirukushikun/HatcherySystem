@@ -73,7 +73,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     }
     
 });
-function showModal(button, targetID = null) {
+function showModalMaintenance(button, targetID = null) {
 
     if (button === "save") {
         modal.classList.add("active");
@@ -110,7 +110,7 @@ function showModal(button, targetID = null) {
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="confirm-button delete-btn" onclick="deleteRecord(${targetID})">
+                    <button type="button" class="confirm-button delete-btn" onclick="deleteRecordMaintenance(${targetID})">
                         Delete
                     </button>
                     <button type="button" class="cancel-button">Cancel</button>
@@ -160,7 +160,7 @@ function storeRecord(){
     .catch(error => console.error("Fetch Error:", error));
 }
 
-function deleteRecord(targetID) {
+function deleteRecordMaintenance(targetID) {
     if (!targetID) {
         console.error("No target ID provided for deletion.");
         return;
@@ -185,8 +185,8 @@ function deleteRecord(targetID) {
             document.getElementById("modal").classList.remove("active");
             createPushNotification("danger", "Deleted Successfully", "Maintenance Value deleted successfully");
 
-            updatePagination(); // Update pagination
-            loadData(); // Reload data
+            updatePaginationMaintenance(); // Update pagination
+            loadDataMaintenance(); // Reload data
 
         } else {
             alert("Error deleting record: " + (data.message || "Unknown error"));

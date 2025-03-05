@@ -5,26 +5,25 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Http\Request;
-use App\Models\MaintenanceValues;
+use App\Models\Audit;
 
-class MaintenanceValueTable extends Component
+class AuditTrailTable extends Component
 {
     public function fetchData(Request $request){
-        $query = MaintenanceValues::query()->orderBy('data_category')->orderByRaw('CAST(data_value AS SIGNED) ASC');
+        $query = Audit::query()->orderBy('created_at', 'desc');
 
-    
         // Search Handling
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
-                $q->where('data_category', 'like', "%{$searchTerm}%")
-                    ->orWhere('data_value', 'like', "%{$searchTerm}%");
+                $q->where('action', 'like', "%{$searchTerm}%")
+                    ->orWhere('table', 'like', "%{$searchTerm}%");
             });
         }
     
         // Sorting Handling
         $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'asc');
+        $sortOrder = $request->get('sort_order', 'desc');
 
         // Check if sorting by 'data_category'
         if ($sortBy === 'data_category') {
@@ -42,7 +41,7 @@ class MaintenanceValueTable extends Component
             $query->orderBy($sortBy, $sortOrder);
         }
         // Pagination Handling
-        $data = $query->paginate(5);
+        $data = $query->paginate(7);
     
         return response()->json([
             'data' => $data->items(),
@@ -51,5 +50,4 @@ class MaintenanceValueTable extends Component
             'total' => $data->total(),
         ]);
     }
-    
 }

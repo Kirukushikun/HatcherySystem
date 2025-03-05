@@ -1,31 +1,31 @@
 <table>
     <thead>
         <tr>
-            <th>Dynamic Field</th>
-            <th>Field Value</th>
-            <th>Actions</th>
+            <th>Action Done</th>
+            <th>Table</th>
+            <th>User</th>
+            <th>Values</th>
         </tr>
     </thead>
-
-    <tbody id="table-maintenance">
+    
+    <tbody id="table-audit">
     </tbody>
     
 </table>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
 
-        skeletonLoaderMaintenance();
+        skeletonLoaderAudit();
 
         setTimeout(() => {
-            loadDataMaintenance();
+            loadDataAudit();
         }, 1000);
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("input", function (e) {
             searchQuery = e.target.value;
-            loadDataMaintenance();
+            loadDataAudit();
         });
 
         document.querySelector(".sort-btn").addEventListener("change", function (e) {
@@ -40,70 +40,69 @@
             // Extract sortOrder (everything after the last underscore)
             sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
 
-            loadDataMaintenance(); // Pass correct values to your function
+            loadDataAudit(); // Pass correct values to your function
         });
     });
 
-    function loadDataMaintenance() {
-        fetch(`/fetch-maintenance-value-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
+    function loadDataAudit() {
+        fetch(`/fetch-audit-trail-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
             .then(response => response.json())
             .then(data => {
                 totalPages = data.last_page;
-                const tableBody = document.getElementById('table-maintenance');
+                const tableBody = document.getElementById('table-audit');
 
                 tableBody.innerHTML = '';
 
                 // Define a mapping object for renaming keys
-                const categoryMapping = {
-                    ps_no: "PS No.",
-                    hatcher_no: "Hatcher No.",
-                    house_no: "House No.",
-                    incubator_no: "Incubator No.",
+                const tableMapping = {
+                    egg_collection: "Egg Collection Entry",
+                    egg_temperature: "Egg Temperature Entry",
+                    rejected_hatch: "Rejected Hatch Entry",
+                    rejected_pullets: "Rejected Pullets Entry",
                 };
 
                 data.data.forEach(row => {
 
                 // Use mapped value, fallback to original if not found
-                let displayCategory = categoryMapping[row.data_category] || row.data_category;
+                let displayTable = tableMapping[row.table] || row.table;
 
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
-                            <td>${displayCategory}</td>
-                            <td>${row.data_value}</td>
-                            <td class="datalist-actions">
-                                <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModalMaintenance('edit', ${row.id})"></i>
-                                <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModalMaintenance('delete', ${row.id})"></i>
+                            <td>${row.action}</td>
+                            <td>${displayTable}</td>
+                            <td>${row.user_id}</td>
+                            <td>
+                            <button style="width: 100%;color: white;background-color: #EC8B18;border: none;padding: 5px;border-radius: 7px;cursor: pointer;font-size: 15px;" onclick="showModalAudit('view', ${row.id})">View</button>
                             </td>
                         </tr>
                     `;   
                 });
                 
-                updatePaginationMaintenance();
+                updatePaginationAudit();
                 loadingScreen(); // Running a function after data is loaded to read all load class
             })
             .catch(error => console.log("Error fetching data", error));
     }
-
-    function refreshTableMaintenance() {
-        const tableBody = document.getElementById('table-maintenance');
+    function refreshTableAudit() {
+        const tableBody = document.getElementById('table-audit');
         tableBody.innerHTML = '';
 
-        skeletonLoaderMaintenance();
+        skeletonLoaderAudit();   
         
         setTimeout(() => {
-            loadDataMaintenance();
+            loadDataAudit();
         }, 1000);
 
-        updatePaginationMaintenance();
+        updatePaginationAudit();
     }
 
     //Pagination Function
-    function updatePaginationMaintenance() {
-        const paginationContainer = document.getElementById("pagination-maintenance");
+    function updatePaginationAudit() {
+        const paginationContainer = document.getElementById("pagination-audit");
         paginationContainer.innerHTML = "";
 
         if (currentPage > 1) {
-            paginationContainer.innerHTML += `<a href="#" onclick="changePageMaintenance(event, ${currentPage - 1})"><i class="fa-solid fa-caret-left"></i></a>`;
+            paginationContainer.innerHTML += `<a href="#" onclick="changePage(event, ${currentPage - 1})"><i class="fa-solid fa-caret-left"></i></a>`;
         }
 
         let startPage = Math.max(1, currentPage - 2);
@@ -117,31 +116,31 @@
             if (i === currentPage) {
                 paginationContainer.innerHTML += `<a href="#" class="active">${i}</a>`;
             } else {
-                paginationContainer.innerHTML += `<a href="#" onclick="changePageMaintenance(event, ${i})">${i}</a>`;
+                paginationContainer.innerHTML += `<a href="#" onclick="changePage(event, ${i})">${i}</a>`;
             }
         }
 
         if (currentPage < totalPages) {
-            paginationContainer.innerHTML += `<a href="#" onclick="changePageMaintenance(event, ${currentPage + 1})"><i class="fa-solid fa-caret-right"></i></a>`;
+            paginationContainer.innerHTML += `<a href="#" onclick="changePage(event, ${currentPage + 1})"><i class="fa-solid fa-caret-right"></i></a>`;
         }
     }
 
-    function changePageMaintenance(event, page) {
+    function changePage(event, page) {
         event.preventDefault(); // Prevents default anchor behavior
         if (page >= 1 && page <= totalPages) {
             currentPage = page;
-            loadDataMaintenance();
+            loadDataAudit();
         }
     }
 
     //Skeleton Loader Function
-    function skeletonLoaderMaintenance(){
-        const tableBody = document.getElementById('table-maintenance');
+    function skeletonLoaderAudit(){
+        const tableBody = document.getElementById('table-audit');
 
         for (let i = 0; i < 10; i++) { // 10 rows
             const row = document.createElement("tr");
             
-            for (let j = 0; j < 3; j++) { // 3 columns per row
+            for (let j = 0; j < 4; j++) { // 4 columns per row
                 let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%";
                 const cell = document.createElement("td");
                 const skeleton = document.createElement("div");
@@ -155,3 +154,4 @@
     }
 
 </script>
+

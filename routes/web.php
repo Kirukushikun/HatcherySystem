@@ -10,12 +10,14 @@ use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
 use App\Http\Controllers\RejectedHatchController;
 use App\Http\Controllers\RejectedPulletsController;
+use App\Http\Controllers\AuditController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
 use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
 use App\Http\Livewire\MaintenanceValueTable;
+use App\Http\Livewire\AuditTrailTable;
 
 use App\Http\Controllers\AdminController;
 
@@ -115,6 +117,14 @@ Route::get('/fetch-maintenance-value-data', [MaintenanceValueTable::class, 'fetc
 Route::post('/maintenance/store', [AdminController::class, 'update_module_store'])->name('maintenance.store'); // Store
 
 Route::delete('/maintenance/delete/{targetID}', [AdminController::class, 'update_module_delete'])->name('maintenance.delete'); // Delete
+
+//Audit Trail
+
+Route::get('/fetch-audit-trail-data', [AuditTrailTable::class, 'fetchData'])->name('audit.trail.fetch'); // View
+
+Route::get('/fetch-audit-data/{targetID}', [AuditController::class, 'fetchAuditData'])->name('audit.trail.data'); // Fetch Target ID Data
+
+Route::delete('/audit/delete/{targetID}', [AuditController::class, 'audit_trail_delete'])->name('audit.delete'); // Delete
 
 // Edit ---------
 

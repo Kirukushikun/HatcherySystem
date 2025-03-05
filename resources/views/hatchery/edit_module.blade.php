@@ -110,7 +110,7 @@
               <div class="input-container column">
                   <label for="ps_no">PS no. <span></span></label>
                   <select name="ps_no" id="ps_no">
-                      <option value="" selected></option>
+                      <option value=""selected></option>
                       <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
                       <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
                       <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>

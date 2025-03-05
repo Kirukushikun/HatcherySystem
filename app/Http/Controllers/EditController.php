@@ -224,6 +224,11 @@ class EditController extends Controller
     
             // Create a new RejectedHatch record
             $rejectedHatch = RejectedHatch::find($targetID);
+
+            // Get the old values
+            $beforeState = $rejectedHatch->toArray(); 
+            $beforeState = json_encode($beforeState);
+
             $rejectedHatch->ps_no = $validatedData['ps_no'];
             $rejectedHatch->production_date = $validatedData['production_date'];
             $rejectedHatch->set_eggs_qty = $validatedData['set_eggs_qty'];
@@ -238,6 +243,9 @@ class EditController extends Controller
             $rejectedHatch->rejected_total_percentage = $validatedData['rejected_total_prcnt'];
             
             $rejectedHatch->save();
+
+            // Log the action with before state
+            $this->logAction('update', $rejectedHatch, $beforeState,'rejected-hatch');
 
             return redirect('/rejected-hatch')->with('success', 'Updated Successfully')->with('success_message', 'Rejected Hatch Entry Updated Successfully');
         }        
@@ -412,6 +420,19 @@ class EditController extends Controller
             $log_entry = [
                 $messages[$action] ?? 'Egg Temperature Record Modified',
                 'egg_temperature',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
+            AC::logEntry($log_entry);
+        }
+
+        elseif ($targetForm == 'rejected-hatch') {
+            $messages = [
+                'update' => 'Rejected Hatch Record Updated',
+            ];
+            $log_entry = [
+                $messages[$action] ?? 'Rejected Hatch Record Modified',
+                'rejected_hatch',
                 $beforeState, // Stores previous state before the action
                 $currentState, // Stores the new state after the action
             ];
