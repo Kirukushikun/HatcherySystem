@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 </head>
 <body>
+    <input type="hidden" id="batch_no" name="batch_no" value="{{ isset($batch_no) ? $batch_no : '' }}">
+    <input type="hidden" id="current_step" name="current_step" value="{{ isset($current_step) ? $current_step : '1' }}">
+
 
     @yield('modal-notification-loader') 
 
@@ -829,8 +832,8 @@
             const datalist = document.getElementById("card13");
             let activeForm = null;
 
-            // let batchNumber = document.getElementById("batch_no").value;
-            // let currentStep = Number(document.getElementById("current_step").value);
+            let batchNumber = document.getElementById("batch_no").value;
+            let currentStep = Number(document.getElementById("current_step").value);
 
             let currentStep = 1;
 
