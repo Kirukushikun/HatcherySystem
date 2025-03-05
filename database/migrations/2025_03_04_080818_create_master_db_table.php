@@ -16,7 +16,7 @@ return new class extends Migration
             $table->boolean('is_deleted')->default(false);
             $table->unsignedInteger('batch_no');
             $table->unsignedInteger('current_step');
-            $table->enum('status', ['in_progress', 'completed'])->default('in_progress');
+            $table->enum('status', ['in_progress', 'completed'])->nullable();
             $table->json('process_data')->nullable();
             $table->timestamps();
         });

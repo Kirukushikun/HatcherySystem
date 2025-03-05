@@ -1,3 +1,4 @@
+@include('components.modal-notification-loader')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +7,16 @@
     <title>Hatchery Master Database</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="{{asset('images/BGC icon.ico')}}">
-
+    <!-- Crucial Part on every forms -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Crucial Part on every forms/ -->
     <link rel="stylesheet" href="{{asset('css/styles_master_db.css')}}">
+    <link rel="stylesheet" href="/css/modal-notification-loader.css">
 </head>
 <body>
+
+    @yield('modal-notification-loader') 
+
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
         <h2>HATCHERY MASTER DATABASE</h2>
@@ -815,19 +822,55 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             const cardSections = document.querySelectorAll(".card");
             const cardLabels = document.querySelectorAll(".card-label");
             const datalist = document.getElementById("card13");
+            let activeForm = null;
 
+            // let batchNumber = document.getElementById("batch_no").value;
+            // let currentStep = Number(document.getElementById("current_step").value);
+
+            let currentStep = 1;
+
+            /*** Event Listeners ***/
             datalist.addEventListener("pointerdown", function () {
                 activateSection(this);
             });
 
-            let activeForm = null; // Store active form
+                // Event Listener: Sidebar Clicks
+            sidebarLinks.forEach(link => {
+                link.addEventListener("click", function (event) {
+                    const targetCard = document.querySelector(this.getAttribute("href"));
+                    activateSection(targetCard);
+                });
+            });
 
-            let currentStep = 1; // Fetch this dynamically from the backend
+                // Event Listener: Input Focus
+            document.querySelectorAll(".card input, .card select, .card textarea").forEach(input => {
+                input.addEventListener("focus", function () {
+                    activateSection(this.closest(".card"));
+                });
+            });
 
+                // Event Listener: Form Close Buttons
+            document.addEventListener("click", function (event) {
+                const modal = document.getElementById("modal");
+
+                if (!modal.classList.contains("active")) return;
+
+                if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
+                    modal.classList.remove("active");
+                }
+            });
+
+            /*** Initialize First Form ***/
+            if (cardSections.length > 0) {
+                activateSection(cardSections[0]);
+            }
+
+            /*** Section Activation ***/
             function activateSection(targetCard) {
                 if (!targetCard) return;
 
@@ -852,27 +895,7 @@
                 updateFormListener();
             }
 
-            // Sidebar click event
-            sidebarLinks.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    // event.preventDefault();
-                    const targetCard = document.querySelector(this.getAttribute("href"));
-                    activateSection(targetCard);
-                });
-            });
-
-            // Input focus event for automatic activation
-            document.querySelectorAll(".card input, .card select, .card textarea").forEach(input => {
-                input.addEventListener("focus", function () {
-                    activateSection(this.closest(".card"));
-                });
-            });
-
-            // Initialize first form as active
-            if (cardSections.length > 0) {
-                activateSection(cardSections[0]);
-            }
-
+            /*** Form Handling ***/
             function updateFormListener() {
                 if (!activeForm) return;
 
@@ -916,8 +939,8 @@
                 activeForm.onsubmit = function (event) {
                     event.preventDefault();
                     if (validateForm()) {
-                        // showModal('save'); // Show modal when all fields are filled
-                        simulateFormSave(); // Simulation
+                        showModal('save');
+                        // simulateFormSave();
                     }
                 };
 
@@ -925,6 +948,7 @@
                 checkFormValues();
             }
 
+            /*** Form Validation ***/
             function validateForm() {
                 if (!activeForm) return false; // Ensure activeForm exists
 
@@ -972,10 +996,25 @@
                 return isValid;
             }
 
-            // Form Disabling
-            const skippableCards = ["card6", "card10"]; // Skippable but still fillable
-            const alwaysEnabledCards = ["card10", "card13"]; // Always enabled
+            /*** Step Progression ***/
+            const skippableCards = ["card6", "card10"];
+            const alwaysEnabledCards = ["card10", "card13"];
             const allCards = document.querySelectorAll(".card");
+
+            function proceedToNextStep() {
+                currentStep++;
+                autoSkipStep();
+                disableFutureForms();
+
+                //Lock Completed Steps
+                lockCompletedSteps(currentStep);
+            }
+
+            function autoSkipStep() {
+                while (skippableCards.includes(`card${currentStep}`)) {
+                    currentStep++; 
+                }
+            }
 
             function disableFutureForms() {
                 allCards.forEach(card => {
@@ -994,52 +1033,6 @@
                         card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
                     }
                 });
-            }
-
-            function autoSkipStep() {
-                while (skippableCards.includes(`card${currentStep}`)) {
-                    currentStep++; // Skip over skippable steps
-                }
-            }
-
-            function proceedToNextStep() {
-                currentStep++;
-                autoSkipStep();
-                disableFutureForms();
-
-                //Lock Completed Steps
-                lockCompletedSteps(currentStep);
-            }
-
-            // Run these functions initially
-            autoSkipStep();
-            
-            disableFutureForms();
-
-            function simulateFormSave() {
-                if (!activeForm) return;
-
-                // Perform validation
-                if (!validateForm()) {
-                    alert("Please fill in all required fields before proceeding.");
-                    return;
-                }
-
-                let stepNumber = parseInt(activeForm.id.replace("card", ""));
-                
-                // Simulate saving
-                setTimeout(() => {
-                    console.log(`Form saved! Proceeding to Step ${currentStep}`);
-                    alert(`Form saved successfully!`);
-
-                    // Proceed to the next step **only if NOT Card 6 or 10**
-                    if (stepNumber !== 6 && stepNumber !== 10) {
-                        proceedToNextStep();
-                    } else {
-                        // If it's Card 6 or 10, disable it after saving
-                        lockCompletedSteps(currentStep);
-                    }
-                }, 1000); // Simulate delay
             }
 
             function lockCompletedSteps(currentStep) {
@@ -1069,6 +1062,34 @@
                     // }
                 });
             }
+
+            /*** Initial Setup ***/
+            autoSkipStep();
+            disableFutureForms();
+            // lockCompletedSteps(currentStep);
+
+
+
+            function simulateFormSave() {
+                if (!activeForm) return;
+
+                let stepNumber = parseInt(activeForm.id.replace("card", ""));
+                
+                // Simulate saving
+                console.log(`Current Step ${currentStep} Done. Form ${activeForm.id} saved! Proceeding to Step ${currentStep + 1}`);
+
+                document.getElementById("modal").classList.remove("active");
+
+                // Proceed to the next step **only if its Card 6 or 10**
+                if (stepNumber !== 6 && stepNumber !== 10) {
+                    proceedToNextStep();
+                } else {
+                    // If it's not Card 6 or 10, disable it after saving
+                    lockCompletedSteps(currentStep);
+                }
+            }
+
+
 
             // function checkIfDataExists(stepNumber, card) {
             //     // fetch(`/check-card-data/${stepNumber}`) // Adjust to your backend route
@@ -1104,9 +1125,108 @@
             //     // Change border color to gray
             //     card.style.borderColor = "gray";
             // }
+
+            function showModal(button, targetID = null) {
+                if (button === "save") {
+                    modal.classList.add("active");
+                    modal.innerHTML = `
+                        <div class="modal-content">
+                            <i class="fa-solid fa-xmark" id="close-button"></i>
+                            <div class="modal-header">
+                                <i class="fa-solid fa-circle-check success"></i>
+                                <h2>Save Record</h2>
+                                <h4>Are you sure you want to save this data?</h4>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="confirm-button save-btn">
+                                    Save
+                                </button>
+                                <button type="button" class="cancel-button">Cancel</button>
+                            </div>
+                        </div>
+                    `;
+
+                    document.querySelector('.save-btn').addEventListener('click', () => {
+                        storeRecord();
+                        // simulateFormSave();
+                    });
+                }
+            }
+
+
+            const saveFunctions = {
+                "card1": saveCollectedEggs,
+                "card2": saveClassificationForStorage
+            }
+
+            function storeRecord(){
+                if (!activeForm) return;
+                let stepNumber = parseInt(activeForm.id.replace("card", ""));
+
+                if (saveFunctions[activeForm.id]) {
+                    saveFunctions[activeForm.id]();
+                }
+
+                document.getElementById("modal").classList.remove("active");
+
+                // Proceed to the next step **only if its Card 6 or 10**
+                if (stepNumber !== 6 && stepNumber !== 10) {
+                    proceedToNextStep();
+                } else {
+                    // If it's not Card 6 or 10, disable it after saving
+                    lockCompletedSteps(currentStep);
+                }
+            }
+
+            function saveData(url, data, successMessage) {
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        // batch_no: batchNumber,
+                        current_step: currentStep,
+                        process_data: data,
+                    })
+                })
+                .then(response => response.json())
+                .then(responseData => {
+                    if (responseData.success) {
+                        createPushNotification("success", "Saved Successfully", successMessage);
+                    } else {
+                        createPushNotification("error", "Save Failed", "Error saving record.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    createPushNotification("error", "Save Failed", "An error occurred while saving.");
+                });
+            }
+
+            function saveCollectedEggs() {
+                let data = {
+                    collected_eggs: {
+                        ps_no: document.getElementById("ps_no").value,
+                        collected_qty: document.getElementById("collected_qty").value,
+                        production_date_from: document.getElementById("production_date_from").value,
+                        production_date_to: document.getElementById("production_date_to").value,                        
+                    }
+                };
+                saveData("/master-database/store", data, "Collected Eggs Entry Saved Successfully");
+            }
+
+            function saveClassificationForStorage() {
+                // Code to save classification for storage data 
+                console.log('Saving classification for storage data...');
+            }
         });
     </script>
 
     <script src="{{asset('js/master_database.js')}}" defer></script>
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
 </body>
 </html>

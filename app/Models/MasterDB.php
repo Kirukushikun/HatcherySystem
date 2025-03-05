@@ -12,7 +12,6 @@ class MasterDB extends Model
         'is_deleted',
         'batch_no',
         'current_step',
-        'status',
         'process_data',
     ];
 

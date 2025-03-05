@@ -10,6 +10,7 @@ use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
 use App\Http\Controllers\RejectedHatchController;
 use App\Http\Controllers\RejectedPulletsController;
+use App\Http\Controllers\MasterDatabaseController;
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
@@ -123,3 +124,7 @@ Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 Route::get('/test', function () {
 	return view('hatchery.report_module');
 });
+
+//Master Database
+
+Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
