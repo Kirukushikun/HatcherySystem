@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 </head>
 <body>
-    <input type="hidden" id="batch_no" name="batch_no" value="{{ isset($batch_no) ? $batch_no : '' }}">
-    <input type="hidden" id="current_step" name="current_step" value="{{ isset($current_step) ? $current_step : '1' }}">
+    <input type="hidden" id="batch_no" name="batch_no" value="{{$batch_no}}">
+    <input type="hidden" id="current_step" name="current_step" value="{{$current_step}}">
 
 
     @yield('modal-notification-loader') 
@@ -833,9 +833,12 @@
             let activeForm = null;
 
             let batchNumber = document.getElementById("batch_no").value;
-            let currentStep = Number(document.getElementById("current_step").value);
+            let currentStep = document.getElementById("current_step").value;
 
-            let currentStep = 1;
+            console.log("Batch Number: " + batchNumber);
+            console.log("Current Step: " + currentStep);
+
+            lockCompletedSteps(currentStep)
 
             /*** Event Listeners ***/
             datalist.addEventListener("pointerdown", function () {
@@ -1190,7 +1193,7 @@
                         "X-CSRF-TOKEN": csrfToken
                     },
                     body: JSON.stringify({
-                        // batch_no: batchNumber,
+                        batch_no: batchNumber,
                         current_step: currentStep,
                         process_data: data,
                     })

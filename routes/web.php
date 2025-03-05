@@ -60,9 +60,9 @@ Route::get('/home', function () {
 	return view('hatchery.main_module');
 });
 
-Route::get('/master-database', function () {
-	return view('hatchery.master_database');
-});
+// Route::get('/master-database', function () {
+// 	return view('hatchery.master_database');
+// });
 
 
 // Egg Collection -------------------------------------------------------------------------------------------
@@ -126,5 +126,7 @@ Route::get('/test', function () {
 });
 
 //Master Database
+
+Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
 
 Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
