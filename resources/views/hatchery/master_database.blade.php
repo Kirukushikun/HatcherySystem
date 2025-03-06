@@ -372,8 +372,6 @@
                     <button class="save-btn" type="submit">Save</button>
                     <button class="reset-btn" type="reset">Reset</button>
                 </div>
-
-                
             </form>
 
             <form class="card c9" id="card9">
@@ -832,14 +830,20 @@
             const datalist = document.getElementById("card13");
             let activeForm = null;
 
-            let batchNumber = document.getElementById("batch_no").value;
-            let currentStep = document.getElementById("current_step").value;
+            //Method 1
+            let batchNumberInput = document.getElementById("batch_no");
+            let currentStepInput = document.getElementById("current_step");
 
-            console.log("Batch Number: " + batchNumber);
-            console.log("Current Step: " + currentStep);
+            let batchNumber = Number(batchNumberInput.value) || 1;
+            let currentStep = Number(currentStepInput.value) || 1;
 
-            lockCompletedSteps(currentStep)
+            //Method 2
+            // let batchNumber = 1;
+            // let currentStep = 3;
 
+            console.log(batchNumber, currentStep);
+
+            
             /*** Event Listeners ***/
             datalist.addEventListener("pointerdown", function () {
                 activateSection(this);
@@ -1072,7 +1076,7 @@
             /*** Initial Setup ***/
             autoSkipStep();
             disableFutureForms();
-            // lockCompletedSteps(currentStep);
+            lockCompletedSteps(currentStep);
 
 
 
@@ -1163,7 +1167,17 @@
 
             const saveFunctions = {
                 "card1": saveCollectedEggs,
-                "card2": saveClassificationForStorage
+                "card2": saveClassificationForStorage,
+                "card3": saveStoragePullout,
+                "card4": saveSetterProcess,
+                // "card5": saveCandlingProcess,
+                // "card6": saveEggTemperatureCheck,
+                // "card7": saveHatcherPullout,
+                // "card8": saveSexing,
+                // "card9": saveQCProcess,
+                // "card10": saveForecast,
+                // "card11": saveDispathProcess,
+                // "card12": saveForecastedBoxes,
             }
 
             function storeRecord(){
@@ -1225,9 +1239,164 @@
             }
 
             function saveClassificationForStorage() {
-                // Code to save classification for storage data 
-                console.log('Saving classification for storage data...');
+                let data = {
+                    classification_for_storage: {
+                        non_settable_eggs: document.getElementById("non_settable_eggs").value,
+                        settable_eggs: document.getElementById("settable_eggs").value,
+                        remaining_balance: document.getElementById("remaining_balance").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Classification for Storage Entry Saved Successfully");
             }
+
+            function saveStoragePullout() {
+                let data = {
+                    storage_pullout: {
+                        pullout_date: document.getElementById("pullout_date").value,
+                        settable_eggs_qty: document.getElementById("settable_eggs_qty").value,
+                        incubator_no: document.getElementById("incubator_no").value,
+                        prime_qty: document.getElementById("prime_qty").value,
+                        prime_prcnt: document.getElementById("prime_prcnt").value,
+                        jp_qty: document.getElementById("jp_qty").value,
+                        jp_prcnt: document.getElementById("jp_prcnt").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully");
+            }
+
+            function saveSetterProcess() {
+                let data = { 
+                    setter_process: {
+                        d10_candling_date: document.getElementById("d10_candling_date").value,
+                        d10_candling_qty: document.getElementById("d10_candling_qty").value,
+                        d10_breakout_qty: document.getElementById("d10_breakout_qty").value,
+                        d10_breakout_prcnt: document.getElementById("d10_breakout_prcnt").value,
+                        d10_inc_qty: document.getElementById("d10_inc_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Setter Process Entry Saved Successfully");
+            }
+
+            function saveCandlingProcess() {
+                let data = {
+                    candling_process: {
+                        d18_candling_date: document.getElementById("d18_candling_date").value,
+                        infertiles_qty: document.getElementById("infertiles_qty").value,
+                        embyonic_eggs_qty: document.getElementById("embyonic_eggs_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Candling Process Entry Saved Successfully");
+            }
+
+            function saveEggTemperatureCheck() {
+                let data = {
+                    egg_temperature_check: {
+                        top_above_temp_qty: document.getElementById("top_above_temp_qty").value,
+                        top_above_temp_prcnt: document.getElementById("top_above_temp_prcnt").value,
+                        top_below_temp_qty: document.getElementById("top_below_temp_qty").value,
+                        top_below_temp_prcnt: document.getElementById("top_below_temp_prcnt").value,
+
+                        mid_above_temp_qty: document.getElementById("mid_above_temp_qty").value,
+                        mid_above_temp_prcnt: document.getElementById("mid_above_temp_prcnt").value,
+                        mid_below_temp_qty: document.getElementById("mid_below_temp_qty").value,
+                        mid_below_temp_prcnt: document.getElementById("mid_below_temp_prcnt").value,
+
+                        low_above_temp_qty: document.getElementById("low_above_temp_qty").value,
+                        low_above_temp_prcnt: document.getElementById("low_above_temp_prcnt").value,
+                        low_below_temp_qty: document.getElementById("low_below_temp_qty").value,
+                        low_below_temp_prcnt: document.getElementById("low_below_temp_prcnt").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Egg Shell Temperature Check Entry Saved Successfully")
+            }
+
+            function saveHatcherPullout(){
+                let data = {
+                    hatcher_pullout: {
+                        hatcher_no: document.getElementById("hatcher_no").value,
+                        hatcher_date: document.getElementById("hatcher_date").value,
+                        rejected_hatch_qty: document.getElementById("rejected_hatch_qty").value,
+                        accepted_hatch_qty: document.getElementById("accepted_hatch_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Hatcher Pullout Entry Saved Successfully");
+            }
+
+            function saveSexing(){
+                let data = {
+                    sexing: {
+                        cock_qty: document.getElementById("cock_qty").value,
+                        dop_qty: document.getElementById("dop_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Sexing Entry Saved Successfully");
+            }
+
+            function saveQCProcess(){
+                let data = {
+                    qc_qa_process: {
+                        qc_date: document.getElementById("qc_date").value,
+                        rejected_dop_qty: document.getElementById("rejected_dop_qty").value,
+                        accepted_dop_qty: document.getElementById("accepted_dop_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "QC/QA Process Entry Saved Successfully");
+            }
+
+            function saveForecast(){
+                let data = {
+                    forecast: {
+                        infertile_qty: document.getElementById("infertile_qty").value,
+                        infertile_prcnt: document.getElementById("infertile_prcnt").value,
+
+                        frcst_cock_qty: document.getElementById("frcst_cock_qty").value,
+                        frcst_cock_prcnt: document.getElementById("frcst_cock_prcnt").value,
+
+                        frcst_rejected_hatch_qty: document.getElementById("frcst_rejected_hatch_qty").value,
+                        frcst_rejected_hatch_prcnt: document.getElementById("frcst_rejected_hatch_prcnt").value,
+
+                        frcst_rejected_dop_qty: document.getElementById("frcst_rejected_dop_qty").value,
+                        frcst_rejected_dop_prcnt: document.getElementById("frcst_rejected_dop_prcnt").value,
+
+                        forecast_total_qty: document.getElementById("forecast_total_qty").value,
+
+                        //
+                        frcst_total_boxes: document.getElementById("frcst_total_boxes").value,
+                        frcst_settable_eggs_prcnt: document.getElementById("frcst_settable_eggs_prcnt").value,
+
+                        frcst_prime: document.getElementById("frcst_prime").value,
+                        frcst_jr_prime: document.getElementById("frcst_jr_prime").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Forecast Entry Saved Successfully");
+            }
+
+            function saveDispathProcess(){
+                let data = {
+                    dispath_process: {
+                        dispatch_prime_qty: document.getElementById("dispatch_prime_qty").value,
+                        dispatch_jr_prime_qty: document.getElementById("dispatch_jr_prime_qty").value,
+                    }
+                }
+                saveData("/master-database/store", data, "Dispath Process Entry Saved Successfully");
+            }
+
+            function saveForecastedBoxes(){
+                let totalBoxesElement = document.getElementById("total_boxes");
+                let totalBoxes = Number(totalBoxesElement.innerText.replace(/\D/g, ''));
+
+                if (isNaN(totalBoxes)) {
+                    alert("Error: Total boxes is not a valid number.");
+                    return;
+                }
+
+                let data = {
+                    frcst_box: { total_boxes: totalBoxes }
+                };
+                
+                saveData("/master-database/store", data, "Forecasted Box Saved Successfully");
+            }
+
         });
     </script>
 
