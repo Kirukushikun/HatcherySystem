@@ -8,33 +8,42 @@ use App\Models\MasterDB;
 class MasterDatabaseController extends Controller
 {   
     function master_database_index() {
-        // Get the latest data entry
+        // Get the latest data entry (most recent record)
         $latestData = MasterDB::orderBy('created_at', 'desc')->first();
-    
-        // Default values (for when there's no data)
+
+        // Default values (for an empty database)
         $batch_no = null;
         $current_step = null;
-    
+        $batchData = [];
+
         if ($latestData) {
             $batch_no = $latestData->batch_no;
-    
+
             // Get all records for the latest batch
             $batchCollection = MasterDB::where('batch_no', $batch_no)->get();
-    
-            // Find step 2 entry (if exists)
-            $latestBatch = $batchCollection->where('current_step', 2)->first();
-    
-            // Find the latest step in the batch
-            $latestStep = $batchCollection->sortByDesc('current_step')->first();
-    
-            // Ensure we don’t access properties of null
-            if ($latestBatch && $latestBatch->status == 'in_progress') {
-                $batch_no = $latestBatch->batch_no;
+
+            // Find the latest step for this batch
+            $latestStep = MasterDB::where('batch_no', $batch_no)
+                ->orderBy('current_step', 'desc')
+                ->first();
+
+            // Check if step 2 exists (since it's a key step)
+            $step2Entry = $batchCollection->where('current_step', 2)->first();
+
+            if ($step2Entry && $step2Entry->status == 'in_progress') {
+                // Batch is still in progress, continue from the latest step
                 $current_step = $latestStep->current_step;
+
+                $batchData = MasterDB::where('batch_no', $batch_no)->get()->toArray();
+
+            } elseif ($step2Entry && $step2Entry->status == 'completed') {
+                // Batch is completed, start a new batch
+                $batch_no += 1;
+                $current_step = 1;
             }
         }
     
-        return view('hatchery.master_database', compact('batch_no', 'current_step'));
+        return view('hatchery.master_database', compact('batch_no', 'current_step', 'batchData'));
     }
     
 
@@ -45,15 +54,15 @@ class MasterDatabaseController extends Controller
         // Create a new entry
         $entry = new MasterDB();
         $entry->batch_no = $batchNo;
-        $entry->current_step = $currentStep + 1;
+        $entry->current_step = $currentStep;
         $entry->process_data = $request->process_data;
         
         // Step 1 is the only one that initializes a batch
-        $entry->status = ($currentStep == 1) ? 'in_progress' : null;
+        $entry->status = ($currentStep == 2) ? 'in_progress' : null;
         $entry->save();
         
         // Define steps that must be present
-        $stepsToCheck = range(2, 11);
+        $stepsToCheck = range(2, 12);
 
         // Get the count of recorded steps within the batch
         $existingStepsCount = MasterDB::where('batch_no', $batchNo)
@@ -74,4 +83,16 @@ class MasterDatabaseController extends Controller
             'message' => 'Master Database Entry Recorded Successfully'
         ]);
     }
+
+    function master_database_check($batchNumber, $currentStep) {
+        $exists = MasterDB::where('batch_no', $batchNumber)
+                          ->where('current_step', $currentStep)
+                          ->exists();
+    
+        return response()->json([
+            'exists' => $exists, // This should be `exists` instead of `success`
+            'message' => $exists ? 'Data Exists' : 'No Data Found'
+        ]);
+    }
+    
 }

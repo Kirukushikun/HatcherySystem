@@ -128,5 +128,6 @@ Route::get('/test', function () {
 //Master Database
 
 Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
+Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDatabaseController::class, 'master_database_check'])->name('master.database.check');
 
 Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');

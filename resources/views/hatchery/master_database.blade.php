@@ -12,6 +12,23 @@
     <!-- Crucial Part on every forms/ -->
     <link rel="stylesheet" href="{{asset('css/styles_master_db.css')}}">
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <style>
+        #frcst-save{
+            width: 100%;
+            border:solid 3px #EC8B18;
+            background-color: transparent;
+            color: #EC8B18;
+            padding: 10px;
+            border-radius: 7px;
+            cursor: pointer;
+
+            font-weight: 500;
+        }
+        #frcst-save:hover{
+            background-color: #EC8B18;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <input type="hidden" id="batch_no" name="batch_no" value="{{$batch_no}}">
@@ -35,10 +52,10 @@
             <a href="#card3"><div></div><p>3</p></a>
             <a href="#card4"><div></div><p>4</p></a>
             <a href="#card5"><div></div><p>5</p></a>
-            <a href="#card6"><div></div><p>6</p></a>
-            <a href="#card7"><div></div><p>7</p></a>
-            <a href="#card8"><div></div><p>8</p></a>
-            <a href="#card9"><div></div><p>9</p></a>
+            <a href="#card7"><div></div><p>6</p></a>
+            <a href="#card8"><div></div><p>7</p></a>
+            <a href="#card9"><div></div><p>8</p></a>
+            <a href="#card11"><div></div><p>9</p></a>
             <a href="#card10"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
             <a href="#card13"><div></div><i class="fa-solid fa-table"></i></a>
         </div>
@@ -218,8 +235,8 @@
                     </div>
                     <br>    
                     <div class="input-group">
-                        <label for="embyonic_eggs_qty">Embryonic Eggs Quantity <span></span></label>
-                        <input type="text" name="embyonic_eggs_qty" id="embyonic_eggs_qty" placeholder="0" readonly>
+                        <label for="embryonic_eggs_qty">Embryonic Eggs Quantity <span></span></label>
+                        <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
                     </div>
 
                 </div>
@@ -491,6 +508,10 @@
                         <label for="">DOP Booking</label>
                         <button style="width: 100%; margin-top: 10px; color: white; background-color: #EC8B18; border: none; padding: 10px; border-radius: 7px; cursor: pointer; font-size: 15px;">View / Entry</button>
                     </div>
+                </div>
+
+                <div class="form-action">
+                    <button class="save-btn" id="frcst-save" type="submit">Save</button>
                 </div>
             
             </form>
@@ -841,7 +862,8 @@
             // let batchNumber = 1;
             // let currentStep = 3;
 
-            console.log(batchNumber, currentStep);
+            console.log("Batch No: ", batchNumber, "Current Step: ", currentStep);
+            console.log("Active Form: ", activeForm);
 
             
             /*** Event Listeners ***/
@@ -950,7 +972,6 @@
                     event.preventDefault();
                     if (validateForm()) {
                         showModal('save');
-                        // simulateFormSave();
                     }
                 };
 
@@ -1031,19 +1052,40 @@
                     let stepNumber = parseInt(card.id.replace("card", ""));
 
                     if (alwaysEnabledCards.includes(card.id)) {
-                        // Ensure alwaysEnabledCards remain active
-                        card.classList.remove("disabled");
-                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+                        enableCard(card);
                     } else if (stepNumber > currentStep) {
-                        // Disable non-skippable future steps
-                        card.classList.add("disabled");
-                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
-                    } else {
-                        card.classList.remove("disabled");
-                        card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+                        disableCard(card);
+                    } else if (stepNumber === 4) {
+                        // let currentDate = new Date(); // Today's date
+                        // let pulloutDay10 = new Date(currentDate); // Clone date
+                        // pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
+
+                        // console.log("⏳ Waiting 5 seconds to simulate 10-day wait...");
+
+                        // setTimeout(() => {
+                        //     console.log("🚀 5 seconds passed! Checking Step 4 conditions...");
+                        //     enableCard(card); // Enable step 4 after 5 seconds
+                        //     console.log("✅ Step 4 is now enabled!");
+                        // }, 5000); // Simulated 5-second delay
+
+                        enableCard(card);
+                    }else{
+                        enableCard(card);
                     }
                 });
             }
+
+            // ✅ Helper functions
+            function enableCard(card) {
+                card.classList.remove("disabled");
+                card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+            }
+
+            function disableCard(card) {
+                card.classList.add("disabled");
+                card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
+            }
+
 
             function lockCompletedSteps(currentStep) {
                 document.querySelectorAll(".card").forEach(card => {
@@ -1067,9 +1109,9 @@
                     }
                     
                     // **Handle Card 6 & 10 based on existing data**
-                    // if (exemptSteps.includes(stepNumber)) {
-                    //     checkIfDataExists(stepNumber, card);
-                    // }
+                    if (exemptSteps.includes(stepNumber)) {
+                        checkIfDataExists(batchNumber, stepNumber, card);
+                    }
                 });
             }
 
@@ -1077,8 +1119,6 @@
             autoSkipStep();
             disableFutureForms();
             lockCompletedSteps(currentStep);
-
-
 
             function simulateFormSave() {
                 if (!activeForm) return;
@@ -1100,41 +1140,28 @@
             }
 
 
+            function checkIfDataExists(batchNumber, stepNumber, card) {
+                let adjustedStep = stepNumber + 1;
+                fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            // Disable Card 6 or 10 if data is already saved
+                            card.querySelectorAll("input, select, textarea").forEach(input => {
+                                input.setAttribute("readonly", true);
+                                input.setAttribute("disabled", true);
+                            });
 
-            // function checkIfDataExists(stepNumber, card) {
-            //     // fetch(`/check-card-data/${stepNumber}`) // Adjust to your backend route
-            //     //     .then(response => response.json())
-            //     //     .then(data => {
-            //     //         if (data.exists) {
-            //     //             // Disable Card 6 or 10 if data is already saved
-            //     //             card.querySelectorAll("input, select, textarea").forEach(input => {
-            //     //                 input.setAttribute("readonly", true);
-            //     //                 input.setAttribute("disabled", true);
-            //     //             });
+                            // Hide the save button
+                            let saveButton = card.querySelector(".form-action");
+                            if (saveButton) saveButton.style.display = "none";
 
-            //     //             // Hide the save button
-            //     //             let saveButton = card.querySelector(".form-action");
-            //     //             if (saveButton) saveButton.style.display = "none";
-
-            //     //             // Change border color to gray
-            //     //             card.style.borderColor = "gray";
-            //     //         }
-            //     //     })
-            //     //     .catch(error => console.error("Error checking data:", error));
-
-            //     // Disable Card 6 or 10 if data is already saved
-            //     card.querySelectorAll("input, select, textarea").forEach(input => {
-            //         input.setAttribute("readonly", true);
-            //         input.setAttribute("disabled", true);
-            //     });
-
-            //     // Hide the save button
-            //     let saveButton = card.querySelector(".form-action");
-            //     if (saveButton) saveButton.style.display = "none";
-
-            //     // Change border color to gray
-            //     card.style.borderColor = "gray";
-            // }
+                            // Change border color to gray
+                            card.style.borderColor = "gray";
+                        }
+                    })
+                    .catch(error => console.error("Error checking data:", error));
+            }
 
             function showModal(button, targetID = null) {
                 if (button === "save") {
@@ -1170,14 +1197,14 @@
                 "card2": saveClassificationForStorage,
                 "card3": saveStoragePullout,
                 "card4": saveSetterProcess,
-                // "card5": saveCandlingProcess,
-                // "card6": saveEggTemperatureCheck,
-                // "card7": saveHatcherPullout,
-                // "card8": saveSexing,
-                // "card9": saveQCProcess,
-                // "card10": saveForecast,
-                // "card11": saveDispathProcess,
-                // "card12": saveForecastedBoxes,
+                "card5": saveCandlingProcess,
+                "card6": saveEggTemperatureCheck,
+                "card7": saveHatcherPullout,
+                "card8": saveSexing,
+                "card9": saveQCProcess,
+                "card10": saveForecast,
+                "card11": saveDispathProcess,
+                "card12": saveForecastedBoxes,
             }
 
             function storeRecord(){
@@ -1200,6 +1227,16 @@
             }
 
             function saveData(url, data, successMessage) {
+
+                let adjustedStep = currentStep + 1;
+
+                if(activeForm.id === "card6"){
+                    adjustedStep = 7;
+                } else if(activeForm.id === "card10"){
+                    adjustedStep = 11;
+                }
+
+
                 fetch(url, {
                     method: "POST",
                     headers: {
@@ -1208,7 +1245,7 @@
                     },
                     body: JSON.stringify({
                         batch_no: batchNumber,
-                        current_step: currentStep,
+                        current_step: adjustedStep,
                         process_data: data,
                     })
                 })
@@ -1282,7 +1319,7 @@
                     candling_process: {
                         d18_candling_date: document.getElementById("d18_candling_date").value,
                         infertiles_qty: document.getElementById("infertiles_qty").value,
-                        embyonic_eggs_qty: document.getElementById("embyonic_eggs_qty").value,
+                        embryonic_eggs_qty: document.getElementById("embryonic_eggs_qty").value,
                     }
                 }
                 saveData("/master-database/store", data, "Candling Process Entry Saved Successfully");
@@ -1399,6 +1436,87 @@
 
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let batchData = @json($batchData); // Laravel safely converts PHP to JSON
+
+            if (batchData && batchData.length > 0) {
+                batchData.forEach(record => {
+                    let step = record.current_step;
+                    let processData = record.process_data || {};
+
+                    // Example: Accessing "collected_eggs" data if step is 1
+                    if (step === 2 && processData.collected_eggs) {
+                        document.getElementById("ps_no").value = processData.collected_eggs.ps_no;
+                        document.getElementById("collected_qty").value = processData.collected_eggs.collected_qty;
+                        document.getElementById("production_date_to").value = processData.collected_eggs.production_date_to;
+                        document.getElementById("production_date_from").value = processData.collected_eggs.production_date_from;
+                    } else if (step === 3 && processData.classification_for_storage) {
+                        document.getElementById("non_settable_eggs").value = processData.classification_for_storage.non_settable_eggs;
+                        document.getElementById("settable_eggs").value = processData.classification_for_storage.settable_eggs;
+                        document.getElementById("remaining_balance").value = processData.classification_for_storage.remaining_balance;
+                    } else if (step === 4 && processData.storage_pullout) {
+                        document.getElementById("pullout_date").value = processData.storage_pullout.pullout_date;
+                        document.getElementById("settable_eggs_qty").value = processData.storage_pullout.settable_eggs_qty;
+                        document.getElementById("incubator_no").value = processData.storage_pullout.incubator_no;
+                        document.getElementById("prime_qty").value = processData.storage_pullout.prime_qty;
+                        document.getElementById("prime_prcnt").value = processData.storage_pullout.prime_prcnt;
+                        document.getElementById("jp_qty").value = processData.storage_pullout.jp_qty;
+                        document.getElementById("jp_prcnt").value = processData.storage_pullout.jp_prcnt;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- <script>
+        function disableFutureForms(pulloutDateStr) {
+            allCards.forEach(card => {
+                let stepNumber = parseInt(card.id.replace("card", ""));
+
+                if (alwaysEnabledCards.includes(card.id)) {
+                    enableCard(card);
+                } else if (stepNumber > currentStep) {
+                    disableCard(card);
+                } else {
+                    if (stepNumber === 4) {
+                        let currentDate = new Date(); // Get current date
+                        let pulloutDate = new Date(pulloutDateStr); // Convert string to Date object
+                        pulloutDate.setDate(pulloutDate.getDate() + 10); // Add 10-day requirement
+
+                        if (currentDate >= pulloutDate) {
+                            console.log("✅ Step 4 is enabled (10-day wait complete)");
+                            enableCard(card);
+                        } else {
+                            console.log("⏳ Step 4 is locked until:", pulloutDate.toDateString());
+                            disableCard(card);
+                        }
+                    } else {
+                        enableCard(card);
+                    }
+                }
+            });
+        }
+
+        // ✅ Helper functions
+        function enableCard(card) {
+            card.classList.remove("disabled");
+            card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
+        }
+
+        function disableCard(card) {
+            card.classList.add("disabled");
+            card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
+        }
+
+
+    </script> -->
+
+    <!-- <script>
+        let pulloutDateFromDB = " $ pullout_date "; // From Laravel
+        disableFutureForms(pulloutDateFromDB);
+    </script> -->
 
     <script src="{{asset('js/master_database.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>

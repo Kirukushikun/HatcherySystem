@@ -122,15 +122,15 @@ function updateSetterProcess(){
 let candlingProcess = {
     candling_date: document.getElementById('d18_candling_date'),
     infertiles_qty: document.getElementById('infertiles_qty'),
-    embyonic_eggs_qty: document.getElementById('embyonic_eggs_qty')
+    embryonic_eggs_qty: document.getElementById('embryonic_eggs_qty')
 }
 
 candlingProcess.infertiles_qty.addEventListener('input', updateCandlingProcess);
 
 function updateCandlingProcess(){
-    candlingProcess.embyonic_eggs_qty.value = setterProcess.d10_inc_qty.value - candlingProcess.infertiles_qty.value;
+    candlingProcess.embryonic_eggs_qty.value = setterProcess.d10_inc_qty.value - candlingProcess.infertiles_qty.value;
     
-    calculateBoxes(candlingProcess.embyonic_eggs_qty.value);
+    calculateBoxes(candlingProcess.embryonic_eggs_qty.value);
 }
 
 
@@ -144,7 +144,7 @@ const hatcherProcess = {
 hatcherProcess.rejected_hatch_qty.addEventListener('input', updateHatcherProcess);
 
 function updateHatcherProcess(){
-    hatcherProcess.accepted_hatch_qty.value = candlingProcess.embyonic_eggs_qty.value - hatcherProcess.rejected_hatch_qty.value;
+    hatcherProcess.accepted_hatch_qty.value = candlingProcess.embryonic_eggs_qty.value - hatcherProcess.rejected_hatch_qty.value;
     
     calculateBoxes(hatcherProcess.accepted_hatch_qty.value);
 }

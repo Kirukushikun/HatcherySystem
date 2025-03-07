@@ -595,7 +595,7 @@ tbody td:last-child {
 }
 
 .form-entries .card-label.active span{
-    padding: 3px 10px;
+    padding: 3px 11px;
     margin-right: 10px;
     background-color: #EC8B18;
     color: white;
@@ -689,6 +689,7 @@ tbody td:last-child {
 .c11{
     grid-area: c11;
     border-color: #AA6B24;
+    height: 100%;
 }
 .c12{
     grid-area: c12;
