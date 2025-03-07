@@ -7,7 +7,7 @@
     <title>Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
-    <link rel="stylesheet" href="/Css/admin-styles.css">
+    <link rel="stylesheet" href="/css/admin-styles.css">
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
 
     <!-- Crucial Part on every forms -->
@@ -108,20 +108,27 @@
             background-color:rgb(255, 255, 255);
         }
 
-        #audit-modal .modal-content table {
+        #audit-modal .modal-content .audit-table{
             border-collapse: collapse;
         }
 
+        #audit-modal .modal-content tbody {
+            border: solid 1px rgb(210, 210, 210);
+        }
+
         #audit-modal .modal-content th {
+            background-color: #EC8B18;
             padding: 10px;
             padding-left: 20px;
             padding-right: 20px;
             text-align: start;
         }
 
-        #audit-modal .modal-content thead {
-            background-color:rgb(241, 190, 113);
-            border-radius: 5px 5px 0px 0px;
+        #audit-modal .modal-content th:first-child{
+            border-radius: 10px 0 0 0;
+        }
+        #audit-modal .modal-content th:last-child{
+            border-radius: 0 10px 0 0;
         }
 
         #audit-modal .modal-content tr {
@@ -130,12 +137,11 @@
         #audit-modal .modal-content td {
             text-align: start;
             padding: 3px;
-            border-right: solid 1px rgb(190, 190, 190);
-            border-left: solid 1px rgb(190, 190, 190);
             padding-left: 20px;
             padding-right: 20px;
+            border-left: solid 1px rgb(210, 210, 210);
+            border-right: solid 1px rgb(210, 210, 210);
         }   
-
         /* ----------- */
         
     </style>
@@ -154,7 +160,7 @@
 
     <div class="body-split">
         <div class="sidebar">
-            <a href="#table1"><div></div><i class="fa-solid fa-table-cells-large"></i></a>
+            <a href="#table1" class=""><div></div><i class="fa-solid fa-table-cells-large"></i></a>
             <a href="#table2" class="active"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
             <a href="#table3"><div></div><i class="fa-solid fa-clipboard-user"></i></a>
             <a href="#table4"><div></div><i class="fa-solid fa-users"></i></a>
@@ -197,18 +203,19 @@
                     <div class="table-header">
                         <h4>Maintenance Value</h4>
                         <div class="table-action">
-                            <div class="search-bar">
+                            <div class="search-bar" id="search-bar-maintenance">
                                 <input type="text" placeholder="Search...">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
             
-                            <select class="sort-btn" name="sort_by" id="sort_by">
-                                <option value="data_category_desc">Sort By: Date (Newest)</option>
-                                <option value="data_category_asc">Sort By: Date (Oldest)</option>
+                            <select class="sort-btn" name="sort_by" id="sort-by-maintenance">
+                                <option value="created_at_desc">Sort By: Date (Newest)</option>
+                                <option value="created_at_asc">Sort By: Date (Oldest)</option>
+                                <option value="data_category_asc">Sort By: Category</option>
                             </select>
             
                             <div class="table-icons">
-                                <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
+                                <i class="fa-solid fa-rotate-right" onclick="refreshTableMaintenance()"></i>
                             </div>
                         </div>
                     </div>
@@ -233,17 +240,20 @@
                 <div id="audit-modal" class="modal"></div>
                     <h4>Audit Trail</h4>
                     <div class="table-action">
-                        <div class="search-bar">
+                        <div class="search-bar" id="search-bar-audit">
                             <input type="text" placeholder="Search...">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
-        
-                        <select class="sort-btn">
-                            <option value=""> Sort By</option>
+
+                        <select class="sort-btn" name="sort_by" id="sort-by-audit">
+                            <option value="created_at_desc">Sort By: Date (Newest)</option>
+                            <option value="created_at_asc">Sort By: Date (Oldest)</option>
+                            <option value="table_asc">Sort By: Table Name</option>
+                            <option value="action_asc">Sort By: Action</option>
                         </select>
-        
+
                         <div class="table-icons">
-                            <i class="fa-solid fa-rotate-right"></i>
+                            <i class="fa-solid fa-rotate-right" onclick="refreshTableAudit()"></i>
                         </div>
                         
                     </div>
@@ -274,6 +284,7 @@
     let searchQuery = "";
     let sortBy = "created_at";
     let sortOrder = "desc";
+
         document.addEventListener("DOMContentLoaded", function () {
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             const tables = document.querySelectorAll(".table");
@@ -302,14 +313,15 @@
                     // Activate target table
                     targetTable.classList.add("active");
                 }
-            }
+            }   
+
         });
     </script>
 
-    <script src="{{ asset('js/admin.js') }}"></script>
-    <script src="{{asset('js/audit.js')}}"></script>
-    <script src="{{asset('js/push-notification.js')}}" defer></script>
+    <script src="{{ asset('js/maintenance-values.js') }}" defer></script>
+    <script src="{{asset('js/audit.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
 
 </body>
 </html>

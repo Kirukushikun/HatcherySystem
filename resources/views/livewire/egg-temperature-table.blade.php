@@ -56,6 +56,7 @@
             sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
 
             loadData(); // Pass correct values to your function
+
         });
 
     });

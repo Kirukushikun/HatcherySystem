@@ -10,7 +10,7 @@ use App\Models\Audit;
 class AuditTrailTable extends Component
 {
     public function fetchData(Request $request){
-        $query = Audit::query()->orderBy('created_at', 'desc');
+        $query = Audit::query();
 
         // Search Handling
         if ($request->has('search') && !empty($request->search)) {
@@ -23,20 +23,31 @@ class AuditTrailTable extends Component
     
         // Sorting Handling
         $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
+        $sortOrder = $request->get('sort_order', 'asc');
 
-        // Check if sorting by 'data_category'
-        if ($sortBy === 'data_category') {
+        // Check if sorting by 'table'
+        if ($sortBy === 'table') {
             $query->orderByRaw("
                 CASE 
-                    WHEN data_category' = 'ps_no' THEN 1
-                    WHEN data_category' = 'house_no' THEN 2
-                    WHEN data_category' = 'incubator_no' THEN 3
-                    WHEN data_category' = 'hatch_no' THEN 4
+                    WHEN `table` = 'egg_collection' THEN 1
+                    WHEN `table` = 'egg_temperature' THEN 2
+                    WHEN `table` = 'rejected_hatch' THEN 3
+                    WHEN `table` = 'rejected_pullets' THEN 4
                     ELSE 5
-                END $sortOrder
-            ");
-        } else
+                END " . ($sortOrder === 'desc' ? 'DESC' : 'ASC')
+            );
+        } 
+        elseif ($sortBy === 'action') {
+            $query->orderByRaw("
+                CASE 
+                    WHEN action LIKE '%Added%' THEN 1
+                    WHEN action LIKE '%Updated%' THEN 2
+                    WHEN action LIKE '%Deleted%' THEN 3
+                    ELSE 4
+                END " . ($sortOrder === 'desc' ? 'DESC' : 'ASC')
+            );
+        }        
+         else
         {
             $query->orderBy($sortBy, $sortOrder);
         }

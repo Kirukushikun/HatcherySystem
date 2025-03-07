@@ -14,6 +14,7 @@
 </table>
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
 
         skeletonLoaderAudit();
@@ -22,13 +23,14 @@
             loadDataAudit();
         }, 1000);
 
-        // Attach event listeners to search and sort inputs
-        document.querySelector(".search-bar input").addEventListener("input", function (e) {
+        // search
+        document.getElementById("search-bar-audit").addEventListener("input", function (e) {
             searchQuery = e.target.value;
             loadDataAudit();
         });
 
-        document.querySelector(".sort-btn").addEventListener("change", function (e) {
+        // sort
+        document.getElementById("sort-by-audit").addEventListener("change", function (e) {
             const selectedSort = e.target.value;
             
             // Find the LAST underscore (to separate column name and order)
@@ -41,7 +43,9 @@
             sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
 
             loadDataAudit(); // Pass correct values to your function
-        });
+
+            console.log(selectedSort, sortBy, sortOrder);
+        });   
     });
 
     function loadDataAudit() {

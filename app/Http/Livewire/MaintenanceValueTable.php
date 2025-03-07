@@ -10,9 +10,8 @@ use App\Models\MaintenanceValues;
 class MaintenanceValueTable extends Component
 {
     public function fetchData(Request $request){
-        $query = MaintenanceValues::query()->orderBy('data_category')->orderByRaw('CAST(data_value AS SIGNED) ASC');
+        $query = MaintenanceValues::query();
 
-    
         // Search Handling
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;
@@ -30,17 +29,18 @@ class MaintenanceValueTable extends Component
         if ($sortBy === 'data_category') {
             $query->orderByRaw("
                 CASE 
-                    WHEN data_category' = 'ps_no' THEN 1
-                    WHEN data_category' = 'house_no' THEN 2
-                    WHEN data_category' = 'incubator_no' THEN 3
-                    WHEN data_category' = 'hatch_no' THEN 4
+                    WHEN `data_category` = 'ps_no' THEN 1
+                    WHEN `data_category` = 'house_no' THEN 2
+                    WHEN `data_category` = 'incubator_no' THEN 3
+                    WHEN `data_category` = 'hatcher_no' THEN 4
                     ELSE 5
-                END $sortOrder
-            ");
-        } else
-        {
+                END 
+            " . ($sortOrder === 'desc' ? 'DESC' : 'ASC'));
+        }
+        else{
             $query->orderBy($sortBy, $sortOrder);
         }
+
         // Pagination Handling
         $data = $query->paginate(5);
     

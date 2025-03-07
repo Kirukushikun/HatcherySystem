@@ -242,9 +242,13 @@ input::-webkit-inner-spin-button {
     color: #ffffff;
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
-    background-color: #EC8B18;
+    padding: 8px 8px;
+    color: #EC8B18;
+    border: solid 2px #ffd6a5;
+    /* background-color: #EC8B18; */
     cursor: pointer;
+    font-weight: 600;
+    outline: none;
 }
 
 .table-icons{
@@ -358,7 +362,6 @@ tbody td:last-child {
     border-top: solid #f8f8f8 2px;
     color: #583925;
 }
-
 
 .table-body table .datalist-actions{
     white-space:nowrap;

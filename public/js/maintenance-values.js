@@ -69,7 +69,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
         }
     });
     if (isValid) {
-        showModal('save'); // Show modal when all fields are filled
+        showModalMaintenance('save'); // Show modal when all fields are filled
     }
     
 });
@@ -150,8 +150,8 @@ function storeRecord(){
     
             createPushNotification("success", "Saved Successfully", "Maintenance Value Saved Successfully");
 
-            updatePagination(); // Update pagination
-            loadData(); // Reload data
+            updatePaginationMaintenance(); // Update pagination
+            loadDataMaintenance(); // Reload data
 
         } else {
             alert("Error saving record: " + (data.message || "Unknown error"));

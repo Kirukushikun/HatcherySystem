@@ -108,23 +108,37 @@ function displayAuditData(data) {
     }
 
     allKeys.forEach(key => {
-
         let displayFields = fields[key] || key;
+        let oldValue = oldData[key] || "—";
+        let newValue = newData[key] || "—";
+    
+        // Check if the field is a date field and format it
+        const dateFields = [
+            "setting_date", "production_date", "temperature_check_date", 
+            "qc_date", "hatch_date", "pullout_date", "created_at", "updated_at"
+        ];
+    
+        if (dateFields.includes(key)) {
+            oldValue = oldValue !== "—" ? new Date(oldValue).toLocaleDateString("en-US") : "—";
+            newValue = newValue !== "—" ? new Date(newValue).toLocaleDateString("en-US") : "—";
+        }
+    
         tableRows += `
             <tr>
-                <td>${displayFields}</td>
-                <td>${oldData[key] || "—"}</td>
-                <td>${newData[key] || "—"}</td>
+                <td data-label="Field">${displayFields}</td>
+                <td data-label="Old Value">${oldValue}</td>
+                <td data-label="New Value">${newValue}</td>
             </tr>
         `;
     });
 
     modal.innerHTML = `
-        <div class="modal-content">
-            <i class="fa-solid fa-xmark" id="close-button"></i>
-            <h2>Audit Data</h2>
-            <table>
-                <thead>
+    <div class="modal-content">
+        <i class="fa-solid fa-xmark" id="close-button"></i>
+        <h2>Audit Data</h2>
+        <div class="audit-table-container"> <!-- Add this wrapper -->
+            <table class="audit-table">
+                <thead class="audit-table-header">
                     <tr>
                         <th>Field</th>
                         <th>Old Value</th>
@@ -134,7 +148,9 @@ function displayAuditData(data) {
                 <tbody>${tableRows}</tbody>
             </table>
         </div>
+    </div>
     `;
+
 
     modal.classList.add("active");
 }
