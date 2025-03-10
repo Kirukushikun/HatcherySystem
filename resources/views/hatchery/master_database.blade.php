@@ -1055,21 +1055,35 @@
                         enableCard(card);
                     } else if (stepNumber > currentStep) {
                         disableCard(card);
-                    } else if (stepNumber === 4) {
-                        // let currentDate = new Date(); // Today's date
-                        // let pulloutDay10 = new Date(currentDate); // Clone date
-                        // pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
+                    } else if (stepNumber == 4) {
+                        let currentDate = new Date(); // Today's date
+                        let candlingDay10 = new Date(document.getElementById("d10_candling_date").value); // Clone date
 
-                        // console.log("⏳ Waiting 5 seconds to simulate 10-day wait...");
+                        console.log("Current Date: ", currentDate); 
+                        console.log("Pullout Day 10: ", candlingDay10);
 
-                        // setTimeout(() => {
-                        //     console.log("🚀 5 seconds passed! Checking Step 4 conditions...");
-                        //     enableCard(card); // Enable step 4 after 5 seconds
-                        //     console.log("✅ Step 4 is now enabled!");
-                        // }, 5000); // Simulated 5-second delay
+                        if(currentDate >= candlingDay10){
+                            console.log("Current Date is greater than or equal to Candling Day 10");
+                            enableCard(card);
+                        } else {
+                            console.log("Current Date is less than Candling Day 10");
+                            disableCard(card);
+                        }
+                    } else if (stepNumber == 5) {
+                        let currentDate = new Date(); // Today's date
+                        let candlingDay18 = new Date(document.getElementById("d18_candling_date").value); // Clone date
+                    
+                        console.log("Current Date: ", currentDate); 
+                        console.log("Candling Day 10: ", candlingDay18);
 
-                        enableCard(card);
-                    }else{
+                        if(currentDate >= candlingDay18){
+                            console.log("Current Date is greater than or equal to Candling Day 18");
+                            enableCard(card);
+                        } else {
+                            console.log("Current Date is less than Candling Day 18");
+                            disableCard(card);
+                        }
+                    } else{
                         enableCard(card);
                     }
                 });
@@ -1085,6 +1099,7 @@
                 card.classList.add("disabled");
                 card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
             }
+            
 
 
             function lockCompletedSteps(currentStep) {
@@ -1289,22 +1304,28 @@
             function saveStoragePullout() {
                 let data = {
                     storage_pullout: {
-                        pullout_date: document.getElementById("pullout_date").value,
+                        pullout_date: document.getElementById("pullout_date").value, // Original pullout date from input
+                        pullout_date_d10: document.getElementById("d10_candling_date").value, // +10 Days
+                        pullout_date_d18: document.getElementById("d18_candling_date").value, // +8.5 Days
+
                         settable_eggs_qty: document.getElementById("settable_eggs_qty").value,
                         incubator_no: document.getElementById("incubator_no").value,
                         prime_qty: document.getElementById("prime_qty").value,
                         prime_prcnt: document.getElementById("prime_prcnt").value,
                         jp_qty: document.getElementById("jp_qty").value,
                         jp_prcnt: document.getElementById("jp_prcnt").value,
+
+                        
                     }
-                }
+                };
+
                 saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully");
             }
 
             function saveSetterProcess() {
                 let data = { 
                     setter_process: {
-                        d10_candling_date: document.getElementById("d10_candling_date").value,
+                        d10_candling_date: document.getElementById("d10_candling_date").value,                        
                         d10_candling_qty: document.getElementById("d10_candling_qty").value,
                         d10_breakout_qty: document.getElementById("d10_breakout_qty").value,
                         d10_breakout_prcnt: document.getElementById("d10_breakout_prcnt").value,
@@ -1464,6 +1485,20 @@
                         document.getElementById("prime_prcnt").value = processData.storage_pullout.prime_prcnt;
                         document.getElementById("jp_qty").value = processData.storage_pullout.jp_qty;
                         document.getElementById("jp_prcnt").value = processData.storage_pullout.jp_prcnt;
+
+                        document.getElementById("d10_candling_date").value = processData.storage_pullout.pullout_date_d10;
+                        document.getElementById("d18_candling_date").value = processData.storage_pullout.pullout_date_d18;
+                    } else if (step === 5 && processData.setter_process) {
+                        document.getElementById("d10_candling_date").value = processData.setter_process.d10_candling_date;
+                        document.getElementById("d10_candling_qty").value = processData.setter_process.d10_candling_qty;
+                        document.getElementById("d10_breakout_qty").value = processData.setter_process.d10_breakout_qty;
+                        document.getElementById("d10_breakout_prcnt").value = processData.setter_process.d10_breakout_prcnt;
+                        document.getElementById("d10_inc_qty").value = processData.setter_process.d10_inc_qty;
+                        
+                    } else if (step === 6 && processData.candling_process) {
+                        document.getElementById("d18_candling_date").value = processData.candling_process.d18_candling_date;
+                        document.getElementById("infertiles_qty").value = processData.candling_process.infertiles_qty;
+                        document.getElementById("embryonic_eggs_qty").value = processData.candling_process.embryonic_eggs_qty;
                     }
                 });
             }

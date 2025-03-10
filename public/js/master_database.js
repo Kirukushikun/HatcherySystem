@@ -120,10 +120,27 @@ function updateSetterProcess(){
 }
 
 let candlingProcess = {
-    candling_date: document.getElementById('d18_candling_date'),
+    d18_candling_date: document.getElementById('d18_candling_date'),
     infertiles_qty: document.getElementById('infertiles_qty'),
     embryonic_eggs_qty: document.getElementById('embryonic_eggs_qty')
 }
+
+pulloutStorage.pullout_date.addEventListener('input', () => {
+    let pulloutDate = new Date(pulloutStorage.pullout_date.value); // Get pullout date
+    
+    // Calculate Day 10 Candling Date
+    let pulloutDay10 = new Date(pulloutDate); // Clone date
+    pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
+    setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+    // Calculate Day 18.5 Candling Date
+    let pulloutDay18_5 = new Date(pulloutDate); // Clone date
+    pulloutDay18_5.setDate(pulloutDay18_5.getDate() + 18); // Add 18 full days
+    pulloutDay18_5.setHours(pulloutDay18_5.getHours() + 12); // Add 12 hours (0.5 day)
+
+    // Format for input field (only date part)
+    candlingProcess.d18_candling_date.value = pulloutDay18_5.toISOString().split('T')[0]; 
+});
 
 candlingProcess.infertiles_qty.addEventListener('input', updateCandlingProcess);
 
@@ -340,4 +357,6 @@ function updateTemperatureCheck(event) {
     }
 }   
 
-
+// setTimeout(() => {
+//     calculateBoxes(Number(pulloutStorage.settable_eggs_qty.value) || 0);
+// }, 1000);
