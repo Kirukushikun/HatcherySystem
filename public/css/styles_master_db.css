@@ -340,6 +340,7 @@ input[type=number] {
     padding: 15px 25px;
     font-weight: 500;
     color: #AB9E91;
+    white-space: nowrap;
 }
 
 thead th:first-child {
@@ -373,6 +374,7 @@ tbody td:last-child {
     background-color: white;
     border-top: solid #f8f8f8 2px;
     color: #583925;
+    white-space: nowrap;
 }
 
 

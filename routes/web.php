@@ -16,6 +16,7 @@ use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
 use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
+use App\Http\Livewire\MasterDatabaseTable;
 
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\PDFController;
@@ -126,6 +127,8 @@ Route::get('/test', function () {
 });
 
 //Master Database
+
+Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
 
 Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
 Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDatabaseController::class, 'master_database_check'])->name('master.database.check');

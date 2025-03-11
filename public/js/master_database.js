@@ -360,3 +360,4 @@ function updateTemperatureCheck(event) {
 // setTimeout(() => {
 //     calculateBoxes(Number(pulloutStorage.settable_eggs_qty.value) || 0);
 // }, 1000);
+
