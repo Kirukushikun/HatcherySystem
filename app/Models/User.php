@@ -25,5 +25,10 @@ class User extends Authenticatable
         'role'
     ];
 
+    public function logs()
+    {
+        return $this->hasMany('App\Models\AccessLogs');
+    }
+
 
 }

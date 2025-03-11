@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>@yield('title') - Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="/css/admin-styles.css">
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    @livewireStyles
 
     <!-- Crucial Part on every forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -255,9 +256,9 @@
                         <div class="table-icons">
                             <i class="fa-solid fa-rotate-right" onclick="refreshTableAudit()"></i>
                         </div>
-                        
+
                     </div>
-        
+
                 </div>
                 <div class="table-body">
                     <livewire:audit-trail-table />
@@ -274,6 +275,12 @@
                 </div>
             </div>
 
+            @yield('user_logs_content')
+
+            {{-- @livewire('users.grant-access') --}}
+            {{-- , ['id' => $user_id] --}}
+
+            @yield('user_content')
         </div>
     </div>
 
@@ -318,10 +325,18 @@
         });
     </script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @yield('scripts_access_logs')
+    @yield('scriptss')
+    @stack('scripts')
+    @stack('scriptsis')
+
     <script src="{{ asset('js/maintenance-values.js') }}" defer></script>
     <script src="{{asset('js/audit.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
     <script src="{{asset('js/push-notification.js')}}" defer></script>
+
 
 </body>
 </html>
