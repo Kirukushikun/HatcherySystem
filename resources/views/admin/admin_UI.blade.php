@@ -169,6 +169,7 @@
 
         <div class="form-entries">
 
+            <!-- Maintenance Value -->
             <div class="table active" id="table1">
                 <form class="body">
                     @csrf
@@ -236,6 +237,7 @@
                 </div>
             </div>
 
+            <!-- Audit Trail -->
             <div class="table" id="table2">
                 <div class="table-header">
                 <div id="audit-modal" class="modal"></div>
@@ -275,12 +277,125 @@
                 </div>
             </div>
 
-            @yield('user_logs_content')
+            <!-- Access Logs -->
+            <div class="table" id="table3">
+                <div class="table-header">
+                    <h4>Access Logs</h4>
 
-            {{-- @livewire('users.grant-access') --}}
-            {{-- , ['id' => $user_id] --}}
+                    <div class="table-action">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search...">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
 
-            @yield('user_content')
+                        <select class="sort-btn">
+                            <option value=""> Sort By</option>
+                        </select>
+
+                        <div class="table-icons">
+                            <i class="fa-solid fa-print"></i>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-body" style="position: relative;">
+                    <table id="accessLogs">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">USER ID</th>                                
+                                <th class="text-center">NAME</th>
+                                <th class="text-center">DATE/TIME</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accessLogs">
+                            <!-- Skeleton Loader rows while fetching data -->
+                            @for ($i = 0; $i < 10; $i++)
+                                <tr class="skeleton-row">
+                                    <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
+                                    <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
+                                    <td><div class="skeleton-loader" style="width: {{ rand(40, 80) }}%;"></div></td>
+                                    <td><div class="skeleton-loader" style="width: {{ rand(60, 100) }}%;"></div></td>
+                                </tr>
+                            @endfor
+                            <!-- Additional skeleton rows if needed -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Loader (Initially hidden) -->
+                <div class="loading-screen">
+                    <div class="loader"></div>
+                </div>
+
+                <div class="table-footer">
+                    <div class="pagination" id="accessLogsPagination">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div class="table" id="table4">
+                <div class="table-header">
+                <h4>Users</h4>
+
+                <div class="table-action">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+
+                    <select class="sort-btn">
+                        <option value=""> Sort By</option>
+                    </select>
+
+                    <div class="table-icons">
+                        <i class="fa-solid fa-print"></i>
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="table-body" style="position: relative;">
+                <table id="users">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">FIRST NAME</th>
+                            <th class="text-center">LAST NAME</th>
+                            <th class="text-center">SYSTEM ACCESS</th>
+                            <th class="text-center">ROLE</th>
+                            <th style="text-align: center">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable">
+                        <!-- Skeleton Loader rows while fetching data -->
+                        @for ($i = 0; $i < 10; $i++)
+                            <tr class="skeleton-row">
+                                <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
+                                <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
+                                <td><div class="skeleton-loader" style="width: {{ rand(40, 80) }}%;"></div></td>
+                                <td><div class="skeleton-loader" style="width: {{ rand(60, 100) }}%;"></div></td>
+                                <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
+                                <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
+                            </tr>
+                        @endfor
+                        <!-- Additional skeleton rows if needed -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Loader (Initially hidden) -->
+            <div class="loading-screen">
+                <div class="loader"></div>
+            </div>
+
+            <div class="table-footer">
+                <div class="pagination" id="userPagination">
+                </div>
+            </div>
+        </div>
+
         </div>
     </div>
 
@@ -333,9 +448,11 @@
     @stack('scriptsis')
 
     <script src="{{ asset('js/maintenance-values.js') }}" defer></script>
-    <script src="{{asset('js/audit.js')}}" defer></script>
-    <script src="{{asset('js/loading-screen.js')}}" defer></script>
-    <script src="{{asset('js/push-notification.js')}}" defer></script>
+    <script src="{{ asset('js/audit.js') }}" defer></script>
+    <script src="{{ asset('js/user.js') }}" defer></script>
+    <script src="{{ asset('js/user-logs.js') }}" defer></script>
+    <script src="{{ asset('js/loading-screen.js') }}" defer></script>
+    <script src="{{ asset('js/push-notification.js') }}" defer></script>
 
 
 </body>

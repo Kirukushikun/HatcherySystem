@@ -62,6 +62,7 @@
                     egg_temperature: "Egg Temperature Entry",
                     rejected_hatch: "Rejected Hatch Entry",
                     rejected_pullets: "Rejected Pullets Entry",
+                    users: "Users",
                 };
 
                 data.data.forEach(row => {

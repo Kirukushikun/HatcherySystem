@@ -54,19 +54,20 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
     Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
     Route::get('/users/grant-access/{id}/{role}/{action}', [UserController::class, 'grantAccess'])->name('grant.access');
+    Route::get('/users/persons', [UserController::class, 'index2'])->name('users.index2'); // Show the users Blade view
 
-Route::get('/gs', function () {
-	return GS::service1();
-});
+    Route::get('/gs', function () {
+        return GS::service1();
+    });
 
     Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
 
 
 
-    // Route::get('/admin', function () {
-    //     return view('admin.admin_UI');
-    // });
+    Route::get('/admin', function () {
+        return view('admin.admin_UI');
+    });
 
     Route::get('/home', function () {
         return view('hatchery.main_module');
@@ -175,4 +176,6 @@ Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 Route::get('/test', function () {
 	return view('hatchery.report_module');
+});
+
 

@@ -33,6 +33,7 @@ class AuditTrailTable extends Component
                     WHEN `table` = 'egg_temperature' THEN 2
                     WHEN `table` = 'rejected_hatch' THEN 3
                     WHEN `table` = 'rejected_pullets' THEN 4
+                    WHEN `table` = 'users' THEN 5
                     ELSE 5
                 END " . ($sortOrder === 'desc' ? 'DESC' : 'ASC')
             );
@@ -43,6 +44,8 @@ class AuditTrailTable extends Component
                     WHEN action LIKE '%Added%' THEN 1
                     WHEN action LIKE '%Updated%' THEN 2
                     WHEN action LIKE '%Deleted%' THEN 3
+                    WHEN action LIKE '%Granted%' THEN 4
+                    WHEN action LIKE '%Revoked%' THEN 5
                     ELSE 4
                 END " . ($sortOrder === 'desc' ? 'DESC' : 'ASC')
             );

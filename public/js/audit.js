@@ -41,7 +41,6 @@ function fetchAuditData(targetID) {
             fetch(`/fetch-audit-data/${encodeURIComponent(data.encrypted_id)}`)
             .then(response => response.json())
             .then(data => {
-
                 displayAuditData(data);
             })
         } else {

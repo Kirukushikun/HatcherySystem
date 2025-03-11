@@ -18,7 +18,7 @@ class AuditController extends Controller
     	$log->table = $data[1];
     	$log->old_value = $data[2];
     	$log->new_value = $data[3];
-    	$log->user_id = 1;
+    	$log->user_id = $data[4];
         // Auth::user()->id;
     	$log->save();
     }

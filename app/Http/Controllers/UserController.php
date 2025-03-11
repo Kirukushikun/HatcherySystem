@@ -28,6 +28,11 @@ class UserController extends Controller
         return view('user-logs.logs');
     }
 
+    public function index2()
+    {
+        return view('users.user');
+    }
+
     /**
      * Access Logs
      */
@@ -170,8 +175,7 @@ class UserController extends Controller
     	$log->save();
     }
 
-    public function accessLogsJson(Request $request)
-    {
+    public function accessLogsJson(Request $request){
         // $url = config('app.root_domain') . config('app.users_api_slug');
 
         // $response = file_get_contents($url);
