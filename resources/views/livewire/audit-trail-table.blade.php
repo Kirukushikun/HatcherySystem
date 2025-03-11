@@ -44,7 +44,6 @@
 
             loadDataAudit(); // Pass correct values to your function
 
-            console.log(selectedSort, sortBy, sortOrder);
         });   
     });
 

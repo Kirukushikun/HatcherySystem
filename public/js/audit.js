@@ -50,7 +50,6 @@ function fetchAuditData(targetID) {
     })
     .catch(error => console.error("Error:", error));
 
-    console.log("fetch audit", targetID);
 }
 
 function displayAuditData(data) {

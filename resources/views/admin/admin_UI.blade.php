@@ -160,15 +160,15 @@
 
     <div class="body-split">
         <div class="sidebar">
-            <a href="#table1" class=""><div></div><i class="fa-solid fa-table-cells-large"></i></a>
-            <a href="#table2" class="active"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
-            <a href="#table3"><div></div><i class="fa-solid fa-clipboard-user"></i></a>
-            <a href="#table4"><div></div><i class="fa-solid fa-users"></i></a>
+            <a href="#table1" class="active"><div></div><i class="fa-solid fa-table-cells-large"></i></a>
+            <a href="#table2" class=""><div></div><i class="fa-solid fa-clipboard-list"></i></a>
+            <a href="#table3" class=""><div></div><i class="fa-solid fa-clipboard-user"></i></a>
+            <a href="#table4" class=""><div></div><i class="fa-solid fa-users"></i></a>
         </div>
 
         <div class="form-entries">
 
-            <div class="table" id="table1">
+            <div class="table active" id="table1">
                 <form class="body">
                     @csrf
                     <div class="table-form">
@@ -235,7 +235,7 @@
                 </div>
             </div>
 
-            <div class="table active" id="table2">
+            <div class="table" id="table2">
                 <div class="table-header">
                 <div id="audit-modal" class="modal"></div>
                     <h4>Audit Trail</h4>

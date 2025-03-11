@@ -216,7 +216,6 @@ function editRecord(targetID) {
     })
     .catch(error => console.error("Error:", error));
 
-    console.log("editing", targetID);
 }
 
 document.addEventListener("click", function (event) {
