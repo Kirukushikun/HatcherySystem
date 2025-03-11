@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string("ps_no");
             $table->date("setting_date");
-            $table->string("incubator");
+            $table->string("incubator_no");
             $table->string("location");
 
 

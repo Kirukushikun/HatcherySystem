@@ -1,3 +1,4 @@
+@include('components.modal-notification-loader')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,17 @@
     <title>Egg Temperature Check Entry</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="/Images/BGC icon.ico">
-    <link rel="stylesheet" href="/Css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <!-- Crucial Part on every forms -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Crucial Part on every forms/ -->
+
 </head>
-<body>
+<body id="body">
+
+    @yield('modal-notification-loader')
+
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
         <h2>EGG SHELL TEMPERATURE CHECK ENTRY</h2>
@@ -23,47 +32,50 @@
         </div>
 
         <div class="form-input col-4">
+
             <div class="input-container column">
-                <label for="">PS no.</label>
-                <select name="" id="" required>
+                <label for="ps_no">PS No. <span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
+            </div>
+            
+            <div class="input-container column">
+                <label for="setting_date">Setting Date <span></span></label>
+                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
+            </div>
+            <div class="input-container column">
+                <label for="incubator_no">Incubator No. <span></span></label>
+                <x-dropdown :data-category="'incubator_no'" />
+            </div>
+            <div class="input-container column">
+                <label for="location">Location <span></span></label>
+                <select name="location" id="location">
                     <option value=""></option>
+                    <option value="Top" {{ session('form_data.location', '') == 'Top' ? 'selected' : ''}}>Top</option>
+                    <option value="Mid" {{ session('form_data.location', '') == 'Mid' ? 'selected' : ''}}>Mid</option>
+                    <option value="Low" {{ session('form_data.location', '') == 'Low' ? 'selected' : ''}}>Low</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Setting Date</label>
-                <input type="date" required>
+                <label for="temp_check_date">Temperature Check Date <span></span></label>
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
-                <label for="">Incubator #</label>
-                <select name="" id="" required>
+                <label for="temperature">Temperature <span></span></label>
+                <select name="temperature" id="temperature">
                     <option value=""></option>
+                    <option value="37.8 Above" {{ session('form_data.temperature', '') == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
+                    <option value="37.7 Below" {{ session('form_data.temperature', '') == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="">Location</label>
-                <select name="" id="" required>
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="">Temperature Check Date</label>
-                <input type="date" required>
-            </div>
-            <div class="input-container column">
-                <label for="">Temperature</label>
-                <select name="" id="" required>
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="">Quantity</label>
-                <input type="number" required>
+                <label for="quantity">Quantity <span></span></label>
+                <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}">
             </div>
         </div>
 
         <div class="form-action">
-            <button class="save-btn">Save</button>
-            <button class="reset-btn" type="button">Reset</button>
+            <button class="save-btn" type="submit">Save</button>
+            <button class="reset-btn" type="reset">Reset</button>
         </div>
 
     </form>
@@ -78,111 +90,39 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
 
-                <select class="sort-btn">
-                    <option value=""> Sort By</option>
+                <!-- <label for="sort-btn">Sort By:</label> -->
+                <select class="sort-btn" name="sort-btn" id="sort-btn">
+                    <option value="created_at_desc">Sort By: Date (Newest)</option>
+                    <option value="created_at_asc">Sort By: Date (Oldest)</option>
+                    <option value="temperature_asc">Sort By: Temperature (High-Low)</option>
+                    <option value="temperature_desc">Sort By: Temperature (Low-High)</option>
+                    <option value="quantity_desc">Sort By: Quantity (Desc)</option>
+                    <option value="quantity_asc">Sort By: Quantity (Asc)</option>
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
+                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
             </div>
 
         </div>
         <div class="table-body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>PS no.</th>
-                        <th>Setting Date</th>
-                        <th>Incubator #</th>
-                        <th>Location</th>
-                        <th>Temp Check Date</th>
-                        <th>Quantity</th>
-                        <th>Encoded/Modified By</th>
-                        <th>Date Encoded/Modified</th>
-                        <th>Action Done</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>#93</td>
-                        <td>09/12/25</td>
-                        <td>1</td>
-                        <td>TOP</td>
-                        <td>37.7 Below</td>
-                        <td>128</td>
-                        <td>IT Head</td>
-                        <td>09/12/25</td>
-                        <td>New Input</td>
-                        <td class="datalist-actions">
-                            <i class="fa-regular fa-pen-to-square" id="edit-action"></i>
-                            <i class="fa-regular fa-trash-can" id="delete-action"></i>
-                            <i class="fa-solid fa-print" id="print-action"></i>
-                        </td>
-                    </tr>
-                </tbody>
-                
-                
-            </table>
+
+            <livewire:egg-temperature-table />
+
         </div>
         <div class="table-footer">
             <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#"><i class="fa-solid fa-caret-right"></i></a>
             </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector(".body"); // Main form container
-            const inputs = form.querySelectorAll("input, select"); // All form fields
-            const formAction = form.querySelector(".form-action"); // Form action buttons
-            const resetButton = form.querySelector(".reset-btn"); // Reset button
-
-            // Function to check if any input has a value
-            function checkFormValues() {
-                let hasValue = false;
-
-                inputs.forEach(input => {
-                    if (input.value.trim() !== "") {
-                        hasValue = true;
-                    }
-                });
-
-                // Show or hide the form-action buttons
-                formAction.style.display = hasValue ? "flex" : "none";
-            }
-
-            // Event listeners for inputs and selects
-            inputs.forEach(input => {
-                input.addEventListener("input", checkFormValues);
-                input.addEventListener("change", checkFormValues); // For select and date/time inputs
-            });
-
-            // Reset button functionality
-            resetButton.addEventListener("click", function () {
-                inputs.forEach(input => {
-                    input.value = ""; // Clear input fields
-                });
-
-                checkFormValues(); // Recheck values to hide form-action
-            });
-
-            // Initial check to hide the form-action if empty
-            checkFormValues();
-        });
-    </script>
+    <script src="{{asset('js/egg-temperature.js')}}" defer></script>
     
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
+
 </body>
 </html>

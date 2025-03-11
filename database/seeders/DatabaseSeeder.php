@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\EggTemperatureSeeder;
+use Database\Seeders\EggCollectionSeeder;
+use Database\Seeders\RejectedHatchSeeder;
+
 use DB;
 
 class DatabaseSeeder extends Seeder
@@ -21,10 +25,22 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        DB::table('users')->insert([
-            'id' => 1,
-            'password' => null,
-            'role' => 'superuser',
+
+        // DB::table('users')->insert([
+        //     'id' => 1,
+        //     'password' => null,
+        //     'role' => 'superuser',
+        // ]);
+
+        // Empty specific tables
+        DB::table('egg_temperature')->truncate();
+        DB::table('egg_collection')->truncate();
+        DB::table('rejected_hatch')->truncate();
+
+        $this->call([
+            EggTemperatureSeeder::class,
+            EggCollectionSeeder::class,
+            RejectedHatchSeeder::class
         ]);
     }
 }

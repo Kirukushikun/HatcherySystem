@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #1C1C1C;
+    font-family: "Poppins", serif;
+}
+
+/* -------------------------------------------------- MODAL STYLING -------------------------------------------------- */
+
+
+.modal{
+    display: none;
+}
+.modal.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    z-index:100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal.active body {
+    overflow: hidden;
+}
+
+.modal-content {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border-radius: 10px;
+    background-color: white;
+    padding: 40px 40px;
+
+    gap: 20px;
+
+    /* Add bounce animation */
+    animation: bounce 0.2s ease-out;
+}
+
+.modal-content.export-options{
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px 40px;
+}
+.modal-content.export-options i{
+    font-size: 45px;
+}
+.modal-content.export-options .option{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-content.export-options button{
+    font-size: 20px;
+}
+.modal-content.export-options #separator{
+    width: 2px;
+    height: 100%;
+    background-color: #bcbcbc;
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.modal-footer button {
+    padding: 8px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#close-button {  
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    font-size: 23px;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.modal-header i {
+    font-size: 30px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.modal-header h2 {
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+.modal-header h4 {
+    font-size: 17px;
+    font-weight: 500;
+    color: #868686;
+}
+
+/* Bouncing animation */
+@keyframes bounce {
+    0% {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+.danger{
+    color: #EA4335;
+    background-color: rgb(255, 230, 230);
+}
+
+.success{
+    color: #34A853;
+    background-color: #e6ffe6;
+}
+
+.edit{
+    color: #F28B30;
+    background-color: #fff3e0;
+}
+
+.csv{
+    color: #FBBC05;
+    background-color: #fff9de;
+}
+
+.report{
+    color: #FF7043;
+    background-color: #ffeee9;
+}
+
+.cancel-button{
+    background-color: rgb(238, 233, 225);
+    border: 2px solid #c5c5c5;
+}
+
+.delete-btn{
+    color: white;
+    border: solid 2px #EA4335;
+    background-color: #EA4335;
+}
+.save-btn{
+    color: white;
+    border: solid 2px #34A853;
+    background-color: #34A853;
+}
+.edit-btn{
+    color: white;
+    border: solid 2px #F28B30;
+    background-color: #F28B30;
+}
+.csv-btn{
+    color: white;
+    border: solid 2px #FBBC05;
+    background-color: #FBBC05;
+}
+.report-btn{
+    color: white;
+    border: solid 2px #FF7043;
+    background-color: #FF7043;
+}
+
+/* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */
+
+.loading-screen{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    z-index: 9999;
+}
+
+.loading-screen.active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading{
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 200px 0;
+}.loading.active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.loader {
+    width: 44px;
+    height: 44px;
+    border: 5px solid rgb(255, 222, 184); /* #7b5cad color with 0.5 opacity */
+    border-top: 5px solid #EC8B18; /* Transparent part of the loader */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; /* 1s for animation duration, loops infinitely */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* -------------------------------------------------- PUSH NOTIFICATION STYLING -------------------------------------------------- */
+
+.push-notification {
+    display: flex;
+    align-items: flex-start;
+    position: fixed;
+    top: -170px; /* Start off-screen */
+    right: 20px;
+    border: solid 2px #43ac5fb0;
+    padding: 25px;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    color: var(--text-color);
+    opacity: 0; /* Start hidden */
+    transition: top 0.5s ease, opacity 0.5s ease; /* Animate both top and opacity */
+    gap: 20px;
+}
+
+.push-notification.active {
+    top: 20px; /* Slide to visible position */
+    opacity: 1; /* Make it visible */
+}
+
+.push-notification.success{
+    background-color: #e8ffee;
+    border: solid 2px #43ac5fb0;
+}.push-notification.danger{
+    background-color: #ffe8e8;
+    border: solid 2px #df6060;
+}
+
+.notification-message{
+    font-size: 17px;
+    user-select: none;
+}
+.push-notification p{
+    margin-top: 5px;
+    font-size: 16px;
+    width: 280px;
+}
+
+.push-notification .fa-bell.success{
+    background-color: #34A853;
+    padding: 11px 12px;
+    border-radius: 8px;
+    color: white;
+}.push-notification .fa-bell.danger{
+    background-color: #EB4335;
+    padding: 11px 12px;
+    border-radius: 8px;
+    color: white;
+}
+
+.push-notification #close-notification{
+    font-size: 25px;
+    cursor: pointer;;
+    margin-top: 2px;
+}
+
+
+
+/* -------------------------------------------------- SKELETON LOADER STYLING -------------------------------------------------- */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite linear;
+    height: 17px;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

@@ -12,7 +12,7 @@
 }
 
 body{
-    height: 100vh;
+    height: auto;
     background-color: #F6F4F1;
     padding: 40px 15%;
 
@@ -107,6 +107,19 @@ label{
     gap: 10px;
 }
 
+.body .input-container label{
+    position: relative;
+}
+.body .input-container label span{
+    position: absolute;
+    left: 10px;
+    bottom: -20px;
+    color: #ea4435d7;
+    font-weight: 600;
+    font-size: 12px;
+    background-color: white;
+}
+
 .body .input-container input{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
@@ -117,6 +130,7 @@ label{
     font-weight: 300;
 
     width: 100%;
+    outline: none;
 }
 .body .input-container select{
     background-color: #F6F4F1;
@@ -242,9 +256,13 @@ input[type=number] {
     color: #ffffff;
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
-    background-color: #EC8B18;
+    padding: 8px 8px;
+    color: #EC8B18;
+    border: solid 2px #ffd6a5;
+    /* background-color: #EC8B18; */
     cursor: pointer;
+    font-weight: 600;
+    outline: none;
 }
 
 .table-icons{
@@ -315,12 +333,23 @@ input[type=number] {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
-    background-color: #fafafa;
+}
 
-}.table-body table th{
+/* Table Row Hover Effects */
+.table-body table tr:hover {
+    background: #f7f7f7;
+    /* cursor: pointer; */
+}
+.table-body table tr:hover td:first-child, table tr:hover td:last-child{
+    background: #f7f7f7;
+}
+
+.table-body table th{
     padding: 15px 25px;
     font-weight: 500;
     color: #AB9E91;
+    background-color: #fafafa;
+    white-space: nowrap;
 }
 
 thead th:first-child {
@@ -329,6 +358,7 @@ thead th:first-child {
     background: #f0f0f0;
     z-index: 2;
 }
+
 tbody td:first-child {
     position: sticky;
     left: 0;
@@ -351,10 +381,11 @@ tbody td:last-child {
 
 .table-body table td{
     padding: 17px 25px;
-    background-color: white;
-    border-top: solid #f8f8f8 2px;
+    /* background-color: white; */
+    border-top: solid #f3f3f3 2px;
     color: #583925;
 }
+
 
 
 .table-body table .datalist-actions{
@@ -380,11 +411,6 @@ tbody td:last-child {
     color: #00796B;
     transform: scale(1.2);
 }
-
-
-
-
-
 
 
 @media(max-width:1800px){
@@ -691,3 +717,4 @@ tbody td:last-child {
 
     width: 100%;
     margin-top: 10px;
+}
