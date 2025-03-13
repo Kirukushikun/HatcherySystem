@@ -55,7 +55,7 @@ class AuditTrailTable extends Component
             $query->orderBy($sortBy, $sortOrder);
         }
         // Pagination Handling
-        $data = $query->paginate(7);
+        $data = $query->paginate(10);
     
         return response()->json([
             'data' => $data->items(),

@@ -300,13 +300,13 @@
                 </div>
 
                 <div class="table-body" style="position: relative;">
-                    <table id="accessLogs">
+                    <table >
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
-                                <th class="text-center">USER ID</th>                                
-                                <th class="text-center">NAME</th>
-                                <th class="text-center">DATE/TIME</th>
+                                <th class="text-center">User ID</th>                                
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Date / Time</th>
                             </tr>
                         </thead>
                         <tbody id="accessLogs">
@@ -337,41 +337,39 @@
             <!-- Users -->
             <div class="table" id="table4">
                 <div class="table-header">
-                <h4>Users</h4>
+                    <h4>Users</h4>
 
-                <div class="table-action">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search...">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="table-action">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search..." />
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+                        <select class="sort-btn">
+                            <option value="">Sort By</option>
+                        </select>
+
+                        <div class="table-icons">
+                            <i class="fa-solid fa-print"></i>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </div>
                     </div>
-
-                    <select class="sort-btn">
-                        <option value=""> Sort By</option>
-                    </select>
-
-                    <div class="table-icons">
-                        <i class="fa-solid fa-print"></i>
-                        <i class="fa-solid fa-rotate-right"></i>
-                    </div>
-
                 </div>
-
-            </div>
-            <div class="table-body" style="position: relative;">
-                <table id="users">
-                    <thead>
-                        <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">FIRST NAME</th>
-                            <th class="text-center">LAST NAME</th>
-                            <th class="text-center">SYSTEM ACCESS</th>
-                            <th class="text-center">ROLE</th>
-                            <th style="text-align: center">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTable">
-                        <!-- Skeleton Loader rows while fetching data -->
-                        @for ($i = 0; $i < 10; $i++)
+                <div class="table-body" style="position: relative">
+                    <table id="users">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">First Name</th>
+                                <th class="text-center">Last Name</th>
+                                <th class="text-center">System Access</th>
+                                <th class="text-center">Role</th>
+                                <th style="text-align: center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            <!-- Skeleton Loader rows while fetching data -->
+                            @for ($i = 0; $i < 10; $i++)
                             <tr class="skeleton-row">
                                 <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
                                 <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
@@ -380,11 +378,13 @@
                                 <td><div class="skeleton-loader" style="width: {{ rand(30, 70) }}%;"></div></td>
                                 <td><div class="skeleton-loader" style="width: {{ rand(50, 90) }}%;"></div></td>
                             </tr>
-                        @endfor
-                        <!-- Additional skeleton rows if needed -->
-                    </tbody>
-                </table>
+                            @endfor
+                            <!-- Additional skeleton rows if needed -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
             <!-- Loader (Initially hidden) -->
             <div class="loading-screen">
                 <div class="loader"></div>
@@ -407,37 +407,45 @@
     let sortBy = "created_at";
     let sortOrder = "desc";
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const sidebarLinks = document.querySelectorAll(".sidebar a");
-            const tables = document.querySelectorAll(".table");
+    document.addEventListener("DOMContentLoaded", function () {
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+    const tables = document.querySelectorAll(".table");
 
-            // Click event for sidebar links
-            sidebarLinks.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault(); // Prevent default anchor behavior
+    // Retrieve the last active tab from local storage
+    const savedTab = localStorage.getItem("activeTab");
+    if (savedTab) {
+        activateSection(document.querySelector(savedTab));
+    } else {
+        activateSection(document.querySelector(".table.active")); // Default to first section
+    }
 
-                    const targetTable = document.querySelector(this.getAttribute("href"));
-                    activateSection(targetTable);
-                });
-            });
+    // Click event for sidebar links
+    sidebarLinks.forEach(link => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const targetTable = document.querySelector(this.getAttribute("href"));
+            activateSection(targetTable);
 
-            // Function to handle sidebar and table activation
-            function activateSection(targetTable) {
-                // Remove 'active' class from all sidebar links and tables
-                sidebarLinks.forEach(link => link.classList.remove("active"));
-                tables.forEach(table => table.classList.remove("active"));
-
-                if (targetTable) {
-                    // Activate corresponding sidebar link
-                    const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetTable.id}"]`);
-                    if (targetSidebarLink) targetSidebarLink.classList.add("active");
-
-                    // Activate target table
-                    targetTable.classList.add("active");
-                }
-            }   
-
+            // Save the active tab in local storage
+            localStorage.setItem("activeTab", this.getAttribute("href"));
         });
+    });
+
+    // Function to handle sidebar and table activation
+    function activateSection(targetTable) {
+        if (!targetTable) return;
+
+        // Remove 'active' class from all sidebar links and tables
+        sidebarLinks.forEach(link => link.classList.remove("active"));
+        tables.forEach(table => table.classList.remove("active"));
+
+        // Activate the selected sidebar link and table
+        const targetSidebarLink = document.querySelector(`.sidebar a[href="#${targetTable.id}"]`);
+        if (targetSidebarLink) targetSidebarLink.classList.add("active");
+        targetTable.classList.add("active");
+    }
+    });
+
     </script>
 
 

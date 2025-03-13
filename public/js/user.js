@@ -157,7 +157,6 @@ document.addEventListener("click", function (event) {
                             window.location.reload(); // Reloads after the user clicks OK
                         });
                     } else {
-                        console.log(id);
                         Swal.fire("Error!", "Failed to update access.", "error");
                     }
                 })
