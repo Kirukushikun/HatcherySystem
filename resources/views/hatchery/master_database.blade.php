@@ -31,6 +31,7 @@
     </style>
 </head>
 <body>
+
     <input type="hidden" id="batch_no" name="batch_no" value="{{$batch_no}}">
     <input type="hidden" id="current_step" name="current_step" value="{{$current_step}}">
 
@@ -983,17 +984,28 @@
             }
 
             function saveData(url, data, successMessage) {
+                let adjustedStep = currentStep;
 
-                let adjustedStep = currentStep + 1;
-
-                if(activeForm.id === "card6"){
+                // 🔹 If classification_for_storage exists, force step to 3
+                if (data.hasOwnProperty("classification_for_storage")) {
+                    adjustedStep = 3;
+                } 
+                // 🔹 Fix specific step jumps
+                else if (activeForm.id === "card6") {
                     adjustedStep = 7;
-                } else if(activeForm.id === "card10"){
+                } else if (activeForm.id === "card10") {
                     adjustedStep = 11;
+                } 
+                // 🔹 First-time save always starts at Step 2
+                else if (currentStep === 1) {
+                    adjustedStep = 2;
+                } 
+                // 🔹 Normal case: Move to next step
+                else {
+                    adjustedStep = currentStep + 1;
                 }
 
-
-                fetch(url, {
+                return fetch(url, {  // ✅ Return the fetch Promise here
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -1009,6 +1021,8 @@
                 .then(responseData => {
                     if (responseData.success) {
                         createPushNotification("success", "Saved Successfully", successMessage);
+                        //Refresh Table
+                        loadData();
                     } else {
                         createPushNotification("error", "Save Failed", "Error saving record.");
                     }
@@ -1018,6 +1032,7 @@
                     createPushNotification("error", "Save Failed", "An error occurred while saving.");
                 });
             }
+
 
             function saveCollectedEggs() {
                 let data = {
@@ -1054,9 +1069,7 @@
                         prime_qty: document.getElementById("prime_qty").value,
                         prime_prcnt: document.getElementById("prime_prcnt").value,
                         jp_qty: document.getElementById("jp_qty").value,
-                        jp_prcnt: document.getElementById("jp_prcnt").value,
-
-                        
+                        jp_prcnt: document.getElementById("jp_prcnt").value
                     }
                 };
 

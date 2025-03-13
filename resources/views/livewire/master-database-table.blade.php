@@ -39,6 +39,9 @@
     })
     
     function loadData() {
+        
+        skeletonLoader();
+
         fetch(`/fetch-master-database-data`)
             .then(response => response.json())
             .then(data => {
@@ -102,6 +105,31 @@
         cell.textContent = content;
         return cell;
     }
+
+    function skeletonLoader() {
+        const tableBody = document.getElementById('table-body');
+        const existingRowCount = tableBody.querySelectorAll("tr").length; // Count existing rows
+        const skeletonRowCount = existingRowCount > 0 ? existingRowCount : 2; // Use existing rows or default to 2
+
+        tableBody.innerHTML = ""; // Clear table before adding skeletons
+
+        for (let i = 0; i < skeletonRowCount; i++) {
+            const row = document.createElement("tr");
+
+            for (let j = 0; j < 15; j++) { // Assuming 15 columns
+                let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%"; // Random width
+                const cell = document.createElement("td");
+                const skeleton = document.createElement("div");
+                skeleton.classList.add("skeleton");
+                skeleton.style.width = ranWidth;
+                cell.appendChild(skeleton);
+                row.appendChild(cell);
+            }
+
+            tableBody.appendChild(row);
+        }
+    }
+
 
 
 </script>
