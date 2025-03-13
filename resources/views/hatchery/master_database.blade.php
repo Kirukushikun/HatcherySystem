@@ -657,6 +657,7 @@
                 document.querySelector(`.sidebar a[href="#${targetCard.id}"]`)?.classList.add("active");
                 targetCard.querySelector(".card-label")?.classList.add("active");
                 targetCard.classList.add("active");
+                // targetCard.style.borderWidth = "5px";
 
                 activeForm = targetCard; // Update active form
 
