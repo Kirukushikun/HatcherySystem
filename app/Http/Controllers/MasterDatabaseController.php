@@ -50,39 +50,53 @@ class MasterDatabaseController extends Controller
     function master_database_store(Request $request){
         $batchNo = $request->batch_no ?? 1;
         $currentStep = $request->current_step;
-        
-        // Create a new entry
-        $entry = new MasterDB();
-        $entry->batch_no = $batchNo;
-        $entry->current_step = $currentStep;
-        $entry->process_data = $request->process_data;
-        
-        // Step 1 is the only one that initializes a batch
-        $entry->status = ($currentStep == 2) ? 'in_progress' : null;
-        $entry->save();
-        
+    
+        // Check if an entry for this batch and step already exists
+        $entry = MasterDB::where('batch_no', $batchNo)
+                         ->where('current_step', $currentStep)
+                         ->first();
+    
+        if ($entry) {
+            // If exists, update process_data
+            $entry->process_data = $request->process_data;
+            $entry->save();
+            $message = "Master Database Entry Updated Successfully";
+        } else {
+            // Otherwise, create a new entry
+            $entry = new MasterDB();
+            $entry->batch_no = $batchNo;
+            $entry->current_step = $currentStep;
+            $entry->process_data = $request->process_data;
+    
+            // Step 1 is the only one that initializes a batch
+            $entry->status = ($currentStep == 2) ? 'in_progress' : null;
+            $entry->save();
+            $message = "Master Database Entry Recorded Successfully";
+        }
+    
         // Define steps that must be present
         $stepsToCheck = range(2, 12);
-
+    
         // Get the count of recorded steps within the batch
         $existingStepsCount = MasterDB::where('batch_no', $batchNo)
             ->whereIn('current_step', $stepsToCheck)
             ->distinct()
             ->count('current_step');
-
+    
         // If all steps (2 to 11) are present, mark step 2 as completed
         $step2 = MasterDB::where('batch_no', $batchNo)->where('current_step', 2)->first();
-
+    
         if ($step2 && $existingStepsCount === count($stepsToCheck)) {
             $step2->status = 'completed';
             $step2->save();
         }
-
+    
         return response()->json([
             'success' => true,
-            'message' => 'Master Database Entry Recorded Successfully'
+            'message' => $message
         ]);
     }
+    
 
     function master_database_check($batchNumber, $currentStep) {
         $exists = MasterDB::where('batch_no', $batchNumber)

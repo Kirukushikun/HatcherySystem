@@ -585,29 +585,28 @@
     </div>
 
     <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
+        const sidebarLinks = document.querySelectorAll(".sidebar a");
+        const cardSections = document.querySelectorAll(".card");
+        const cardLabels = document.querySelectorAll(".card-label");
+        const datalist = document.getElementById("card13");
+        let activeForm = null;
+
+        //Method 1
+        let batchNumberInput = document.getElementById("batch_no");
+        let currentStepInput = document.getElementById("current_step");
+
+        let batchNumber = Number(batchNumberInput.value) || 1;
+        let currentStep = Number(currentStepInput.value) || 1;
+
+        //Method 2
+        // let batchNumber = 1;
+        // let currentStep = 3;
+
+        console.log("Batch No: ", batchNumber, "Current Step: ", currentStep);
+        console.log("Active Form: ", activeForm);
+
         document.addEventListener("DOMContentLoaded", function () {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
-            const sidebarLinks = document.querySelectorAll(".sidebar a");
-            const cardSections = document.querySelectorAll(".card");
-            const cardLabels = document.querySelectorAll(".card-label");
-            const datalist = document.getElementById("card13");
-            let activeForm = null;
-
-            //Method 1
-            let batchNumberInput = document.getElementById("batch_no");
-            let currentStepInput = document.getElementById("current_step");
-
-            let batchNumber = Number(batchNumberInput.value) || 1;
-            let currentStep = Number(currentStepInput.value) || 1;
-
-            //Method 2
-            // let batchNumber = 1;
-            // let currentStep = 3;
-
-            console.log("Batch No: ", batchNumber, "Current Step: ", currentStep);
-            console.log("Active Form: ", activeForm);
-
-            
             /*** Event Listeners ***/
             datalist.addEventListener("pointerdown", function () {
                 activateSection(this);
@@ -949,7 +948,6 @@
                 }
             }
 
-
             const saveFunctions = {
                 "card1": saveCollectedEggs,
                 "card2": saveClassificationForStorage,
@@ -1062,7 +1060,11 @@
                     }
                 };
 
-                saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully");
+                saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully")
+                    .then(() => {
+                        // If saving Step 3, re-save Step 2 (Classification for Storage)
+                        saveClassificationForStorage();
+                    });
             }
 
             function saveSetterProcess() {
@@ -1198,6 +1200,8 @@
                 saveData("/master-database/store", data, "Forecasted Box Saved Successfully");
             }
 
+
+
         });
     </script>
 
@@ -1275,6 +1279,38 @@
                     }
                 });
             }
+
+            function generateCurrentStepData(){
+                if (currentStep == 2) {
+                    let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
+
+                    classificationStorage.settable_eggs.value = collectedQty;
+                    classificationStorage.remaining_balance.value = collectedQty;
+                } else if (currentStep == 4) {
+                    let pulloutDate = new Date(pulloutStorage.pullout_date.value); // Get pullout date
+    
+                    // Calculate Day 10 Candling Date
+                    let pulloutDay10 = new Date(pulloutDate); // Clone date
+                    pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
+                    setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+                    // Calculate Day 18.5 Candling Date
+                    let pulloutDay18_5 = new Date(pulloutDate); // Clone date
+                    pulloutDay18_5.setDate(pulloutDay18_5.getDate() + 18); // Add 18 full days
+                    pulloutDay18_5.setHours(pulloutDay18_5.getHours() + 12); // Add 12 hours (0.5 day)
+
+                    // Format for input field (only date part)
+                    candlingProcess.d18_candling_date.value = pulloutDay18_5.toISOString().split('T')[0]; 
+                    
+
+                    //------------------------
+                    let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
+                    setterProcess.d10_inc_qty.value = pulloutQty;
+                }
+            }
+
+            generateCurrentStepData();
+            
         });
     </script>
 
