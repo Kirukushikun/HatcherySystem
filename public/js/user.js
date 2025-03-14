@@ -121,6 +121,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchUsers();
 });
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("keyup", function() {
+        let input = searchInput.value.toLowerCase();
+        let rows = document.querySelectorAll("#accessLogs tr");
+
+        rows.forEach(row => {
+            let text = row.textContent.toLowerCase();
+            row.style.display = text.includes(input) ? "" : "none";
+        });
+    });
+});
 
 document.addEventListener("click", function (event) {
     if (event.target.closest(".AccessBtn")) {

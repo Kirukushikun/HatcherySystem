@@ -284,23 +284,19 @@
 
                     <div class="table-action">
                         <div class="search-bar">
-                            <input type="text" placeholder="Search...">
+                            <input type="text" id="searchInput" placeholder="Search...">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
 
-                        <select class="sort-btn">
-                            <option value=""> Sort By</option>
-                        </select>
-
                         <div class="table-icons">
                             <i class="fa-solid fa-print"></i>
-                            <i class="fa-solid fa-rotate-right"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="table-body" style="position: relative;">
-                    <table >
+
+                    <table>
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
