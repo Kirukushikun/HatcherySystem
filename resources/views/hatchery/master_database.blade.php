@@ -28,6 +28,143 @@
             background-color: #EC8B18;
             color: white;
         }
+
+        .data-display{
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+
+            text-align: center;
+
+            border-radius: 10px;
+            background-color: white;
+            padding: 40px 40px;
+
+            gap: 20px;
+
+            /* Add bounce animation */
+            animation: bounce 0.2s ease-out;
+            height: calc(100vh - 60px);
+            width: calc(100% - 30%);
+        }
+
+        .data-header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .data-header h2{
+            text-align: start;
+            font-weight: 500;
+            font-size: 22px;
+        }
+        .data-header i{
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .card-form .input-group label{
+            position: relative;
+            text-align: start;
+        }
+
+        .card-form .input-group{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        /* .input-group.prcnt{
+            width: 40%;
+        } */
+
+        .data-container{
+            width: 100%;
+            height: 100%;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .data-container .input-group input{
+            background-color: #F6F4F1;
+            border: solid 2px #e2e2e2;
+            border-radius: 5px;
+            padding: 8px 12px;
+
+            font-size: 15px;
+            font-weight: 300;
+
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .data-container .input-group select{
+            background-color: #F6F4F1;
+            border: solid 2px #e2e2e2;
+            border-radius: 5px;
+            padding: 8px 12px;
+
+            font-size: 15px;
+            font-weight: 300;
+
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .data-container .input-container{
+            display: flex;
+            align-items: center;
+            /* justify-content: end; */
+            gap: 20px;
+
+        }
+        .data-container .input-group.prcnt{
+            width: 30%;
+        }
+        .data-container .input-group input{
+            background-color: #F6F4F1;
+            border: solid 2px #e2e2e2;
+            border-radius: 5px;
+            padding: 8px 12px;
+
+            font-size: 15px;
+            font-weight: 300;
+
+            width: 100%;
+            margin-top: 10px;
+        }
+
+
+        .data-container .card{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .data-container .card-label{
+            display: flex;
+            align-items: center;
+            
+            font-size: 18px;
+            font-weight: 600;
+        }.data-container .card-label span{
+            color: #EC8B18;
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .data-container .card-form{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
@@ -188,7 +325,7 @@
                 <div class="card-form col-2">
                     <div class="input-group">
                         <label for="d10_candling_date">Day 10 Candling Date <span></span></label>
-                        <input type="date" name="d10_candling_date" id="d10_candling_date">
+                        <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
                     </div>
                     <div class="input-group">
                         <label for="d10_candling_qty">Day 10 Candling Quantity <span></span></label>
@@ -227,7 +364,7 @@
 
                     <div class="input-group">
                         <label for="d18_candling_date">Day 18.5 Candling Date <span></span></label>
-                        <input type="date" name="d18_candling_date" id="d18_candling_date">
+                        <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
                     </div>
                     <br>
                     <div class="input-group">
@@ -585,640 +722,12 @@
         </div>
     </div>
 
+    <script src="{{asset('js/master_database_form.js')}}" defer></script>
+    <script src="{{asset('js/master_database_formula.js')}}" defer></script>
+
+    
     <script>
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
-        const sidebarLinks = document.querySelectorAll(".sidebar a");
-        const cardSections = document.querySelectorAll(".card");
-        const cardLabels = document.querySelectorAll(".card-label");
-        const datalist = document.getElementById("card13");
-        let activeForm = null;
-
-        //Method 1
-        let batchNumberInput = document.getElementById("batch_no");
-        let currentStepInput = document.getElementById("current_step");
-
-        let batchNumber = Number(batchNumberInput.value) || 1;
-        let currentStep = Number(currentStepInput.value) || 1;
-
-        //Method 2
-        // let batchNumber = 1;
-        // let currentStep = 3;
-
-        console.log("Batch No: ", batchNumber, "Current Step: ", currentStep);
-        console.log("Active Form: ", activeForm);
-
-        document.addEventListener("DOMContentLoaded", function () {
-            /*** Event Listeners ***/
-            datalist.addEventListener("pointerdown", function () {
-                activateSection(this);
-            });
-
-                // Event Listener: Sidebar Clicks
-            sidebarLinks.forEach(link => {
-                link.addEventListener("click", function (event) {
-                    const targetCard = document.querySelector(this.getAttribute("href"));
-                    activateSection(targetCard);
-                });
-            });
-
-                // Event Listener: Input Focus
-            document.querySelectorAll(".card input, .card select, .card textarea").forEach(input => {
-                input.addEventListener("focus", function () {
-                    activateSection(this.closest(".card"));
-                });
-            });
-
-                // Event Listener: Form Close Buttons
-            document.addEventListener("click", function (event) {
-                const modal = document.getElementById("modal");
-
-                if (!modal.classList.contains("active")) return;
-
-                if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
-                    modal.classList.remove("active");
-                }
-            });
-
-            /*** Initialize First Form ***/
-            if (cardSections.length > 0) {
-                activateSection(cardSections[0]);
-            }
-
-            /*** Section Activation ***/
-            function activateSection(targetCard) {
-                if (!targetCard) return;
-
-                // Remove 'active' class from all sections
-                sidebarLinks.forEach(link => link.classList.remove("active"));
-                cardLabels.forEach(label => label.classList.remove("active"));
-                cardSections.forEach(card => card.classList.remove("active"));
-
-                // Activate the target section
-                document.querySelector(`.sidebar a[href="#${targetCard.id}"]`)?.classList.add("active");
-                targetCard.querySelector(".card-label")?.classList.add("active");
-                targetCard.classList.add("active");
-                // targetCard.style.borderWidth = "5px";
-
-                activeForm = targetCard; // Update active form
-
-                // Hide all form-action sections except inside the active form
-                document.querySelectorAll(".form-action").forEach(action => {
-                    action.style.display = targetCard.contains(action) ? "flex" : "none";
-                });
-
-                // Update event listeners for the new active form
-                updateFormListener();
-            }
-
-            /*** Form Handling ***/
-            function updateFormListener() {
-                if (!activeForm) return;
-
-                let formInputs = activeForm.querySelectorAll("input, select, textarea");
-                let resetButtons = activeForm.querySelectorAll(".form-action .reset-btn");
-                let formAction = activeForm.querySelector(".form-action");
-
-                if (!formInputs.length || !formAction) return; // Avoid errors
-
-                let formStep = parseInt(activeForm.id.replace("card", "")); // Extract step number
-
-                // Function to check if form has values
-                function checkFormValues() {
-                    // Show action buttons **only if form is at currentStep**
-                    if (formStep === currentStep || formStep === 6 || formStep === 10) {
-                        formAction.style.display = [...formInputs].some(input => input.value.trim() !== "") ? "flex" : "none";
-                    } else {
-                        formAction.style.display = "none"; // Hide for completed steps
-                    }
-                }
-
-                // Remove previous event listeners (prevents duplicates)
-                formInputs.forEach(input => {
-                    input.oninput = checkFormValues;
-                    input.onchange = checkFormValues;
-                });
-
-                resetButtons.forEach(button => {
-                    button.onclick = function () {
-                        formInputs.forEach(input => {
-                            input.value = ""; // Clear all inputs
-                            input.style.border = ""; // Reset borders
-                            let labelSpan = input.closest(".input-group")?.querySelector("label span");
-                            if (labelSpan) labelSpan.textContent = "";
-                        });
-                        formAction.style.display = "none"; // Hide form actions
-                    };
-                });
-
-                // Remove existing submit event before adding a new one
-                activeForm.onsubmit = function (event) {
-                    event.preventDefault();
-                    if (validateForm()) {
-                        showModal('save');
-                    }
-                };
-
-                // Initial check (for pre-filled forms)
-                checkFormValues();
-            }
-
-            /*** Form Validation ***/
-            function validateForm() {
-                if (!activeForm) return false; // Ensure activeForm exists
-
-                let isValid = true;
-
-                // Define required fields per form ID
-                let requiredFields = {
-                    "card1": ["ps_no", "collected_qty", "production_date_from", "production_date_to"],
-                    "card2": ["non_settable_eggs"],
-                    "card3": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
-                    "card4": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
-                    "card5": ["d18_candling_date", "infertiles_qty"],
-                    "card6": ["top_above_temp_qty", "top_below_temp_qty", "mid_above_temp_qty", "mid_below_temp_qty", "low_above_temp_qty", "low_below_temp_qty"],
-                    "card7": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
-                    "card8": ["cock_qty"],
-                    "card9": ["qc_date", "rejected_dop_qty"],
-                    "card10": ["infertile_prcnt", "frcst_cock_prcnt", "frcst_rejected_hatch_prcnt", "frcst_rejected_dop_prcnt"],
-                    "card11": ["dispatch_prime_qty"],
-                };
-
-                // Get fields for the currently active form
-                let currentRequiredFields = requiredFields[activeForm.id] || [];
-
-                currentRequiredFields.forEach(id => {
-                    let field = activeForm.querySelector(`#${id}`); // Select field inside active form only
-                    if (!field) return; // Skip if field is not found
-
-                    let labelSpan = field.closest(".input-group")?.querySelector("label span");
-
-                    if (!field.value.trim()) {
-                        field.style.border = "2px solid #ea4435d7";
-
-                        if (labelSpan) {
-                            labelSpan.textContent = "This field is required";
-                            labelSpan.style.color = "#ea4435d7";
-                        }
-
-                        isValid = false;
-                    } else {
-                        field.style.border = "";
-                        if (labelSpan) labelSpan.textContent = "";
-                    }
-                });
-
-                return isValid;
-            }
-
-            /*** Step Progression ***/
-            const skippableCards = ["card6", "card10"];
-            const alwaysEnabledCards = ["card10", "card13"];
-            const allCards = document.querySelectorAll(".card");
-
-            function proceedToNextStep() {
-                currentStep++;
-                autoSkipStep();
-                disableFutureForms();
-
-                //Lock Completed Steps
-                lockCompletedSteps(currentStep);
-            }
-
-            function autoSkipStep() {
-                while (skippableCards.includes(`card${currentStep}`)) {
-                    currentStep++; 
-                }
-            }
-
-            function disableFutureForms() {
-                allCards.forEach(card => {
-                    let stepNumber = parseInt(card.id.replace("card", ""));
-
-                    if (alwaysEnabledCards.includes(card.id)) {
-                        enableCard(card);
-                    } else if (stepNumber > currentStep) {
-                        disableCard(card);
-                    } else if (stepNumber == 4) {
-                        let currentDate = new Date(); // Today's date
-                        let candlingDay10 = new Date(document.getElementById("d10_candling_date").value); // Clone date
-
-                        console.log("Current Date: ", currentDate); 
-                        console.log("Pullout Day 10: ", candlingDay10);
-
-                        if(currentDate >= candlingDay10){
-                            console.log("Current Date is greater than or equal to Candling Day 10");
-                            enableCard(card);
-                        } else {
-                            console.log("Current Date is less than Candling Day 10");
-                            disableCard(card);
-                        }
-                    } else if (stepNumber == 5) {
-                        let currentDate = new Date(); // Today's date
-                        let candlingDay18 = new Date(document.getElementById("d18_candling_date").value); // Clone date
-                    
-                        console.log("Current Date: ", currentDate); 
-                        console.log("Candling Day 10: ", candlingDay18);
-
-                        if(currentDate >= candlingDay18){
-                            console.log("Current Date is greater than or equal to Candling Day 18");
-                            enableCard(card);
-                        } else {
-                            console.log("Current Date is less than Candling Day 18");
-                            disableCard(card);
-                        }
-                    } else{
-                        enableCard(card);
-                    }
-                });
-            }
-
-            // ✅ Helper functions
-            function enableCard(card) {
-                card.classList.remove("disabled");
-                card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
-            }
-
-            function disableCard(card) {
-                card.classList.add("disabled");
-                card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
-            }
-            
-
-
-            function lockCompletedSteps(currentStep) {
-                document.querySelectorAll(".card").forEach(card => {
-                    let stepNumber = parseInt(card.id.replace("card", "")); // Extract step number
-
-                    let exemptSteps = [6, 10]; // Skippable but needs its own condition
-
-                    if (stepNumber < currentStep && !exemptSteps.includes(stepNumber)) {
-                        // Disable all inputs inside the card
-                        card.querySelectorAll("input, select, textarea").forEach(input => {
-                            input.setAttribute("readonly", true);
-                            input.setAttribute("disabled", true); // For select dropdowns
-                        });
-
-                        // Hide the save button inside the card
-                        let saveButton = card.querySelector(".form-action");
-                        if (saveButton) saveButton.style.display = "none";
-
-                        // Change border color to gray to indicate completion
-                        card.style.borderColor = "gray";
-                    }
-                    
-                    // **Handle Card 6 & 10 based on existing data**
-                    if (exemptSteps.includes(stepNumber)) {
-                        checkIfDataExists(batchNumber, stepNumber, card);
-                    }
-                });
-            }
-
-            /*** Initial Setup ***/
-            autoSkipStep();
-            disableFutureForms();
-            lockCompletedSteps(currentStep);
-
-            function simulateFormSave() {
-                if (!activeForm) return;
-
-                let stepNumber = parseInt(activeForm.id.replace("card", ""));
-                
-                // Simulate saving
-                console.log(`Current Step ${currentStep} Done. Form ${activeForm.id} saved! Proceeding to Step ${currentStep + 1}`);
-
-                document.getElementById("modal").classList.remove("active");
-
-                // Proceed to the next step **only if its Card 6 or 10**
-                if (stepNumber !== 6 && stepNumber !== 10) {
-                    proceedToNextStep();
-                } else {
-                    // If it's not Card 6 or 10, disable it after saving
-                    lockCompletedSteps(currentStep);
-                }
-            }
-
-
-            function checkIfDataExists(batchNumber, stepNumber, card) {
-                let adjustedStep = stepNumber + 1;
-                fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.exists) {
-                            // Disable Card 6 or 10 if data is already saved
-                            card.querySelectorAll("input, select, textarea").forEach(input => {
-                                input.setAttribute("readonly", true);
-                                input.setAttribute("disabled", true);
-                            });
-
-                            // Hide the save button
-                            let saveButton = card.querySelector(".form-action");
-                            if (saveButton) saveButton.style.display = "none";
-
-                            // Change border color to gray
-                            card.style.borderColor = "gray";
-                        }
-                    })
-                    .catch(error => console.error("Error checking data:", error));
-            }
-
-            function showModal(button, targetID = null) {
-                if (button === "save") {
-                    modal.classList.add("active");
-                    modal.innerHTML = `
-                        <div class="modal-content">
-                            <i class="fa-solid fa-xmark" id="close-button"></i>
-                            <div class="modal-header">
-                                <i class="fa-solid fa-circle-check success"></i>
-                                <h2>Save Record</h2>
-                                <h4>Are you sure you want to save this data?</h4>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="confirm-button save-btn">
-                                    Save
-                                </button>
-                                <button type="button" class="cancel-button">Cancel</button>
-                            </div>
-                        </div>
-                    `;
-
-                    document.querySelector('.save-btn').addEventListener('click', () => {
-                        storeRecord();
-                        // simulateFormSave();
-                    });
-                }
-            }
-
-            const saveFunctions = {
-                "card1": saveCollectedEggs,
-                "card2": saveClassificationForStorage,
-                "card3": saveStoragePullout,
-                "card4": saveSetterProcess,
-                "card5": saveCandlingProcess,
-                "card6": saveEggTemperatureCheck,
-                "card7": saveHatcherPullout,
-                "card8": saveSexing,
-                "card9": saveQCProcess,
-                "card10": saveForecast,
-                "card11": saveDispathProcess,
-                "card12": saveForecastedBoxes,
-            }
-
-            function storeRecord(){
-                if (!activeForm) return;
-                let stepNumber = parseInt(activeForm.id.replace("card", ""));
-
-                if (saveFunctions[activeForm.id]) {
-                    saveFunctions[activeForm.id]();
-                }
-
-                document.getElementById("modal").classList.remove("active");
-
-                // Proceed to the next step **only if its Card 6 or 10**
-                if (stepNumber !== 6 && stepNumber !== 10) {
-                    proceedToNextStep();
-                } else {
-                    // If it's not Card 6 or 10, disable it after saving
-                    lockCompletedSteps(currentStep);
-                }
-            }
-
-            function saveData(url, data, successMessage) {
-                let adjustedStep = currentStep;
-
-                // 🔹 If classification_for_storage exists, force step to 3
-                if (data.hasOwnProperty("classification_for_storage")) {
-                    adjustedStep = 3;
-                } 
-                // 🔹 Fix specific step jumps
-                else if (activeForm.id === "card6") {
-                    adjustedStep = 7;
-                } else if (activeForm.id === "card10") {
-                    adjustedStep = 11;
-                } 
-                // 🔹 First-time save always starts at Step 2
-                else if (currentStep === 1) {
-                    adjustedStep = 2;
-                } 
-                // 🔹 Normal case: Move to next step
-                else {
-                    adjustedStep = currentStep + 1;
-                }
-
-                return fetch(url, {  // ✅ Return the fetch Promise here
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": csrfToken
-                    },
-                    body: JSON.stringify({
-                        batch_no: batchNumber,
-                        current_step: adjustedStep,
-                        process_data: data,
-                    })
-                })
-                .then(response => response.json())
-                .then(responseData => {
-                    if (responseData.success) {
-                        createPushNotification("success", "Saved Successfully", successMessage);
-                        //Refresh Table
-                        loadData();
-                    } else {
-                        createPushNotification("error", "Save Failed", "Error saving record.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    createPushNotification("error", "Save Failed", "An error occurred while saving.");
-                });
-            }
-
-
-            function saveCollectedEggs() {
-                let data = {
-                    collected_eggs: {
-                        ps_no: document.getElementById("ps_no").value,
-                        collected_qty: document.getElementById("collected_qty").value,
-                        production_date_from: document.getElementById("production_date_from").value,
-                        production_date_to: document.getElementById("production_date_to").value,                        
-                    }
-                };
-                saveData("/master-database/store", data, "Collected Eggs Entry Saved Successfully");
-            }
-
-            function saveClassificationForStorage() {
-                let data = {
-                    classification_for_storage: {
-                        non_settable_eggs: document.getElementById("non_settable_eggs").value,
-                        settable_eggs: document.getElementById("settable_eggs").value,
-                        remaining_balance: document.getElementById("remaining_balance").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Classification for Storage Entry Saved Successfully");
-            }
-
-            function saveStoragePullout() {
-                let data = {
-                    storage_pullout: {
-                        pullout_date: document.getElementById("pullout_date").value, // Original pullout date from input
-                        pullout_date_d10: document.getElementById("d10_candling_date").value, // +10 Days
-                        pullout_date_d18: document.getElementById("d18_candling_date").value, // +8.5 Days
-
-                        settable_eggs_qty: document.getElementById("settable_eggs_qty").value,
-                        incubator_no: document.getElementById("incubator_no").value,
-                        prime_qty: document.getElementById("prime_qty").value,
-                        prime_prcnt: document.getElementById("prime_prcnt").value,
-                        jp_qty: document.getElementById("jp_qty").value,
-                        jp_prcnt: document.getElementById("jp_prcnt").value
-                    }
-                };
-
-                saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully")
-                    .then(() => {
-                        // If saving Step 3, re-save Step 2 (Classification for Storage)
-                        saveClassificationForStorage();
-                    });
-            }
-
-            function saveSetterProcess() {
-                let data = { 
-                    setter_process: {
-                        d10_candling_date: document.getElementById("d10_candling_date").value,                        
-                        d10_candling_qty: document.getElementById("d10_candling_qty").value,
-                        d10_breakout_qty: document.getElementById("d10_breakout_qty").value,
-                        d10_breakout_prcnt: document.getElementById("d10_breakout_prcnt").value,
-                        d10_inc_qty: document.getElementById("d10_inc_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Setter Process Entry Saved Successfully");
-            }
-
-            function saveCandlingProcess() {
-                let data = {
-                    candling_process: {
-                        d18_candling_date: document.getElementById("d18_candling_date").value,
-                        infertiles_qty: document.getElementById("infertiles_qty").value,
-                        embryonic_eggs_qty: document.getElementById("embryonic_eggs_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Candling Process Entry Saved Successfully");
-            }
-
-            function saveEggTemperatureCheck() {
-                let data = {
-                    egg_temperature_check: {
-                        top_above_temp_qty: document.getElementById("top_above_temp_qty").value,
-                        top_above_temp_prcnt: document.getElementById("top_above_temp_prcnt").value,
-                        top_below_temp_qty: document.getElementById("top_below_temp_qty").value,
-                        top_below_temp_prcnt: document.getElementById("top_below_temp_prcnt").value,
-
-                        mid_above_temp_qty: document.getElementById("mid_above_temp_qty").value,
-                        mid_above_temp_prcnt: document.getElementById("mid_above_temp_prcnt").value,
-                        mid_below_temp_qty: document.getElementById("mid_below_temp_qty").value,
-                        mid_below_temp_prcnt: document.getElementById("mid_below_temp_prcnt").value,
-
-                        low_above_temp_qty: document.getElementById("low_above_temp_qty").value,
-                        low_above_temp_prcnt: document.getElementById("low_above_temp_prcnt").value,
-                        low_below_temp_qty: document.getElementById("low_below_temp_qty").value,
-                        low_below_temp_prcnt: document.getElementById("low_below_temp_prcnt").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Egg Shell Temperature Check Entry Saved Successfully")
-            }
-
-            function saveHatcherPullout(){
-                let data = {
-                    hatcher_pullout: {
-                        hatcher_no: document.getElementById("hatcher_no").value,
-                        hatcher_date: document.getElementById("hatcher_date").value,
-                        rejected_hatch_qty: document.getElementById("rejected_hatch_qty").value,
-                        accepted_hatch_qty: document.getElementById("accepted_hatch_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Hatcher Pullout Entry Saved Successfully");
-            }
-
-            function saveSexing(){
-                let data = {
-                    sexing: {
-                        cock_qty: document.getElementById("cock_qty").value,
-                        dop_qty: document.getElementById("dop_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Sexing Entry Saved Successfully");
-            }
-
-            function saveQCProcess(){
-                let data = {
-                    qc_qa_process: {
-                        qc_date: document.getElementById("qc_date").value,
-                        rejected_dop_qty: document.getElementById("rejected_dop_qty").value,
-                        accepted_dop_qty: document.getElementById("accepted_dop_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "QC/QA Process Entry Saved Successfully");
-            }
-
-            function saveForecast(){
-                let data = {
-                    forecast: {
-                        infertile_qty: document.getElementById("infertile_qty").value,
-                        infertile_prcnt: document.getElementById("infertile_prcnt").value,
-
-                        frcst_cock_qty: document.getElementById("frcst_cock_qty").value,
-                        frcst_cock_prcnt: document.getElementById("frcst_cock_prcnt").value,
-
-                        frcst_rejected_hatch_qty: document.getElementById("frcst_rejected_hatch_qty").value,
-                        frcst_rejected_hatch_prcnt: document.getElementById("frcst_rejected_hatch_prcnt").value,
-
-                        frcst_rejected_dop_qty: document.getElementById("frcst_rejected_dop_qty").value,
-                        frcst_rejected_dop_prcnt: document.getElementById("frcst_rejected_dop_prcnt").value,
-
-                        forecast_total_qty: document.getElementById("forecast_total_qty").value,
-
-                        //
-                        frcst_total_boxes: document.getElementById("frcst_total_boxes").value,
-                        frcst_settable_eggs_prcnt: document.getElementById("frcst_settable_eggs_prcnt").value,
-
-                        frcst_prime: document.getElementById("frcst_prime").value,
-                        frcst_jr_prime: document.getElementById("frcst_jr_prime").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Forecast Entry Saved Successfully");
-            }
-
-            function saveDispathProcess(){
-                let data = {
-                    dispath_process: {
-                        dispatch_prime_qty: document.getElementById("dispatch_prime_qty").value,
-                        dispatch_jr_prime_qty: document.getElementById("dispatch_jr_prime_qty").value,
-                    }
-                }
-                saveData("/master-database/store", data, "Dispath Process Entry Saved Successfully");
-            }
-
-            function saveForecastedBoxes(){
-                let totalBoxesElement = document.getElementById("total_boxes");
-                let totalBoxes = Number(totalBoxesElement.innerText.replace(/\D/g, ''));
-
-                if (isNaN(totalBoxes)) {
-                    alert("Error: Total boxes is not a valid number.");
-                    return;
-                }
-
-                let data = {
-                    frcst_box: { total_boxes: totalBoxes }
-                };
-                
-                saveData("/master-database/store", data, "Forecasted Box Saved Successfully");
-            }
-
-
-
-        });
-    </script>
-
-    <script>
+        //GENERATE IN PROGRESS BATCH DATA
         document.addEventListener("DOMContentLoaded", function() {
             let batchData = @json($batchData); // Laravel safely converts PHP to JSON
 
@@ -1289,6 +798,8 @@
                     } else if (step === 12 && processData.dispath_process){
                         document.getElementById("dispatch_prime_qty").value = processData.dispath_process.dispatch_prime_qty;
                         document.getElementById("dispatch_jr_prime_qty").value = processData.dispath_process.dispatch_jr_prime_qty;
+                    } else if (step === 13 && processData.frcst_box){
+                        document.getElementById("total_boxes").innerText = processData.frcst_box.total_boxes;
                     }
                 });
             }
@@ -1326,6 +837,10 @@
             
         });
     </script>
+
+
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>    
 
     <!-- <script>
         function disableFutureForms(pulloutDateStr) {
@@ -1375,8 +890,7 @@
         disableFutureForms(pulloutDateFromDB);
     </script> -->
 
-    <script src="{{asset('js/master_database.js')}}" defer></script>
-    <script src="{{asset('js/loading-screen.js')}}" defer></script>
-    <script src="{{asset('js/push-notification.js')}}" defer></script>
+
+
 </body>
 </html>

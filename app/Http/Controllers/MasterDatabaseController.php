@@ -22,9 +22,10 @@ class MasterDatabaseController extends Controller
             // Get all records for the latest batch
             $batchCollection = MasterDB::where('batch_no', $batch_no)->get();
 
-            // Find the latest step for this batch
+            // Find the latest step for this batch // Exclude Step 13 from the steps list
             $latestStep = MasterDB::where('batch_no', $batch_no)
-                ->orderBy('current_step', 'desc')
+                ->where('current_step', '!=', 13) // Ignore Step 13
+                ->orderBy('current_step', 'desc') // Get the latest step
                 ->first();
 
             // Check if step 2 exists (since it's a key step)
@@ -75,7 +76,7 @@ class MasterDatabaseController extends Controller
         }
     
         // Define steps that must be present
-        $stepsToCheck = range(2, 12);
+        $stepsToCheck = range(2, 13);
     
         // Get the count of recorded steps within the batch
         $existingStepsCount = MasterDB::where('batch_no', $batchNo)
@@ -83,7 +84,7 @@ class MasterDatabaseController extends Controller
             ->distinct()
             ->count('current_step');
     
-        // If all steps (2 to 11) are present, mark step 2 as completed
+        // If all steps (2 to 13) are present, mark step 2 as completed
         $step2 = MasterDB::where('batch_no', $batchNo)->where('current_step', 2)->first();
     
         if ($step2 && $existingStepsCount === count($stepsToCheck)) {

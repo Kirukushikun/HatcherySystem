@@ -56,8 +56,11 @@
                     batchNoTd.textContent = row.batch_no;
                     tr.appendChild(batchNoTd);
 
-                    // Create Step columns dynamically (Steps 2 to 12)
-                    for (let step = 2; step <= 12; step++) {
+                    // Define the step order manually (Swap 11 and 12)
+                    const stepOrder = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 11]; 
+
+                    // Loop through steps in the specified order
+                    stepOrder.forEach(step => {
                         const td = document.createElement("td");
                         const p = document.createElement("p");
 
@@ -71,7 +74,7 @@
 
                         td.appendChild(p);
                         tr.appendChild(td);
-                    }
+                    });
 
                     // Create Encoded By column
                     const encodedByTd = document.createElement("td");
@@ -87,8 +90,8 @@
                     const actionTd = document.createElement("td");
                     actionTd.classList.add("datalist-actions");
                     actionTd.innerHTML = `
-                        <i class="fa-solid fa-eye" id="edit-action"></i>
-                        <i class="fa-regular fa-trash-can" id="delete-action"></i>
+                        <i class="fa-solid fa-eye" id="edit-action" onclick="showModal('view', ${row.batch_no})"></i>
+                        <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.batch_no})"></i>
                         <i class="fa-solid fa-print" id="print-action"></i>
                     `;
                     tr.appendChild(actionTd);
