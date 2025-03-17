@@ -316,20 +316,23 @@ function checkIfDataExists(batchNumber, stepNumber, card) {
     fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
         .then(response => response.json())
         .then(data => {
-            if (data.exists) {
-                // Disable Card 6 or 10 if data is already saved
-                card.querySelectorAll("input, select, textarea").forEach(input => {
-                    input.setAttribute("readonly", true);
-                    input.setAttribute("disabled", true);
-                });
+            if(card.id == "card6"){ //Only for card 6
+                if (data.exists) {
+                    // Disable Card 6 or 10 if data is already saved
+                    card.querySelectorAll("input, select, textarea").forEach(input => {
+                        input.setAttribute("readonly", true);
+                        input.setAttribute("disabled", true);
+                    });
 
-                // Hide the save button
-                let saveButton = card.querySelector(".form-action");
-                if (saveButton) saveButton.style.display = "none";
+                    // Hide the save button
+                    let saveButton = card.querySelector(".form-action");
+                    if (saveButton) saveButton.style.display = "none";
 
-                // Change border color to gray
-                card.style.borderColor = "gray";
+                    // Change border color to gray
+                    card.style.borderColor = "gray";
+                }                
             }
+
         })
         .catch(error => console.error("Error checking data:", error));
 }
@@ -378,6 +381,11 @@ function showModal(button, targetID = null) {
                 </div>
             </div>
         `;
+
+        document.querySelector('.delete-btn').addEventListener('click', () => {
+            deleteRecord(targetID);
+        });
+
     } else if (button === "view") {
         viewRecord();
     }
@@ -675,13 +683,40 @@ function viewRecord(){
     `;
 }
 
+function deleteRecord(targetBatch) {
+    fetch(`/master-database/delete/${targetBatch}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+            
+            loadData();
+
+            // Trigger push notification
+            createPushNotification("danger", "Deleted Successfully", "Master Database Record Deleted Successfully");
+        } else {
+            createPushNotification("danger", "Delete Unsuccessful", "Record not found");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
 function saveData(url, data, successMessage = null) {
     let adjustedStep = currentStep;
 
     // 🔹 If classification_for_storage exists, force step to 3
     if (data.hasOwnProperty("classification_for_storage")) {
         adjustedStep = 3;
-    } else if (data.hasOwnProperty("frcst_box")) {
+    } else if (data.hasOwnProperty("forecast")) {
+        adjustedStep = 11;
+    } 
+    else if (data.hasOwnProperty("frcst_box")) {
         adjustedStep = 13;
     }
 
@@ -771,8 +806,8 @@ function saveStoragePullout() {
 
     saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully")
         .then(() => {
-            // If saving Step 3, re-save Step 2 (Classification for Storage)
-            updateExistingEntry();
+            // If saving Step 3, save Forecast, Forecasted boxes and re-save step 2 (Classification for Storage)
+            updateExistingFRCST();
         });
 }
 
@@ -924,7 +959,7 @@ function saveForecastedBoxes(){
     saveData("/master-database/store", data);
 }
 
-function updateExistingEntry(){
+function updateExistingCFS(){
     let data = {
         classification_for_storage: {
             non_settable_eggs: document.getElementById("non_settable_eggs").value,
@@ -936,4 +971,35 @@ function updateExistingEntry(){
     .then(() => {
         saveForecastedBoxes();
     });
+}
+
+function updateExistingFRCST(){
+    let data = {
+        forecast: {
+            infertile_qty: document.getElementById("infertile_qty").value,
+            infertile_prcnt: document.getElementById("infertile_prcnt").value,
+
+            frcst_cock_qty: document.getElementById("frcst_cock_qty").value,
+            frcst_cock_prcnt: document.getElementById("frcst_cock_prcnt").value,
+
+            frcst_rejected_hatch_qty: document.getElementById("frcst_rejected_hatch_qty").value,
+            frcst_rejected_hatch_prcnt: document.getElementById("frcst_rejected_hatch_prcnt").value,
+
+            frcst_rejected_dop_qty: document.getElementById("frcst_rejected_dop_qty").value,
+            frcst_rejected_dop_prcnt: document.getElementById("frcst_rejected_dop_prcnt").value,
+
+            forecast_total_qty: document.getElementById("forecast_total_qty").value,
+
+            //
+            frcst_total_boxes: document.getElementById("frcst_total_boxes").value,
+            frcst_settable_eggs_prcnt: document.getElementById("frcst_settable_eggs_prcnt").value,
+
+            frcst_prime: document.getElementById("frcst_prime").value,
+            frcst_jr_prime: document.getElementById("frcst_jr_prime").value,
+        }
+    }
+    saveData("/master-database/store", data)
+    .then(() => {
+        updateExistingCFS();
+    });;
 }

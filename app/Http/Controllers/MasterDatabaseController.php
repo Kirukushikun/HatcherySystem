@@ -24,6 +24,7 @@ class MasterDatabaseController extends Controller
 
             // Find the latest step for this batch // Exclude Step 13 from the steps list
             $latestStep = MasterDB::where('batch_no', $batch_no)
+                ->where('current_step', '!=', 11)
                 ->where('current_step', '!=', 13) // Ignore Step 13
                 ->orderBy('current_step', 'desc') // Get the latest step
                 ->first();
@@ -108,6 +109,21 @@ class MasterDatabaseController extends Controller
             'exists' => $exists, // This should be `exists` instead of `success`
             'message' => $exists ? 'Data Exists' : 'No Data Found'
         ]);
+    }
+
+    function master_database_delete($targetBatch){
+        $targetData = MasterDB::where('batch_no', $targetBatch)->get();
+
+        if (!$targetData) {
+            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+        }
+
+        foreach ($targetData as $data) {
+            $data->is_deleted = true;
+            $data->save();
+        }
+
+        return response()->json(['success' => true, 'message' => 'Master Database Record Deleted Successfully']);
     }
     
 }

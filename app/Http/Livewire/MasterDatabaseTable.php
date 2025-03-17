@@ -51,12 +51,18 @@ class MasterDatabaseTable extends Component
 
     public function fetchData(Request $request)
     {
-        // Get unique batch numbers sorted
-        $batchNumbers = MasterDB::where('is_deleted', false)
+        // Get sorting parameters
+        $sortBy = $request->get('sort_by', 'batch_no'); // Default: batch_no
+        $sortOrder = $request->get('sort_order', 'desc'); // Default: desc
+
+        // Get paginated batch numbers (pagination logic)
+        $paginatedData = MasterDB::where('is_deleted', false)
             ->select('batch_no')
             ->groupBy('batch_no')
-            ->orderBy('batch_no', 'asc')
-            ->pluck('batch_no');
+            ->orderBy('batch_no', 'desc')
+            ->paginate(10);
+
+        $batchNumbers = $paginatedData->pluck('batch_no');
 
         // Get all latest entries in one query
         $latestEntries = MasterDB::whereIn('batch_no', $batchNumbers)
@@ -91,6 +97,23 @@ class MasterDatabaseTable extends Component
             $batchData[] = $batchEntry;
         }
 
-        return response()->json($batchData);
+        // **Sorting Logic**
+        usort($batchData, function ($a, $b) use ($sortBy, $sortOrder) {
+            if ($sortBy === 'batch_no') {
+                return $sortOrder === 'asc' ? $a['batch_no'] <=> $b['batch_no'] : $b['batch_no'] <=> $a['batch_no'];
+            }
+            if ($sortBy === 'date_encoded') {
+                return $sortOrder === 'asc' 
+                    ? strtotime($a['date_encoded']) <=> strtotime($b['date_encoded']) 
+                    : strtotime($b['date_encoded']) <=> strtotime($a['date_encoded']);
+            }
+            return 0;
+        });
+
+        return response()->json([
+            'batchData' => $batchData,
+            'paginatedData' => $paginatedData
+        ]);
     }
+
 }

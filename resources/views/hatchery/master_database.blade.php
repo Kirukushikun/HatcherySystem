@@ -76,10 +76,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%;
         }
-        /* .input-group.prcnt{
-            width: 40%;
-        } */
 
         .data-container{
             width: 100%;
@@ -119,7 +117,6 @@
         .data-container .input-container{
             display: flex;
             align-items: center;
-            /* justify-content: end; */
             gap: 20px;
 
         }
@@ -164,6 +161,16 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 20px;
+        }
+
+        .activeBatch{
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+        .activeBatch i{
+            color: #EC8B18;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -239,7 +246,7 @@
                 </div>
 
                 <div class="card-form">
-                    <div class="input-container">
+                    <div class="input-container row">
                         <div class="input-group">
                             <label for="non_settable_eggs">Non-settable Eggs</label>
                             <input type="number" name="non_settable_eggs" id="non_settable_eggs" value="0">
@@ -249,6 +256,7 @@
                             <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" readonly>
                         </div>
                     </div>
+                    
                     <br>
 
                     <div class="input-group">
@@ -698,8 +706,9 @@
                         </select>
         
                         <div class="table-icons">
+                            <i class="fa-solid fa-file-circle-plus"></i>
                             <i class="fa-solid fa-print"></i>
-                            <i class="fa-solid fa-rotate-right"></i>
+                            <i class="fa-solid fa-rotate-right" onclick="loadData()"></i>
                         </div>
                         
                     </div>
@@ -710,12 +719,12 @@
                 </div>
                 <div class="table-footer">
                     <div class="pagination">
-                        <a href="#" class="active">1</a>
+                        <!-- <a href="#" class="active">1</a>
                         <a href="#">2</a>
                         <a href="#">3</a>
                         <a href="#">4</a>
                         <a href="#">5</a>
-                        <a href="#"><i class="fa-solid fa-caret-right"></i></a>
+                        <a href="#"><i class="fa-solid fa-caret-right"></i></a> -->
                     </div>
                 </div>
             </div>
@@ -795,7 +804,31 @@
                         document.getElementById("qc_date").value = processData.qc_qa_process.qc_date;
                         document.getElementById("rejected_dop_qty").value = processData.qc_qa_process.rejected_dop_qty;
                         document.getElementById("accepted_dop_qty").value = processData.qc_qa_process.accepted_dop_qty;
-                    } else if (step === 12 && processData.dispath_process){
+                    } else if (step === 11 && processData.forecast){
+                        document.getElementById("infertile_qty").value = processData.forecast.infertile_qty;
+                        document.getElementById("infertile_prcnt").value = processData.forecast.infertile_prcnt;
+
+                        document.getElementById("frcst_cock_qty").value = processData.forecast.frcst_cock_qty;
+                        document.getElementById("frcst_cock_prcnt").value = processData.forecast.frcst_cock_prcnt;
+
+                        document.getElementById("frcst_rejected_hatch_qty").value = processData.forecast.frcst_rejected_hatch_qty;
+                        document.getElementById("frcst_rejected_hatch_prcnt").value = processData.forecast.frcst_rejected_hatch_prcnt;
+
+                        document.getElementById("frcst_rejected_dop_qty").value = processData.forecast.frcst_rejected_dop_qty;
+                        document.getElementById("frcst_rejected_dop_prcnt").value = processData.forecast.frcst_rejected_dop_prcnt;
+
+                        document.getElementById("forecast_total_qty").value = processData.forecast.forecast_total_qty;
+
+
+                        //
+                        document.getElementById("frcst_total_boxes").value = processData.forecast.frcst_total_boxes;
+                        document.getElementById("frcst_settable_eggs_prcnt").value = processData.forecast.frcst_settable_eggs_prcnt;
+
+                        document.getElementById("frcst_prime").value = processData.forecast.frcst_prime;
+                        document.getElementById("frcst_jr_prime").value = processData.forecast.frcst_jr_prime;
+
+                    } 
+                    else if (step === 12 && processData.dispath_process){
                         document.getElementById("dispatch_prime_qty").value = processData.dispath_process.dispatch_prime_qty;
                         document.getElementById("dispatch_jr_prime_qty").value = processData.dispath_process.dispatch_jr_prime_qty;
                     } else if (step === 13 && processData.frcst_box){

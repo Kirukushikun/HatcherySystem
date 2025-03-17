@@ -99,19 +99,21 @@ label{
     gap: 20px;
 }
 
-.body .input-container.row{
+.body-split .input-container.row{
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
+    width: 100%;
 }
 
-.body .input-container.column{
+.body-split .input-container.column{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
-.body .input-container input{
+.body-split .input-container input{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
     border-radius: 5px;
@@ -122,7 +124,7 @@ label{
 
     width: 100%;
 }
-.body .input-container select{
+.body-split .input-container select{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
     border-radius: 5px;
