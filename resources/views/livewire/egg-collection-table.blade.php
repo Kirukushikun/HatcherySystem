@@ -24,7 +24,7 @@
     let sortBy = "created_at";
     let sortOrder = "desc";
 
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
             skeletonLoader();
             setTimeout(() => {
                 loadData();

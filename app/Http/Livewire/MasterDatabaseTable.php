@@ -51,17 +51,25 @@ class MasterDatabaseTable extends Component
 
     public function fetchData(Request $request)
     {
+        // Get search query
+        $search = $request->get('search', '');
+
         // Get sorting parameters
         $sortBy = $request->get('sort_by', 'batch_no'); // Default: batch_no
         $sortOrder = $request->get('sort_order', 'desc'); // Default: desc
 
         // Get paginated batch numbers (pagination logic)
-        $paginatedData = MasterDB::where('is_deleted', false)
+        $query = MasterDB::where('is_deleted', false)
             ->select('batch_no')
-            ->groupBy('batch_no')
-            ->orderBy('batch_no', 'desc')
-            ->paginate(10);
+            ->groupBy('batch_no');
 
+        // **Apply Search Filtering**
+        if (!empty($search)) {
+            $query->where('batch_no', 'like', "%{$search}%")
+                ->orWhereRaw("JSON_SEARCH(process_data, 'one', ?) IS NOT NULL", ["%{$search}%"]);;
+        }
+
+        $paginatedData = $query->orderBy($sortBy, $sortOrder)->paginate(10);
         $batchNumbers = $paginatedData->pluck('batch_no');
 
         // Get all latest entries in one query

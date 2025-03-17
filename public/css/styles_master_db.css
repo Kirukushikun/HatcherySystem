@@ -328,6 +328,7 @@ input[type=number] {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* .table-body::-webkit-scrollbar-thumb:hover {
     background: #d6d6d6; 
 } */
@@ -407,6 +408,11 @@ tbody td:last-child {
     color: #583925;
     white-space: nowrap;
 }
+
+/* Table Row Hover Effects */
+/* .table-body table tr:hover td{
+    background: #f7f7f7;
+} */
 
 
 .table-body table .datalist-actions{

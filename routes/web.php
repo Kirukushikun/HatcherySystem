@@ -135,3 +135,4 @@ Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDat
 
 Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
 Route::patch('/master-database/delete/{targetBatch}', [MasterDatabaseController::class, 'master_database_delete'])->name('master.database.delete');
+Route::get('/master-database/view/{targetBatch}', [MasterDatabaseController::class, 'master_database_view'])->name('master.database.view');

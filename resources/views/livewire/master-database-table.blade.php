@@ -36,6 +36,25 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         loadData();
+
+        // Attach event listeners to search and sort inputs
+        document.querySelector(".search-bar input").addEventListener("change", function (e) {
+            searchQuery = e.target.value;
+            currentPage = 1;
+            loadData();
+        });
+
+        document.querySelector(".sort-btn").addEventListener("change", function (e) {
+            const selectedSort = e.target.value;
+            
+            // Find the LAST underscore (to separate column name and order)
+            const lastUnderscoreIndex = selectedSort.lastIndexOf("_");
+            // Extract sortBy (everything before the last underscore)
+            sortBy = selectedSort.substring(0, lastUnderscoreIndex);
+            // Extract sortOrder (everything after the last underscore)
+            sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
+            loadData(); // Pass correct values to your function
+        });
     })
     
     function loadData() {

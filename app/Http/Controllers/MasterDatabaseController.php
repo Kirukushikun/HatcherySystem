@@ -125,5 +125,23 @@ class MasterDatabaseController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Master Database Record Deleted Successfully']);
     }
+
+    function master_database_view($targetBatch)
+    {
+        // Fetch and sort the data by current_step in descending order
+        $targetData = MasterDB::where('batch_no', $targetBatch)
+            ->orderBy('current_step', 'asc') // Sort before fetching
+            ->get();
+    
+        // Extract only process_data and decode JSON if needed
+        $organizedData = $targetData->map(function ($item) {
+            return is_string($item->process_data) 
+                ? json_decode($item->process_data, true) 
+                : $item->process_data;
+        });
+    
+        return response()->json($organizedData);
+    }
+    
     
 }

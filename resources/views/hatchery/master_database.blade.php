@@ -83,9 +83,10 @@
             width: 100%;
             height: 100%;
             overflow-x: auto;
+            padding-right: 30px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 40px;
         }
 
         .data-container .input-group input{
@@ -142,6 +143,8 @@
             flex-direction: column;
             gap: 10px;
             width: 100%;
+
+            /* margin-bottom: 20px; */
         }
         .data-container .card-label{
             display: flex;
@@ -152,9 +155,9 @@
         }.data-container .card-label span{
             color: #EC8B18;
             display: flex;
-            justify-content: center;
-            border-radius: 50%;
             margin-right: 10px;
+        }.data-container .card-label i{
+            color: #EC8B18;
         }
 
         .data-container .card-form{
@@ -701,13 +704,15 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
         
-                        <select class="sort-btn">
-                            <option value=""> Sort By</option>
+                        <select class="sort-btn" name="sort_by" id="sort_by">
+                            <option value="batch_no_desc">Sort By: Batch No (Desc)</option>
+                            <option value="batch_no_asc">Sort By: Batch No (Asc)</option>
+                           
                         </select>
         
                         <div class="table-icons">
-                            <i class="fa-solid fa-file-circle-plus"></i>
-                            <i class="fa-solid fa-print"></i>
+                            <!-- <i class="fa-solid fa-file-circle-plus"></i> -->
+                            <!-- <i class="fa-solid fa-print"></i> -->
                             <i class="fa-solid fa-rotate-right" onclick="loadData()"></i>
                         </div>
                         
@@ -719,12 +724,6 @@
                 </div>
                 <div class="table-footer">
                     <div class="pagination">
-                        <!-- <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#"><i class="fa-solid fa-caret-right"></i></a> -->
                     </div>
                 </div>
             </div>
