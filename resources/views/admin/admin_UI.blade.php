@@ -144,7 +144,33 @@
             border-right: solid 1px rgb(210, 210, 210);
         }   
         /* ----------- */
-        
+
+        .skeleton-loader {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            height: 16px;
+            border-radius: 4px;
+            animation: loading 1.5s infinite;
+        }
+
+        .skeleton-row td {
+            padding: 10px;
+        }
+
+        .skeleton-pagination {
+            display: inline-block;
+            width: 30px;
+            height: 10px;
+            margin: 5px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body>
@@ -284,9 +310,14 @@
 
                     <div class="table-action">
                         <div class="search-bar">
-                            <input type="text" id="searchInput" placeholder="Search...">
+                            <input type="text" id="searchLogs" placeholder="Search...">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
+
+                        <select class="sort-btn" id="sortOrderLogs">
+                            <option value="desc">Sort By: Date (Newest)</option>
+                            <option value="asc">Sort By: Date (Oldest)</option>
+                        </select>
 
                         <div class="table-icons">
                             <i class="fa-solid fa-print"></i>
@@ -337,13 +368,9 @@
 
                     <div class="table-action">
                         <div class="search-bar">
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" id="searchUsers" placeholder="Search..." />
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
-
-                        <select class="sort-btn">
-                            <option value="">Sort By</option>
-                        </select>
 
                         <div class="table-icons">
                             <i class="fa-solid fa-print"></i>

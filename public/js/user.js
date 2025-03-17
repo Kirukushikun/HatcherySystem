@@ -9,7 +9,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1;
 
-    function fetchUsers(page = 1) {
+    function fetchUsers(page = 1, sortBy = 'date_time', order = 'desc', searchQuery = '') {
         let tableBody = document.getElementById('userTable');
         let paginationContainer = document.querySelector('#userPagination');
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // document.querySelector('.loading-screen').classList.add('active');
 
-        fetch(`/users/json?page=${page}`)
+        fetch(`/users/json?page=${page}&sortBy=${sortBy}&order=${order}&search=${encodeURIComponent(searchQuery)}`)
             .then(response => response.json())
             .then(data => {
                 tableBody.innerHTML = ""; // Clear skeleton loaders
@@ -71,6 +71,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 // document.querySelector('.loading-screen').classList.remove('active');
             });
     }
+
+    document.getElementById('searchUsers').addEventListener('input', function() {
+        let searchQuery = this.value;
+        fetchUsers(1, 'date_time', document.getElementById('sortOrderLogs').value, searchQuery);
+    });
 
     function updatePaginationUser(data) {
         let paginationContainer = document.querySelector('#userPagination');
@@ -120,18 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     fetchUsers();
-});
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("keyup", function() {
-        let input = searchInput.value.toLowerCase();
-        let rows = document.querySelectorAll("#accessLogs tr");
-
-        rows.forEach(row => {
-            let text = row.textContent.toLowerCase();
-            row.style.display = text.includes(input) ? "" : "none";
-        });
-    });
 });
 
 document.addEventListener("click", function (event) {

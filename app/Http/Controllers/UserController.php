@@ -61,11 +61,10 @@ class UserController extends Controller
     public function userJson(Request $request)
     {
         $url = config('app.root_domain') . config('app.users_api_slug');
-
         $response = file_get_contents($url);
         $data = json_decode($response);
         $users = [];
-
+    
         if (!empty($data)) {
             foreach ($data as $d) {
                 $id = GC::decryptString($d->id);
@@ -74,6 +73,7 @@ class UserController extends Controller
                     'id' => $id,
                     'first_name' => $d->first_name,
                     'last_name' => $d->last_name,
+                    'full_name' => $full_name,
                     'system_access' => GC::checkUserAccess($id) ? '<span style="color: green;"><i class="fa-solid fa-check" style="color: green;"></i> Granted</span>' : '<span style="color: red;"><i class="fa-regular fa-circle-xmark" style="color: red;"></i> No Access</span>',
                     'role' => GC::checkUserRole($id),
                     'action' => GC::checkUserAccess($id) ?
@@ -88,22 +88,52 @@ class UserController extends Controller
                 ];
             }
         }
-
-        // Convert array to Laravel Collection for pagination
+    
         $usersCollection = collect($users);
-        $perPage = 10; // Number of users per page
+    
+        // Apply search filter
+        if ($request->has('search')) {
+            $search = strtolower($request->input('search'));
+            $usersCollection = $usersCollection->filter(function ($user) use ($search) {
+                return str_contains(strtolower($user['full_name']), $search) || str_contains(strtolower($user['role']), $search);
+            });
+        }
+    
+        // Apply sorting
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            $sortBy = $request->input('sort_by');
+            $sortOrder = strtolower($request->input('sort_order')) === 'desc' ? 'desc' : 'asc';
+        
+            // Handle sorting of 'system_access' separately because it contains HTML
+            if ($sortBy === 'system_access') {
+                $usersCollection = $usersCollection->sortBy(function ($user) {
+                    return strpos($user['system_access'], 'Granted') !== false ? 1 : 0;
+                }, SORT_REGULAR, $sortOrder === 'desc');
+            } else {
+                $usersCollection = $sortOrder === 'desc' ? 
+                    $usersCollection->sortByDesc($sortBy) : 
+                    $usersCollection->sortBy($sortBy);
+            }
+        
+            // Re-index the collection after sorting
+            $usersCollection = $usersCollection->values();
+        }
+        
+    
+        // Pagination
+        $perPage = 10;
         $currentPage = $request->input('page', 1);
-        $currentItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
+        $currentItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+    
         // Create LengthAwarePaginator instance
         $paginatedUsers = new LengthAwarePaginator($currentItems, count($usersCollection), $perPage, $currentPage, [
             'path' => url()->current(),
             'query' => $request->query(),
         ]);
-
+    
         return response()->json($paginatedUsers);
     }
-
+    
     /**
      * Grant or revoke access to a user
      *
@@ -174,40 +204,55 @@ class UserController extends Controller
     	$log->user_id = $id;
     	$log->save();
     }
-
-    public function accessLogsJson(Request $request){
-        // $url = config('app.root_domain') . config('app.users_api_slug');
-
-        // $response = file_get_contents($url);
-        // $data = json_decode($response);
+    public function accessLogsJson(Request $request) {
         $data = AL::all();
         $access_logs = [];
-
+    
         if (!empty($data)) {
             foreach ($data as $d) {
-                $id = $d->id;
                 $access_logs[] = [
-                    'id' => $id,
+                    'id' => $d->id,
                     'user_id' => $d->user_id,
                     'full_name' => GC::getUserFullName($d->user_id),
                     'date_time' => Carbon::parse($d->created_at)->format('Y-m-d H:i:s'),
                 ];
             }
         }
-
-        // Convert array to Laravel Collection for pagination
+    
+        // Convert array to collection
         $usersCollection = collect($access_logs);
-        $perPage = 10; // Number of users per page
+    
+        // Get search query
+        $search = $request->input('search', '');
+    
+        // Filter results if search query is provided
+        if (!empty($search)) {
+            $usersCollection = $usersCollection->filter(function ($item) use ($search) {
+                return stripos($item['full_name'], $search) !== false ||
+                       stripos($item['user_id'], $search) !== false ||
+                       stripos($item['id'], $search) !== false ||
+                       stripos($item['date_time'], $search) !== false;
+            });
+        }
+    
+        // Get sorting parameters
+        $sortBy = $request->input('sortBy', 'date_time');
+        $order = $request->input('order', 'desc');
+    
+        // Sort data
+        $usersCollection = ($order === 'desc') ? $usersCollection->sortByDesc($sortBy) : $usersCollection->sortBy($sortBy);
+    
+        // Pagination
+        $perPage = 10;
         $currentPage = $request->input('page', 1);
-        $currentItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
-        // Create LengthAwarePaginator instance
-        $paginatedUsers = new LengthAwarePaginator($currentItems, count($usersCollection), $perPage, $currentPage, [
+        $currentItems = $usersCollection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+    
+        // Create paginator
+        $paginatedUsers = new LengthAwarePaginator($currentItems, $usersCollection->count(), $perPage, $currentPage, [
             'path' => url()->current(),
             'query' => $request->query(),
         ]);
-
+    
         return response()->json($paginatedUsers);
-    }
-
+    }    
 }

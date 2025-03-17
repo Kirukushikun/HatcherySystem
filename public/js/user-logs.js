@@ -2,45 +2,33 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1;
-
-    function fetchUsersLogs(page = 1) {
+    function fetchUsersLogs(page = 1, sortBy = 'date_time', order = 'desc', searchQuery = '') {
         let tableBody = document.getElementById('accessLogs');
         let paginationContainer = document.querySelector('#accessLogsPagination');
-
-        // if (!Array.isArray(data.data)) {
-        //     data.data = Object.values(data.data);
-        // }
-
-        // Show skeleton loaders for the table
+    
+        // Show skeleton loaders
         tableBody.innerHTML = "";
         for (let i = 0; i < 10; i++) {
             tableBody.innerHTML += `
                 <tr class="skeleton-row">
-                    <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 40) + 30}%;"></div></td>
-                    <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
-                    <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
-                    <td><div class="skeleton-loader" style="width: ${Math.floor(Math.random() * 50) + 40}%;"></div></td>
+                    <td><div class="skeleton-loader" style="width: ${Math.random() * 40 + 30}%;"></div></td>
+                    <td><div class="skeleton-loader" style="width: ${Math.random() * 50 + 40}%;"></div></td>
+                    <td><div class="skeleton-loader" style="width: ${Math.random() * 50 + 40}%;"></div></td>
+                    <td><div class="skeleton-loader" style="width: ${Math.random() * 50 + 40}%;"></div></td>
                 </tr>
             `;
         }
-
-        // Show skeleton loading effect for pagination
+    0
         paginationContainer.innerHTML = "";
         for (let i = 0; i < 5; i++) {
             paginationContainer.innerHTML += `<span class="skeleton-pagination"></span>`;
         }
-
-        // document.querySelector('.loading-screen').classList.add('active');
-
-        fetch(`/access/access-logs-json?page=${page}`)
+    
+        fetch(`/access/access-logs-json?page=${page}&sortBy=${sortBy}&order=${order}&search=${encodeURIComponent(searchQuery)}`)
             .then(response => response.json())
             .then(data => {
-                tableBody.innerHTML = ""; // Clear skeleton loaders
-
-                if (!Array.isArray(data.data)) {
-                    data.data = Object.values(data.data);
-                }
-
+                tableBody.innerHTML = ""; // Clear skeletons
+    
                 data.data.forEach(user => {
                     let row = `
                         <tr>
@@ -52,16 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
                     tableBody.innerHTML += row;
                 });
-
+    
                 updatePaginationLogs(data);
-                // document.querySelector('.loading-screen').classList.remove('active');
             })
-            .catch(error => {
-                console.error('Error fetching users:', error);
-                // document.querySelector('.loading-screen').classList.remove('active');
-            });
+            .catch(error => console.error('Error fetching users:', error));
     }
 
+    document.getElementById('searchLogs').addEventListener('input', function() {
+        let searchQuery = this.value;
+        fetchUsersLogs(1, 'date_time', document.getElementById('sortOrderLogs').value, searchQuery);
+    });
+
+    document.getElementById('sortOrderLogs').addEventListener('change', function() {
+        fetchUsersLogs(1, 'date_time', this.value, document.getElementById('searchLogs').value);
+        console.log('Sorting order changed to:', this.value);
+    });
+    
     function updatePaginationLogs(data) {
         let paginationContainer = document.querySelector('#accessLogsPagination');
         paginationContainer.innerHTML = '';
