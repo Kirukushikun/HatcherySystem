@@ -11,44 +11,6 @@ class MasterDatabaseTable extends Component
 {
     use WithPagination;
 
-    // public function fetchData(Request $request)
-    // {
-    //     // Get unique batch numbers sorted
-    //     $batchNumbers = MasterDB::where('is_deleted', false)
-    //         ->select('batch_no')
-    //         ->groupBy('batch_no')
-    //         ->orderBy('batch_no', 'asc')
-    //         ->pluck('batch_no');  // Retrieves only batch_no values
-
-    //     $batchData = [];
-
-    //     foreach ($batchNumbers as $batch_no) {
-    //         // Initialize batch entry
-    //         $batchEntry = ['batch_no' => $batch_no];
-
-    //         // Get the latest entry for this batch
-    //         $latestEntry = MasterDB::where('batch_no', $batch_no)
-    //         ->where('is_deleted', false)
-    //         ->orderBy('created_at', 'desc')
-    //         ->first();
-
-    //         $batchEntry = ['date_encoded' => $latestEntry->created_at->format('d-m-Y')];
-
-    //         // Loop through the step range (modify range if needed)
-    //         for ($step = 2; $step <= 12; $step++) {
-    //             $hasStep = MasterDB::where('batch_no', $batch_no)
-    //                 ->where('current_step', $step)
-    //                 ->exists();
-
-    //             $batchEntry[$step] = $hasStep ? 'Done' : 'Pending';
-    //         }
-
-    //         $batchData[] = $batchEntry;
-    //     }
-
-    //     return response()->json($batchData);
-    // }
-
     public function fetchData(Request $request)
     {
         // Get search query

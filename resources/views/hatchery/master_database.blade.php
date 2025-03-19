@@ -875,55 +875,5 @@
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
     <script src="{{asset('js/push-notification.js')}}" defer></script>    
 
-    <!-- <script>
-        function disableFutureForms(pulloutDateStr) {
-            allCards.forEach(card => {
-                let stepNumber = parseInt(card.id.replace("card", ""));
-
-                if (alwaysEnabledCards.includes(card.id)) {
-                    enableCard(card);
-                } else if (stepNumber > currentStep) {
-                    disableCard(card);
-                } else {
-                    if (stepNumber === 4) {
-                        let currentDate = new Date(); // Get current date
-                        let pulloutDate = new Date(pulloutDateStr); // Convert string to Date object
-                        pulloutDate.setDate(pulloutDate.getDate() + 10); // Add 10-day requirement
-
-                        if (currentDate >= pulloutDate) {
-                            console.log("✅ Step 4 is enabled (10-day wait complete)");
-                            enableCard(card);
-                        } else {
-                            console.log("⏳ Step 4 is locked until:", pulloutDate.toDateString());
-                            disableCard(card);
-                        }
-                    } else {
-                        enableCard(card);
-                    }
-                }
-            });
-        }
-
-        // ✅ Helper functions
-        function enableCard(card) {
-            card.classList.remove("disabled");
-            card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = false);
-        }
-
-        function disableCard(card) {
-            card.classList.add("disabled");
-            card.querySelectorAll("input, select, textarea").forEach(input => input.disabled = true);
-        }
-
-
-    </script> -->
-
-    <!-- <script>
-        let pulloutDateFromDB = " $ pullout_date "; // From Laravel
-        disableFutureForms(pulloutDateFromDB);
-    </script> -->
-
-
-
 </body>
 </html>
