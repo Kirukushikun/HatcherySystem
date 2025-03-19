@@ -1,8 +1,14 @@
 //make every input type number prevent user from entering special characters just purely number
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
         this.value = this.value.replace(/[^0-9]/g, '');
-    })  
+
+        // Prevent the input from starting with '00'
+        if (this.value.startsWith('00')) {
+            this.value = '0'; // Reset to a single '0'
+        }
+    });
 });
 
 let collectedEggs = {
@@ -37,12 +43,9 @@ let setterProcess = {
 };
 
 
-classificationStorage.non_settable_eggs.addEventListener('input', () => {
-    classificationStorage.settable_eggs.value = Number(collectedEggs.collected_qty.value) - Number(classificationStorage.non_settable_eggs.value);
-    classificationStorage.remaining_balance.value = Number(classificationStorage.settable_eggs.value);
-})
 
-//Collected Quantity function to generate settable eggs and balance
+
+// Form 1
 collectedEggs.collected_qty.addEventListener('input', () => {
     let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
 
@@ -50,15 +53,33 @@ collectedEggs.collected_qty.addEventListener('input', () => {
     classificationStorage.remaining_balance.value = collectedQty;
 });
 
+// Form 2
+classificationStorage.non_settable_eggs.addEventListener('input', () => {
+    classificationStorage.non_settable_eggs.value = Math.min(
+        classificationStorage.non_settable_eggs.value, 
+        collectedEggs.collected_qty.value
+    );
+    
+    classificationStorage.settable_eggs.value = collectedEggs.collected_qty.value - classificationStorage.non_settable_eggs.value;
+    classificationStorage.remaining_balance.value = classificationStorage.settable_eggs.value;
+});
+
 // Pullout Quantity function to update remaining balance
 pulloutStorage.settable_eggs_qty.addEventListener('input', () => {
     let settableEggs = Number(classificationStorage.settable_eggs.value) || 0;
+    
+    // Ensure pulloutQty does not exceed settableEggs
+    pulloutStorage.settable_eggs_qty.value = Math.min(
+        Number(pulloutStorage.settable_eggs_qty.value) || 0, 
+        settableEggs
+    );
+
     let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
 
     classificationStorage.remaining_balance.value = Math.max(0, settableEggs - pulloutQty);
     setterProcess.d10_inc_qty.value = pulloutQty;
 
-    if(pulloutStorage.prime_qty.value && pulloutStorage.jp_qty.value) {
+    if (pulloutStorage.prime_qty.value && pulloutStorage.jp_qty.value) {
         pulloutStorage.prime_qty.value = "";
         pulloutStorage.jp_qty.value = "";
         pulloutStorage.prime_prcnt.value = "";
@@ -69,55 +90,77 @@ pulloutStorage.settable_eggs_qty.addEventListener('input', () => {
     calculateFrcstBoxes(pulloutQty);
 });
 
-pulloutStorage.prime_qty.addEventListener('input', updatePullout);
-pulloutStorage.jp_qty.addEventListener('input', updatePulloutByJP); // 🟢 New function
+pulloutStorage.prime_qty.addEventListener('input', () => updatePullout('prime'));
+pulloutStorage.jp_qty.addEventListener('input', () => updatePullout('jp'));
 
-function updatePullout() {
+function updatePullout(source) {
     let settableEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
     let primeQty = Number(pulloutStorage.prime_qty.value) || 0;
-
-    // Instead of overwriting jp_qty, we let users change it manually
-    let jpQty = Math.max(0, settableEggs - primeQty);
-    pulloutStorage.jp_qty.value = jpQty;  
-
-    // Update percentages
-    updatePercentages(settableEggs, primeQty, jpQty);
-
-    calculatePJPBoxes(settableEggs, primeQty, jpQty)
-}
-
-// 🟢 New function: Triggered when JP Quantity is changed
-function updatePulloutByJP() {
-    let settableEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
     let jpQty = Number(pulloutStorage.jp_qty.value) || 0;
 
-    let primeQty = Math.max(0, settableEggs - jpQty);
-    pulloutStorage.prime_qty.value = primeQty;  
+    if (source === 'prime') {
+        // Make sure prime does not exceed settableEggs
+        primeQty = Math.min(primeQty, settableEggs);
+        pulloutStorage.prime_qty.value = primeQty;
+
+        // Adjust JP accordingly
+        jpQty = settableEggs - primeQty;
+        pulloutStorage.jp_qty.value = jpQty;
+    } else if (source === 'jp') {
+        // Make sure JP does not exceed settableEggs
+        jpQty = Math.min(jpQty, settableEggs);
+        pulloutStorage.jp_qty.value = jpQty;
+
+        // Adjust Prime accordingly
+        primeQty = settableEggs - jpQty;
+        pulloutStorage.prime_qty.value = primeQty;
+    }
 
     // Update percentages
     updatePercentages(settableEggs, primeQty, jpQty);
 
-    calculatePJPBoxes(settableEggs, primeQty, jpQty)
+    // Other calculations
+    calculatePJPBoxes(settableEggs, primeQty, jpQty);
 }
 
-// 🟢 New helper function to calculate percentages
+// ✅ Helper function for percentage updates
 function updatePercentages(settableEggs, primeQty, jpQty) {
     pulloutStorage.prime_prcnt.value = settableEggs > 0 ? Math.round((primeQty / settableEggs) * 100) : 0;
     pulloutStorage.jp_prcnt.value = settableEggs > 0 ? Math.round((jpQty / settableEggs) * 100) : 0;
 }
 
+setterProcess.d10_breakout_qty.addEventListener('input', () => {
+    setterProcess.d10_breakout_qty.value = Math.min(
+        Number(setterProcess.d10_breakout_qty.value) || 0, 
+        Number(pulloutStorage.settable_eggs_qty.value)
+    );
+
+    setterProcess.d10_candling_qty.value = '';
+    setterProcess.d10_breakout_prcnt.value = '';
+    setterProcess.d10_inc_qty.value = Number(pulloutStorage.settable_eggs_qty.value);
+})
+
 
 setterProcess.d10_candling_qty.addEventListener('input', updateSetterProcess); // Update d10_inc
 
-function updateSetterProcess(){
+function updateSetterProcess() {
     let settableEggs = Number(pulloutStorage.settable_eggs_qty.value) || 0;
     let breakoutQty = Number(setterProcess.d10_breakout_qty.value) || 0;
+    let candlingQty = Number(setterProcess.d10_candling_qty.value) || 0;
 
-    setterProcess.d10_breakout_prcnt.value = breakoutQty > 0 ? Math.round((setterProcess.d10_candling_qty.value / breakoutQty) * 100) : 0;
-    setterProcess.d10_inc_qty.value = Math.max(0, settableEggs - setterProcess.d10_candling_qty.value);
+    // 🔹 Make sure Candling Qty does not exceed Breakout Qty
+    candlingQty = Math.min(candlingQty, breakoutQty);
+    setterProcess.d10_candling_qty.value = candlingQty;
+
+    // 🔹 Update percentage
+    setterProcess.d10_breakout_prcnt.value = breakoutQty > 0 ? Math.round((candlingQty / breakoutQty) * 100) : 0;
+
+    // 🔹 Ensure Incubation Qty does not go negative
+    setterProcess.d10_inc_qty.value = Math.max(0, settableEggs - candlingQty);
 
     calculateBoxes(setterProcess.d10_inc_qty.value);
 }
+
 
 let candlingProcess = {
     d18_candling_date: document.getElementById('d18_candling_date'),
@@ -144,10 +187,19 @@ pulloutStorage.pullout_date.addEventListener('input', () => {
 
 candlingProcess.infertiles_qty.addEventListener('input', updateCandlingProcess);
 
-function updateCandlingProcess(){
-    candlingProcess.embryonic_eggs_qty.value = setterProcess.d10_inc_qty.value - candlingProcess.infertiles_qty.value;
-    
-    calculateBoxes(candlingProcess.embryonic_eggs_qty.value);
+function updateCandlingProcess() {
+    let incubationQty = Number(setterProcess.d10_inc_qty.value) || 0;
+    let infertilesQty = Number(candlingProcess.infertiles_qty.value) || 0;
+
+    // 🔹 Ensure Infertiles Qty does not exceed Incubation Qty
+    infertilesQty = Math.min(infertilesQty, incubationQty);
+    candlingProcess.infertiles_qty.value = infertilesQty;
+
+    // 🔹 Calculate Embryonic Eggs Qty (Non-negative)
+    let embryonicEggsQty = Math.max(0, incubationQty - infertilesQty);
+    candlingProcess.embryonic_eggs_qty.value = embryonicEggsQty;
+
+    calculateBoxes(embryonicEggsQty);
 }
 
 
@@ -160,10 +212,19 @@ const hatcherProcess = {
 
 hatcherProcess.rejected_hatch_qty.addEventListener('input', updateHatcherProcess);
 
-function updateHatcherProcess(){
-    hatcherProcess.accepted_hatch_qty.value = candlingProcess.embryonic_eggs_qty.value - hatcherProcess.rejected_hatch_qty.value;
-    
-    calculateBoxes(hatcherProcess.accepted_hatch_qty.value);
+function updateHatcherProcess() {
+    let embryonicEggsQty = Number(candlingProcess.embryonic_eggs_qty.value) || 0;
+    let rejectedHatchQty = Number(hatcherProcess.rejected_hatch_qty.value) || 0;
+
+    // 🔹 Ensure Rejected Hatch Qty does not exceed Embryonic Eggs Qty
+    rejectedHatchQty = Math.min(rejectedHatchQty, embryonicEggsQty);
+    hatcherProcess.rejected_hatch_qty.value = rejectedHatchQty;
+
+    // 🔹 Calculate Accepted Hatch Qty (Non-negative)
+    let acceptedHatchQty = Math.max(0, embryonicEggsQty - rejectedHatchQty);
+    hatcherProcess.accepted_hatch_qty.value = acceptedHatchQty;
+
+    calculateBoxes(acceptedHatchQty);
 }
 
 const sexingProcess = {
@@ -173,9 +234,19 @@ const sexingProcess = {
 
 sexingProcess.cock_qty.addEventListener('input', updateSexingProcess);
 
-function updateSexingProcess(){
-    sexingProcess.dop_qty.value = hatcherProcess.accepted_hatch_qty.value - sexingProcess.cock_qty.value;
-    calculateBoxes(sexingProcess.dop_qty.value);
+function updateSexingProcess() {
+    let acceptedHatchQty = Number(hatcherProcess.accepted_hatch_qty.value) || 0;
+    let cockQty = Number(sexingProcess.cock_qty.value) || 0;
+
+    // 🔹 Ensure Cock Qty does not exceed Accepted Hatch Qty
+    cockQty = Math.min(cockQty, acceptedHatchQty);
+    sexingProcess.cock_qty.value = cockQty;
+
+    // 🔹 Calculate DOP Qty (Non-negative)
+    let dopQty = Math.max(0, acceptedHatchQty - cockQty);
+    sexingProcess.dop_qty.value = dopQty;
+
+    calculateBoxes(dopQty);
 }
 
 const qualityControl = {
@@ -186,10 +257,21 @@ const qualityControl = {
 
 qualityControl.rejected_dop_qty.addEventListener('input', updateQualityControl);
 
-function updateQualityControl(){
-    qualityControl.accepted_dop_qty.value = sexingProcess.dop_qty.value - qualityControl.rejected_dop_qty.value;
-    calculateBoxes(qualityControl.accepted_dop_qty.value);
+function updateQualityControl() {
+    let dopQty = Number(sexingProcess.dop_qty.value) || 0;
+    let rejectedDopQty = Number(qualityControl.rejected_dop_qty.value) || 0;
+
+    // 🔹 Ensure Rejected DOP Qty does not exceed DOP Qty
+    rejectedDopQty = Math.min(rejectedDopQty, dopQty);
+    qualityControl.rejected_dop_qty.value = rejectedDopQty;
+
+    // 🔹 Calculate Accepted DOP Qty (Non-negative)
+    let acceptedDopQty = Math.max(0, dopQty - rejectedDopQty);
+    qualityControl.accepted_dop_qty.value = acceptedDopQty;
+
+    calculateBoxes(acceptedDopQty);
 }
+
 
 const dispatchProcess = {
     dispatch_prime_qty: document.getElementById('dispatch_prime_qty'),
@@ -203,6 +285,11 @@ function updateDispatchProcess() {
     let goodDOPQty = Number(qualityControl.accepted_dop_qty.value) || 0;
     let primeQty = Number(dispatchProcess.dispatch_prime_qty.value) || 0;
 
+    // 🔹 Ensure Prime Qty does not exceed Good DOP Qty
+    primeQty = Math.min(primeQty, goodDOPQty);
+    dispatchProcess.dispatch_prime_qty.value = primeQty;
+
+    // 🔹 Auto-adjust Jr. Prime Qty
     let jpQty = Math.max(0, goodDOPQty - primeQty);
     dispatchProcess.dispatch_jr_prime_qty.value = jpQty;
 }
@@ -212,6 +299,11 @@ function updateDispatchByJP() {
     let goodDOPQty = Number(qualityControl.accepted_dop_qty.value) || 0;
     let jpQty = Number(dispatchProcess.dispatch_jr_prime_qty.value) || 0;
 
+    // 🔹 Ensure Jr. Prime Qty does not exceed Good DOP Qty
+    jpQty = Math.min(jpQty, goodDOPQty);
+    dispatchProcess.dispatch_jr_prime_qty.value = jpQty;
+
+    // 🔹 Auto-adjust Prime Qty
     let primeQty = Math.max(0, goodDOPQty - jpQty);
     dispatchProcess.dispatch_prime_qty.value = primeQty;
 }

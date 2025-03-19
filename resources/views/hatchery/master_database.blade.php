@@ -640,20 +640,20 @@
                 <div class="card-form col-33">
                     <div class="input-group">
                         <label for="frcst_total_boxes">Total</label>
-                        <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0">
+                        <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" readonly>
                     </div>
                     <div class="input-group">
                         <label for="frcst_settable_eggs_prcnt">%</label>
-                        <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0">
+                        <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" readonly>
                     </div>
                     <br>
                     <div class="input-group">
                         <label for="frcst_prime">Prime</label>
-                        <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0">
+                        <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" readonly>
                     </div>
                     <div class="input-group">
                         <label for="frcst_jr_prime">Junior Prime</label>
-                        <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0">
+                        <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" readonly>
                     </div>
                     <div class="input-group">
                         <label for="">DOP Booking</label>
@@ -734,7 +734,6 @@
 
     <script src="{{asset('js/master_database_form.js')}}" defer></script>
     <script src="{{asset('js/master_database_formula.js')}}" defer></script>
-    <script src="{{asset('js/loading-screen.js')}}" defer></script>
     
     <script>
         //GENERATE IN PROGRESS BATCH DATA

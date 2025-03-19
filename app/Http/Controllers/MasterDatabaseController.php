@@ -20,7 +20,8 @@ class MasterDatabaseController extends Controller
             $batch_no = $latestData->batch_no;
 
             // Get all records for the latest batch
-            $batchCollection = MasterDB::where('batch_no', $batch_no)->get();
+            $batchCollection = MasterDB::where('batch_no', $batch_no)
+                ->get();
 
             // Find the latest step for this batch // Exclude Step 13 from the steps list
             $latestStep = MasterDB::where('batch_no', $batch_no)
@@ -128,20 +129,47 @@ class MasterDatabaseController extends Controller
 
     function master_database_view($targetBatch)
     {
-        // Fetch and sort the data by current_step in descending order
+        // Define the expected steps in order
+        $expectedSteps = [
+            "collected_eggs",
+            "classification_for_storage",
+            "storage_pullout",
+            "setter_process",
+            "candling_process",
+            "egg_temperature_check",
+            "hatcher_pullout",
+            "sexing",
+            "qc_qa_process",
+            "forecast",
+            "dispath_process",
+            "frcst_box"
+        ];
+
+        // Fetch and sort the data by current_step
         $targetData = MasterDB::where('batch_no', $targetBatch)
-            ->orderBy('current_step', 'asc') // Sort before fetching
+            ->orderBy('current_step', 'asc')
             ->get();
-    
-        // Extract only process_data and decode JSON if needed
-        $organizedData = $targetData->map(function ($item) {
-            return is_string($item->process_data) 
+
+        // Create an associative array with process names as keys
+        $organizedData = [];
+        foreach ($targetData as $item) {
+            $processData = is_string($item->process_data) 
                 ? json_decode($item->process_data, true) 
                 : $item->process_data;
-        });
-    
-        return response()->json($organizedData);
+
+            $processKey = key($processData); // Extract the step name (e.g., "collected_eggs")
+            $organizedData[$processKey] = $processData;
+        }
+
+        // Ensure all steps exist in the correct order, filling missing ones with empty objects
+        $finalData = [];
+        foreach ($expectedSteps as $step) {
+            $finalData[] = isset($organizedData[$step]) ? $organizedData[$step] : [$step => (object)[]];
+        }
+
+        return response()->json($finalData);
     }
+
     
     
 }
