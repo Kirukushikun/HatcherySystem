@@ -657,7 +657,7 @@
                     </div>
                     <div class="input-group">
                         <label for="">DOP Booking</label>
-                        <button style="width: 100%; margin-top: 10px; color: white; background-color: #EC8B18; border: none; padding: 10px; border-radius: 7px; cursor: pointer; font-size: 15px;">View / Entry</button>
+                        <button type="button" style="width: 100%; margin-top: 10px; color: white; background-color: #EC8B18; border: none; padding: 10px; border-radius: 7px; cursor: pointer; font-size: 15px;">View / Entry</button>
                     </div>
                 </div>
 
