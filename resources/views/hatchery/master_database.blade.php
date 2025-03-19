@@ -574,6 +574,7 @@
 
             <form class="card c10" id="card10">
                 <div class="card-label">
+                    <i class="fa-solid fa-clipboard-list"></i>
                     <p>Forecast Base on Last Hatch</p>
                 </div>
 
@@ -632,6 +633,7 @@
                 </div>
 
                 <div class="card-label">
+                    <i class="fa-solid fa-box"></i>
                     <p>Forecast # of Boxes</p>
                 </div>
 
@@ -732,7 +734,7 @@
 
     <script src="{{asset('js/master_database_form.js')}}" defer></script>
     <script src="{{asset('js/master_database_formula.js')}}" defer></script>
-
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
     
     <script>
         //GENERATE IN PROGRESS BATCH DATA

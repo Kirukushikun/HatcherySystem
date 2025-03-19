@@ -426,6 +426,8 @@ function storeRecord(){
 }
 
 function viewRecord(targetBatch){
+    loadingDisplayData(targetBatch);
+
     fetch(`/master-database/view/${targetBatch}`, {
         method: "GET",
         headers: {
@@ -442,418 +444,413 @@ function viewRecord(targetBatch){
 }
 
 function displayRecord(data){
-    modal.classList.add("active");
-    modal.innerHTML =
-    `<div class="data-display">
-        <div class="data-header">
-            <h2>MASTER DATABASE ENTRY (BATCH 1)</h2>
-            <i class="fa-solid fa-xmark" id="close-button"></i>
+    const dataDisplay = document.querySelector(".data-container");
+    if(!dataDisplay) return;
+    dataDisplay.innerHTML = ""; // Clear previous content
+    dataDisplay.innerHTML =
+    `<div class="card">
+        <div class="card-label">
+            <span>1</span>
+            <p>Collected Eggs</p>
         </div>
 
-        <div class="data-container">
-            <div class="card">
-                <div class="card-label">
-                    <span>1</span>
-                    <p>Collected Eggs</p>
-                </div>
+        <div class="card-form col-4">
+            <div class="input-group">
+                <label for="ps_no">PS no.</label>
+                <input type="text" name="ps_no" id="ps_no" value="${data[0].collected_eggs.ps_no}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="collected_qty">Collected Quantity</label>
+                <input type="number" name="collected_qty" id="collected_qty" placeholder="0" value="${data[0].collected_eggs.collected_qty}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="production_date_from">Production Date (From)</label>
+                <input type="date" name="production_date_from" id="production_date_from" value="${data[0].collected_eggs.production_date_from}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="production_date_to">Production Date (To)</label>
+                <input type="date" name="production_date_to" id="production_date_to" value="${data[0].collected_eggs.production_date_to}" readonly>
+            </div>
+        </div>
+    </div>
 
-                <div class="card-form col-4">
-                    <div class="input-group">
-                        <label for="ps_no">PS no.</label>
-                        <input type="text" name="ps_no" id="ps_no" value="${data[0].collected_eggs.ps_no}" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="collected_qty">Collected Quantity</label>
-                        <input type="number" name="collected_qty" id="collected_qty" placeholder="0" value="${data[0].collected_eggs.collected_qty}" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="production_date_from">Production Date (From)</label>
-                        <input type="date" name="production_date_from" id="production_date_from" value="${data[0].collected_eggs.production_date_from}" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="production_date_to">Production Date (To)</label>
-                        <input type="date" name="production_date_to" id="production_date_to" value="${data[0].collected_eggs.production_date_to}" readonly>
-                    </div>
+    <div class="card">
+        <div class="card-label">
+            <span>2</span>
+            <p>Classification for Storage</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="non_settable_eggs">Non-settable Eggs</label>
+                <input type="number" name="non_settable_eggs" id="non_settable_eggs" placeholder="0" value="${data[1] ? data[1].classification_for_storage.non_settable_eggs : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="settable_eggs">Settable Eggs</label>
+                <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" value="${data[1] ? data[1].classification_for_storage.settable_eggs : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="remaining_balance">Remaining Balance</label>
+                <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" value="${data[1] ? data[1].classification_for_storage.remaining_balance : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>3</span>
+            <p>Storage Pullout Process</p>
+        </div>
+
+        <div class="card-form">
+
+            <div class="input-group">
+                <label for="incubator_no">Incubator No. </label>
+                <input type="text" name="incubator_no" id="incubator_no" placeholder="0" value="${data[2] ? data[2].storage_pullout.incubator_no : ''}" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="settable_eggs_qty">Set. Egg Quantity </label>
+                <input type="text" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.settable_eggs_qty : ''}" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="pullout_date">Pullout Date </label>
+                <input type="date" name="pullout_date" id="pullout_date" value="${data[2] ? data[2].storage_pullout.pullout_date : ''}" readonly>
+            </div>
+            
+            <br> 
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="prime_qty">Prime Quantity </label>
+                    <input type="number" name="prime_qty" id="prime_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.prime_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="prime_prcnt">%</label>
+                    <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" value="${data[2] ? data[2].storage_pullout.prime_prcnt : ''}" readonly>
+                </div>                     
+            </div>
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="jp_qty">JP Quantity </label>
+                    <input type="number" name="jp_qty" id="jp_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.jp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="jp_prcnt">% </label>
+                    <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" value="${data[2] ? data[2].storage_pullout.jp_prcnt : ''}" readonly>
+                </div>                     
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>4</span>
+            <p>Setter Process Entry</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="d10_breakout_qty">Day 10 Breakout Quantity </label>
+                <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0" value="${data[3] ? data[3].setter_process.d10_breakout_qty : ''}" readonly>
+            </div>                 
+            <div class="input-group">
+                <label for="d10_candling_date">Day 10 Candling Date </label>
+                <input type="date" name="d10_candling_date" id="d10_candling_date" value="${data[3] ? data[3].setter_process.d10_candling_date : ''}" readonly>
+            </div>
+
+            <p></p>
+            <br>
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="d10_candling_qty">Day 10 Candling Quantity </label>
+                    <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0" value="${data[3] ? data[3].setter_process.d10_candling_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="d10_breakout_prcnt">%</label>
+                    <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" value="${data[3] ? data[3].setter_process.d10_breakout_prcnt : ''}" readonly>
+                </div>                     
+            </div>
+            <div class="input-group">
+                <label for="d10_inc_qty">Day 10  Inc Quantity</label>
+                <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" value="${data[3] ? data[3].setter_process.d10_inc_qty : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>5</span>
+            <p>Candling Process Entry</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="infertiles_qty">Infertiles Quantity</label>
+                <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0" value="${data[4] ? data[4].candling_process.infertiles_qty : ''}" readonly>
+            </div> 
+            <div class="input-group">
+                <label for="embryonic_eggs_qty">Embryonic Eggs Quantity</label>
+                <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" value="${data[4] ? data[4].candling_process.embryonic_eggs_qty : ''}" readonly>
+            </div>                    
+            <div class="input-group">
+                <label for="d18_candling_date">Day 18.5 Candling Date</label>
+                <input type="date" name="d18_candling_date" id="d18_candling_date" value="${data[4] ? data[4].candling_process.d18_candling_date : ''}" readonly>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>5.1</span>
+            <p>Egg Shell Temperature Check</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="">Location</label>
+                <input type="text" value="TOP" readonly>
+            </div>
+            
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="top_above_temp_qty">37.8 Above<span></span></label>
+                    <input type="number" name="top_above_temp_qty" id="top_above_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.top_above_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="top_above_temp_prcnt">%</label>
+                    <input type="text" name="top_above_temp_prcnt" id="top_above_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.top_above_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="top_below_temp_qty">37.7 Lower<span></span></label>
+                    <input type="number" name="top_below_temp_qty" id="top_below_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.top_below_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="top_below_temp_prcnt">%</label>
+                    <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.top_below_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+            <br>
+
+            <div class="input-group">
+                <input type="text" value="MID" readonly>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="mid_above_temp_qty" id="mid_above_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.mid_above_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="mid_above_temp_prcnt" id="mid_above_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.mid_above_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="mid_below_temp_qty" id="mid_below_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.mid_below_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="mid_below_temp_prcnt" id="mid_below_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.mid_below_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+            <br>
+
+            <div class="input-group">
+                <input type="text" value="LOW" readonly>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="low_above_temp_qty" id="low_above_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.low_above_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="low_above_temp_prcnt" id="low_above_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.low_above_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="low_below_temp_qty" id="low_below_temp_qty" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.low_below_temp_qty : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="low_below_temp_prcnt" id="low_below_temp_prcnt" placeholder="0" value="${data[5] ? data[5].egg_temperature_check.low_below_temp_prcnt : ''}" readonly>
+                </div>                    
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>6</span>
+            <p>Hatcher Pullout Process</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="hatcher_no">Hatcher No</label>
+                <input type="text" id="hatcher_no" name="hatcher_no" placeholder="0" value="${data[6] ? data[6].hatcher_pullout.hatcher_no : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
+                <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0" value="${data[6] ? data[6].hatcher_pullout.rejected_hatch_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="accepted_hatch_qty">Good Hatch Qty</label>
+                <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" placeholder="0" value="${data[6] ? data[6].hatcher_pullout.accepted_hatch_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="hatcher_date">Hatcher Date</label>
+                <input type="date" name="hatcher_date" id="hatcher_date" value="${data[6] ? data[6].hatcher_pullout.hatcher_date : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>7</span>
+            <p>Sexing</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="cock_qty">Cockerels Quantity</label>
+                <input type="number" name="cock_qty" id="cock_qty" placeholder="0" value="${data[7] ? data[7].sexing.cock_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="dop_qty">DOP Quantity</label>
+                <input type="text" name="dop_qty" id="dop_qty" placeholder="0" value="${data[7] ? data[7].sexing.dop_qty : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>8</span>
+            <p>QC/QA Process Entry</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="rejected_dop_qty">Rejected DOP Qty</label>
+                <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0" value="${data[8] ? data[8].qc_qa_process.rejected_dop_qty : ''}" readonly>
+            </div>
+            
+            <div class="input-group">
+                <label for="accepted_dop_qty">Good DOP Qty</label>
+                <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" placeholder="0" value="${data[8] ? data[8].qc_qa_process.accepted_dop_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="qc_date">QC Date</label>
+                <input type="date" name="qc_date" id="qc_date" value="${data[8] ? data[8].qc_qa_process.qc_date : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>9</span>
+            <p>Dispath Process Entry</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="dispatch_prime_qty">Prime Qty</label>
+                <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0" value="${data[10] ? data[10].dispath_process.dispatch_prime_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="dispatch_jr_prime_qty">Jr Prime Qty</label>
+                <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0" value="${data[10] ? data[10].dispath_process.dispatch_jr_prime_qty : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="total_boxes">Total Boxes</label>
+                <input type="number" name="total_boxes" id="total_boxes" placeholder="0" value="${data.length > 0 && data[data.length - 1].frcst_box ? data[data.length - 1].frcst_box.total_boxes : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span><i class="fa-solid fa-clipboard-list"></i></span>
+            <p>Forcasted Base on Last Hatch</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="infertile_qty">Infertile Qty</label>
+                    <input type="number" name="infertile_qty" id="infertile_qty" placeholder="0" value="${data[9] ? data[9].forecast.infertile_qty : ''}" readonly>
+                </div>
+                
+                <div class="input-group prcnt">
+                    <label for="infertile_prcnt">% <span></span></label>
+                    <input type="number" name="infertile_prcnt" id="infertile_prcnt" placeholder="0" value="${data[9] ? data[9].forecast.infertile_prcnt : ''}" readonly>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="frcst_cock_qty">Cock Qty</label>
+                    <input type="number" name="frcst_cock_qty" id="frcst_cock_qty" placeholder="0" value="${data[9] ? data[9].forecast.frcst_cock_qty : ''}" readonly>
+                </div>
+                
+                <div class="input-group prcnt">
+                    <label for="frcst_cock_prcnt">% <span></span></label>
+                    <input type="number" name="frcst_cock_prcnt" id="frcst_cock_prcnt" placeholder="0" value="${data[9] ? data[9].forecast.frcst_cock_prcnt : ''}" readonly>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
+                    <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" value="${data[9] ? data[9].forecast.frcst_rejected_hatch_qty : ''}" readonly>
+                </div>
+                
+                <div class="input-group prcnt">
+                    <label for="frcst_rejected_hatch_prcnt">% <span></span></label>
+                    <input type="number" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt" placeholder="0" value="${data[9] ? data[9].forecast.frcst_rejected_hatch_prcnt : ''}" readonly>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="frcst_rejected_dop_qty">Rejected DOP Qty</label>
+                    <input type="number" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty" placeholder="0" value="${data[9] ? data[9].forecast.frcst_rejected_dop_qty : ''}" readonly>
+                </div>
+                
+                <div class="input-group prcnt">
+                    <label for="frcst_rejected_dop_prcnt">% <span></span></label>
+                    <input type="number" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt" placeholder="0" value="${data[9] ? data[9].forecast.frcst_rejected_dop_prcnt : ''}" readonly>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-label">
-                    <span>2</span>
-                    <p>Classification for Storage</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="non_settable_eggs">Non-settable Eggs</label>
-                        <input type="number" name="non_settable_eggs" id="non_settable_eggs" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="settable_eggs">Settable Eggs</label>
-                        <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="remaining_balance">Remaining Balance</label>
-                        <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" readonly>
-                    </div>
-                </div>
+            <div class="input-group">
+                <label for="forecast_total_qty">Total Qty</label>
+                <input type="number" name="forecast_total_qty" id="forecast_total_qty" placeholder="0" value="${data[9] ? data[9].forecast.forecast_total_qty : ''}" readonly>
             </div>
+        </div>
+    </div>
 
-            <div class="card">
-                <div class="card-label">
-                    <span>3</span>
-                    <p>Storage Pullout Process</p>
-                </div>
+    <div class="card">
+        <div class="card-label">
+            <span><i class="fa-solid fa-box"></i></span>
+            <p>Forcasted number of boxes</p>
+        </div>
 
-                <div class="card-form">
-
-                    <div class="input-group">
-                        <label for="incubator_no">Incubator No. </label>
-                        <input type="text" name="incubator_no" id="incubator_no" readonly readonly>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="settable_eggs_qty">Set. Egg Quantity </label>
-                        <input type="text" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0" readonly>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="pullout_date">Pullout Date </label>
-                        <input type="date" name="pullout_date" id="pullout_date" readonly>
-                    </div>
-                    
-                    <br> 
-
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="prime_qty">Prime Quantity </label>
-                            <input type="number" name="prime_qty" id="prime_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <label for="prime_prcnt">%</label>
-                            <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" readonly>
-                        </div>                     
-                    </div>
-
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="jp_qty">JP Quantity </label>
-                            <input type="number" name="jp_qty" id="jp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <label for="jp_prcnt">% </label>
-                            <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" readonly>
-                        </div>                     
-                    </div>
-                </div>
+        <div class="card-form">
+            <div class="input-group">
+                <label for="frcst_total_boxes">Total</label>
+                <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" value="${data[9] ? data[9].forecast.frcst_total_boxes : ''}" readonly>
             </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>4</span>
-                    <p>Setter Process Entry</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="d10_candling_qty">Day 10 Candling Quantity </label>
-                        <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0" readonly>
-                    </div>                    
-                    <div class="input-group">
-                        <label for="d10_candling_date">Day 10 Candling Date </label>
-                        <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
-                    </div>
-
-                    <p></p>
-                    <br>
-
-                    <div class="input-group">
-                        <label for="d10_breakout_qty">Day 10 Breakout Quantity </label>
-                        <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="d10_breakout_prcnt">Day 10 Breakout %</label>
-                        <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="d10_inc_qty">Day 10  Inc Quantity</label>
-                        <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" readonly>
-                    </div>
-                </div>
+            <div class="input-group">
+                <label for="frcst_settable_eggs_prcnt">%</label>
+                <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" value="${data[9] ? data[9].forecast.frcst_settable_eggs_prcnt : ''}" readonly>
             </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>5</span>
-                    <p>Candling Process Entry</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="infertiles_qty">Infertiles Quantity</label>
-                        <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0" readonly>
-                    </div> 
-                    <div class="input-group">
-                        <label for="embryonic_eggs_qty">Embryonic Eggs Quantity</label>
-                        <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
-                    </div>                    
-                    <div class="input-group">
-                        <label for="d18_candling_date">Day 18.5 Candling Date</label>
-                        <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
-                    </div>
-
-                </div>
+            <div class="input-group">
+                <label for="frcst_prime">Prime</label>
+                <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" value="${data[9] ? data[9].forecast.frcst_prime : ''}" readonly>
             </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>5.1</span>
-                    <p>Egg Shell Temperature Check</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="">Location</label>
-                        <input type="text" value="TOP" readonly>
-                    </div>
-                    
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="top_above_temp_qty">37.8 Above<span></span></label>
-                            <input type="number" name="top_above_temp_qty" id="top_above_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <label for="top_above_temp_prcnt">%</label>
-                            <input type="text" name="top_above_temp_prcnt" id="top_above_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="top_below_temp_qty">37.7 Lower<span></span></label>
-                            <input type="number" name="top_below_temp_qty" id="top_below_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <label for="top_below_temp_prcnt">%</label>
-                            <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <input type="text" value="MID" readonly>
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <input type="number" name="mid_above_temp_qty" id="mid_above_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <input type="text" name="mid_above_temp_prcnt" id="mid_above_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <input type="number" name="mid_below_temp_qty" id="mid_below_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <input type="text" name="mid_below_temp_prcnt" id="mid_below_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <input type="text" value="LOW" readonly>
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <input type="number" name="low_above_temp_qty" id="low_above_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <input type="text" name="low_above_temp_prcnt" id="low_above_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <input type="number" name="low_below_temp_qty" id="low_below_temp_qty" placeholder="0" readonly>
-                        </div>   
-                        <div class="input-group prcnt">
-                            <input type="text" name="low_below_temp_prcnt" id="low_below_temp_prcnt" placeholder="0" readonly>
-                        </div>                    
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>6</span>
-                    <p>Hatcher Pullout Process</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="hatcher_no">Hatcher No</label>
-                        <input type="text" id="hatcher_no" name="hatcher_no" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
-                        <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="accepted_hatch_qty">Good Hatch Qty</label>
-                        <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="hatcher_date">Hatcher Date</label>
-                        <input type="date" name="hatcher_date" id="hatcher_date" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>7</span>
-                    <p>Sexing</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="cock_qty">Cockerels Quantity</label>
-                        <input type="number" name="cock_qty" id="cock_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="dop_qty">DOP Quantity</label>
-                        <input type="text" name="dop_qty" id="dop_qty" placeholder="0" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>8</span>
-                    <p>QC/QA Process Entry</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="rejected_dop_qty">Rejected DOP Qty</label>
-                        <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0" readonly>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="accepted_dop_qty">Good DOP Qty</label>
-                        <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="qc_date">QC Date</label>
-                        <input type="date" name="qc_date" id="qc_date" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span>9</span>
-                    <p>Dispath Process Entry</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="dispatch_prime_qty">Prime Qty</label>
-                        <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="dispatch_jr_prime_qty">Jr Prime Qty</label>
-                        <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="total_boxes">Total Boxes</label>
-                        <input type="number" name="total_boxes" id="total_boxes" placeholder="0" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span><i class="fa-solid fa-clipboard-list"></i></span>
-                    <p>Forcasted Base on Last Hatch</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="infertile_qty">Infertile Qty</label>
-                            <input type="number" name="infertile_qty" id="infertile_qty" placeholder="0" readonly>
-                        </div>
-                        
-                        <div class="input-group prcnt">
-                            <label for="infertile_prcnt">% <span></span></label>
-                            <input type="number" name="infertile_prcnt" id="infertile_prcnt" placeholder="0" readonly>
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="frcst_cock_qty">Cock Qty</label>
-                            <input type="number" name="frcst_cock_qty" id="frcst_cock_qty" placeholder="0" readonly>
-                        </div>
-                        
-                        <div class="input-group prcnt">
-                            <label for="frcst_cock_prcnt">% <span></span></label>
-                            <input type="number" name="frcst_cock_prcnt" id="frcst_cock_prcnt" placeholder="0" readonly>
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
-                            <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" readonly>
-                        </div>
-                        
-                        <div class="input-group prcnt">
-                            <label for="frcst_rejected_hatch_prcnt">% <span></span></label>
-                            <input type="number" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt" placeholder="0" readonly>
-                        </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="input-group">
-                            <label for="frcst_rejected_dop_qty">Rejected DOP Qty</label>
-                            <input type="number" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty" placeholder="0" readonly>
-                        </div>
-                        
-                        <div class="input-group prcnt">
-                            <label for="frcst_rejected_dop_prcnt">% <span></span></label>
-                            <input type="number" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt" placeholder="0" readonly>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="forecast_total_qty">Total Qty</label>
-                        <input type="number" name="forecast_total_qty" id="forecast_total_qty" placeholder="0" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-label">
-                    <span><i class="fa-solid fa-box"></i></span>
-                    <p>Forcasted number of boxes</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-group">
-                        <label for="frcst_total_boxes">Total</label>
-                        <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="frcst_settable_eggs_prcnt">%</label>
-                        <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="frcst_prime">Prime</label>
-                        <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label for="frcst_jr_prime">Junior Prime</label>
-                        <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" readonly>
-                    </div>
-                </div>
+            <div class="input-group">
+                <label for="frcst_jr_prime">Junior Prime</label>
+                <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" value="${data[9] ? data[9].forecast.frcst_jr_prime : ''}" readonly>
             </div>
         </div>
     </div>`;
