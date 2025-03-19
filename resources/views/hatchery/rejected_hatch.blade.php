@@ -159,7 +159,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
 
-                <select class="sort-btn" name="sort-btn" id="sort-btn">
+                <select class="sort-btn" name="sort_by" id="sort_by">
                     <option value=""> Sort By</option>
                 </select>
 
