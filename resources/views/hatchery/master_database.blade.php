@@ -608,6 +608,8 @@
                             <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
                             <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" readonly>
                         </div>
+
+                        footer Feature
                         
                         <div class="input-group prcnt">
                             <label for="frcst_rejected_hatch_prcnt">% <span></span></label>
