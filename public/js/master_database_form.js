@@ -870,10 +870,15 @@ function deleteRecord(targetBatch) {
         if (data.success) {
             document.getElementById("modal").classList.remove("active");
             
-            loadData();
-
             // Trigger push notification
             createPushNotification("danger", "Deleted Successfully", "Master Database Record Deleted Successfully");
+            loadData();
+            
+            // Reload the page using setTimeout
+            setTimeout(() => {
+                location.reload();
+            }, 1000); // 0ms delay means it will happen as soon as possible
+
         } else {
             createPushNotification("danger", "Delete Unsuccessful", "Record not found");
         }

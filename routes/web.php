@@ -126,7 +126,7 @@ Route::get('/test', function () {
 	return view('hatchery.report_module');
 });
 
-//Master Database
+// Master Database ---------
 
 Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
 
