@@ -157,7 +157,7 @@ class RejectedPulletsController extends Controller
         $rejectedPullets->save();
 
         // Log the action
-        $this->logCollectionAction('store', $rejectedPullets, null);
+        // $this->logCollectionAction('store', $rejectedPullets, null);
 
         return response()->json([
             'success' => true,
@@ -185,18 +185,18 @@ class RejectedPulletsController extends Controller
         return response()->json(['success' => true, 'message' => 'Rejected Pullets Entry Deleted Successfully']);
     }
 
-    public function logCollectionAction($action, $currentState, $beforeState = null)
-    {
-        $messages = [
-            'store' => 'Rejected Pullets Record Added',
-            'delete' => 'Rejected Pullets Record Deleted',
-        ];
-        $log_entry = [
-            $messages[$action] ?? 'Rejected Pullets Record Modified',
-            'rejected_pullets',
-            $beforeState, // Stores previous state before the action
-            $currentState, // Stores the new state after the action
-        ];
-        AC::logEntry($log_entry);
-    }
+    // public function logCollectionAction($action, $currentState, $beforeState = null)
+    // {
+    //     $messages = [
+    //         'store' => 'Rejected Pullets Record Added',
+    //         'delete' => 'Rejected Pullets Record Deleted',
+    //     ];
+    //     $log_entry = [
+    //         $messages[$action] ?? 'Rejected Pullets Record Modified',
+    //         'rejected_pullets',
+    //         $beforeState, // Stores previous state before the action
+    //         $currentState, // Stores the new state after the action
+    //     ];
+    //     AC::logEntry($log_entry);
+    // }
 }

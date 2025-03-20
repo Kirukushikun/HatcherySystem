@@ -109,7 +109,7 @@ class RejectedHatchController extends Controller
         $rejectedHatch->save();
 
         // Log the action
-        $this->logCollectionAction('store', $rejectedHatch, null);
+        // $this->logCollectionAction('store', $rejectedHatch, null);
 
         return response()->json([
             'success' => true,
@@ -131,24 +131,24 @@ class RejectedHatchController extends Controller
         $rejectedHatch->save();
 
         // Log the action with before state
-        $this->logCollectionAction('delete', $rejectedHatch, $beforeState);
+        // $this->logCollectionAction('delete', $rejectedHatch, $beforeState);
     
     
         return response()->json(['success' => true, 'message' => 'Rejected Hatch Entry Deleted Successfully']);    
     }   
 
-    public function logCollectionAction($action, $currentState, $beforeState = null)
-    {
-        $messages = [
-            'store' => 'Rejected Hatch Record Added',
-            'delete' => 'Rejected Hatch Record Deleted',
-        ];
-        $log_entry = [
-            $messages[$action] ?? 'Rejected Hatch Record Modified',
-            'rejected_hatch',
-            $beforeState, // Stores previous state before the action
-            $currentState, // Stores the new state after the action
-        ];
-        AC::logEntry($log_entry);
-    }
+    // public function logCollectionAction($action, $currentState, $beforeState = null)
+    // {
+    //     $messages = [
+    //         'store' => 'Rejected Hatch Record Added',
+    //         'delete' => 'Rejected Hatch Record Deleted',
+    //     ];
+    //     $log_entry = [
+    //         $messages[$action] ?? 'Rejected Hatch Record Modified',
+    //         'rejected_hatch',
+    //         $beforeState, // Stores previous state before the action
+    //         $currentState, // Stores the new state after the action
+    //     ];
+    //     AC::logEntry($log_entry);
+    // }
 }
