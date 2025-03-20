@@ -6,6 +6,18 @@ const resetButton = form.querySelector(".reset-btn"); // Reset button
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
 
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
+        this.value = this.value.replace(/[^0-9]/g, '');
+
+        // Prevent the input from starting with '00'
+        if (this.value.startsWith('00')) {
+            this.value = '0'; // Reset to a single '0'
+        }
+    });
+});
+
 // Function to check if any input has a value
 function checkFormValues() {
     let hasValue = false;

@@ -10,9 +10,15 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 //make every input type number prevent user from entering special characters just purely number
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
         this.value = this.value.replace(/[^0-9]/g, '');
-    })  
-})
+
+        // Prevent the input from starting with '00'
+        if (this.value.startsWith('00')) {
+            this.value = '0'; // Reset to a single '0'
+        }
+    });
+});
 
 // Function to check if any input has a value
 function checkFormValues() {

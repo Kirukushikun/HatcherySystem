@@ -66,33 +66,35 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
 
 
-	Route::get('/admin', function () {
-		return view('admin.admin_UI');
-	});
 	
-	Route::get('/home', function () {
-		return view('hatchery.main_module');
-	});
-	
-	Route::get('/egg-collection-entry', function () {
-		return view('hatchery.egg_collection');
-	});
-	
-	Route::get('/egg-temperature-check-entry', function () {
-		return view('hatchery.egg_temperature');
-	});
-	
-	Route::get('/rejected-hatch', function () {
-		return view('hatchery.rejected_hatch');
-	});
-	
-	Route::get('/rejected-pullets', function () {
-		return view('hatchery.rejected_pullets');
-	});
-	
-	Route::get('/master-database', function () {
-		return view('hatchery.master_database');
-	});
+});
+
+Route::get('/admin', function () {
+	return view('admin.admin_UI');
+});
+
+Route::get('/home', function () {
+	return view('hatchery.main_module');
+});
+
+Route::get('/egg-collection-entry', function () {
+	return view('hatchery.egg_collection');
+});
+
+Route::get('/egg-temperature-check-entry', function () {
+	return view('hatchery.egg_temperature');
+});
+
+Route::get('/rejected-hatch', function () {
+	return view('hatchery.rejected_hatch');
+});
+
+Route::get('/rejected-pullets', function () {
+	return view('hatchery.rejected_pullets');
+});
+
+Route::get('/master-database', function () {
+	return view('hatchery.master_database');
 });
 
 
