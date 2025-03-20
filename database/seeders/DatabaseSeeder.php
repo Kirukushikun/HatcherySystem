@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
         DB::table('rejected_hatch')->truncate();
 
         $this->call([
-            EggTemperatureSeeder::class,
-            EggCollectionSeeder::class,
+            // EggTemperatureSeeder::class,
+            // EggCollectionSeeder::class,
             RejectedHatchSeeder::class
         ]);
     }
