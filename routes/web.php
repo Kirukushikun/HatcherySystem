@@ -43,15 +43,15 @@ Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->n
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
 Route::middleware(['auth', 'cors'])->group(function() {
-	// Main Session Check for Authetication
-	Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-	// Dash/Dashboard
-	Route::get('/', [DashboardController::class, 'dash'])->name('dash');
+    // Main Session Check for Authetication
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Dash/Dashboard
+    Route::get('/', [DashboardController::class, 'dash'])->name('dash');
 
-	/**
-	 * YOUR CODE STARTS HERE
-	 * DO NOT ALTER ABOVE CODE
-	 */
+    /**
+     * YOUR CODE STARTS HERE
+     * DO NOT ALTER ABOVE CODE
+     */
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
     Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
@@ -65,36 +65,34 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
 
-
-	
-});
-
-Route::get('/admin', function () {
-	return view('admin.admin_UI');
-});
-
-Route::get('/home', function () {
-	return view('hatchery.main_module');
-});
-
-Route::get('/egg-collection-entry', function () {
-	return view('hatchery.egg_collection');
-});
-
-Route::get('/egg-temperature-check-entry', function () {
-	return view('hatchery.egg_temperature');
-});
-
-Route::get('/rejected-hatch', function () {
-	return view('hatchery.rejected_hatch');
-});
-
-Route::get('/rejected-pullets', function () {
-	return view('hatchery.rejected_pullets');
-});
-
-Route::get('/master-database', function () {
-	return view('hatchery.master_database');
+    Route::get('/admin', function () {
+        return view('admin.admin_UI');
+    });
+    
+    Route::get('/home', function () {
+        return view('hatchery.main_module');
+    });
+    
+    Route::get('/egg-collection-entry', function () {
+        return view('hatchery.egg_collection');
+    });
+    
+    Route::get('/egg-temperature-check-entry', function () {
+        return view('hatchery.egg_temperature');
+    });
+    
+    Route::get('/rejected-hatch', function () {
+        return view('hatchery.rejected_hatch');
+    });
+    
+    Route::get('/rejected-pullets', function () {
+        return view('hatchery.rejected_pullets');
+    });
+    
+    Route::get('/master-database', function () {
+        return view('hatchery.master_database');
+    });
+  
 });
 
 
@@ -172,7 +170,7 @@ Route::post('/egg-collection/report/result', [ReportController::class, 'egg_coll
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 Route::get('/test', function () {
-	return view('hatchery.report_module');
+    return view('hatchery.report_module');
 });
 
 // Master Database ---------
