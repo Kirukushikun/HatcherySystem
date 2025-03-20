@@ -6,6 +6,7 @@ const resetButton = form.querySelector(".reset-btn"); // Reset button
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
 
+//make every input type number prevent user from entering special characters just purely number
 document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', function(e) {
         // Remove any non-numeric characters
