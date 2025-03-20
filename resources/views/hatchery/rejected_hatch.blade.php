@@ -136,9 +136,6 @@
                     <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" placeholder="0" readonly>
                 </div>
             </div>
-
-
-
         </div>
 
         <div class="form-action">
@@ -159,8 +156,10 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
 
-                <select class="sort-btn" name="sort-btn" id="sort-btn">
-                    <option value=""> Sort By</option>
+                <select class="sort-btn" name="sort_by" id="sort_by">
+                    <option value="production_date_desc">Sort By: Date (Newest)</option>
+                    <option value="production_date_asc">Sort By: Date (Oldest)</option>
+                    <option value="ps_no_asc">Sort By: PS No.</option>
                 </select>
 
                 <div class="table-icons">
