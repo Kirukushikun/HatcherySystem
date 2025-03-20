@@ -13,6 +13,7 @@ use App\Models\EggCollection;
 use App\Models\EggTemperature;
 use App\Models\RejectedHatch;
 use App\Models\RejectedPullets;
+use App\Models\MaintenanceValues;
 
   
 class EditController extends Controller
@@ -34,6 +35,9 @@ class EditController extends Controller
         elseif($targetForm == 'rejected-pullets'){
             $dataRecord = RejectedPullets::find($targetID);   
             $dataRecord->rejected_pullets_data = json_decode($dataRecord->rejected_pullets_data, true); // Decode JSON into array         
+        }
+        elseif($targetForm == 'maintenance-value'){
+            $dataRecord = MaintenanceValues::find($targetID);
         }
         return view('hatchery.edit_module', [
             'targetForm' => $targetForm,
@@ -220,6 +224,11 @@ class EditController extends Controller
     
             // Create a new RejectedHatch record
             $rejectedHatch = RejectedHatch::find($targetID);
+
+            // Get the old values
+            $beforeState = $rejectedHatch->toArray(); 
+            $beforeState = json_encode($beforeState);
+
             $rejectedHatch->ps_no = $validatedData['ps_no'];
             $rejectedHatch->production_date = $validatedData['production_date'];
             $rejectedHatch->set_eggs_qty = $validatedData['set_eggs_qty'];
@@ -234,6 +243,9 @@ class EditController extends Controller
             $rejectedHatch->rejected_total_percentage = $validatedData['rejected_total_prcnt'];
             
             $rejectedHatch->save();
+
+            // Log the action with before state
+            $this->logAction('update', $rejectedHatch, $beforeState,'rejected-hatch');
 
             return redirect('/rejected-hatch')->with('success', 'Updated Successfully')->with('success_message', 'Rejected Hatch Entry Updated Successfully');
         }        
@@ -365,7 +377,26 @@ class EditController extends Controller
 
             return redirect('/rejected-pullets')->with('success', 'Updated Successfully')->with('success_message', 'Rejected Pullets Entry Updated Successfully');
         }
-        
+        elseif($targetForm == 'maintenance-value'){
+            $validator = Validator::make($request->all(), [
+                'data_category' => 'required',
+                'data_value' => 'required',
+            ]);
+    
+            if ($validator->fails()) {
+                return back()->with('error', 'Please fill in all the required fields.');
+            }
+    
+            $validatedData = $validator->validated();
+    
+            $adminInput = MaintenanceValues::find($targetID);
+            $adminInput->data_category = $validatedData['data_category'];
+            $adminInput->data_value = $validatedData['data_value'];
+            $adminInput->save();
+    
+            return redirect('/admin')->with('success', 'Updated Successfully')->with('success_message', 'Maintenance Value Updated Successfully');
+       
+        }
     }
 
     public function logAction($action, $currentState, $beforeState = null, $targetForm){
@@ -389,6 +420,19 @@ class EditController extends Controller
             $log_entry = [
                 $messages[$action] ?? 'Egg Temperature Record Modified',
                 'egg_temperature',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
+            AC::logEntry($log_entry);
+        }
+
+        elseif ($targetForm == 'rejected-hatch') {
+            $messages = [
+                'update' => 'Rejected Hatch Record Updated',
+            ];
+            $log_entry = [
+                $messages[$action] ?? 'Rejected Hatch Record Modified',
+                'rejected_hatch',
                 $beforeState, // Stores previous state before the action
                 $currentState, // Stores the new state after the action
             ];
