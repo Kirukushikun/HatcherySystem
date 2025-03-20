@@ -214,8 +214,10 @@ function storeRecord(){
         } else {
             alert("Error saving record");
         }
-    })
-    .catch(error => console.error("Error:", error));
+    }).catch(error => {
+        console.error("Error:", error)
+        createPushNotification("danger", "Save Unsuccessful", "Please try again or Contact Support if the issue persist.");
+    });
 }
 
 function deleteRecord(targetID) {
@@ -238,7 +240,8 @@ function deleteRecord(targetID) {
             // Trigger push notification
             createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
         } else {
-            alert("Error deleting record");
+            // alert("Error deleting record");
+            createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
         }
     })
     .catch(error => console.error("Error:", error));

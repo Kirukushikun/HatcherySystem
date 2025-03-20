@@ -76,32 +76,32 @@ function activateSection(targetCard) {
     const formAction = targetCard.querySelector(".form-action");
 
     // Check if step is 4 or 5 and restrict if not due
-    if (formStep === 4 || formStep === 5) {
-        let currentDate = new Date();
-        let targetDate = formStep === 4 
-            ? new Date(document.getElementById("d10_candling_date").value)
-            : new Date(document.getElementById("d18_candling_date").value);
+    // if (formStep === 4 || formStep === 5) {
+    //     let currentDate = new Date();
+    //     let targetDate = formStep === 4 
+    //         ? new Date(document.getElementById("d10_candling_date").value)
+    //         : new Date(document.getElementById("d18_candling_date").value);
 
-        if (currentDate < targetDate) {
-            // Calculate days remaining safely
-            let timeDiff = targetDate - currentDate;
-            let daysRemaining = Math.max(0, Math.ceil(timeDiff / (1000 * 60 * 60 * 24)));
+    //     if (currentDate < targetDate) {
+    //         // Calculate days remaining safely
+    //         let timeDiff = targetDate - currentDate;
+    //         let daysRemaining = Math.max(0, Math.ceil(timeDiff / (1000 * 60 * 60 * 24)));
         
-            // Notification title assignment
-            let notificationTitle = formStep === 4 
-                ? 'Setter Process Unavailable' 
-                : 'Candling Process Unavailable';
+    //         // Notification title assignment
+    //         let notificationTitle = formStep === 4 
+    //             ? 'Setter Process Unavailable' 
+    //             : 'Candling Process Unavailable';
         
-            console.log(`Step ${formStep} is not due. Hiding form actions. ${daysRemaining} day(s) remaining.`);
-            formAction.style.display = "none";
+    //         console.log(`Step ${formStep} is not due. Hiding form actions. ${daysRemaining} day(s) remaining.`);
+    //         formAction.style.display = "none";
         
-            // Trigger notification
-            createPushNotification('danger', notificationTitle, `Step ${formStep} will be available in ${daysRemaining} day(s).`);
+    //         // Trigger notification
+    //         createPushNotification('danger', notificationTitle, `Step ${formStep} will be available in ${daysRemaining} day(s).`);
         
-            return; // Exit early
-        }
+    //         return; // Exit early
+    //     }
             
-    }
+    // }
 
     // Show/hide form-action for active form
     document.querySelectorAll(".form-action").forEach(action => {
@@ -126,19 +126,19 @@ function updateFormListener() {
 
     // Function to check if form has values
     function checkFormValues() {
-        // Check if step 4 or 5 is due
-        if (formStep === 4 || formStep === 5) {
-            let currentDate = new Date();
-            let targetDate = formStep === 4 
-                ? new Date(document.getElementById("d10_candling_date").value)
-                : new Date(document.getElementById("d18_candling_date").value);
+        // // Check if step 4 or 5 is due
+        // if (formStep === 4 || formStep === 5) {
+        //     let currentDate = new Date();
+        //     let targetDate = formStep === 4 
+        //         ? new Date(document.getElementById("d10_candling_date").value)
+        //         : new Date(document.getElementById("d18_candling_date").value);
 
-            if (currentDate < targetDate) {
-                console.log(`Form Step ${formStep} is not yet due. Hiding form actions.`);
-                formAction.style.display = "none";
-                return;
-            }
-        }
+        //     if (currentDate < targetDate) {
+        //         console.log(`Form Step ${formStep} is not yet due. Hiding form actions.`);
+        //         formAction.style.display = "none";
+        //         return;
+        //     }
+        // }
 
         // Show form-action if inputs have values
         const hasValues = [...formInputs].some(input => {
@@ -266,35 +266,35 @@ function disableFutureForms() {
         } else if (stepNumber > currentStep) {
             disableCard(card);
         } 
-        else if (stepNumber == 4) {
-            let currentDate = new Date(); // Today's date
-            let candlingDay10 = new Date(document.getElementById("d10_candling_date").value); // Clone date
+        // else if (stepNumber == 4) {
+        //     let currentDate = new Date(); // Today's date
+        //     let candlingDay10 = new Date(document.getElementById("d10_candling_date").value); // Clone date
 
-            console.log("Current Date: ", currentDate); 
-            console.log("Pullout Day 10: ", candlingDay10);
+        //     console.log("Current Date: ", currentDate); 
+        //     console.log("Pullout Day 10: ", candlingDay10);
 
-            if(currentDate >= candlingDay10){
-                console.log("Current Date is greater than or equal to Candling Day 10");
-                enableCard(card);
-            } else {
-                console.log("Current Date is less than Candling Day 10");
-                disableCard(card);
-            }
-        } else if (stepNumber == 5) {
-            let currentDate = new Date(); // Today's date
-            let candlingDay18 = new Date(document.getElementById("d18_candling_date").value); // Clone date
+        //     if(currentDate >= candlingDay10){
+        //         console.log("Current Date is greater than or equal to Candling Day 10");
+        //         enableCard(card);
+        //     } else {
+        //         console.log("Current Date is less than Candling Day 10");
+        //         disableCard(card);
+        //     }
+        // } else if (stepNumber == 5) {
+        //     let currentDate = new Date(); // Today's date
+        //     let candlingDay18 = new Date(document.getElementById("d18_candling_date").value); // Clone date
         
-            console.log("Current Date: ", currentDate); 
-            console.log("Candling Day 10: ", candlingDay18);
+        //     console.log("Current Date: ", currentDate); 
+        //     console.log("Candling Day 10: ", candlingDay18);
 
-            if(currentDate >= candlingDay18){
-                console.log("Current Date is greater than or equal to Candling Day 18");
-                enableCard(card);
-            } else {
-                console.log("Current Date is less than Candling Day 18");
-                disableCard(card);
-            }
-        } 
+        //     if(currentDate >= candlingDay18){
+        //         console.log("Current Date is greater than or equal to Candling Day 18");
+        //         enableCard(card);
+        //     } else {
+        //         console.log("Current Date is less than Candling Day 18");
+        //         disableCard(card);
+        //     }
+        // } 
         else{
             enableCard(card);
         }

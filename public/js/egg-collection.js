@@ -205,8 +205,12 @@ function storeRecord(){
         } else {
             alert("Error saving record");
         }
-    })
-    .catch(error => console.error("Error:", error));
+    }).catch(error => {
+        console.error("Error:", error)
+        createPushNotification("danger", "Save Unsuccessful", "Please try again or Contact Support if the issue persist.");
+    });
+    
+
 }
 
 function deleteRecord(targetID) {
@@ -227,9 +231,10 @@ function deleteRecord(targetID) {
             loadData();
 
             // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
+            createPushNotification("success", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
         } else {
-            alert("Error deleting record");
+            // alert("Error deleting record");
+            createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
         }
     })
     .catch(error => console.error("Error:", error));
@@ -253,10 +258,10 @@ function editRecord(targetID) {
         } else {
             console.error('Error encrypting ID');
         }
-    })
-    .catch(error => console.error("Error:", error));
-
-    console.log("editing", targetID);
+    }).catch(error => {
+        console.error("Error:", error)
+        createPushNotification("danger", "Edit Unsuccessful", "Please try again or Contact Support if the issue persist.");
+    });
 }
 
 document.addEventListener("click", function (event) {

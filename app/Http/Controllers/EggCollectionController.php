@@ -19,70 +19,87 @@ class EggCollectionController extends Controller
     }
 
     function egg_collection_store(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'ps_no' => 'required|string|max:255',
-            'house_no' => 'required|string|max:255',
-            'production_date' => 'required|date',
-            'collection_time' => 'required|date_format:H:i',
-            'collection_eggs_quantity' => 'required|integer',
-        ]);
-
-        if ($validator->fails()) {
-            $errorMessages = $validator->errors();
-            session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
-
-            if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
-                return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
-            }   
-            if ($errorMessages->hasAny(['production_date'])) {
-                return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
-            }      
-            if ($errorMessages->hasAny(['collection_time'])) {
-                return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
-            }               
-            if ($errorMessages->has('collection_eggs_quantity')) {
-                return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
-            } 
+        try {
+            $validator = Validator::make($request->all(), [
+                'ps_no' => 'required|string|max:255',
+                'house_no' => 'required|string|max:255',
+                'production_date' => 'required|date',
+                'collection_time' => 'required|date_format:H:i',
+                'collection_eggs_quantity' => 'required|integer',
+            ]);
     
+            if ($validator->fails()) {
+                $errorMessages = $validator->errors();
+                session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
+    
+                if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
+                    return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
+                }   
+                if ($errorMessages->hasAny(['production_date'])) {
+                    return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
+                }      
+                if ($errorMessages->hasAny(['collection_time'])) {
+                    return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
+                }               
+                if ($errorMessages->has('collection_eggs_quantity')) {
+                    return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
+                } 
+            }
+    
+            $validatedData = $validator->validated();
+    
+            $eggCollection = new EggCollection();
+            $eggCollection->ps_no = $validatedData['ps_no'];
+            $eggCollection->house_no = $validatedData['house_no']; 
+            $eggCollection->production_date = $validatedData['production_date'];
+            $eggCollection->collection_time = $validatedData['collection_time'];
+            $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
+            $eggCollection->save();
+    
+            // Log the action
+            $this->logEggCollectionAction('store', $eggCollection, null);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Egg Collection Entry Recorded Successfully'
+            ]);
+    
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Error in egg_collection_store: ' . $e->getMessage());
+    
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
         }
-
-        $validatedData = $validator->validated();
-
-        $eggCollection = new EggCollection();
-        $eggCollection->ps_no = $validatedData['ps_no'];
-        $eggCollection->house_no = $validatedData['house_no']; 
-        $eggCollection->production_date = $validatedData['production_date'];
-        $eggCollection->collection_time = $validatedData['collection_time'];
-        $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
-        $eggCollection->save();
-
-        // Log the action
-        $this->logEggCollectionAction('store', $eggCollection, null);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Egg Collection Entry Recorded Successfully'
-        ]);
-
     }
+    
 
     public function egg_collection_delete(Request $request, $targetID){
-        $eggCollection = EggCollection::find($targetID);
+        try{
+
+            $eggCollection = EggCollection::find($targetID);
     
-        if (!$eggCollection) {
-            return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+            if (!$eggCollection) {
+                return response()->json(['success' => false, 'message' => 'Record not found'], 404);
+            }
+    
+            // Capture before state (store relevant attributes)
+            $beforeState = $eggCollection->toJson();
+        
+            $eggCollection->is_deleted = true;
+            $eggCollection->save();
+    
+            // Log the action with before state
+            $this->logEggCollectionAction('delete', $eggCollection, $beforeState);
+        
+            return response()->json(['success' => true, 'message' => 'Egg Collection Entry Deleted Successfully']);
+
+        } catch (\Exception $e) {
+
+            // Log the error for debugging
+            Log::error('Error in egg_collection_delete: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
         }
-
-        // Capture before state (store relevant attributes)
-        $beforeState = $eggCollection->toJson();
-    
-        $eggCollection->is_deleted = true;
-        $eggCollection->save();
-
-        // Log the action with before state
-        $this->logEggCollectionAction('delete', $eggCollection, $beforeState);
-    
-        return response()->json(['success' => true, 'message' => 'Egg Collection Entry Deleted Successfully']);
     }
 
 
