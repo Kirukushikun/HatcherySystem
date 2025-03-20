@@ -194,7 +194,6 @@
         </div>
 
         <div class="form-entries">
-
             <!-- Maintenance Value -->
             <div class="table active" id="table1">
                 <form class="body">
@@ -235,7 +234,7 @@
                                 <input type="text" placeholder="Search...">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
-            
+           
                             <select class="sort-btn" name="sort_by" id="sort-by-maintenance">
                                 <option value="created_at_desc">Sort By: Date (Newest)</option>
                                 <option value="created_at_asc">Sort By: Date (Oldest)</option>

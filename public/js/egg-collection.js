@@ -46,8 +46,7 @@ resetButton.addEventListener("click", function () {
     // hide the form-action buttons
     formAction.style.display = "none";
 });
-// Initial check to hide the form-action if empty
-// checkFormValues();
+
 document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
@@ -258,5 +257,3 @@ document.addEventListener("click", function (event) {
     }
 });
 
-
-  

@@ -25,3 +25,19 @@ function loadingScreen(){
         button.addEventListener('click', showLoadingScreen);
     });
 }
+
+function loadingDisplayData (targetBatch){
+    modal.classList.add("active");
+    modal.innerHTML = 
+    `<div class="data-display">
+        <div class="data-header">
+            <h2>MASTER DATABASE ENTRY (NO. ${targetBatch})</h2>
+            <i class="fa-solid fa-xmark" id="close-button"></i>
+        </div>
+        <div class="data-container">
+            <div class="loading-display">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>`;
+}
