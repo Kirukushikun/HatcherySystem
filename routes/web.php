@@ -5,18 +5,25 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
 use App\Http\Controllers\RejectedHatchController;
 use App\Http\Controllers\RejectedPulletsController;
 use App\Http\Controllers\MasterDatabaseController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\AdminController;
+
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
 use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
+use App\Http\Livewire\MaintenanceValueTable;
+use App\Http\Livewire\AuditTrailTable;
 use App\Http\Livewire\MasterDatabaseTable;
+
 
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\PDFController;
@@ -35,7 +42,7 @@ Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->n
 // Login Route
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'cors'])->group(function() {
 	// Main Session Check for Authetication
 	Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 	// Dash/Dashboard
@@ -45,25 +52,50 @@ Route::middleware('auth')->group(function() {
 	 * YOUR CODE STARTS HERE
 	 * DO NOT ALTER ABOVE CODE
 	 */
+
+
+    Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
+    Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
+    Route::get('/users/grant-access/{id}/{role}/{action}', [UserController::class, 'grantAccess'])->name('grant.access');
+    Route::get('/users/persons', [UserController::class, 'index2'])->name('users.index2'); // Show the users Blade view
+
+    Route::get('/gs', function () {
+        return GS::service1();
+    });
+
+    Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
+    Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
+
+
+
+    Route::get('/admin', function () {
+        return view('admin.admin_UI');
+    });
+
+    Route::get('/home', function () {
+        return view('hatchery.main_module');
+    });
+
+    Route::get('/egg-collection-entry', function () {
+        return view('hatchery.egg_collection');
+    });
+
+    Route::get('/egg-temperature-check-entry', function () {
+        return view('hatchery.egg_temperature');
+    });
+
+    Route::get('/rejected-hatch', function () {
+        return view('hatchery.rejected_hatch');
+    });
+
+    Route::get('/rejected-pullets', function () {
+        return view('hatchery.rejected_pullets');
+    });
+
+    Route::get('/master-database', function () {
+        return view('hatchery.master_database');
+    });
 });
-
-
-Route::get('/gs', function () {
-	return GS::service1();
-});
-
-
-Route::get('/admin', function () {
-	return view('admin.admin_UI');
-});
-
-Route::get('/home', function () {
-	return view('hatchery.main_module');
-});
-
-// Route::get('/master-database', function () {
-// 	return view('hatchery.master_database');
-// });
 
 
 // Egg Collection -------------------------------------------------------------------------------------------
@@ -106,6 +138,23 @@ Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejec
 
 Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
   
+
+// Admin Maintenance -------------------------------------------------------------------------------------------
+
+Route::get('/fetch-maintenance-value-data', [MaintenanceValueTable::class, 'fetchData'])->name('maintenance.value.fetch'); // Maintenance Value Table Data Fetch
+
+Route::post('/maintenance/store', [AdminController::class, 'update_module_store'])->name('maintenance.store'); // Store
+
+Route::delete('/maintenance/delete/{targetID}', [AdminController::class, 'update_module_delete'])->name('maintenance.delete'); // Delete
+
+//Audit Trail
+
+Route::get('/fetch-audit-trail-data', [AuditTrailTable::class, 'fetchData'])->name('audit.trail.fetch'); // View
+
+Route::get('/fetch-audit-data/{targetID}', [AuditController::class, 'fetchAuditData'])->name('audit.trail.data'); // Fetch Target ID Data
+
+Route::delete('/audit/delete/{targetID}', [AuditController::class, 'audit_trail_delete'])->name('audit.delete'); // Delete
+
 // Edit ---------
 
 Route::get('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_record_index'])->name('edit.record.index'); // Edit View
@@ -126,8 +175,6 @@ Route::get('/test', function () {
 	return view('hatchery.report_module');
 });
 
-//Master Database
-
 Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
 
 Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
@@ -136,3 +183,4 @@ Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDat
 Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
 Route::patch('/master-database/delete/{targetBatch}', [MasterDatabaseController::class, 'master_database_delete'])->name('master.database.delete');
 Route::get('/master-database/view/{targetBatch}', [MasterDatabaseController::class, 'master_database_view'])->name('master.database.view');
+
