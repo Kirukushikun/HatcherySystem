@@ -1,49 +1,36 @@
 <table>
     <thead>
         <tr>
-            <th>No.</th>
-            <th>PS No.</th>
-            <th>Setting Date</th>
-            <th>Incubator No.</th>
-            <th>Location</th>
-            <th>Temp Check Date</th>
-            <th>Temperature</th>
-            <th>Quantity</th>
-            <th>Encoded/Modified By</th>
-            <th>Actions</th>
-
-            <!-- <th>Date Encoded/Modified</th> -->
-            <!-- <th>Action Done</th> -->
+            <th>Action Done</th>
+            <th>Table</th>
+            <th>User</th>
+            <th>Values</th>
         </tr>
     </thead>
     
-    <tbody id="table-body">
+    <tbody id="table-audit">
     </tbody>
+    
 </table>
 
 <script>
-    let currentPage = 1;
-    let totalPages = 1;
-    let searchQuery = "";
-    let sortBy = "created_at";
-    let sortOrder = "desc";
 
     document.addEventListener("DOMContentLoaded", function () {
 
-        skeletonLoader();
+        skeletonLoaderAudit();
 
         setTimeout(() => {
-            loadData();
+            loadDataAudit();
         }, 1000);
 
-        // Attach event listeners to search and sort inputs
-        document.querySelector(".search-bar input").addEventListener("input", function (e) {
+        // search
+        document.getElementById("search-bar-audit").addEventListener("input", function (e) {
             searchQuery = e.target.value;
-            currentPage = 1;
-            loadData();
+            loadDataAudit();
         });
 
-        document.querySelector(".sort-btn").addEventListener("change", function (e) {
+        // sort
+        document.getElementById("sort-by-audit").addEventListener("change", function (e) {
             const selectedSort = e.target.value;
             
             // Find the LAST underscore (to separate column name and order)
@@ -55,65 +42,67 @@
             // Extract sortOrder (everything after the last underscore)
             sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
 
-            loadData(); // Pass correct values to your function
+            loadDataAudit(); // Pass correct values to your function
 
-        });
-
+        });   
     });
 
-    function loadData() {
-        fetch(`/fetch-egg-temperature-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
+    function loadDataAudit() {
+        fetch(`/fetch-audit-trail-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
             .then(response => response.json())
             .then(data => {
                 totalPages = data.last_page;
-                const tableBody = document.getElementById('table-body');
+                const tableBody = document.getElementById('table-audit');
 
                 tableBody.innerHTML = '';
+
+                // Define a mapping object for renaming keys
+                const tableMapping = {
+                    egg_collection: "Egg Collection Entry",
+                    egg_temperature: "Egg Temperature Entry",
+                    rejected_hatch: "Rejected Hatch Entry",
+                    rejected_pullets: "Rejected Pullets Entry",
+                    users: "Users",
+                };
+
                 data.data.forEach(row => {
-                    let setting_date = new Date(row.setting_date).toLocaleDateString();
-                    let temperature_check_date = new Date(row.temperature_check_date).toLocaleDateString();
+
+                // Use mapped value, fallback to original if not found
+                let displayTable = tableMapping[row.table] || row.table;
 
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
-                            <td>${row.id}</td>
-                            <td>${row.ps_no}</td>
-                            <td>${setting_date}</td>
-                            <td>${row.incubator_no}</td>
-                            <td>${row.location}</td>
-                            <td>${temperature_check_date}</td>
-                            <td>${row.temperature}</td>
-                            <td>${row.quantity}</td>
-                            <td>${row.encoded_by}</td>
-                            <td class="datalist-actions">
-                                <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
-                                <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
+                            <td>${row.action}</td>
+                            <td>${displayTable}</td>
+                            <td>${row.user_id}</td>
+                            <td>
+                            <button style="width: 100%;color: white;background-color: #EC8B18;border: none;padding: 5px;border-radius: 7px;cursor: pointer;font-size: 15px;" onclick="showModalAudit('view', ${row.id})">View</button>
                             </td>
                         </tr>
                     `;   
                 });
-
-                updatePagination();
+                
+                updatePaginationAudit();
                 loadingScreen(); // Running a function after data is loaded to read all load class
             })
             .catch(error => console.log("Error fetching data", error));
     }
-
-    function refreshTable() {
-        const tableBody = document.getElementById('table-body');
+    function refreshTableAudit() {
+        const tableBody = document.getElementById('table-audit');
         tableBody.innerHTML = '';
 
-        skeletonLoader();
+        skeletonLoaderAudit();   
         
         setTimeout(() => {
-            loadData();
+            loadDataAudit();
         }, 1000);
 
-        updatePagination();
+        updatePaginationAudit();
     }
 
     //Pagination Function
-    function updatePagination() {
-        const paginationContainer = document.querySelector(".pagination");
+    function updatePaginationAudit() {
+        const paginationContainer = document.getElementById("pagination-audit");
         paginationContainer.innerHTML = "";
 
         if (currentPage > 1) {
@@ -144,18 +133,18 @@
         event.preventDefault(); // Prevents default anchor behavior
         if (page >= 1 && page <= totalPages) {
             currentPage = page;
-            loadData();
+            loadDataAudit();
         }
     }
 
     //Skeleton Loader Function
-    function skeletonLoader(){
-        const tableBody = document.getElementById('table-body');
+    function skeletonLoaderAudit(){
+        const tableBody = document.getElementById('table-audit');
 
         for (let i = 0; i < 10; i++) { // 10 rows
             const row = document.createElement("tr");
             
-            for (let j = 0; j < 10; j++) { // 10 columns per row
+            for (let j = 0; j < 4; j++) { // 4 columns per row
                 let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%";
                 const cell = document.createElement("td");
                 const skeleton = document.createElement("div");
@@ -167,4 +156,6 @@
             tableBody.appendChild(row);
         }
     }
+
 </script>
+

@@ -25,9 +25,8 @@ class EggCollectionTable extends Component
         // Sorting Handling
         $sortBy = $request->get('sort_by', 'created_at');
         $sortOrder = $request->get('sort_order', 'asc');
-        // Check if sorting by 'location' (Top > Mid > Low)
         
-        // Ensure 'quantity' sorts as a number (in case of string issues)
+        // Ensure 'collected_qty' sorts as a number (in case of string issues)
         if ($sortBy === 'collected_qty') {
             $query->orderByRaw("CAST(collected_qty AS SIGNED) $sortOrder");
         } 
