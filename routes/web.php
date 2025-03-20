@@ -65,7 +65,6 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
 
-
     Route::get('/admin', function () {
         return view('admin.admin_UI');
     });
@@ -93,6 +92,7 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/master-database', function () {
         return view('hatchery.master_database');
     });
+  
 });
 
 

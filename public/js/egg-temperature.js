@@ -20,13 +20,6 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
     });
 });
 
-//make every input type number prevent user from entering special characters just purely number
-document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.addEventListener('input', function(e) {
-        this.value = this.value.replace(/[^0-9]/g, '');
-    })  
-})
-
 // Function to check if any input has a value
 function checkFormValues() {
     let hasValue = false;
