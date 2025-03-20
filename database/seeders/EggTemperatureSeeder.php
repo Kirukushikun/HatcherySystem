@@ -19,13 +19,13 @@ class EggTemperatureSeeder extends Seeder
 
         for ($i = 0; $i < 60; $i++) {
             EggTemperature::create([
-                'ps_no' => $faker->randomElement(['#92', '#93', '#94']),
+                'ps_no' => $faker->randomElement(['92', '93', '94']),
                 'setting_date' => $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
-                'incubator' => $faker->randomElement(['#1', '#2', '#3']),
+                'incubator_no' => $faker->randomElement(['1', '2', '3']),
                 'location' => $faker->randomElement(['Top', 'Mid', 'Low']),
                 'temperature' => $faker->randomElement(['37.8 Above', '37.7 Below']),
                 'temperature_check_date' => $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
-                'quantity' => $faker->numberBetween(5000, 6000),
+                'quantity' => $faker->numberBetween(400, 600),
             ]);
         }
     }

@@ -2,9 +2,9 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS no.</th>
+            <th>PS No.</th>
             <th>Setting Date</th>
-            <th>Incubator #</th>
+            <th>Incubator No.</th>
             <th>Location</th>
             <th>Temp Check Date</th>
             <th>Temperature</th>
@@ -26,7 +26,7 @@
     let totalPages = 1;
     let searchQuery = "";
     let sortBy = "created_at";
-    let sortOrder = "asc";
+    let sortOrder = "desc";
 
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -34,7 +34,7 @@
 
         setTimeout(() => {
             loadData();
-        }, 3000);
+        }, 1000);
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("input", function (e) {
@@ -56,30 +56,10 @@
             sortOrder = selectedSort.substring(lastUnderscoreIndex + 1);
 
             loadData(); // Pass correct values to your function
+
         });
 
     });
-
-    function skeletonLoader(){
-        const tableBody = document.getElementById('table-body');
-
-        for (let i = 0; i < 10; i++) { // 10 rows
-            const row = document.createElement("tr");
-            
-            for (let j = 0; j < 10; j++) { // 10 columns per row
-                let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%";
-                const cell = document.createElement("td");
-                const skeleton = document.createElement("div");
-                skeleton.classList.add("skeleton");
-                skeleton.style.width = ranWidth; // Full width
-                cell.appendChild(skeleton);
-                row.appendChild(cell);
-            }
-
-            tableBody.appendChild(row);
-        }
-
-    }
 
     function loadData() {
         fetch(`/fetch-egg-temperature-data?page=${currentPage}&search=${searchQuery}&sort_by=${sortBy}&sort_order=${sortOrder}`)
@@ -94,30 +74,44 @@
                     let temperature_check_date = new Date(row.temperature_check_date).toLocaleDateString();
 
                     tableBody.innerHTML += `
-                        <tr>
+                        <tr id="row-${row.id}">
                             <td>${row.id}</td>
                             <td>${row.ps_no}</td>
                             <td>${setting_date}</td>
-                            <td>${row.incubator}</td>
+                            <td>${row.incubator_no}</td>
                             <td>${row.location}</td>
                             <td>${temperature_check_date}</td>
                             <td>${row.temperature}</td>
                             <td>${row.quantity}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">
-                                <i class="fa-regular fa-pen-to-square" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
+                                <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
-                                <i class="fa-solid fa-print" id="print-action"></i>
                             </td>
                         </tr>
                     `;   
                 });
 
                 updatePagination();
+                loadingScreen(); // Running a function after data is loaded to read all load class
             })
             .catch(error => console.log("Error fetching data", error));
     }
 
+    function refreshTable() {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = '';
+
+        skeletonLoader();
+        
+        setTimeout(() => {
+            loadData();
+        }, 1000);
+
+        updatePagination();
+    }
+
+    //Pagination Function
     function updatePagination() {
         const paginationContainer = document.querySelector(".pagination");
         paginationContainer.innerHTML = "";
@@ -154,4 +148,23 @@
         }
     }
 
+    //Skeleton Loader Function
+    function skeletonLoader(){
+        const tableBody = document.getElementById('table-body');
+
+        for (let i = 0; i < 10; i++) { // 10 rows
+            const row = document.createElement("tr");
+            
+            for (let j = 0; j < 10; j++) { // 10 columns per row
+                let ranWidth = Math.floor(Math.random() * (100 - 50 + 1) + 50) + "%";
+                const cell = document.createElement("td");
+                const skeleton = document.createElement("div");
+                skeleton.classList.add("skeleton");
+                skeleton.style.width = ranWidth; // Full width
+                cell.appendChild(skeleton);
+                row.appendChild(cell);
+            }
+            tableBody.appendChild(row);
+        }
+    }
 </script>

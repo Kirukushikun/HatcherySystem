@@ -22,7 +22,7 @@ class EggTemperature extends Model
         'is_deleted',
         'ps_no',
         'setting_date',
-        'incubator',
+        'incubator_no',
         'location',
 
         'temperature',

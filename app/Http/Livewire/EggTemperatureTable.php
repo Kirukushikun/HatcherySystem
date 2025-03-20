@@ -21,7 +21,7 @@ class EggTemperatureTable extends Component
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('ps_no', 'like', "%{$searchTerm}%")
                     ->orWhere('setting_date', 'like', "%{$searchTerm}%")
-                    ->orWhere('incubator', 'like', "%{$searchTerm}%")
+                    ->orWhere('incubator_no', 'like', "%{$searchTerm}%")
                     ->orWhere('location', 'like', "%{$searchTerm}%")
                     ->orWhere('temperature_check_date', 'like', "%{$searchTerm}%")
                     ->orWhere('temperature', 'like', "%{$searchTerm}%")

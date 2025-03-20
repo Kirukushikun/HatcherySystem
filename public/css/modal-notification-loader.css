@@ -11,6 +11,7 @@
 
 /* -------------------------------------------------- MODAL STYLING -------------------------------------------------- */
 
+
 .modal{
     display: none;
 }
@@ -52,6 +53,28 @@
 
     /* Add bounce animation */
     animation: bounce 0.2s ease-out;
+}
+
+.modal-content.export-options{
+    flex-direction: row;
+    gap: 30px;
+    padding: 50px 40px;
+}
+.modal-content.export-options i{
+    font-size: 45px;
+}
+.modal-content.export-options .option{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-content.export-options button{
+    font-size: 20px;
+}
+.modal-content.export-options #separator{
+    width: 2px;
+    height: 100%;
+    background-color: #bcbcbc;
 }
 
 .modal-footer {
@@ -118,7 +141,7 @@
 
 .danger{
     color: #EA4335;
-    background-color: rgb(255, 230, 230);
+    background-color: #ffe6e6;
 }
 
 .success{
@@ -129,6 +152,16 @@
 .edit{
     color: #F28B30;
     background-color: #fff3e0;
+}
+
+.csv{
+    color: #FBBC05;
+    background-color: #fff9de;
+}
+
+.report{
+    color: #FF7043;
+    background-color: #ffeee9;
 }
 
 .cancel-button{
@@ -151,8 +184,71 @@
     border: solid 2px #F28B30;
     background-color: #F28B30;
 }
+.csv-btn{
+    color: white;
+    border: solid 2px #FBBC05;
+    background-color: #FBBC05;
+}
+.report-btn{
+    color: white;
+    border: solid 2px #FF7043;
+    background-color: #FF7043;
+}
+
+/* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */
+
+.loading-screen{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    z-index: 9999;
+}
+
+.loading-screen.active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
+.loading-screen .loader {
+    width: 44px;
+    height: 44px;
+    border: 5px solid rgb(255, 222, 184); /* #7b5cad color with 0.5 opacity */
+    border-top: 5px solid #EC8B18; /* Transparent part of the loader */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; /* 1s for animation duration, loops infinitely */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */
+.loading-display{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.loading-display .loader {
+    width: 44px;
+    height: 44px;
+    border: 5px solid rgb(255, 222, 184); /* #7b5cad color with 0.5 opacity */
+    border-top: 5px solid #EC8B18; /* Transparent part of the loader */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; /* 1s for animation duration, loops infinitely */
+}
 /* -------------------------------------------------- PUSH NOTIFICATION STYLING -------------------------------------------------- */
 
 .push-notification {
@@ -215,53 +311,6 @@
 }
 
 
-
-
-/* -------------------------------------------------- LOADER STYLING -------------------------------------------------- */
-
-.loading-screen{
-    display: none;
-    width: 100%;
-    height: 50vh;
-    background-color: white;
-    z-index: 9999;
-}
-
-.loading-screen.active{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.loading{
-    display: none;
-    width: 100%;
-    height: 100%;
-    padding: 200px 0;
-}.loading.active{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.loader {
-    width: 44px;
-    height: 44px;
-    border: 5px solid rgb(255, 222, 184); /* #7b5cad color with 0.5 opacity */
-    border-top: 5px solid #EC8B18; /* Transparent part of the loader */
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite; /* 1s for animation duration, loops infinitely */
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 /* -------------------------------------------------- SKELETON LOADER STYLING -------------------------------------------------- */
 .skeleton {

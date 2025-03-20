@@ -1,3 +1,4 @@
+@include('components.modal-notification-loader')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,31 +9,14 @@
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <!-- Crucial Part on every forms -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Crucial Part on every forms/ -->
+
 </head>
-<body>
-        <!-- PUSH NOTIFICATION -->
-        @if(session()->has('error'))
-            <div class="push-notification danger">
-                <i class="fa-solid fa-bell danger"></i>
-                <div class="notification-message">
-                    <h4>{{session('error')}}</h4>
-                    <p>{{session('error_message')}}</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-notification"></i>
-            </div>
-        @elseif(session()->has('success'))
-            <div class="push-notification success">
-                <i class="fa-solid fa-bell success"></i>
-                <div class="notification-message">
-                    <h4>{{session('success')}}</h4>
-                    <p>{{session('success_message')}}</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-notification"></i>
-            </div>
-        @endif
-    
-    <div class="modal" id="modal">
-    </div>
+<body id="body">
+
+    @yield('modal-notification-loader')
 
     <div class="header">
         <img class="logo" src="/Images/BDL.png" alt="">
@@ -42,9 +26,7 @@
         </div>
     </div>
 
-    <form class="body" action="{{ route('egg.temperature.store') }}" method="POST">
-        @csrf
-
+    <form class="body">
         <div class="form-header">
             <h4>Entry Form</h4>
         </div>
@@ -52,24 +34,17 @@
         <div class="form-input col-4">
 
             <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
-                <select name="ps_no" id="ps_no">
-                    <option value=""></option>
-                    <option value="#93" {{ session('form_data.ps_no', '') == '#93' ? 'selected' : ''}}>#93</option>
-                    <option value="#94" {{ session('form_data.ps_no', '') == '#94' ? 'selected' : ''}}>#94</option>
-                </select>
+                <label for="ps_no">PS No. <span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
             </div>
             
             <div class="input-container column">
                 <label for="setting_date">Setting Date <span></span></label>
-                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', '') }}">
+                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
-                <label for="incubator">Incubator # <span></span></label>
-                <select name="incubator" id="incubator">
-                    <option value=""></option>
-                    <option value="5" {{ session('form_data.incubator', '') == '5' ? 'selected' : ''}}>5</option>
-                </select>
+                <label for="incubator_no">Incubator No. <span></span></label>
+                <x-dropdown :data-category="'incubator_no'" />
             </div>
             <div class="input-container column">
                 <label for="location">Location <span></span></label>
@@ -82,7 +57,7 @@
             </div>
             <div class="input-container column">
                 <label for="temp_check_date">Temperature Check Date <span></span></label>
-                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', '') }}">
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
                 <label for="temperature">Temperature <span></span></label>
@@ -100,7 +75,7 @@
 
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
-            <button class="reset-btn" type="button">Reset</button>
+            <button class="reset-btn" type="reset">Reset</button>
         </div>
 
     </form>
@@ -117,8 +92,8 @@
 
                 <!-- <label for="sort-btn">Sort By:</label> -->
                 <select class="sort-btn" name="sort-btn" id="sort-btn">
-                    <option value="created_at_asc">Sort By: Date (Oldest)</option>
                     <option value="created_at_desc">Sort By: Date (Newest)</option>
+                    <option value="created_at_asc">Sort By: Date (Oldest)</option>
                     <option value="temperature_asc">Sort By: Temperature (High-Low)</option>
                     <option value="temperature_desc">Sort By: Temperature (Low-High)</option>
                     <option value="quantity_desc">Sort By: Quantity (Desc)</option>
@@ -126,8 +101,8 @@
                 </select>
 
                 <div class="table-icons">
-                    <i class="fa-solid fa-print"></i>
-                    <i class="fa-solid fa-rotate-right"></i>
+                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
+                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
                 </div>
                 
             </div>
@@ -144,8 +119,10 @@
         </div>
     </div>
 
+    <script src="{{asset('js/egg-temperature.js')}}" defer></script>
     
-    <script src="{{asset('js/egg_temperature.js')}}" defer></script>
+    <script src="{{asset('js/push-notification.js')}}" defer></script>
+    <script src="{{asset('js/loading-screen.js')}}" defer></script>
 
 </body>
 </html>
