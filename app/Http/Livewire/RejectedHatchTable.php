@@ -36,8 +36,15 @@ class RejectedHatchTable extends Component
         // Sorting Handling
         $sortBy = $request->get('sort_by', 'created_at');
         $sortOrder = $request->get('sort_order', 'asc');
-
-        $query->orderBy($sortBy, $sortOrder);
+        
+        // Ensure 'set_eggs_qty' sorts as a number (in case of string issues)
+        if ($sortBy === 'set_eggs_qty') {
+            $query->orderByRaw("CAST(set_eggs_qty AS SIGNED) $sortOrder");
+        } 
+        // Default sorting for other columns
+        else {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
         //Pagination Handling
         $data = $query->paginate(10);
