@@ -11,7 +11,10 @@ use App\Http\Controllers\EggCollectionController;
 use App\Http\Controllers\EggTemperatureController;
 use App\Http\Controllers\RejectedHatchController;
 use App\Http\Controllers\RejectedPulletsController;
+use App\Http\Controllers\MasterDatabaseController;
 use App\Http\Controllers\AuditController;
+use App\Http\Controllers\AdminController;
+
 
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
@@ -19,8 +22,8 @@ use App\Http\Livewire\RejectedHatchTable;
 use App\Http\Livewire\RejectedPulletsTable;
 use App\Http\Livewire\MaintenanceValueTable;
 use App\Http\Livewire\AuditTrailTable;
+use App\Http\Livewire\MasterDatabaseTable;
 
-use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\PDFController;
@@ -94,14 +97,6 @@ Route::middleware(['auth', 'cors'])->group(function() {
     });
 });
 
-// Route::get('/gs', function () {
-// 	return GS::service1();
-// });
-
-Route::get('/master-database', function () {
-	return view('hatchery.master_database');
-});
-
 
 // Egg Collection -------------------------------------------------------------------------------------------
 
@@ -170,6 +165,8 @@ Route::patch('/{targetForm}/edit/{targetID}', [EditController::class, 'edit_reco
 
 Route::get('/{targetForm}/report', [ReportController::class, 'generateReport']);
 
+Route::post('/egg-collection/report/result', [ReportController::class, 'egg_collection_result']);
+
 // PDF ---------
 
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
@@ -178,4 +175,12 @@ Route::get('/test', function () {
 	return view('hatchery.report_module');
 });
 
+Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
+
+Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
+Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDatabaseController::class, 'master_database_check'])->name('master.database.check');
+
+Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
+Route::patch('/master-database/delete/{targetBatch}', [MasterDatabaseController::class, 'master_database_delete'])->name('master.database.delete');
+Route::get('/master-database/view/{targetBatch}', [MasterDatabaseController::class, 'master_database_view'])->name('master.database.view');
 

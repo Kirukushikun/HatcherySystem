@@ -201,6 +201,7 @@
             text-align: center;
         }
 
+
         th {
             background-color: #EC8B18; /* Orange header */
             color: white;
@@ -275,7 +276,7 @@
 </head>
 <body>
 
-    <input type="text" class="targetForm" value="{{$targetForm}}" hidden>
+    <input type="text" class="targetForm" value="{{$targetForm}}" id="targetForm" hidden>
 
     <div class="report-container">
         @if($targetForm == "egg-collection" && $targetForm != null)
@@ -292,31 +293,81 @@
 
                     <div class="form-container col-2">
                         <div class="form-group">
-                            <label for="ps-no">PS No:</label>
-                            <input type="text" id="ps-no">
+                            <label for="ps_no">PS No:</label>
+                            <x-dropdown :data-category="'ps_no'" />
                         </div>
                         <div class="form-group">
-                            <label for="house-no">House No:</label>
-                            <input type="text" id="house-no">
+                            <label for="house_no">House No:</label>
+                            <!-- <x-dropdown :data-category="'house_no'" /> -->
+                            <select name="house_no" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" >
+                                <option value="1">House 1</option>
+                                <option value="2">House 2</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="production-date-from">Production Date (From):</label>
-                            <input type="date" id="production-date-from">
+                            <label for="production_date_from">Production Date (From):</label>
+                            <input type="date" id="production_date_from">
                         </div>
                         <div class="form-group">
-                            <label for="production-date-to">Production Date (To):</label>
-                            <input type="date" id="production-date-to">
+                            <label for="production_date_to">Production Date (To):</label>
+                            <input type="date" id="production_date_to">
                         </div>
                         <div class="form-group">
-                            <label for="collection-time">Collection Time:</label>
-                            <input type="time" id="collection-time">
+                            <label for="collection_time">Collection Time:</label>
+                            <input type="time" id="collection_time">
                         </div>
                         <div class="form-group">
-                            <label for="collection-quantity">Collection Quantity:</label>
-                            <input type="number" id="collection-quantity">
+                            <label for="collected_qty">Collection Quantity:</label>
+                            <input type="number" id="collected_qty">
                         </div>         
                     </div>
 
+                    <!-- <div class="form-container">
+                        <table>
+                            <thead>
+                                <th>PS No.</th>
+                                <th>House No. 1</th>
+                                <th>House No. 2</th>
+                                <th>House No. 3</th>
+                                <th>House No. 4</th>
+                                <th>House No. 5</th>
+                                <th>Total:</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>93</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>95</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>98</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>200</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">Grand Total:</td>
+                                    <td>10000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
 
                     <div class="form-container col-2">
                         <div class="form-group">
@@ -654,9 +705,137 @@
         @endif
         <div class="report-actions">
             <button type="button" class="back" onclick="window.history.back()">GO BACK <i class="fa-solid fa-door-open"></i></button>
-            <button type="submit" class="print">PRINT <i class="fa-solid fa-print"></i></button>
+            <button type="submit" class="print" onclick="getSelectedValues()">PRINT <i class="fa-solid fa-print"></i></button>
         </div>
     </div>
+    
+    <script>
+
+        let targetform = document.getElementById('targetForm').value;
+
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        if(targetform == 'egg-collection'){
+            // Function to fetch egg collection result
+            function getEggCollectionResult() {
+                const ps_no = document.getElementById("ps_no").value;
+                const production_date_from = document.getElementById("production_date_from").value;
+                const production_date_to = document.getElementById("production_date_to").value;
+                let selectedValues = [];
+
+                // Get the select element for 'house_no'
+                var select = document.getElementById('house_no');
+                
+                // Get all selected options
+                var selectedOptions = Array.from(select.selectedOptions);
+                
+                // Extract the values from the selected options
+                selectedValues = selectedOptions.map(option => option.value);
+
+                // Check if all required fields are filled
+                if (ps_no && production_date_from && production_date_to && selectedValues.length > 0) {
+                    // Proceed with the fetch request only if all required fields are provided
+                    fetch("/egg-collection/report/result", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken  // Ensure you send the CSRF token if needed
+                        },
+                        body: JSON.stringify({
+                            ps_no: ps_no,
+                            production_date_from: production_date_from,
+                            production_date_to: production_date_to,
+                            selectedValues: selectedValues
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Assuming the result is returned as 'egg_quantity_result'
+                            console.log(data.egg_quantity_result);
+                            
+                            // Optionally you can also update the UI with the result
+                            document.getElementById("collected_qty").value = data.egg_quantity_result;
+                            document.getElementById("collection_time").value = data.collection_time;
+                        } else {
+                            alert("Error fetching egg collection result");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                } else {
+                    // Optionally, show a message if the required fields are not filled
+                    console.log("Please fill in all required fields");
+                }
+            }
+
+            // Attach event listeners to the fields
+            let requiredFields = document.querySelectorAll("#ps_no, #production_date_from, #production_date_to, #house_no");
+
+            requiredFields.forEach(field => {
+                // Trigger getEggCollectionResult only when all fields are filled
+                field.addEventListener("input", () => {
+                    const ps_no = document.getElementById("ps_no").value;
+                    const production_date_from = document.getElementById("production_date_from").value;
+                    const production_date_to = document.getElementById("production_date_to").value;
+                    const house_no = document.getElementById("house_no").value;  // Check if house_no has values
+
+                    // Check if all required fields are filled before calling getEggCollectionResult
+                    if (ps_no && production_date_from && production_date_to && house_no) {
+                        getEggCollectionResult(); // Call the function only when all fields are filled
+                    }
+                });
+            });
+
+            // Additional handling for 'ps_no' to dynamically populate 'house_no' (if needed)
+            document.getElementById("ps_no").addEventListener("change", () => {
+                const ps_no = document.getElementById("ps_no").value;
+                
+                // Fetch available houses based on selected ps_no (if needed)
+                // This could involve a fetch request to get houses corresponding to the selected ps_no.
+                
+                // Example of fetching house data:
+                    fetch("/egg-collection/report/result", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": csrfToken  
+                        },
+                        body: JSON.stringify({
+                            ps_no: ps_no
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        console.log(data);
+
+                        const houseSelect = document.getElementById("house_no");
+
+                        // Clear existing options
+                        houseSelect.innerHTML = "";
+
+                        // Populate new options
+                        data.house_no.forEach(house => {
+                            let option = document.createElement("option");
+                            option.value = house;
+                            option.textContent = `House ${house}`;
+                            houseSelect.appendChild(option);
+                        });
+
+                        // Refresh multiselect
+                        houseSelect.loadOptions();
+
+                    })
+                    .catch(error => console.error("Error fetching house data:", error));
+            });
+        }
+
+
+        
+    </script>
+
+    <script src="{{asset('js/multiselect-dropdown.js')}}" defer></script>
     
 </body>
 </html>
