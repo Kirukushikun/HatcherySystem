@@ -180,7 +180,7 @@ class RejectedPulletsController extends Controller
         $rejectedPullets->save();
     
         // Log the action with before state
-        $this->logCollectionAction('delete', $rejectedPullets, $beforeState);
+        // $this->logCollectionAction('delete', $rejectedPullets, $beforeState);
     
         return response()->json(['success' => true, 'message' => 'Rejected Pullets Entry Deleted Successfully']);
     }

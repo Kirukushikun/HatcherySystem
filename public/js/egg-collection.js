@@ -196,7 +196,6 @@ function storeRecord(){
     .catch(error => console.error("Error:", error));
 }
 
-
 function deleteRecord(targetID) {
     fetch(`/egg-collection/delete/${targetID}`, {
         method: "PATCH",
