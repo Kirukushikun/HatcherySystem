@@ -64,26 +64,26 @@
 
 
 <body>
-        <!-- PUSH NOTIFICATION -->
-        @if(session()->has('error'))
-            <div class="push-notification danger">
-                <i class="fa-solid fa-bell danger"></i>
-                <div class="notification-message">
-                    <h4>{{session('error')}}</h4>
-                    <p>{{session('error_message')}}</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-notification"></i>
+    <!-- PUSH NOTIFICATION -->
+    @if(session()->has('error'))
+        <div class="push-notification danger">
+            <i class="fa-solid fa-bell danger"></i>
+            <div class="notification-message">
+                <h4>{{session('error')}}</h4>
+                <p>{{session('error_message')}}</p>
             </div>
-        @elseif(session()->has('success'))
-            <div class="push-notification success">
-                <i class="fa-solid fa-bell success"></i>
-                <div class="notification-message">
-                    <h4>{{session('success')}}</h4>
-                    <p>{{session('success_message')}}</p>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-notification"></i>
+            <i class="fa-solid fa-xmark" id="close-notification"></i>
+        </div>
+    @elseif(session()->has('success'))
+        <div class="push-notification success">
+            <i class="fa-solid fa-bell success"></i>
+            <div class="notification-message">
+                <h4>{{session('success')}}</h4>
+                <p>{{session('success_message')}}</p>
             </div>
-        @endif
+            <i class="fa-solid fa-xmark" id="close-notification"></i>
+        </div>
+    @endif
     
     <div class="modal" id="modal">
     </div>
@@ -104,26 +104,12 @@
           </div>
           <div class="form-input col-3">  
               <div class="input-container column">
-                  <label for="record_id">ID <span></span></label>
-                  <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
+                  <label for="ps_no">PS No. <span></span></label>
+                  <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
               </div>
               <div class="input-container column">
-                  <label for="ps_no">PS no. <span></span></label>
-                  <select name="ps_no" id="ps_no">
-                      <option value=""selected></option>
-                      <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
-                      <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
-                      <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>
-                  </select>
-              </div>
-              <div class="input-container column">
-                  <label for="house_no">House no. <span></span></label>
-                  <select name="house_no" id="house_no">
-                      <option value=""selected></option>
-                      <option value="1" {{ $record->house_no == '1' ? 'selected' : ''}}>1</option>
-                      <option value="2" {{ $record->house_no == '2' ? 'selected' : ''}}>2</option>
-                      <option value="3" {{ $record->house_no == '3' ? 'selected' : ''}}>3</option>
-                  </select>
+                  <label for="house_no">House No. <span></span></label>
+                  <x-dropdown :data-category="'house_no'" :data-value="$record->house_no" />
               </div>
               <div class="input-container column">
                   <label for="production_date">Production Date <span></span></label>
@@ -159,16 +145,8 @@
 
             <div class="form-input col-3">
                 <div class="input-container column">
-                    <label for="record_id">ID <span></span></label>
-                    <input name="record_id" id="record_id" type="number" value="{{ $record->id }}" readonly>
-                </div>
-                <div class="input-container column">
-                    <label for="ps_no">PS no. <span></span></label>
-                    <select name="ps_no" id="ps_no">
-                        <option value=""></option>
-                        <option value="#93" {{ $record->ps_no == '#93' ? 'selected' : ''}}>#93</option>
-                        <option value="#94" {{ $record->ps_no == '#94' ? 'selected' : ''}}>#94</option>
-                    </select>
+                    <label for="ps_no">PS No. <span></span></label>
+                    <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
                 </div>
                 
                 <div class="input-container column">
@@ -176,13 +154,8 @@
                     <input type="date" name="setting_date" id="setting_date" value="{{ $record->setting_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="incubator_no">Incubator # <span></span></label>
-                    <select name="incubator_no" id="incubator_no">
-                        <option value=""></option>
-                        <option value="#1" {{ $record->incubator == '1' ? 'selected' : ''}}>1</option>
-                        <option value="#2" {{ $record->incubator == '2' ? 'selected' : ''}}>2</option>
-                        <option value="#3" {{ $record->incubator == '5' ? 'selected' : ''}}>5</option>
-                    </select>
+                    <label for="incubator_no">Incubator No. <span></span></label>
+                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
                 </div>
                 <div class="input-container column">
                     <label for="location">Location <span></span></label>
@@ -229,19 +202,10 @@
             </div>
 
             <div class="form-input col-5">
-                <div class="input-container column">
-                    <label for="ID">ID</label>
-                    <input type="text" readonly value="{{$record->id}}">
-                </div>
 
                 <div class="input-container column">
-                    <label for="ps_no">PS no. <span></span></label>
-                    <select name="ps_no" id="ps_no">
-                        <option value="" selected></option>
-                        <option value="93" {{ $record->ps_no == '93' ? 'selected' : ''}}>93</option>
-                        <option value="95" {{ $record->ps_no == '95' ? 'selected' : ''}}>95</option>
-                        <option value="98" {{ $record->ps_no == '98' ? 'selected' : ''}}>98</option>
-                    </select>
+                    <label for="ps_no">PS No. <span></span></label>
+                    <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
                 </div>
 
                 <div class="input-container column">
@@ -255,19 +219,13 @@
                 </div>
 
                 <div class="input-container column">
-                    <label for="incubator_no">Incubator # <span></span></label>
-                    <select name="incubator_no" id="incubator_no">
-                        <option value=""></option>
-                        <option value="5" {{ $record->incubator_no == '5' ? 'selected' : ''}}>5</option>
-                    </select>
+                    <label for="incubator_no">Incubator No. <span></span></label>
+                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
                 </div>
 
                 <div class="input-container column">
-                    <label for="hatcher_no">Hatch # <span></span></label>
-                    <select name="hatcher_no" id="hatcher_no">
-                        <option value=""></option>
-                        <option value="5" {{ $record->hatcher_no == '5' ? 'selected' : ''}}>5</option>
-                    </select>
+                    <label for="hatcher_no">Hatch No. <span></span></label>
+                    <x-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
                 </div>
 
                 <div class="input-container row">
@@ -438,12 +396,8 @@
 
             <div class="form-input col-5">
                 <div class="input-container column">
-                    <label for="ps_no">PS no. <span></span></label>
-                    <select name="ps_no" id="ps_no">
-                        <option value=""></option>
-                        <option value="#93" {{ $record->ps_no == '#93' ? 'selected' : ''}}>#93</option>
-                        <option value="#94" {{ $record->ps_no == '#94' ? 'selected' : ''}}>#94</option>
-                    </select>
+                    <label for="ps_no">PS No. <span></span></label>
+                    <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
                 </div>
 
                 <div class="input-container column">
@@ -458,18 +412,12 @@
 
                 <div class="input-container column">
                     <label for="incubator_no">Incubator  <span></span></label>
-                    <select id="incubator_no" name="incubator_no">
-                        <option value=""></option>
-                        <option value="1" {{ $record->incubator_no == '1' ? 'selected' : ''}}>1</option>
-                    </select>
+                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
                 </div>
 
                 <div class="input-container column">
-                    <label for="hatcher_no">Hatch # <span></span></label>
-                    <select id="hatcher_no" name="hatcher_no">
-                        <option value=""></option>
-                        <option value="1" {{ $record->hatcher_no == '1' ? 'selected' : ''}}>1</option>
-                    </select>
+                    <label for="hatcher_no">Hatch No. <span></span></label>
+                    <x-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
                 </div>
 
                 <div class="input-container row">

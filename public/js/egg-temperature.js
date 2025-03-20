@@ -238,7 +238,7 @@ function deleteRecord(targetID) {
             loadData(); // Reload data
 
             // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+            createPushNotification("success", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
         } else {
             // alert("Error deleting record");
             createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
