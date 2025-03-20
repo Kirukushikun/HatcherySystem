@@ -70,11 +70,11 @@ Route::get('/home', function () {
 
 Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'])->name('egg.collection.fetch'); // Egg Collection Table Data Fetch
 
-Route::get('egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index'); // View
+Route::get('/egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index'); // View
 
 Route::post('/egg-collection/store', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store'); // Store
 
-Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
+Route::patch('/egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
 
 // Egg Temperature -------------------------------------------------------------------------------------------
 
