@@ -226,7 +226,7 @@ function deleteRecord(targetID) {
             loadData();
 
             // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
+            createPushNotification("success", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
         } else {
             alert("Error deleting record");
         }

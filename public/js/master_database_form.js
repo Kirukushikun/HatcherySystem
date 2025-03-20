@@ -926,7 +926,7 @@ function deleteRecord(targetBatch) {
             document.getElementById("modal").classList.remove("active");
             
             // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Master Database Record Deleted Successfully");
+            createPushNotification("success", "Deleted Successfully", "Master Database Record Deleted Successfully");
             loadData();
             
             // Reload the page using setTimeout
@@ -938,7 +938,10 @@ function deleteRecord(targetBatch) {
             createPushNotification("danger", "Delete Unsuccessful", "Record not found");
         }
     })
-    .catch(error => console.error("Error:", error));
+    .catch(error =>{
+        createPushNotification("danger", "Delete Unsuccessful", "Please try again or contact support if the issue persists");
+        console.error("Error:", error)
+    });
 }
 
 function saveData(url, data, successMessage = null) {
