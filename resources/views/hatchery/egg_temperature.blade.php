@@ -34,42 +34,42 @@
         <div class="form-input col-4">
 
             <div class="input-container column">
-                <label for="ps_no">PS No. <span></span></label>
+                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
             
             <div class="input-container column">
-                <label for="setting_date">Setting Date <span></span></label>
+                <label for="setting_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
-                <label for="incubator_no">Incubator No. <span></span></label>
+                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'incubator_no'" />
             </div>
             <div class="input-container column">
-                <label for="location">Location <span></span></label>
+                <label for="location">Location <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <select name="location" id="location">
-                    <option value=""></option>
+                    <option value="">Select Location</option>
                     <option value="Top" {{ session('form_data.location', '') == 'Top' ? 'selected' : ''}}>Top</option>
                     <option value="Mid" {{ session('form_data.location', '') == 'Mid' ? 'selected' : ''}}>Mid</option>
                     <option value="Low" {{ session('form_data.location', '') == 'Low' ? 'selected' : ''}}>Low</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="temp_check_date">Temperature Check Date <span></span></label>
+                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container column">
-                <label for="temperature">Temperature <span></span></label>
+                <label for="temperature">Temperature <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <select name="temperature" id="temperature">
-                    <option value=""></option>
+                    <option value="">Select Temperature</option>
                     <option value="37.8 Above" {{ session('form_data.temperature', '') == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
                     <option value="37.7 Below" {{ session('form_data.temperature', '') == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
                 </select>
             </div>
             <div class="input-container column">
-                <label for="quantity">Quantity <span></span></label>
-                <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}">
+                <label for="quantity">Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
             </div>
         </div>
 
