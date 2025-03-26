@@ -107,11 +107,11 @@ document.addEventListener("DOMContentLoaded", function () {
     setEggsQtyInput.addEventListener("input", updatePercentages);
 
     function updatePercentages() {
-        let setEggsQty = parseFloat(setEggsQtyInput.value) || 1; // Avoid division by zero
+        let setEggsQty = parseFloat(setEggsQtyInput.value) || 0; // Ensure it's a valid number
         let totalRejected = 0;
-
-        // Reset if setEggsQty is empty or invalid
-        if (!setEggsQtyInput.value.trim() || totalRejectedInput.value > setEggsQty) {
+    
+        // If setEggsQty is 0, reset all fields to 0
+        if (setEggsQty === 0) {
             fields.forEach(field => {
                 document.getElementById(field).value = 0;
                 document.getElementById(`${field}_prcnt`).value = "0.0"; // Keep decimal
@@ -120,26 +120,38 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("rejected_total_prcnt").value = "0.0"; // Keep decimal
             return;
         }
-
+    
         fields.forEach(field => {
             let fieldInput = document.getElementById(field);
             let value = parseInt(fieldInput.value) || 0;
-
+    
             // Prevent input values from exceeding setEggsQty
             if (value > setEggsQty) {
-                fieldInput.value = setEggsQty;
-                value = setEggsQty;
+                fieldInput.value = setEggsQty; // Limit input
+                createPushNotification("danger", "Quantity Exceeded", "Input value exceeds Set Eggs Quantity");
             }
-
-            let percentage = ((value / setEggsQty) * 100).toFixed(1); // Keep 1 decimal
-            document.getElementById(`${field}_prcnt`).value = percentage; // Keep decimal
+    
             totalRejected += value;
         });
-
+    
+        // Prevent totalRejected from exceeding setEggsQty
+        if (totalRejected > setEggsQty) {
+            totalRejected = setEggsQty; // Cap total rejected
+            createPushNotification("danger", "Total Exceeded", "Total rejected eggs exceed Set Eggs Quantity.");
+        }
+    
+        // Update individual percentages
+        fields.forEach(field => {
+            let fieldInput = document.getElementById(field);
+            let value = parseInt(fieldInput.value) || 0;
+            let percentage = ((value / setEggsQty) * 100).toFixed(1);
+            document.getElementById(`${field}_prcnt`).value = percentage;
+        });
+    
         // Update Rejected Total and Percentage
         totalRejectedInput.value = totalRejected;
         let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
-        document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
+        document.getElementById("rejected_total_prcnt").value = rejectedPercentage;
     }
 });
 function showModal(button, targetID = null) {
