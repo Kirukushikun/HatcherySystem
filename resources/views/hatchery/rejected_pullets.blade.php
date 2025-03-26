@@ -212,7 +212,7 @@
                     <input type="number" name="rejected_total" id="rejected_total" value="{{ session('form_data.rejected_total', '') }}" placeholder="0" readonly />
                 </div>
                 <div class="input-group prcnt">
-                    <label for="rejected_total_prcnt">Rejected Total % </label>
+                    <label for="rejected_total_prcnt">%</label>
                     <input type="number" name="rejected_total_prcnt" id="rejected_total_prcnt" value="{{ session('form_data.rejected_total_prcnt', '') }}" placeholder="0" readonly />
                 </div>
             </div>
