@@ -218,19 +218,31 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="ps_no">PS no. <span></span></label>
+                        <label for="ps_no">PS no. 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <x-dropdown :data-category="'ps_no'" />
                     </div>
                     <div class="input-group">
-                        <label for="collected_qty">Collected Quantity <span></span></label>
+                        <label for="collected_qty">Collected Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="collected_qty" id="collected_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="production_date_from">Production Date (From) <span></span></label>
+                        <label for="production_date_from">Production Date (From) 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="production_date_from" id="production_date_from">
                     </div>
                     <div class="input-group">
-                        <label for="production_date_to">Production Date (To) <span></span></label>
+                        <label for="production_date_to">Production Date (To) 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="production_date_to" id="production_date_to">
                     </div>
                 </div>
@@ -284,21 +296,33 @@
                 <div class="card-form col-2">
 
                     <div class="input-group">
-                        <label for="pullout_date">Pullout Date <span></span></label>
+                        <label for="pullout_date">Pullout Date 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="pullout_date" id="pullout_date">
                     </div>
                     
                     <div class="input-group">
-                        <label for="settable_eggs_qty">Set. Egg Quantity <span></span></label>
+                        <label for="settable_eggs_qty">Set. Egg Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="incubator_no">Incubator No. <span></span></label>
+                        <label for="incubator_no">Incubator No. 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <x-dropdown :data-category="'incubator_no'" />
                     </div>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="prime_qty">Prime Quantity <span></span></label>
+                            <label for="prime_qty">Prime Quantity 
+                                <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                                <span></span>
+                            </label>
                             <input type="number" name="prime_qty" id="prime_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
@@ -309,7 +333,10 @@
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="jp_qty">JP Quantity <span></span></label>
+                            <label for="jp_qty">JP Quantity 
+                                <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                                <span></span>
+                            </label>
                             <input type="number" name="jp_qty" id="jp_qty" placeholder="0">
                         </div>   
                         <div class="input-group prcnt">
@@ -335,15 +362,24 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="d10_candling_date">Day 10 Candling Date <span></span></label>
+                        <label for="d10_candling_date">Day 10 Candling Date 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
                     </div>
                     <div class="input-group">
-                        <label for="d10_candling_qty">Day 10 Candling Quantity <span></span></label>
+                        <label for="d10_candling_qty">Day 10 Candling Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="d10_breakout_qty">Day 10 Breakout Quantity <span></span></label>
+                        <label for="d10_breakout_qty">Day 10 Breakout Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0">
                     </div>
                     <div class="input-group">
@@ -374,17 +410,23 @@
                 <div class="card-form">
 
                     <div class="input-group">
-                        <label for="d18_candling_date">Day 18.5 Candling Date <span></span></label>
+                        <label for="d18_candling_date">Day 18.5 Candling Date 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="infertiles_qty">Infertiles Quantity <span></span></label>
+                        <label for="infertiles_qty">Infertiles Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0">
                     </div>
                     <br>    
                     <div class="input-group">
-                        <label for="embryonic_eggs_qty">Embryonic Eggs Quantity <span></span></label>
+                        <label for="embryonic_eggs_qty">Embryonic Eggs Quantity </label>
                         <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
                     </div>
 
@@ -493,15 +535,24 @@
 
                 <div class="card-form col-2">
                     <div class="input-group">
-                        <label for="hatcher_no">Hatcher No <span></span></label>
+                        <label for="hatcher_no">Hatcher No 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <x-dropdown :data-category="'hatcher_no'" />
                     </div>
                     <div class="input-group">
-                        <label for="hatcher_date">Hatcher Date <span></span></label>
+                        <label for="hatcher_date">Hatcher Date 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="hatcher_date" id="hatcher_date">
                     </div>
                     <div class="input-group">
-                        <label for="rejected_hatch_qty">Rejected Hatch Qty <span></span></label>
+                        <label for="rejected_hatch_qty">Rejected Hatch Qty 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0">
                     </div>
                     <div class="input-group">
@@ -524,7 +575,10 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="cock_qty">Cockerels Quantity <span></span></label>
+                        <label for="cock_qty">Cockerels Quantity 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="cock_qty" id="cock_qty" placeholder="0">
                     </div>
                     <br>
@@ -548,13 +602,19 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="qc_date">QC Date <span></span></label>
+                        <label for="qc_date">QC Date 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="date" name="qc_date" id="qc_date">
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label for="rejected_dop_qty">Rejected DOP Qty <span></span></label>
+                            <label for="rejected_dop_qty">Rejected DOP Qty 
+                                <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                                <span></span>
+                            </label>
                             <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0">
                         </div>
                         
@@ -675,12 +735,18 @@
 
                 <div class="card-form">
                     <div class="input-group">
-                        <label for="dispatch_prime_qty">Prime Qty <span></span></label>
+                        <label for="dispatch_prime_qty">Prime Qty 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0">
                     </div>
                     <br>
                     <div class="input-group">
-                        <label for="dispatch_jr_prime_qty">Jr Prime Qty <span></span></label>
+                        <label for="dispatch_jr_prime_qty">Jr Prime Qty 
+                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                            <span></span>
+                        </label>
                         <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0">
                     </div>
                 </div>
