@@ -113,6 +113,15 @@ label{
     width: 100%;
 }
 
+.body-split .input-group .asterisk{
+    opacity: 0;
+}
+.body-split .input-group .asterisk.active{
+    opacity: 1;
+    margin-left: 5px;
+    color: #ea4435d7;
+}
+
 .body-split .input-container input{
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
@@ -726,7 +735,7 @@ tbody td:last-child {
 }
 .c10{
     grid-area: c10;
-    border-color: #757575;
+    border-color: #424242;
 }
 .c11{
     grid-area: c11;
@@ -735,7 +744,7 @@ tbody td:last-child {
 }
 .c12{
     grid-area: c12;
-    border-color: #757575;
+    border-color: #6D4C41;
 
     display: flex;
     flex-direction: column;

@@ -43,16 +43,15 @@ Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->n
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
 Route::middleware(['auth', 'cors'])->group(function() {
-	// Main Session Check for Authetication
-	Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-	// Dash/Dashboard
-	Route::get('/', [DashboardController::class, 'dash'])->name('dash');
+    // Main Session Check for Authetication
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Dash/Dashboard
+    Route::get('/', [DashboardController::class, 'dash'])->name('dash');
 
-	/**
-	 * YOUR CODE STARTS HERE
-	 * DO NOT ALTER ABOVE CODE
-	 */
-
+    /**
+     * YOUR CODE STARTS HERE
+     * DO NOT ALTER ABOVE CODE
+     */
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index'); // Show the users Blade view
     Route::get('/users/json', [UserController::class, 'userJson'])->name('users.json'); // Return JSON data
@@ -65,7 +64,7 @@ Route::middleware(['auth', 'cors'])->group(function() {
 
     Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
-
+  
 });
 
 Route::get('/admin', function () {
@@ -100,11 +99,11 @@ Route::get('/master-database', function () {
 
 Route::get('/fetch-egg-collection-data', [EggCollectionTable::class, 'fetchData'])->name('egg.collection.fetch'); // Egg Collection Table Data Fetch
 
-Route::get('egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index'); // View
+Route::get('/egg-collection', [EggCollectionController::class, 'egg_collection_index'])->name('egg.collection.index'); // View
 
 Route::post('/egg-collection/store', [EggCollectionController::class, 'egg_collection_store'])->name('egg.collection.store'); // Store
 
-Route::patch('egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
+Route::patch('/egg-collection/delete/{targetID}', [EggCollectionController::class, 'egg_collection_delete'])->name('egg.collection.delete'); // Delete
 
 // Egg Temperature -------------------------------------------------------------------------------------------
 
@@ -170,7 +169,7 @@ Route::post('/egg-collection/report/result', [ReportController::class, 'egg_coll
 Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
 Route::get('/test', function () {
-	return view('hatchery.report_module');
+    return view('hatchery.report_module');
 });
 
 Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');

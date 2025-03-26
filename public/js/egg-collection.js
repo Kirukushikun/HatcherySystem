@@ -6,6 +6,19 @@ const resetButton = form.querySelector(".reset-btn"); // Reset button
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
 
+//make every input type number prevent user from entering special characters just purely number
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function(e) {
+        // Remove any non-numeric characters
+        this.value = this.value.replace(/[^0-9]/g, '');
+
+        // Prevent the input from starting with '00'
+        if (this.value.startsWith('00')) {
+            this.value = '0'; // Reset to a single '0'
+        }
+    });
+});
+
 // Function to check if any input has a value
 function checkFormValues() {
     let hasValue = false;
@@ -34,9 +47,11 @@ resetButton.addEventListener("click", function () {
 
         if (inputContainer) {
             let labelSpan = inputContainer.querySelector("label span");
+            let asterisk = inputContainer.querySelector(".asterisk");
 
-            if (labelSpan) {
+            if (labelSpan && asterisk) {
                 labelSpan.textContent = ""; // Clear the label span
+                asterisk.classList.add("active");
             }
         }
 
@@ -56,6 +71,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     requiredFields.forEach(id => {
         let field = document.getElementById(id);
         let labelSpan = field.closest(".input-container").querySelector("label span");
+        let asterisk = field.closest(".input-container").querySelector(".asterisk");
         
         if (!field.value.trim()) {
             field.style.border = "2px solid #ea4435d7";
@@ -63,9 +79,12 @@ document.querySelector("form").addEventListener("submit", function (event) {
             labelSpan.textContent = "This field is required";
             labelSpan.style.color = "#ea4435d7";
             isValid = false;
+
+            asterisk.classList.add("active");
         }else{
             field.style.border = "";
             labelSpan.textContent = "";
+            asterisk.classList.remove("active");
         }
     });
     if (isValid) {
@@ -183,6 +202,7 @@ function storeRecord(){
             document.getElementById("house_no").value = "";
             document.getElementById("collection_time").value = "";
             document.getElementById("collection_eggs_quantity").value = "";
+            document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 
             updatePagination(); // Update pagination
             loadData(); // Reload data
@@ -195,7 +215,6 @@ function storeRecord(){
     })
     .catch(error => console.error("Error:", error));
 }
-
 
 function deleteRecord(targetID) {
     fetch(`/egg-collection/delete/${targetID}`, {
@@ -215,7 +234,7 @@ function deleteRecord(targetID) {
             loadData();
 
             // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
+            createPushNotification("success", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");
         } else {
             alert("Error deleting record");
         }
