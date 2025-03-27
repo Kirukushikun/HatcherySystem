@@ -34,27 +34,27 @@
 
         <div class="form-input col-5">
             <div class="input-container column">
-                <label for="ps_no">PS No. <span></span></label>
+                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
 
             <div class="input-container column">
-                <label for="production_date"> Production Date <span></span> </label>
+                <label for="production_date"> Production Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="production_date" id="production_date" value="{{ session('form_data.production_date', date('Y-m-d')) }}" />
             </div>
 
             <div class="input-container column">
-                <label for="set_eggs_qty">Settable Eggs Quantity <span></span></label>
+                <label for="set_eggs_qty">Settable Eggs Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="number" name="set_eggs_qty" id="set_eggs_qty" value="{{ session('form_data.set_eggs_qty', '') }}" placeholder="0">
             </div>
 
             <div class="input-container column">
-                <label for="incubator_no">Incubator No. <span></span></label>
+                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'incubator_no'" />
             </div>
 
             <div class="input-container column">
-                <label for="hatcher_no">Hatcher No. <span></span></label>
+                <label for="hatcher_no">Hatcher No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'hatcher_no'" />
             </div>
 
@@ -195,15 +195,15 @@
 
         <div class="form-result">
             <div class="input-container column">
-                <label for="pullout_date"> Pull-out Date <span></span> </label>
+                <label for="pullout_date"> Pull-out Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="pullout_date" id="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}" />
             </div>
             <div class="input-container column">
-                <label for="hatch_date"> Hatch Date <span></span> </label>
+                <label for="hatch_date"> Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="hatch_date" id="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}" />
             </div>
             <div class="input-container column">
-                <label for="qc_date"> QC Date <span></span> </label>
+                <label for="qc_date"> QC Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="qc_date" id="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}" />
             </div>
             <div class="input-container row">
@@ -212,7 +212,7 @@
                     <input type="number" name="rejected_total" id="rejected_total" value="{{ session('form_data.rejected_total', '') }}" placeholder="0" readonly />
                 </div>
                 <div class="input-group prcnt">
-                    <label for="rejected_total_prcnt">Rejected Total % </label>
+                    <label for="rejected_total_prcnt">%</label>
                     <input type="number" name="rejected_total_prcnt" id="rejected_total_prcnt" value="{{ session('form_data.rejected_total_prcnt', '') }}" placeholder="0" readonly />
                 </div>
             </div>

@@ -40,7 +40,11 @@ class ReportController extends Controller
         // If only PS number is provided and other fields are empty, fetch all house numbers
         if ($ps_no && (empty($house_no) && empty($date_from) && empty($date_to))) {
             // Fetch all distinct house_no values for the given PS No
-            $house_no = EggCollection::where('ps_no', $ps_no)->distinct()->pluck("house_no");
+            $house_no = EggCollection::where('ps_no', $ps_no)
+                ->distinct()
+                ->orderBy('house_no', 'asc')
+                ->pluck('house_no');
+
 
             return response()->json([
                 'success' => true,

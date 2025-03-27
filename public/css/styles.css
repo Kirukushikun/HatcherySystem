@@ -119,6 +119,14 @@ label{
     font-size: 12px;
     background-color: white;
 }
+.body .input-container .asterisk{
+    opacity: 0;
+}
+.body .input-container .asterisk.active{
+    opacity: 1;
+    margin-left: 5px;
+    color: #ea4435d7;
+}
 
 .body .input-container input{
     background-color: #F6F4F1;
