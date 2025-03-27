@@ -235,6 +235,11 @@ document.addEventListener("click", function (event) {
 });
 
 function storeRecord(){
+    if (!csrfToken) {
+        console.error("CSRF token is missing.");
+        createPushNotification("danger", "Error", "CSRF token is missing. Refresh and try again.");
+        return;
+    }
     fetch("/rejected-pullets/store", {
         method: "POST",
         headers: {
@@ -293,28 +298,42 @@ function storeRecord(){
 
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById("modal").classList.remove("active");
-
-            form.reset();
-
-            updatePagination(); // Update pagination
-            loadData(); // Reload data
-
-            // Trigger push notification
-            createPushNotification("success", "Saved Successfully", "Rejected Pullets Entry Saved Successfully");
-        } else {
-            alert("Error saving record");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server Error: ${response.status} ${response.statusText}`);
         }
+        return response.json();
+    })
+    .then(data => {
+        if (!data.success) {
+            throw new Error("Save unsuccessful. Please try again.");
+        }
+        document.getElementById("modal").classList.remove("active");
+
+        form.reset();
+
+        updatePagination(); // Update pagination
+        loadData(); // Reload data
+
+        // Trigger push notification
+        createPushNotification("success", "Saved Successfully", "Rejected Pullets Entry Saved Successfully");
+
     }).catch(error => {
-        console.error("Error:", error)
-        createPushNotification("danger", "Save Unsuccessful", "Please try again or Contact Support if the issue persist.");
+        console.error("Error:", error);
+        createPushNotification("danger", "Save Failed", "Please try again or contact support if the issue persists.");
+
+        setTimeout(() => {
+            location.reload(); // Refresh after 3s
+        }, 3000);
     });
 }
 
 function deleteRecord(targetID) {
+    if (!csrfToken) {
+        console.error("CSRF token is missing.");
+        createPushNotification("danger", "Error", "CSRF token is missing. Refresh and try again.");
+        return;
+    }
     fetch(`/rejected-pullets/delete/${targetID}`, {
         method: "PATCH",
         headers: {
@@ -322,28 +341,49 @@ function deleteRecord(targetID) {
             "X-CSRF-TOKEN": csrfToken
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById("modal").classList.remove("active");
-            document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
+    .then(response => response.text().then(text => {
 
-            updatePagination(); // Update pagination
-            loadData(); // Reload data
-
-            // Trigger push notification
-            createPushNotification("danger", "Deleted Successfully", "Rejected Pullets Entry Deleted Successfully");
-        } else {
-            // alert("Error deleting record");
-            createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
+        if (!response.ok) {
+            throw new Error(`Server Error: ${response.status} ${response.statusText}`);
         }
-    }).catch(error => {
-        console.error("Error:", error)
-        createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
+
+        try {
+            return JSON.parse(text);
+        } catch (error) {
+            throw new Error("Invalid JSON response from server.");
+        }
+    }))
+    .then(data => {
+        if (!data.success) {
+            throw new Error("Delete unsuccessful. Please try again.");
+        }
+
+        document.getElementById("modal").classList.remove("active");
+        document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
+
+        updatePagination(); // Update pagination
+        loadData(); // Reload data
+
+        // Trigger push notification
+        createPushNotification("danger", "Deleted Successfully", "Rejected Pullets Entry Deleted Successfully");
+
+    })
+    .catch(error => {
+        console.error("Caught Error:", error);
+        createPushNotification("danger", "Delete Failed", `Error: ${error.message}. Please contact support.`);
+
+        setTimeout(() => {
+            location.reload(); // Refresh after 3s if deletion fails
+        }, 3000);
     });
 }
 
 function editRecord(targetID) {
+    if (!csrfToken) {
+        console.error("CSRF token is missing.");
+        createPushNotification("danger", "Error", "CSRF token is missing. Refresh and try again.");
+        return;
+    }
     fetch(`/api/encrypt-id`, {
         method: "POST",
         headers: {
@@ -354,15 +394,24 @@ function editRecord(targetID) {
             targetID: targetID
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.encrypted_id) {
-            window.location.href = `/rejected-pullets/edit/${encodeURIComponent(data.encrypted_id)}`;
-        } else {
-            console.error('Error encrypting ID');
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server Error: ${response.status} ${response.statusText}`);
         }
+        return response.json();
     })
-    .catch(error => console.error("Error:", error));
-
-    console.log("editing", targetID);
+    .then(data => {
+        if (!data.encrypted_id) {
+            throw new Error("Error encrypting ID. Please try again.");
+        }
+        window.location.href = `/rejected-pullets/edit/${encodeURIComponent(data.encrypted_id)}`;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        createPushNotification("danger", "Edit Unsuccessful", "Please try again or contact support if the issue persists.");
+        
+        setTimeout(() => {
+            location.reload(); // Refresh after 3s
+        }, 3000);
+    });
 }

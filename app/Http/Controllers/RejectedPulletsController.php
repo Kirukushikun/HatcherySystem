@@ -158,7 +158,7 @@ class RejectedPulletsController extends Controller
             $rejectedPullets->save();
 
             // Log the action
-            // $this->logCollectionAction('store', $rejectedPullets, null);
+            // $this->logRejectedPulletsAction('store', $rejectedPullets, null);
 
             return response()->json([
                 'success' => true,
@@ -190,7 +190,7 @@ class RejectedPulletsController extends Controller
             $rejectedPullets->save();
         
             // Log the action with before state
-            // $this->logCollectionAction('delete', $rejectedPullets, $beforeState);
+            // $this->logRejectedPulletsAction('delete', $rejectedPullets, $beforeState);
         
             return response()->json(['success' => true, 'message' => 'Rejected Pullets Entry Deleted Successfully']);
         }catch (\Exception $e) {
@@ -202,18 +202,27 @@ class RejectedPulletsController extends Controller
         }
     }
 
-    // public function logCollectionAction($action, $currentState, $beforeState = null)
-    // {
-    //     $messages = [
-    //         'store' => 'Rejected Pullets Record Added',
-    //         'delete' => 'Rejected Pullets Record Deleted',
-    //     ];
-    //     $log_entry = [
-    //         $messages[$action] ?? 'Rejected Pullets Record Modified',
-    //         'rejected_pullets',
-    //         $beforeState, // Stores previous state before the action
-    //         $currentState, // Stores the new state after the action
-    //     ];
-    //     AC::logEntry($log_entry);
-    // }
+    public function logRejectedPulletsAction($action, $currentState, $beforeState = null)
+    {
+        try{
+            $messages = [
+            'store' => 'Rejected Pullets Record Added',
+            'delete' => 'Rejected Pullets Record Deleted',
+            ];
+            $log_entry = [
+                $messages[$action] ?? 'Rejected Pullets Record Modified',
+                'rejected_pullets',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
+            AC::logEntry($log_entry);
+        }
+        catch (\Exception $e) {
+    
+            // Log the error for debugging
+            Log::error('Error in logRejectedPulletsAction: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
+        }
+    }
 }

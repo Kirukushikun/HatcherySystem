@@ -110,7 +110,7 @@ class RejectedHatchController extends Controller
             $rejectedHatch->save();
     
             // Log the action
-            // $this->logCollectionAction('store', $rejectedHatch, null);
+            // $this->logRejectedHatchAction('store', $rejectedHatch, null);
     
             return response()->json([
                 'success' => true,
@@ -140,7 +140,7 @@ class RejectedHatchController extends Controller
             $rejectedHatch->save();
 
             // Log the action with before state
-            // $this->logCollectionAction('delete', $rejectedHatch, $beforeState);
+            // $this->logRejectedHatchAction('delete', $rejectedHatch, $beforeState);
 
 
             return response()->json(['success' => true, 'message' => 'Rejected Hatch Entry Deleted Successfully']);
@@ -153,18 +153,26 @@ class RejectedHatchController extends Controller
         }    
     }   
 
-    // public function logCollectionAction($action, $currentState, $beforeState = null)
-    // {
-    //     $messages = [
-    //         'store' => 'Rejected Hatch Record Added',
-    //         'delete' => 'Rejected Hatch Record Deleted',
-    //     ];
-    //     $log_entry = [
-    //         $messages[$action] ?? 'Rejected Hatch Record Modified',
-    //         'rejected_hatch',
-    //         $beforeState, // Stores previous state before the action
-    //         $currentState, // Stores the new state after the action
-    //     ];
-    //     AC::logEntry($log_entry);
-    // }
+    public function logRejectedHatchAction($action, $currentState, $beforeState = null)
+    {
+        try{
+            $messages = [
+            'store' => 'Rejected Hatch Record Added',
+            'delete' => 'Rejected Hatch Record Deleted',
+            ];
+            $log_entry = [
+                $messages[$action] ?? 'Rejected Hatch Record Modified',
+                'rejected_hatch',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
+            AC::logEntry($log_entry);
+        }catch (\Exception $e) {
+    
+            // Log the error for debugging
+            Log::error('Error in logRejectedHatchAction: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
+        }
+    }
 }

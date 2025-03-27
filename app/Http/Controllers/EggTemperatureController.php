@@ -108,24 +108,29 @@ class EggTemperatureController extends Controller
     }
 
 
-    // public function logEggTemperatureAction($action, $currentState, $beforeState = null)
-    // {
-    //     $messages = [
-    //         'store' => 'Egg Shell Temperature Record Added',
-    //         'update' => 'Egg Shell Temperature Record Updated',
-    //         'delete' => 'Egg Shell Temperature Record Deleted',
-    //     ];
+    public function logEggTemperatureAction($action, $currentState, $beforeState = null)
+    {
+        try{
+            $messages = [
+            'store' => 'Egg Shell Temperature Record Added',
+            'update' => 'Egg Shell Temperature Record Updated',
+            'delete' => 'Egg Shell Temperature Record Deleted',
+            ];
 
-    //     $log_entry = [
-    //         $messages[$action] ?? 'Egg Shell Temperature Record Modified',
-    //         'egg_temperature',
-    //         $beforeState, // Stores previous state before the action
-    //         $currentState, // Stores the new state after the action
-    //     ];
+            $log_entry = [
+                $messages[$action] ?? 'Egg Shell Temperature Record Modified',
+                'egg_temperature',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
 
-    //     AC::logEntry($log_entry);
-    // }
+            AC::logEntry($log_entry);
+        }catch (\Exception $e) {
+    
+            // Log the error for debugging
+            Log::error('Error in logEggTemperatureAction: ' . $e->getMessage());
 
-
-
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
+        }
+    }
 }

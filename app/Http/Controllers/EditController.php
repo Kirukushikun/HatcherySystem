@@ -20,29 +20,40 @@ class EditController extends Controller
 {
     public function edit_record_index($targetForm, $encryptedId){
 
-        $targetID = Crypt::decrypt($encryptedId);
+        try{
+            $targetID = Crypt::decrypt($encryptedId);
 
-        if($targetForm == 'egg-collection'){
-            $dataRecord = EggCollection::find($targetID);
+            if($targetForm == 'egg-collection'){
+                $dataRecord = EggCollection::find($targetID);
+            }
+            elseif($targetForm == 'egg-temperature'){
+                $dataRecord = EggTemperature::find($targetID);            
+            }
+            elseif($targetForm == 'rejected-hatch'){
+                $dataRecord = RejectedHatch::find($targetID);
+                $dataRecord->rejected_hatch_data = json_decode($dataRecord->rejected_hatch_data, true); // Decode JSON into array
+            }
+            elseif($targetForm == 'rejected-pullets'){
+                $dataRecord = RejectedPullets::find($targetID);   
+                $dataRecord->rejected_pullets_data = json_decode($dataRecord->rejected_pullets_data, true); // Decode JSON into array         
+            }
+            elseif($targetForm == 'maintenance-value'){
+                $dataRecord = MaintenanceValues::find($targetID);
+            }
+            return view('hatchery.edit_module', [
+                'targetForm' => $targetForm,
+                'record' => $dataRecord
+            ]);
         }
-        elseif($targetForm == 'egg-temperature'){
-            $dataRecord = EggTemperature::find($targetID);            
+        catch (\Exception $e) {
+    
+            // Log the error for debugging
+            Log::error('Error in edit_record_index: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
         }
-        elseif($targetForm == 'rejected-hatch'){
-            $dataRecord = RejectedHatch::find($targetID);
-            $dataRecord->rejected_hatch_data = json_decode($dataRecord->rejected_hatch_data, true); // Decode JSON into array
-        }
-        elseif($targetForm == 'rejected-pullets'){
-            $dataRecord = RejectedPullets::find($targetID);   
-            $dataRecord->rejected_pullets_data = json_decode($dataRecord->rejected_pullets_data, true); // Decode JSON into array         
-        }
-        elseif($targetForm == 'maintenance-value'){
-            $dataRecord = MaintenanceValues::find($targetID);
-        }
-        return view('hatchery.edit_module', [
-            'targetForm' => $targetForm,
-            'record' => $dataRecord
-        ]);
+
+
     }
 
     public function edit_record_update(Request $request, $targetForm, $targetID){
@@ -465,7 +476,9 @@ class EditController extends Controller
     }
 
     public function logAction($action, $currentState, $beforeState = null, $targetForm){
-        if ($targetForm == 'egg-collection') {
+
+        try{
+            if ($targetForm == 'egg-collection') {
             $messages = [
                 'update' => 'Egg Collection Record Updated',
             ];
@@ -476,45 +489,56 @@ class EditController extends Controller
                 $currentState, // Stores the new state after the action
             ];
             AC::logEntry($log_entry);
-        }
+            }
 
-        elseif ($targetForm == 'egg-temperature') {
-            $messages = [
-                'update' => 'Egg Temperature Record Updated',
-            ];
-            $log_entry = [
-                $messages[$action] ?? 'Egg Temperature Record Modified',
-                'egg_temperature',
-                $beforeState, // Stores previous state before the action
-                $currentState, // Stores the new state after the action
-            ];
-            AC::logEntry($log_entry);
-        }
+            elseif ($targetForm == 'egg-temperature') {
+                $messages = [
+                    'update' => 'Egg Temperature Record Updated',
+                ];
+                $log_entry = [
+                    $messages[$action] ?? 'Egg Temperature Record Modified',
+                    'egg_temperature',
+                    $beforeState, // Stores previous state before the action
+                    $currentState, // Stores the new state after the action
+                ];
+                AC::logEntry($log_entry);
+            }
 
-        elseif ($targetForm == 'rejected-hatch') {
-            $messages = [
-                'update' => 'Rejected Hatch Record Updated',
-            ];
-            $log_entry = [
-                $messages[$action] ?? 'Rejected Hatch Record Modified',
-                'rejected_hatch',
-                $beforeState, // Stores previous state before the action
-                $currentState, // Stores the new state after the action
-            ];
-            AC::logEntry($log_entry);
-        }
+            elseif ($targetForm == 'rejected-hatch') {
+                $messages = [
+                    'update' => 'Rejected Hatch Record Updated',
+                ];
+                $log_entry = [
+                    $messages[$action] ?? 'Rejected Hatch Record Modified',
+                    'rejected_hatch',
+                    $beforeState, // Stores previous state before the action
+                    $currentState, // Stores the new state after the action
+                ];
+                AC::logEntry($log_entry);
+            }
+        
+            elseif ($targetForm == 'rejected-pullets') {
+                $messages = [
+                    'update' => 'Rejected Pullets Record Updated',
+                ];
+                $log_entry = [
+                    $messages[$action] ?? 'Rejected Pullets Record Modified',
+                    'rejected_pullets',
+                    $beforeState, // Stores previous state before the action
+                    $currentState, // Stores the new state after the action
+                ];
+                AC::logEntry($log_entry);
+            }
+
+            elseif ($targetForm == 'maintenance-value') {
+                
+            }
+        }catch (\Exception $e) {
     
-        elseif ($targetForm == 'rejected-pullets') {
-            $messages = [
-                'update' => 'Rejected Pullets Record Updated',
-            ];
-            $log_entry = [
-                $messages[$action] ?? 'Rejected Pullets Record Modified',
-                'rejected_pullets',
-                $beforeState, // Stores previous state before the action
-                $currentState, // Stores the new state after the action
-            ];
-            AC::logEntry($log_entry);
+            // Log the error for debugging
+            Log::error('Error in logAction: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
         }
     }
 }

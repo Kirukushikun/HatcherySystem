@@ -105,18 +105,28 @@ class EggCollectionController extends Controller
 
     public function logEggCollectionAction($action, $currentState, $beforeState = null)
     {
-        $messages = [
+        try{
+            $messages = [
             'store' => 'Egg Collection Record Added',
             'update' => 'Egg Collection Record Updated',
             'delete' => 'Egg Collection Record Deleted',
-        ];
-        $log_entry = [
-            $messages[$action] ?? 'Egg Collection Record Modified',
-            'egg_collection',
-            $beforeState, // Stores previous state before the action
-            $currentState, // Stores the new state after the action
-        ];
-        AC::logEntry($log_entry);
+            ];
+            $log_entry = [
+                $messages[$action] ?? 'Egg Collection Record Modified',
+                'egg_collection',
+                $beforeState, // Stores previous state before the action
+                $currentState, // Stores the new state after the action
+            ];
+            AC::logEntry($log_entry);
+
+        }catch (\Exception $e) {
+    
+            // Log the error for debugging
+            Log::error('Error in logEggCollectionAction: ' . $e->getMessage());
+
+            return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
+        }
+        
     }
 
 }
