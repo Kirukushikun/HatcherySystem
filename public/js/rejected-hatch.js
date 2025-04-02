@@ -313,7 +313,7 @@ function deleteRecord(targetID) {
         return;
     }
 
-    fetch(`/rejected-hatch/delete/${targetID}`, {
+    fetch(`/rejected-hatch/delete/0`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -343,14 +343,14 @@ function deleteRecord(targetID) {
         loadData(); // Reload data
 
         // Trigger push notification
-        createPushNotification("danger", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
-    })
-    .catch(error => {
-        console.error("Caught Error:", error);
-        createPushNotification("danger", "Delete Failed", `Error: ${error.message}. Please contact support.`);
+        createPushNotification("success", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+        
+    }).catch(error => {
+        console.error("Error:", error)
+        createPushNotification("danger", "Delete Unsuccessful", "Please try again or Contact Support if the issue persist.");
 
         setTimeout(() => {
-            location.reload(); // Refresh after 3s if deletion fails
+            location.reload(); // Refresh after 3s
         }, 3000);
     });
 }

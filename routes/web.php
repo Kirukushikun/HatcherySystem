@@ -92,9 +92,15 @@ Route::middleware(['auth', 'cors'])->group(function() {
     Route::get('/master-database', function () {
         return view('hatchery.master_database');
     });
+    Route::get('/driver_egg_collection', function () {
+        return view('hatchery.driver_egg_collection_form');
+    });
   
 });
 
+// Driver -------------------------------------------------------------------------------------------
+
+Route::post('/driver-collection-store/store', [EggCollectionController::class, 'driver_collection_store'])->name('driver.collection.store'); // Store
 
 // Egg Collection -------------------------------------------------------------------------------------------
 

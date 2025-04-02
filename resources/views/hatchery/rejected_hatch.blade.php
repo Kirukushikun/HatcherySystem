@@ -45,6 +45,10 @@
                 <input type="date" id="production_date" name="production_date">
             </div>
             <div class="input-container column">
+                <label for=""> Production Date (To) <span></span> </label>
+                <input type="date" name="" id="" value="" />
+            </div>
+            <div class="input-container column">
                 <label for="set_eggs_qty">Set Egg Qty <span></span></label>
                 <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0">
             </div>
@@ -117,10 +121,10 @@
                 </div>
 
             </div>
-            <div class="input-container column">
+            <!-- <div class="input-container column">
                 <label for="pullout_date">Pull-out Date <span></span></label>
                 <input type="date" id="pullout_date" name="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}">
-            </div>
+            </div> -->
             <div class="input-container column">
                 <label for="hatch_date">Hatch Date <span></span></label>
                 <input type="date" id="hatch_date" name="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">

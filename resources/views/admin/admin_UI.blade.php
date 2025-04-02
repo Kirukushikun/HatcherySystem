@@ -211,11 +211,12 @@
                                     <option value="hatcher_no" {{ session('form_data.data_category', '') == 'hatcher_no' ? 'selected' : ''}}>Hatcher No.</option>
                                     <option value="house_no" {{ session('form_data.data_category', '') == 'house_no' ? 'selected' : ''}}>House No.</option>
                                     <option value="incubator_no" {{ session('form_data.data_category', '') == 'incubator_no' ? 'selected' : ''}}>Incubator No.</option>
+                                    <option value="driver" {{ session('form_data.data_category', '') == 'incubator_no' ? 'selected' : ''}}>Driver</option>
                                 </select>
                             </div>
                             <div class="input-container column">
                                 <label for="data_value">Value<span></span></label>
-                                <input type="text" name="data_value" id="data_value" value="" placeholder="0">
+                                <input type="text" name="data_value" id="data_value" value="" placeholder="Enter Value">
                             </div>
                         </div>
                         <div class="form-action">
@@ -483,7 +484,6 @@
     <script src="{{ asset('js/user-logs.js') }}" defer></script>
     <script src="{{ asset('js/loading-screen.js') }}" defer></script>
     <script src="{{ asset('js/push-notification.js') }}" defer></script>
-
 
 </body>
 </html>

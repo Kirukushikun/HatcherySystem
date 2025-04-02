@@ -5,8 +5,9 @@
             <th>PS No.</th>
             <th>House No.</th>
             <th>Production Date</th>
-            <th>Collection Time (hh:mm)</th>
+            <th>Collection Time from Farm</th>
             <th>Collected Eggs Quantity</th>
+            <th>Collected By</th>
             <th>Encoded/Modified By</th>
             <th>Actions</th>
             <!-- <th>Date Encoded/Modified</th> -->
@@ -97,6 +98,7 @@
                             <td>${production_date}</td>
                             <td>${collection_time}</td>
                             <td>${row.collected_qty}</td>
+                            <td>${row.driver}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>

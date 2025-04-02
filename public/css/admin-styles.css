@@ -157,6 +157,12 @@ input::-webkit-inner-spin-button {
 
 .form-action{
     display: none;
+    justify-content: end;
+    gap: 15px;
+
+    position: absolute;
+    right: 30px;
+    bottom: 25px;
 }
 
 .form-action.active{

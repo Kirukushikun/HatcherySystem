@@ -19,7 +19,7 @@
             background-color: transparent;
             color: #EC8B18;
             padding: 10px;
-            border-radius: 7px;
+            border-radius: 7px; 
             cursor: pointer;
 
             font-weight: 500;
@@ -278,7 +278,7 @@
 
                 <div class="card-label">
                     <span>3</span>
-                    <p>Storage Pullout Process</p>
+                    <p>Egg Setting Process</p>
                 </div>
 
                 <div class="card-form col-2">
@@ -330,7 +330,7 @@
 
                 <div class="card-label">
                     <span>4</span>
-                    <p>Setter Process Entry</p>
+                    <p>10 Day Candling Process</p>
                 </div>
 
                 <div class="card-form col-2">
@@ -374,7 +374,7 @@
                 <div class="card-form">
 
                     <div class="input-group">
-                        <label for="d18_candling_date">Day 18.5 Candling Date <span></span></label>
+                        <label for="d18_candling_date">Candling Entry Process <span></span></label>
                         <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
                     </div>
                     <br>

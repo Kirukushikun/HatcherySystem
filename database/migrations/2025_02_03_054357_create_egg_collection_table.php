@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('production_date');
             $table->time('collection_time');
             $table->integer('collected_qty');
+            $table->string('driver')->nullable();
             $table->unsignedBigInteger('encoded_by')->nullable();
             $table->unsignedBigInteger('modified_by')->nullable();
             $table->timestamps();

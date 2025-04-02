@@ -15,6 +15,7 @@ class EggCollection extends Model
         'production_date',
         'collection_time',
         'collected_qty',
+        'driver',
         'encoded_by',
         'modified_by',
     ];

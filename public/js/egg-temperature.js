@@ -273,8 +273,9 @@ function deleteRecord(targetID) {
         updatePagination(); // Update pagination
         loadData(); // Reload data
 
-        // Trigger push notification
-        createPushNotification("success", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+            // Trigger push notification
+            createPushNotification("success", "Deleted Successfully", "Egg Temperature Entry Deleted Successfully");
+
     })
     .catch(error => {
         console.error("Error:", error);

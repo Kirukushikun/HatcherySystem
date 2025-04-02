@@ -39,8 +39,13 @@
             </div>
 
             <div class="input-container column">
-                <label for="production_date"> Production Date <span></span> </label>
+                <label for="production_date"> Production Date (From) <span></span> </label>
                 <input type="date" name="production_date" id="production_date" value="{{ session('form_data.production_date', date('Y-m-d')) }}" />
+            </div>
+
+            <div class="input-container column">
+                <label for=""> Production Date (To) <span></span> </label>
+                <input type="date" name="" id="" value="{{ date('Y-m-d') }}" />
             </div>
 
             <div class="input-container column">
@@ -194,18 +199,18 @@
         </div>
 
         <div class="form-result">
-            <div class="input-container column">
+            <!-- <div class="input-container column">
                 <label for="pullout_date"> Pull-out Date <span></span> </label>
                 <input type="date" name="pullout_date" id="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}" />
-            </div>
+            </div> -->
             <div class="input-container column">
                 <label for="hatch_date"> Hatch Date <span></span> </label>
                 <input type="date" name="hatch_date" id="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}" />
             </div>
-            <div class="input-container column">
+            <!-- <div class="input-container column">
                 <label for="qc_date"> QC Date <span></span> </label>
                 <input type="date" name="qc_date" id="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}" />
-            </div>
+            </div> -->
             <div class="input-container row">
                 <div class="input-group">
                     <label for="rejected_total">Rejected Total </label>
