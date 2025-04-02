@@ -36,14 +36,10 @@
 
         <div class="form-input col-5">
             <div class="input-container column">
-                <label for="ps_no">PS no. <span></span></label>
+                <label for="ps_no">PS no. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
 
-            <div class="input-container column">
-                <label for="production_date">Production Date <span></span></label>
-                <input type="date" id="production_date" name="production_date">
-            </div>
             <div class="input-container column">
                 <label for=""> Production Date (To) <span></span> </label>
                 <input type="date" name="" id="" value="" />
@@ -53,18 +49,18 @@
                 <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0">
             </div>
             <div class="input-container column">
-                <label for="incubator_no">Incubator No.  <span></span></label>
+                <label for="incubator_no">Incubator No.  <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'incubator_no'" />
             </div>
             <div class="input-container column">
-                <label for="hatcher_no">Hatcher No. <span></span></label>
+                <label for="hatcher_no">Hatcher No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'hatcher_no'" />
             </div>
 
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="unhatched">Unhatched <span></span></label>
+                    <label for="unhatched">Unhatched<span></span></label>
                     <input type="number" id="unhatched" name="unhatched" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -76,7 +72,7 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="pips">Pips <span></span></label>
+                    <label for="pips">Pips<span></span></label>
                     <input type="number" id="pips" name="pips" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -88,7 +84,7 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="rejected_chicks">Rejected Chicks <span></span></label>
+                    <label for="rejected_chicks">Rejected Chicks<span></span></label>
                     <input type="number" id="rejected_chicks" name="rejected_chicks" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -100,7 +96,7 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="dead_chicks">Dead Chicks <span></span></label>
+                    <label for="dead_chicks">Dead Chicks<span></span></label>
                     <input type="number" id="dead_chicks" name="dead_chicks" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -112,7 +108,7 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="rotten">Rotten <span></span></label>
+                    <label for="rotten">Rotten<span></span></label>
                     <input type="number" id="rotten" name="rotten" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -122,11 +118,11 @@
 
             </div>
             <!-- <div class="input-container column">
-                <label for="pullout_date">Pull-out Date <span></span></label>
+                <label for="pullout_date">Pull-out Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="pullout_date" name="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}">
             </div> -->
             <div class="input-container column">
-                <label for="hatch_date">Hatch Date <span></span></label>
+                <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="hatch_date" name="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container row">

@@ -47,9 +47,11 @@ resetButton.addEventListener("click", function () {
 
         if (inputContainer) {
             let labelSpan = inputContainer.querySelector("label span");
+            let asterisk = inputContainer.querySelector(".asterisk");
 
-            if (labelSpan) {
+            if (labelSpan && asterisk) {
                 labelSpan.textContent = ""; // Clear the label span
+                asterisk.classList.add("active");
             }
         }
 
@@ -69,6 +71,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     requiredFields.forEach(id => {
         let field = document.getElementById(id);
         let labelSpan = field.closest(".input-container").querySelector("label span");
+        let asterisk = field.closest(".input-container").querySelector(".asterisk");
         
         if (!field.value.trim()) {
             field.style.border = "2px solid #ea4435d7";
@@ -76,9 +79,12 @@ document.querySelector("form").addEventListener("submit", function (event) {
             labelSpan.textContent = "This field is required";
             labelSpan.style.color = "#ea4435d7";
             isValid = false;
+
+            asterisk.classList.add("active");
         }else{
             field.style.border = "";
             labelSpan.textContent = "";
+            asterisk.classList.remove("active");
         }
     });
     if (isValid) {
@@ -200,15 +206,13 @@ function storeRecord() {
         return response.json();
     })
     .then(data => {
-        if (!data.success) {
-            throw new Error("Save unsuccessful. Please try again.");
-        }
-
-        document.getElementById("modal").classList.remove("active");
-        document.getElementById("ps_no").value = "";
-        document.getElementById("house_no").value = "";
-        document.getElementById("collection_time").value = "";
-        document.getElementById("collection_eggs_quantity").value = "";
+        if (data.success) {
+            document.getElementById("modal").classList.remove("active");
+            document.getElementById("ps_no").value = "";
+            document.getElementById("house_no").value = "";
+            document.getElementById("collection_time").value = "";
+            document.getElementById("collection_eggs_quantity").value = "";
+            document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 
         updatePagination(); // Update pagination
         loadData(); // Reload data

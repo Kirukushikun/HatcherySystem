@@ -51,16 +51,16 @@
         </div>
         <div class="form-input col-4">  
             <div class="input-container column">
-                <label for="ps_no">PS No. <span></span></label>
+                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
             <div class="input-container column">
-                <label for="house_no">House No. <span></span></label>
+                <label for="house_no">House No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'house_no'" />
             </div>
             <div class="input-container column">
                 <label for="production_date">
-                    Production Date <span></span>
+                    Production Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span>
                 </label>
                 <input 
                     type="date" 
@@ -72,7 +72,7 @@
 
             <div class="input-container column">
                 <label for="collection_time">
-                    Collection Time from Farm <span></span>
+                    Collection Time from Farm <i class="fa-solid fa-asterisk asterisk active"></i><span></span>
                 </label>
                 <input 
                     type="time" 
@@ -82,7 +82,7 @@
                 >
             </div>
             <div class="input-container column">
-                <label for="collection_eggs_quantity">Hatching Eggs <span></span></label>
+                <label for="collection_eggs_quantity">Hatching Eggs <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="number" name="collection_eggs_quantity" id="collection_eggs_quantity" value="{{ session('form_data.collection_eggs_quantity', '') }}" placeholder="0">
             </div>
         </div>

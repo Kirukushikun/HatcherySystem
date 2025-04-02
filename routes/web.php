@@ -64,43 +64,36 @@ Route::middleware(['auth', 'cors'])->group(function() {
 
     Route::get('/access', [UserController::class, 'accessLogs'])->name('access.logs');
     Route::get('/access/access-logs-json', [UserController::class, 'accessLogsJson'])->name('access-logs.json');
-
-    Route::get('/admin', function () {
-        return view('admin.admin_UI');
-    });
-    
-    Route::get('/home', function () {
-        return view('hatchery.main_module');
-    });
-    
-    Route::get('/egg-collection-entry', function () {
-        return view('hatchery.egg_collection');
-    });
-    
-    Route::get('/egg-temperature-check-entry', function () {
-        return view('hatchery.egg_temperature');
-    });
-    
-    Route::get('/rejected-hatch', function () {
-        return view('hatchery.rejected_hatch');
-    });
-    
-    Route::get('/rejected-pullets', function () {
-        return view('hatchery.rejected_pullets');
-    });
-    
-    Route::get('/master-database', function () {
-        return view('hatchery.master_database');
-    });
-    Route::get('/driver_egg_collection', function () {
-        return view('hatchery.driver_egg_collection_form');
-    });
   
 });
 
-// Driver -------------------------------------------------------------------------------------------
+Route::get('/admin', function () {
+    return view('admin.admin_UI');
+});
 
-Route::post('/driver-collection-store/store', [EggCollectionController::class, 'driver_collection_store'])->name('driver.collection.store'); // Store
+Route::get('/home', function () {
+    return view('hatchery.main_module');
+});
+
+Route::get('/egg-collection-entry', function () {
+    return view('hatchery.egg_collection');
+});
+
+Route::get('/egg-temperature-check-entry', function () {
+    return view('hatchery.egg_temperature');
+});
+
+Route::get('/rejected-hatch', function () {
+    return view('hatchery.rejected_hatch');
+});
+
+Route::get('/rejected-pullets', function () {
+    return view('hatchery.rejected_pullets');
+});
+
+Route::get('/master-database', function () {
+    return view('hatchery.master_database');
+});
 
 // Egg Collection -------------------------------------------------------------------------------------------
 
@@ -179,8 +172,6 @@ Route::get('/test', function () {
     return view('hatchery.report_module');
 });
 
-// Master Database ---------
-  
 Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
 
 Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');

@@ -272,6 +272,18 @@
             width: 30%; /* Second column takes 30% of the table width */
         }
 
+        .data-table th{
+            white-space: nowrap;
+        }
+
+        .data-table th:first-child, .data-table td:first-child {
+            min-width: 70%; /* First column takes 70% of the table width */
+        }
+
+        .data-table th:last-child, .data-table td:last-child {
+            width: 30%; /* Second column takes 30% of the table width */
+        }
+
     </style>
 </head>
 <body>
@@ -300,8 +312,7 @@
                             <label for="house_no">House No:</label>
                             <!-- <x-dropdown :data-category="'house_no'" /> -->
                             <select name="house_no" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" >
-                                <option value="1">House 1</option>
-                                <option value="2">House 2</option>
+                                
                             </select>
                         </div>
                         <div class="form-group">
@@ -318,7 +329,7 @@
                         </div>
                         <div class="form-group">
                             <label for="collected_qty">Collection Quantity:</label>
-                            <input type="number" id="collected_qty">
+                            <input type="number" id="collected_qty" readonly>
                         </div>         
                     </div>
 
@@ -406,18 +417,11 @@
                     <div class="form-container col-2">
                         <div class="form-group">
                             <label for="ps_no">PS No: <span></span></label>
-                            <select name="ps_no" id="ps_no">
-                                <option value=""></option>
-                                <option value="#93">#93</option>
-                                <option value="#94">#94</option>
-                            </select>
+                            <x-dropdown :data-category="'ps_no'" />
                         </div>
                         <div class="form-group">
                             <label for="incubator">Incubator No: <span></span></label>
-                            <select name="incubator" id="incubator">
-                                <option value=""></option>
-                                <option value="5">5</option>
-                            </select>
+                            <x-dropdown :data-category="'incubator_no'" />
                         </div>
                         <div class="form-group">
                             <label for="setting_date">Setting Date: <span></span></label>
@@ -501,25 +505,15 @@
                     <div class="form-container col-3">
                         <div class="form-group">
                             <label for="ps_no">PS No: <span></span></label>
-                            <select name="ps_no" id="ps_no">
-                                <option value=""></option>
-                                <option value="#93">#93</option>
-                                <option value="#94">#94</option>
-                            </select>
+                            <x-dropdown :data-category="'ps_no'" />
                         </div>
                         <div class="form-group">
                             <label for="incubator_no">Incubator No: <span></span></label>
-                            <select name="incubator_no" id="incubator_no">
-                                <option value=""></option>
-                                <option value="5">5</option>
-                            </select>
+                            <x-dropdown :data-category="'incubator_no'" />
                         </div>
                         <div class="form-group">
                             <label for="hatcher_no">Hatcher No: <span></span></label>
-                            <select name="hatcher_no" id="hatcher_no">
-                                <option value=""></option>
-                                <option value="5">5</option>
-                            </select>
+                            <x-dropdown :data-category="'hatcher_no'" />
                         </div>
                         <div class="form-group">
                             <label for="production_date">Production Date: <span></span></label>
@@ -535,13 +529,13 @@
                         </div> 
                         <div class="form-group">
                             <label for="set_eggs_qty">Collection Quantity:</label>
-                            <input type="number" id="set_eggs_qty" name="set_eggs_qty">
+                            <input type="number" id="set_eggs_qty" name="set_eggs_qty" readonly>
                         </div>     
                     </div>
 
                     <div class="form-container col-5" id="rejected_hatch_table">
                         @foreach(['UNHATCHED', 'PIPS', 'REJECTED HATCH', 'DEAD CHICKS', 'ROTTEN'] as $item)
-                            <div class="state">
+                            <div class="data-table">
                                 <table>
                                     <thead>
                                         <th>{{$item}}</th>
@@ -607,25 +601,15 @@
                     <div class="form-container col-3">
                         <div class="form-group">
                             <label for="ps_no">PS No: <span></span></label>
-                            <select name="ps_no" id="ps_no">
-                                <option value=""></option>
-                                <option value="#93">#93</option>
-                                <option value="#94">#94</option>
-                            </select>
+                            <x-dropdown :data-category="'ps_no'" />
                         </div>
                         <div class="form-group">
                             <label for="incubator_no">Incubator No: <span></span></label>
-                            <select name="incubator_no" id="incubator_no">
-                                <option value=""></option>
-                                <option value="5">5</option>
-                            </select>
+                            <x-dropdown :data-category="'incubator_no'" />
                         </div>
                         <div class="form-group">
                             <label for="hatcher_no">Hatcher No: <span></span></label>
-                            <select name="hatcher_no" id="hatcher_no">
-                                <option value=""></option>
-                                <option value="5">5</option>
-                            </select>
+                            <x-dropdown :data-category="'hatcher_no'" />
                         </div>
                         <div class="form-group">
                             <label for="production_date">Production Date: <span></span></label>
@@ -645,13 +629,13 @@
                         </div> 
                         <div class="form-group">
                             <label for="set_eggs_qty">Settable Eggs Quantity:</label>
-                            <input type="number" id="set_eggs_qty" name="set_eggs_qty">
+                            <input type="number" id="set_eggs_qty" name="set_eggs_qty" readonly>
                         </div>     
                     </div>
 
                     <div class="form-container col-5" id="rejected_hatch_table">
                         @foreach(['ONE EYE CLOSED', 'NO EYES', 'SMALL EYES', 'LARGE EYES', 'UNHEALED NAVEL', 'CROSSED BEAK', 'SMALL CHICK', 'WEAK CHICK', 'BLACK BUTTONS', 'STRING NAVEL', 'BLOATED'] as $item)
-                            <div class="state">
+                            <div class="data-table">
                                 <table>
                                     <thead>
                                         <th>{{$item}}</th>
