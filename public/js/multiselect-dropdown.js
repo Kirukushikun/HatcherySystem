@@ -65,8 +65,10 @@ style.innerHTML = `
   border-radius:3px;
 }
 
-.multiselect-dropdown-list div{
+.multiselect-dropdown-list div {
   padding: 5px;
+  display: flex;
+  align-items: center;
 }
 .multiselect-dropdown-list input{
   height: 1.15em;
@@ -87,7 +89,7 @@ function MultiselectDropdown(options){
   var config={
     search:true,
     height:'15rem',
-    placeholder:'select',
+    placeholder:'Select Value',
     txtSelected:'selected',
     txtAll:'All',
     txtRemove: 'Remove',

@@ -82,7 +82,7 @@
                 >
             </div>
             <div class="input-container column">
-                <label for="collection_eggs_quantity">Collected Eggs Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <label for="collection_eggs_quantity">Hatching Eggs Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="number" name="collection_eggs_quantity" id="collection_eggs_quantity" value="{{ session('form_data.collection_eggs_quantity', '') }}" placeholder="0">
             </div>
         </div>

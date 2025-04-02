@@ -97,7 +97,7 @@
                             <td>${production_date}</td>
                             <td>${collection_time}</td>
                             <td>${row.collected_qty}</td>
-                            <td>${row.encoded_by}</td>
+                            <td>Iverson Guno</td>
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>
