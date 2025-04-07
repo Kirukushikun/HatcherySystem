@@ -31,13 +31,47 @@
             <h4>Entry Form</h4>
         </div>
 
-        <div class="form-input col-4">
+        <!-- <div class="form-header chamber">
+            <h4>OVERALL</h4>
+            <div class="line"></div>
+        </div> -->
 
+        <div class="form-input col-4">
             <div class="input-container column">
+                <label for="quantity">Temperature Check QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="above_temp_qty">Above Temp QTY<span></span></label>
+                    <input type="number" id="above_temp_qty" name="above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="above_temp_prcnt">%</label>
+                    <input type="number" id="above_temp_prcnt" name="above_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="below_temp_qty">Below Temp QTY<span></span></label>
+                    <input type="number" id="below_temp_qty" name="below_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="below_temp_prcnt">%</label>
+                    <input type="number" id="below_temp_prcnt" name="below_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+            
+            <div class="input-container column">
+                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
+            </div>
+            <!-- <div class="input-container column">
                 <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
-            
             <div class="input-container column">
                 <label for="setting_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
@@ -70,8 +104,102 @@
             <div class="input-container column">
                 <label for="quantity">Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+            </div> -->
+        </div>
+
+        <div class="form-header chamber">
+            <h4>LEFT</h4>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-input col-4">
+            <div class="input-container column">
+                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="left_above_temp_qty">Above Temp QTY<span></span></label>
+                    <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="left_above_temp_prcnt">%</label>
+                    <input type="number" id="left_above_temp_prcnt" name="left_above_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="left_below_temp_qty">Below Temp QTY<span></span></label>
+                    <input type="number" id="left_below_temp_qty" name="left_below_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="left_below_temp_prcnt">%</label>
+                    <input type="number" id="left_below_temp_prcnt" name="left_below_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container column">
+                <label for="total_left_qty">Total Left QTY</label>
+                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
             </div>
         </div>
+
+        <div class="form-header chamber">
+            <h4>RIGHT</h4>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-input col-4">
+            <div class="input-container column">
+                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <x-dropdown :data-category="'ps_no'" />
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="right_above_temp_qty">Above Temp QTY<span></span></label>
+                    <input type="number" id="right_above_temp_qty" name="right_above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="right_above_temp_prcnt">%</label>
+                    <input type="number" id="right_above_temp_prcnt" name="right_above_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="right_below_temp_qty">Below Temp QTY<span></span></label>
+                    <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="right_below_temp_prcnt">%</label>
+                    <input type="number" id="right_below_temp_prcnt" name="right_below_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container column">
+                <label for="total_right_qty">Total Right QTY</label>
+                <input name="total_right_qty" id="total_right_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+            </div>
+        </div>
+
+        <!-- <div class="form-header chamber">
+            <div class="line"></div>
+        </div>
+
+        <div class="form-input col-4">
+            <div class="input-container column">
+                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <x-dropdown :data-category="'incubator_no'" />
+            </div>
+
+            <div class="input-container column">
+                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
+            </div>
+        </div> -->
 
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>

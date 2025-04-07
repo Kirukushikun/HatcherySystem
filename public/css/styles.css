@@ -74,6 +74,20 @@ label{
     font-weight: 500;
     font-size: 18px;
 }
+.form-header.chamber{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.form-header.chamber h4{
+    color: #d9d7d4;
+}
+.form-header.chamber .line{
+    background-color: #F6F4F1;
+    height: 2px;
+    width: 100%;
+}
 .col-2{
     display: grid;
     grid-template-columns: 1fr 1fr;

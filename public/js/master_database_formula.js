@@ -42,6 +42,13 @@ let setterProcess = {
     d10_inc_qty: document.getElementById('d10_inc_qty'),
 };
 
+const hatcherProcess = {
+    hatcher_no: document.getElementById('hatcher_no'),
+    hatcher_date: document.getElementById('hatcher_date'),
+    rejected_hatch_qty: document.getElementById('rejected_hatch_qty'),
+    accepted_hatch_qty: document.getElementById('accepted_hatch_qty')
+};
+
 
 // Form 1
 collectedEggs.collected_qty.addEventListener('input', () => {
@@ -172,15 +179,21 @@ pulloutStorage.pullout_date.addEventListener('input', () => {
     // Calculate Day 10 Candling Date
     let pulloutDay10 = new Date(pulloutDate); // Clone date
     pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
-    setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
 
     // Calculate Day 18.5 Candling Date
     let pulloutDay18_5 = new Date(pulloutDate); // Clone date
     pulloutDay18_5.setDate(pulloutDay18_5.getDate() + 18); // Add 18 full days
     pulloutDay18_5.setHours(pulloutDay18_5.getHours() + 12); // Add 12 hours (0.5 day)
 
+    // Calculate Day 21 Candling Date
+    let pulloutDay21 = new Date(pulloutDate); // Clone date
+    pulloutDay21.setDate(pulloutDay21.getDate() + 21); // Add 21 days
+    
+
     // Format for input field (only date part)
+    setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
     candlingProcess.d18_candling_date.value = pulloutDay18_5.toISOString().split('T')[0]; 
+    hatcherProcess.hatcher_date.value = pulloutDay21.toISOString().split('T')[0]; // Format YYYY-MM-DD
 });
 
 candlingProcess.infertiles_qty.addEventListener('input', updateCandlingProcess);
@@ -199,14 +212,6 @@ function updateCandlingProcess() {
 
     calculateBoxes(embryonicEggsQty);
 }
-
-
-const hatcherProcess = {
-    hatcher_no: document.getElementById('hatcher_no'),
-    hatcher_date: document.getElementById('hatcher_date'),
-    rejected_hatch_qty: document.getElementById('rejected_hatch_qty'),
-    accepted_hatch_qty: document.getElementById('accepted_hatch_qty')
-};
 
 hatcherProcess.rejected_hatch_qty.addEventListener('input', updateHatcherProcess);
 

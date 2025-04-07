@@ -254,7 +254,7 @@
 
             </form>
 
-            <form class="card c2" id="card2">
+            <!-- <form class="card c2" id="card2">
                 <div class="card-label">
                     <span>2</span>
                     <p>Classification for Storage</p>
@@ -282,9 +282,8 @@
 
                 <div class="form-action">
                     <button class="save-btn" type="submit">Save</button>
-                    <!-- <button class="reset-btn" type="button">Reset</button> -->
                 </div>
-            </form>
+            </form> -->
 
             <form class="card c3" id="card3">
 
@@ -357,7 +356,7 @@
 
                 <div class="card-label">
                     <span>4</span>
-                    <p>Setter Process Entry</p>
+                    <p>10 Day Candling Process</p>
                 </div>
 
                 <div class="card-form col-2">
@@ -369,14 +368,14 @@
                         <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
                     </div>
                     <div class="input-group">
-                        <label for="d10_candling_qty">Day 10 Candling Quantity 
+                        <label for="d10_candling_qty">Day 10 Breakout Quantity 
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
                         <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label for="d10_breakout_qty">Day 10 Breakout Quantity 
+                        <label for="d10_breakout_qty">Day 10 Sampling Quantity 
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
@@ -404,7 +403,7 @@
 
                 <div class="card-label">
                     <span>5</span>
-                    <p>Candling Process Entry</p>
+                    <p>18.5 Candling Process</p>
                 </div>
 
                 <div class="card-form">
@@ -439,7 +438,7 @@
 
             </form>
 
-            <form class="card c6" id="card6">
+            <!-- <form class="card c6" id="card6">
 
                 <div class="card-label">
                     <span>5.1</span>
@@ -523,9 +522,8 @@
 
                 <div class="form-action">
                     <button class="save-btn" type="submit">Save</button>
-                    <!-- <button class="reset-btn" type="button">Reset</button> -->
                 </div>
-            </form>
+            </form> -->
 
             <form class="card c7" id="card7">
                 <div class="card-label">

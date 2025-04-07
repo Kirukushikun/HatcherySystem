@@ -478,16 +478,16 @@ tbody td:last-child {
     }
 }
 
-@media(max-width:1400px){
+/* @media(max-width:1400px){
     .form-entries{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas: 
-        "c1 c1 c1 c2 c2 c2"
-        "c3 c3 c3 c4 c4 c4"
-        "c5 c5 c6 c6 c6 c6"
-        "c5 c5 c6 c6 c6 c6"
-        "c7 c7 c7 c8 c9 c9"
+        "c1 c1 c1 c3 c3 c3"
+        "c4 c4 c4 c5 c5 c5"
+        "c6 c6 c6 c7 c7 c7"
+        "c6 c6 c6 c7 c7 c7"
+        "c8 c8 c8 c9 c9 c9"
         "c10 c10 c10 c10 c11 c11"
         "c10 c10 c10 c10 c12 c12"
         "c13 c13 c13 c13 c13 c13";
@@ -501,7 +501,7 @@ tbody td:last-child {
     
         scroll-behavior: smooth;
     }
-}
+} */
 
 /* @media(max-width:900px){
     .body{
@@ -585,11 +585,11 @@ tbody td:last-child {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
-    "c1 c1 c1 c2 c2 c2"
+    "c1 c1 c1 c1 c1 c1"
     "c3 c3 c3 c4 c4 c4"
-    "c5 c5 c6 c6 c6 c6"
-    "c5 c5 c6 c6 c6 c6"
-    "c7 c7 c7 c8 c9 c9"
+    "c5 c5 c5 c7 c7 c7"
+    "c5 c5 c5 c7 c7 c7"
+    "c8 c8 c8 c9 c9 c9"
     "c10 c10 c10 c10 c11 c11"
     "c10 c10 c10 c10 c12 c12"
     "c13 c13 c13 c13 c13 c13";
@@ -829,7 +829,7 @@ tbody td:last-child {
     }
 }
 
-@media(max-width:1400px){
+/* @media(max-width:1400px){
     .form-entries{
         grid-template-areas: 
         "c1 c1 c1 c2 c2 c2"
@@ -892,4 +892,4 @@ tbody td:last-child {
         "c12 c12 c12 c12 c12 c12"
         "c13 c13 c13 c13 c13 c13";
     }
-}
+} */
