@@ -39,8 +39,8 @@ class MasterDatabaseController extends Controller
 
                 $batchData = MasterDB::where('batch_no', $batch_no)->get()->toArray();
 
-            } elseif ($step2Entry && $step2Entry->status == 'completed') {
-                // Batch is completed, start a new batch
+            } elseif ($step2Entry && ($step2Entry->status == 'completed' || $step2Entry->is_deleted)) {
+                // Batch is completed or deleted, start a new batch
                 $batch_no += 1;
                 $current_step = 1;
             }
@@ -112,18 +112,24 @@ class MasterDatabaseController extends Controller
         ]);
     }
 
-    function master_database_delete($targetBatch){
+    function master_database_delete($targetBatch) {
         $targetData = MasterDB::where('batch_no', $targetBatch)->get();
-
-        if (!$targetData) {
+    
+        if ($targetData->isEmpty()) {
             return response()->json(['success' => false, 'message' => 'Record not found'], 404);
         }
-
+    
+        // Update step 2 status to 'completed' if it exists
+        MasterDB::where('batch_no', $targetBatch)
+            ->where('current_step', 2)
+            ->update(['status' => 'completed']);
+    
+        // Soft delete the records
         foreach ($targetData as $data) {
             $data->is_deleted = true;
             $data->save();
         }
-
+    
         return response()->json(['success' => true, 'message' => 'Master Database Record Deleted Successfully']);
     }
 

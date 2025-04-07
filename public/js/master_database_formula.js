@@ -43,8 +43,6 @@ let setterProcess = {
 };
 
 
-
-
 // Form 1
 collectedEggs.collected_qty.addEventListener('input', () => {
     let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
