@@ -312,7 +312,6 @@
                             <label for="house_no">House No:</label>
                             <!-- <x-dropdown :data-category="'house_no'" /> -->
                             <select name="house_no" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" >
-                                
                             </select>
                         </div>
                         <div class="form-group">

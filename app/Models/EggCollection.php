@@ -20,6 +20,7 @@ class EggCollection extends Model
     ];
 
     protected $casts = [
+        'house_no' => 'array',
         'is_deleted' => 'boolean',
         'collected_qty' => 'integer',
         'production_date' => 'date',

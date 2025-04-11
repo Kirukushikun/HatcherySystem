@@ -22,7 +22,7 @@ class EggCollectionController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'ps_no' => 'required|string|max:255',
-                'house_no' => 'required|string|max:255',
+                'house_no' => 'required|array',
                 'production_date' => 'required|date',
                 'collection_time' => 'required|date_format:H:i',
                 'collection_eggs_quantity' => 'required|integer',

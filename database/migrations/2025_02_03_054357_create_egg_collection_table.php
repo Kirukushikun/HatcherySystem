@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_deleted')->default(false);
             $table->string('ps_no');
-            $table->string('house_no');
+            $table->json('house_no');
             $table->date('production_date');
             $table->time('collection_time');
             $table->integer('collected_qty');
+            $table->string('driver_name')->nullable();
             $table->unsignedBigInteger('encoded_by')->nullable();
             $table->unsignedBigInteger('modified_by')->nullable();
             $table->timestamps();

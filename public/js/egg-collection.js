@@ -180,6 +180,7 @@ function showModal(button, targetID = null) {
     }
 }
 function storeRecord(){
+    
     fetch("/egg-collection/store", {
         method: "POST",
         headers: {
@@ -188,7 +189,8 @@ function storeRecord(){
         },
         body: JSON.stringify({
             ps_no: document.getElementById("ps_no").value,
-            house_no: document.getElementById("house_no").value,
+            // house_no: document.getElementById("house_no").value,
+            house_no: ["1", "2", "3"],
             production_date: document.getElementById("production_date").value,
             collection_time: document.getElementById("collection_time").value,
             collection_eggs_quantity: document.getElementById("collection_eggs_quantity").value,
