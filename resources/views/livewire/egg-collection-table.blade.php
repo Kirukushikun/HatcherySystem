@@ -93,12 +93,7 @@
                         <tr>
                             <td>${row.id}</td>
                             <td>${row.ps_no}</td>
-                            <td class="tag-container">
-                                ${row.house_no.map(h => {
-                                    const width = h < 10 ? '3ch' : '4ch';
-                                    return `<span style="width:${width};">${h}</span>`;
-                                }).join(' ')}
-                            </td>
+                            <td>${row.house_no}</td>
                             <td>${production_date}</td>
                             <td>${collection_time}</td>
                             <td>${row.collected_qty}</td>

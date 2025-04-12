@@ -22,47 +22,53 @@ class EggCollectionController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'ps_no' => 'required|string|max:255',
-                'house_no' => 'required|array',
+                'house_no' => 'required|array|min:1',
                 'production_date' => 'required|date',
                 'collection_time' => 'required|date_format:H:i',
                 'collection_eggs_quantity' => 'required|integer',
             ]);
-    
+            
             if ($validator->fails()) {
                 $errorMessages = $validator->errors();
                 session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
-    
+            
                 if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
                     return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
                 }   
-                if ($errorMessages->hasAny(['production_date'])) {
+                if ($errorMessages->has('production_date')) {
                     return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
                 }      
-                if ($errorMessages->hasAny(['collection_time'])) {
+                if ($errorMessages->has('collection_time')) {
                     return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
                 }               
                 if ($errorMessages->has('collection_eggs_quantity')) {
                     return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
                 } 
             }
-    
+            
             $validatedData = $validator->validated();
-    
-            $eggCollection = new EggCollection();
-            $eggCollection->ps_no = $validatedData['ps_no'];
-            $eggCollection->house_no = $validatedData['house_no']; 
-            $eggCollection->production_date = $validatedData['production_date'];
-            $eggCollection->collection_time = $validatedData['collection_time'];
-            $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
-            $eggCollection->save();
-    
-            // Log the action
-            $this->logEggCollectionAction('store', $eggCollection, null);
-    
+            $createdEntries = [];
+            
+            foreach ($validatedData['house_no'] as $house) {
+                $eggCollection = new EggCollection();
+                $eggCollection->ps_no = $validatedData['ps_no'];
+                $eggCollection->house_no = $house;
+                $eggCollection->production_date = $validatedData['production_date'];
+                $eggCollection->collection_time = $validatedData['collection_time'];
+                $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
+                $eggCollection->save();
+            
+                $createdEntries[] = $eggCollection;
+            
+                // Log for each entry
+                $this->logEggCollectionAction('store', $eggCollection, null);
+            }
+            
             return response()->json([
                 'success' => true,
-                'message' => 'Egg Collection Entry Recorded Successfully'
-            ]);
+                'message' => 'Egg Collection Entries Recorded Successfully',
+                'entries' => $createdEntries // Optional: return all entries created
+            ]);            
     
         } catch (\Exception $e) {
             // Log the error for debugging

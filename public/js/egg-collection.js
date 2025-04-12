@@ -225,9 +225,7 @@ function storeRecord(){
             document.getElementById("modal").classList.remove("active");
             document.getElementById("ps_no").value = "";
             document.getElementById("house_no").value = "";
-            document.getElementById("collection_time").value = "";
             document.getElementById("collection_eggs_quantity").value = "";
-            form.querySelector(".form-action").style.display = "none"; // Hide form action buttons
 
             // Clear multiselect
             clearMultiSelect();
@@ -239,6 +237,9 @@ function storeRecord(){
 
             // Trigger push notification
             createPushNotification("success", "Saved Successfully", "Egg Collection Entry Saved Successfully");
+
+            // Hide form action buttons
+            form.querySelector(".form-action").style.display = "none"; // Hide form action buttons
         } else {
             alert("Error saving record");
         }

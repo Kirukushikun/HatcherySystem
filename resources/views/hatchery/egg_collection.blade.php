@@ -56,10 +56,8 @@
             </div>
             <div class="input-container column">
                 <label for="house_no">House No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="house_no" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                <select name="house_no[]" id="house_no" multiple multiselect-select-all="true" multiselect-search="true">
+                    <x-multiselect-dropdown :data-category="'house_no'" />
                 </select>
             </div>
             <div class="input-container column">

@@ -36,15 +36,6 @@ class EggCollectionTable extends Component
         }
         //Pagination Handling
         $data = $query->paginate(10);
-
-        // Decode house_no for each record if it's JSON
-        $data->getCollection()->transform(function ($item) {
-            if (is_string($item->house_no) && str_starts_with($item->house_no, '[')) {
-                $item->house_no = json_decode($item->house_no);
-            }
-            return $item;
-        });
-        
         return response()->json([
             'data' => $data->items(),
             'current_page' => $data->currentPage(),

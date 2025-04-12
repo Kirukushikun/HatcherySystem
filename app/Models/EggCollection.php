@@ -15,12 +15,12 @@ class EggCollection extends Model
         'production_date',
         'collection_time',
         'collected_qty',
+        'driver_name',
         'encoded_by',
         'modified_by',
     ];
 
     protected $casts = [
-        'house_no' => 'array',
         'is_deleted' => 'boolean',
         'collected_qty' => 'integer',
         'production_date' => 'date',

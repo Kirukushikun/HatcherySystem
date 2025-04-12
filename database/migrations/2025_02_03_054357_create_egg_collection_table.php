@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_deleted')->default(false);
             $table->string('ps_no');
-            $table->json('house_no');
+            $table->string('house_no');
             $table->date('production_date');
             $table->time('collection_time');
             $table->integer('collected_qty');
