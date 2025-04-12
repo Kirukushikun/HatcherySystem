@@ -51,62 +51,47 @@ class EditController extends Controller
 
             if($targetForm == 'egg-collection'){
 
-                try {
-    
-                    $validator = Validator::make($request->all(), [
-                        'ps_no' => 'required|string|max:255',
-                        'house_no' => 'required|string|max:255',
-                        'production_date' => 'required|date',
-                        'collection_time' => 'required|date_format:H:i',
-                        'collection_eggs_quantity' => 'required|integer',
-                    ]);
-            
-                    if ($validator->fails()) {
-                        $errorMessages = $validator->errors();
-                        session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
-            
-                        if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
-                            return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
-                        }   
-                        if ($errorMessages->hasAny(['production_date'])) {
-                            return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
-                        }      
-                        if ($errorMessages->hasAny(['collection_time'])) {
-                            return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
-                        }               
-                        if ($errorMessages->has('collection_eggs_quantity')) {
-                            return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
-                        }          
-                    }
-            
-                    $validatedData = $validator->validated();
-            
-                    $eggCollection = EggCollection::find($targetID);
+                
+                $validator = Validator::make($request->all(), [
+                    'ps_no' => 'required|string|max:255',
+                    'house_no' => 'required|array',
+                    'production_date' => 'required|date',
+                    'collection_time' => 'required|date_format:H:i',
+                    'collection_eggs_quantity' => 'required|integer',
+                ]);
         
-                    $beforeState = $eggCollection->toArray(); // Get the old values
-                    $beforeState = json_encode($beforeState);
+                if ($validator->fails()) {
+                    $errorMessages = $validator->errors();
+                    session()->flash('form_data', $request->only(['ps_no', 'house_no', 'production_date', 'collection_time', 'collection_eggs_quantity']));
         
-                    $eggCollection->ps_no = $validatedData['ps_no'];
-                    $eggCollection->house_no = $validatedData['house_no'];
-                    $eggCollection->production_date = $validatedData['production_date'];
-                    $eggCollection->collection_time = $validatedData['collection_time'];
-                    $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
-        
-                    $eggCollection->save();
-        
-                    // Log the action with before state
-                    $this->logAction('update', $eggCollection, $beforeState, $targetForm);
-        
-                    return redirect('/egg-collection')->with('success', 'Updated Successfully')->with('success_message', 'Egg Collection Entry Updated Successfully');
-    
-                } catch (\Exception $e) {
-    
-                    // Log the error for debugging
-                    Log::error('Error in edit_record_update(egg-collection): ' . $e->getMessage());
-        
-                    return back()->with('error', 'Unexpected Error')->with('error_message', 'Something went wrong. Please try again.');
+                    if ($errorMessages->hasAny(['ps_no', 'house_no', 'production_date', 'collection_time'])) {
+                        return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
+                    }   
+                    if ($errorMessages->hasAny(['production_date'])) {
+                        return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
+                    }      
+                    if ($errorMessages->hasAny(['collection_time'])) {
+                        return back()->with('error', 'Invalid Time Format')->with('error_message', 'Please provide correct time format (HH:MM).');
+                    }               
+                    if ($errorMessages->has('collection_eggs_quantity')) {
+                        return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a number.');
+                    }          
                 }
-               
+        
+                $validatedData = $validator->validated();
+        
+                $eggCollection = EggCollection::find($targetID);
+    
+                $eggCollection->ps_no = $validatedData['ps_no'];
+                $eggCollection->house_no = $validatedData['house_no'];
+                $eggCollection->production_date = $validatedData['production_date'];
+                $eggCollection->collection_time = $validatedData['collection_time'];
+                $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
+    
+                $eggCollection->save();
+    
+                return redirect('/egg-collection')->with('success', 'Updated Successfully')->with('success_message', 'Egg Collection Entry Updated Successfully');
+
             }
             
             elseif($targetForm == 'egg-temperature'){

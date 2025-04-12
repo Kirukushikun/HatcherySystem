@@ -56,6 +56,8 @@ resetButton.addEventListener("click", function () {
         }
 
         input.style.border = "";  // Reset border styling
+
+        clearMultiSelect(); // Clear multiselect if applicable
     });
 
     // hide the form-action buttons
@@ -66,32 +68,51 @@ document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
-    
+    const requiredFields = ["ps_no", "production_date", "collection_time", "collection_eggs_quantity", "house_no"];
+
     requiredFields.forEach(id => {
-        let field = document.getElementById(id);
-        let labelSpan = field.closest(".input-container").querySelector("label span");
-        let asterisk = field.closest(".input-container").querySelector(".asterisk");
-        
-        if (!field.value.trim()) {
+        const field = document.getElementById(id);
+        const container = field.closest(".input-container");
+        const labelSpan = container.querySelector("label span");
+        const asterisk = container.querySelector(".asterisk");
+
+        let isEmpty = false;
+
+        // Special handling for multi-selects
+        if (field.multiple) {
+            const selected = Array.from(field.selectedOptions);
+            isEmpty = selected.length === 0;
+
+            // Optional: Add red border to the custom dropdown
+            const customDropdown = field.nextElementSibling; // Assuming the multiselect div is next
+            if (isEmpty) {
+                customDropdown.style.border = "2px solid #ea4435d7";
+            } else {
+                customDropdown.style.border = "";
+            }
+        } else {
+            isEmpty = !field.value.trim();
+        }
+
+        if (isEmpty) {
             field.style.border = "2px solid #ea4435d7";
-            // field.style.marginTop = "5px";
             labelSpan.textContent = "This field is required";
             labelSpan.style.color = "#ea4435d7";
-            isValid = false;
-
             asterisk.classList.add("active");
-        }else{
+            isValid = false;
+        } else {
             field.style.border = "";
             labelSpan.textContent = "";
             asterisk.classList.remove("active");
         }
     });
+
     if (isValid) {
-        showModal('save'); // Show modal when all fields are filled
+        showModal('save'); // Proceed when valid
     }
-    
 });
+
+
 function showModal(button, targetID = null) {
 
     if (button === "save") {
@@ -180,6 +201,9 @@ function showModal(button, targetID = null) {
     }
 }
 function storeRecord(){
+
+    let housenoValues = Array.from(document.getElementById('house_no').selectedOptions)
+    .map(option => option.value);
     
     fetch("/egg-collection/store", {
         method: "POST",
@@ -189,8 +213,7 @@ function storeRecord(){
         },
         body: JSON.stringify({
             ps_no: document.getElementById("ps_no").value,
-            // house_no: document.getElementById("house_no").value,
-            house_no: ["1", "2", "3"],
+            house_no: housenoValues,
             production_date: document.getElementById("production_date").value,
             collection_time: document.getElementById("collection_time").value,
             collection_eggs_quantity: document.getElementById("collection_eggs_quantity").value,
@@ -204,6 +227,11 @@ function storeRecord(){
             document.getElementById("house_no").value = "";
             document.getElementById("collection_time").value = "";
             document.getElementById("collection_eggs_quantity").value = "";
+            form.querySelector(".form-action").style.display = "none"; // Hide form action buttons
+
+            // Clear multiselect
+            clearMultiSelect();
+
             document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 
             updatePagination(); // Update pagination
@@ -283,3 +311,9 @@ document.addEventListener("click", function (event) {
     }
 });
 
+function clearMultiSelect(){
+    const houseNo = document.getElementById("house_no");
+    Array.from(houseNo.options).forEach(option => option.selected = false);
+    houseNo.dispatchEvent(new Event('change'));
+    houseNo.loadOptions();
+}

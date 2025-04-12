@@ -132,6 +132,7 @@ label{
     font-weight: 600;
     font-size: 12px;
     background-color: white;
+    z-index: 100;
 }
 .body .input-container .asterisk{
     opacity: 0;
@@ -150,8 +151,6 @@ label{
 
     font-size: 15px;
     font-weight: 300;
-
-    width: 100%;
     outline: none;
 }
 .body .input-container select{
@@ -386,6 +385,24 @@ tbody td:first-child {
     left: 0;
     background: white;
     z-index: 1;
+}
+
+tbody .tag-container{
+    /* display: flex;
+    gap: 10px; */
+    white-space: nowrap;
+}
+
+tbody .tag-container span{
+    color: #583925;
+    border: solid 2px #c9bbb3;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-right: 3px;
+    
+    display: inline-block;
+    width: 3ch;
+    text-align: center;
 }
 
 thead th:last-child {

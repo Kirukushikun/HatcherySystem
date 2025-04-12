@@ -107,10 +107,13 @@
                   <label for="ps_no">PS No. <span></span></label>
                   <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
               </div>
-              <div class="input-container column">
-                  <label for="house_no">House No. <span></span></label>
-                  <x-dropdown :data-category="'house_no'" :data-value="$record->house_no" />
-              </div>
+                <div class="input-container column">
+                    <label for="house_no">House No. <span></span></label>
+                    <select name="house_no[]" id="house_no" multiple multiselect-select-all="true" multiselect-search="true">
+                        <x-multiselect-dropdown :data-category="'house_no'" :data-value="$record->house_no" />
+                    </select>
+                </div>
+
               <div class="input-container column">
                   <label for="production_date">Production Date <span></span></label>
                   <input type="date" name="production_date" id="production_date" value="{{ $record->production_date->format('Y-m-d') }}">
@@ -610,11 +613,24 @@
                 } else {
                     input.value = originalValues[input.name];
                 }
+                
+                // Clear custom multiselects
+                if (input.multiple && input.id) {
+                    clearMultiSelect(input.id);
+                }
+
             });
 
-            // hide the form-action buttons
+            // Hide the form-action buttons
             formAction.style.display = "none";
         });
+
+        function clearMultiSelect(targetID){
+            const multiselectDropdown = document.getElementById(targetID);
+            Array.from(multiselectDropdown.options).forEach(option => option.selected = false);
+            multiselectDropdown.dispatchEvent(new Event('change'));
+            multiselectDropdown.loadOptions();
+        }
 
         document.querySelector("form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission initially
@@ -634,21 +650,35 @@
 
             requiredFields.forEach(id => {
                 let field = document.getElementById(id);
+                let isEmpty = false;
+
+                // Special handling for multi-selects
+                if (field.multiple) {
+                    const selected = Array.from(field.selectedOptions);
+                    isEmpty = selected.length === 0;
+
+                    // Optional: Add red border to the custom dropdown
+                    const customDropdown = field.nextElementSibling; // Assuming the multiselect div is next
+                    if (isEmpty) {
+                        customDropdown.style.border = "2px solid #ea4435d7";
+                    } else {
+                        customDropdown.style.border = "";
+                    }
+                } else {
+                    isEmpty = !field.value.trim();
+                }
+
+
                 if (field) {
                     let labelSpan = field.closest(".input-container")?.querySelector("label span");
-
-                    if (!field.value.trim()) {
+                    if (isEmpty) {
                         field.style.border = "2px solid #ea4435d7";
-                        if (labelSpan) {
-                            labelSpan.textContent = "(This field is required)";
-                            labelSpan.style.color = "#ea4435d7";
-                        }
+                        labelSpan.textContent = "This field is required";
+                        labelSpan.style.color = "#ea4435d7";
                         isValid = false;
                     } else {
                         field.style.border = "";
-                        if (labelSpan) {
-                            labelSpan.textContent = "";
-                        }
+                        labelSpan.textContent = "";
                     }
                 }
             });
@@ -816,7 +846,8 @@
               }
           });
         }
-        
     </script>
+
+    <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
 </body>
 </html>
