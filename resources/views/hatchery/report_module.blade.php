@@ -11,280 +11,7 @@
     <link rel="icon" href="/Images/BGC icon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/modal-notification-loader.css">
-
-    <style>
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-        -moz-appearance: textfield;
-        }
-
-        *{
-            font-family: "Lexend";
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            color: #1C1C1C;
-
-            transition: 0.3s ease;
-        }
-
-        body{
-            min-height: 100vh;
-            padding-top: 20px;
-            height: auto;
-            
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background-color: #F6F4F1;
-        }
-
-        .report-container{
-            min-width: 1300px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            position: relative;
-        }
-
-        .report-content{
-            background-color: white;
-        }
-
-        .report-header{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 40px;
-        }
-        .report-header img{
-            width: 160px;
-        }
-        .report-header #BGC{
-            width: 180px;
-        }
-
-        .report-title{
-            font-size: 25px;
-            font-weight: 5  00;
-            text-align: center;
-
-            padding: 10px 0;
-
-            background-color: #EC8B18;
-            color: white;
-        }
-
-        .report-form{
-            display: flex;
-            flex-direction: column;
-            /* justify-content: space-between; */
-            gap:60px;
-
-            padding: 50px;
-        }
-
-        .report-form .col-2{
-            display:grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;            
-        }
-
-        .report-form .col-3{
-            display:grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;            
-        }
-
-        .report-form .col-5{
-            display:grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 25px;            
-        }
-
-
-
-        .report-form .form-group{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .form-group input{
-            border: none;
-            font-size: 16px;
-            padding: 12px 15px;
-            background-color: #F3F3F3;
-            outline: none;
-        }
-        .form-group select{
-            border: none;
-            font-size: 16px;
-            padding: 12px 15px;
-            background-color: #F3F3F3;
-            outline: none;
-
-            border-right: 16px solid transparent
-        }
-
-        .report-footer{
-            display: flex;
-            flex-direction: column;
-            margin: 0 50px 30px;
-            padding: 20px 0;
-            border-top: solid 2px #F0F0F0;
-            text-align: center;
-            font-weight: 500;
-            color: #D8D8D8;
-        }
-
-        /* .report-actions{
-            position: absolute;
-            right: -170px;
-            bottom: -20px;
-
-            display:flex;
-            flex-direction: column;
-            justify-content: end;
-            gap: 20px;
-            margin: 20px 0;
-        } */
-
-        .report-actions{
-            display:flex;
-            justify-content: end;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .report-actions button{
-            padding: 8px 20px;
-            cursor: pointer;
-            border: none;
-
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .back{
-            color: #4C4C4C;
-            background-color: #D9D9D9;
-        }
-        .back i{
-            color: #4C4C4C;
-            margin-left: 5px;
-        }
-
-        .print{
-            color: white;
-            background-color: #EC8B18;
-        }
-        .print i{
-            color: white;
-            margin-left: 5px;
-        }
-
-        .form-container table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-
-        th {
-            background-color: #EC8B18; /* Orange header */
-            color: white;
-            
-            padding: 10px;
-            font-size: 16px;
-            font-weight: 500;
-
-            border: 2px solid #ffffff;
-        }
-
-        td {
-            padding: 10px;
-            border: 2px solid #E9E9E9;
-        }
-
-        /* tr:nth-child(even) {
-            background-color: #f9f9f9; 
-        } */
-
-        tr:hover {
-            background-color: #f1f1f1; /* Hover effect */
-        }
-
-        .signature {
-            display: block; 
-            width: 110px;   
-            height: 80px;   
-            object-fit: contain; 
-            margin-bottom: 5px; 
-        }
-
-        #prepared-by, #date-prepared{
-            background-color: transparent;
-            padding: 0 ;
-        }
-
-        /* .signature {
-            display: block; 
-            width: 110px;   
-            height: 80px;   
-            object-fit: contain; 
-            margin-bottom: 5px; 
-            z-index: 2px;
-        }
-
-        .form-group{
-            position: relative;
-        }
-
-        #prepared-by{
-            bottom: 10px;
-            position: absolute;
-            z-index: 1;
-
-            background-color: transparent;
-        } */
-
-        #result-table th{  
-            background-color: #ECB316;
-        }
-
-        #result-table th:first-child, #result-table td:first-child {
-            width: 70%; /* First column takes 70% of the table width */
-        }
-
-        #result-table th:last-child, #result-table td:last-child {
-            width: 30%; /* Second column takes 30% of the table width */
-        }
-
-        .data-table th{
-            white-space: nowrap;
-        }
-
-        .data-table th:first-child, .data-table td:first-child {
-            min-width: 70%; /* First column takes 70% of the table width */
-        }
-
-        .data-table th:last-child, .data-table td:last-child {
-            width: 30%; /* Second column takes 30% of the table width */
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/report-styles.css">
 </head>
 <body>
 
@@ -325,59 +52,21 @@
                         <div class="form-group">
                             <label for="collection_time">Collection Time:</label>
                             <input type="time" id="collection_time">
-                        </div>
+                        </div>    
                         <div class="form-group">
                             <label for="collected_qty">Collection Quantity:</label>
                             <input type="number" id="collected_qty" readonly>
                         </div>         
                     </div>
 
-                    <!-- <div class="form-container">
-                        <table>
+                    <div class="form-container">
+                        <table id="egg-collection-table">
                             <thead>
-                                <th>PS No.</th>
-                                <th>House No. 1</th>
-                                <th>House No. 2</th>
-                                <th>House No. 3</th>
-                                <th>House No. 4</th>
-                                <th>House No. 5</th>
-                                <th>Total:</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>93</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>95</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>98</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>200</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6">Grand Total:</td>
-                                    <td>10000</td>
-                                </tr>
                             </tbody>
                         </table>
-                    </div> -->
+                    </div>
 
                     <div class="form-container col-2">
                         <div class="form-group">
@@ -688,7 +377,7 @@
         @endif
         <div class="report-actions">
             <button type="button" class="back" onclick="window.history.back()">GO BACK <i class="fa-solid fa-door-open"></i></button>
-            <button type="submit" class="print" onclick="getSelectedValues()">PRINT <i class="fa-solid fa-print"></i></button>
+            <button type="submit" class="print" onclick="window.print()">PRINT <i class="fa-solid fa-print"></i></button>
         </div>
     </div>
     
@@ -714,10 +403,10 @@
                 var selectedOptions = Array.from(select.selectedOptions);
                 
                 // Extract the values from the selected options
-                selectedValues = selectedOptions.map(option => option.value);
+                house_no = selectedOptions.map(option => option.value);
 
                 // Check if all required fields are filled
-                if (ps_no && production_date_from && production_date_to && selectedValues.length > 0) {
+                if (ps_no && production_date_from && production_date_to && house_no.length > 0) {
                     // Proceed with the fetch request only if all required fields are provided
                     fetch("/egg-collection/report/result", {
                         method: "POST",
@@ -729,7 +418,7 @@
                             ps_no: ps_no,
                             production_date_from: production_date_from,
                             production_date_to: production_date_to,
-                            selectedValues: selectedValues
+                            house_no: house_no
                         })
                     })
                     .then(response => response.json())
@@ -737,10 +426,19 @@
                         if (data.success) {
                             // Assuming the result is returned as 'egg_quantity_result'
                             console.log(data.egg_quantity_result);
+                            console.log(data.egg_quantity_breakdown);
                             
                             // Optionally you can also update the UI with the result
                             document.getElementById("collected_qty").value = data.egg_quantity_result;
                             document.getElementById("collection_time").value = data.collection_time;
+
+                            const ps_no = document.getElementById("ps_no").value;
+                            populateEggCollectionTable(
+                                ps_no,
+                                data.egg_quantity_result,
+                                data.egg_quantity_breakdown,
+                                data.grand_total // Optional: pass if available
+                            );
                         } else {
                             alert("Error fetching egg collection result");
                         }
@@ -812,6 +510,70 @@
                     })
                     .catch(error => console.error("Error fetching house data:", error));
             });
+
+            function populateEggCollectionTable(ps_no, egg_quantity_result, egg_quantity_breakdown, grand_total) {
+                const table = document.getElementById("egg-collection-table");
+                const thead = table.querySelector("thead");
+                const tbody = table.querySelector("tbody");
+
+                // Clear old rows
+                thead.innerHTML = '';
+                tbody.innerHTML = '';
+
+                // Dynamically create table headers
+                const headRow = document.createElement("tr");
+                
+                const psHeader = document.createElement("th");
+                psHeader.textContent = "PS No.";
+                headRow.appendChild(psHeader);
+
+                const houseNumbers = Object.keys(egg_quantity_breakdown);
+                houseNumbers.forEach(house => {
+                    const th = document.createElement("th");
+                    th.textContent = `HS No. ${house}`;
+                    headRow.appendChild(th);
+                });
+
+                const totalHeader = document.createElement("th");
+                totalHeader.textContent = "Total:";
+                headRow.appendChild(totalHeader);
+
+                thead.appendChild(headRow);
+
+                // Create row for egg quantities
+                const dataRow = document.createElement("tr");
+
+                const psCell = document.createElement("td");
+                psCell.textContent = ps_no;
+                dataRow.appendChild(psCell);
+
+                houseNumbers.forEach(house => {
+                    const td = document.createElement("td");
+                    td.textContent = egg_quantity_breakdown[house];
+                    dataRow.appendChild(td);
+                });
+
+                const totalCell = document.createElement("td");
+                totalCell.textContent = egg_quantity_result;
+                dataRow.appendChild(totalCell);
+
+                tbody.appendChild(dataRow);
+
+                // Create row for Grand Total
+                const grandTotalRow = document.createElement("tr");
+
+                const colspanCell = document.createElement("td");
+                colspanCell.setAttribute("colspan", houseNumbers.length + 1);
+                colspanCell.textContent = "Grand Total:";
+                grandTotalRow.appendChild(colspanCell);
+
+                const grandTotalValue = document.createElement("td");
+                grandTotalValue.textContent = grand_total ?? egg_quantity_result; // fallback to current total
+                grandTotalRow.appendChild(grandTotalValue);
+
+                tbody.appendChild(grandTotalRow);
+            }
+
         }
 
 

@@ -83,10 +83,18 @@ class ReportController extends Controller
         // Get the total collected quantity within the given filters
         $egg_quantity_result = $egg_quantity_query->sum('collected_qty');  // Ensure your column name is correct
 
+        // Group by house_no and get sum per house
+        $egg_quantity_breakdown = $egg_quantity_query
+            ->selectRaw('house_no, SUM(collected_qty) as total_collected')
+            ->groupBy('house_no')
+            ->orderBy('house_no', 'asc')
+            ->pluck('total_collected', 'house_no'); // returns key => value pair
+
         if ($egg_quantity_result !== null) {
             return response()->json([
                 'success' => true,
                 'egg_quantity_result' => $egg_quantity_result,
+                'egg_quantity_breakdown' => $egg_quantity_breakdown,
                 'collection_time' => $collection_time,  // Only if relevant
             ]);
         } else {
