@@ -152,6 +152,7 @@ label{
     font-size: 15px;
     font-weight: 300;
     outline: none;
+    width: 100%;
 }
 .body .input-container select{
     background-color: #F6F4F1;
@@ -175,6 +176,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+input[type=checkbox] {
+    width: unset !important;
 }
 
 .body .input-group{

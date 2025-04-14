@@ -13,6 +13,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
 
+    <style>
+
+    </style>
+
 </head>
 <body id="body">
 
@@ -56,7 +60,7 @@
             <div class="input-container row">
                 <div class="input-group">
                     <label for="below_temp_qty">Below Temp QTY<span></span></label>
-                    <input type="number" id="below_temp_qty" name="below_temp_qty" placeholder="0">
+                    <input type="number" id="below_temp_qty" name="below_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">
                     <label for="below_temp_prcnt">%</label>
@@ -68,43 +72,6 @@
                 <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
-            <!-- <div class="input-container column">
-                <label for="ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'ps_no'" />
-            </div>
-            <div class="input-container column">
-                <label for="setting_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input type="date" name="setting_date" id="setting_date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
-            </div>
-            <div class="input-container column">
-                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'incubator_no'" />
-            </div>
-            <div class="input-container column">
-                <label for="location">Location <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="location" id="location">
-                    <option value="">Select Location</option>
-                    <option value="Top" {{ session('form_data.location', '') == 'Top' ? 'selected' : ''}}>Top</option>
-                    <option value="Mid" {{ session('form_data.location', '') == 'Mid' ? 'selected' : ''}}>Mid</option>
-                    <option value="Low" {{ session('form_data.location', '') == 'Low' ? 'selected' : ''}}>Low</option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
-            </div>
-            <div class="input-container column">
-                <label for="temperature">Temperature <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="temperature" id="temperature">
-                    <option value="">Select Temperature</option>
-                    <option value="37.8 Above" {{ session('form_data.temperature', '') == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
-                    <option value="37.7 Below" {{ session('form_data.temperature', '') == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
-                </select>
-            </div>
-            <div class="input-container column">
-                <label for="quantity">Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input name="quantity" id="quantity" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
-            </div> -->
         </div>
 
         <div class="form-header chamber">
@@ -142,7 +109,7 @@
 
             <div class="input-container column">
                 <label for="total_left_qty">Total Left QTY</label>
-                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0" readonly>
             </div>
         </div>
 
@@ -160,7 +127,7 @@
             <div class="input-container row">
                 <div class="input-group">
                     <label for="right_above_temp_qty">Above Temp QTY<span></span></label>
-                    <input type="number" id="right_above_temp_qty" name="right_above_temp_qty" placeholder="0">
+                    <input type="number" id="right_above_temp_qty" name="right_above_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">
                     <label for="right_above_temp_prcnt">%</label>
@@ -171,7 +138,7 @@
             <div class="input-container row">
                 <div class="input-group">
                     <label for="right_below_temp_qty">Below Temp QTY<span></span></label>
-                    <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0">
+                    <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">
                     <label for="right_below_temp_prcnt">%</label>
@@ -181,25 +148,11 @@
 
             <div class="input-container column">
                 <label for="total_right_qty">Total Right QTY</label>
-                <input name="total_right_qty" id="total_right_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+                <input name="total_right_qty" id="total_right_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0" readonly>
             </div>
+
+            <br>
         </div>
-
-        <!-- <div class="form-header chamber">
-            <div class="line"></div>
-        </div>
-
-        <div class="form-input col-4">
-            <div class="input-container column">
-                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'incubator_no'" />
-            </div>
-
-            <div class="input-container column">
-                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
-            </div>
-        </div> -->
 
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>

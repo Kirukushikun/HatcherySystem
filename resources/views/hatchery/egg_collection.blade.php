@@ -71,7 +71,6 @@
                     value="{{ session('form_data.production_date', date('Y-m-d')) }}"
                 >
             </div>
-
             <div class="input-container column">
                 <label for="collection_time">
                     Collection Time (hh:mm) <i class="fa-solid fa-asterisk asterisk active"></i><span></span>

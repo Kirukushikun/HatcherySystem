@@ -288,3 +288,101 @@ document.addEventListener("click", function (event) {
 });
 
 
+
+let quantity = document.getElementById("quantity");
+
+let above_temp_qty = document.getElementById("above_temp_qty");
+let above_temp_prcnt = document.getElementById("above_temp_prcnt");
+
+let below_temp_qty = document.getElementById("below_temp_qty");
+let below_temp_prcnt = document.getElementById("below_temp_prcnt");
+
+let left_above_temp_qty = document.getElementById("left_above_temp_qty");
+let left_above_temp_prcnt = document.getElementById("left_above_temp_prcnt");
+
+let left_below_temp_qty = document.getElementById("left_below_temp_qty");
+let left_below_temp_prcnt = document.getElementById("left_below_temp_prcnt");
+
+let right_above_temp_qty = document.getElementById("right_above_temp_qty");
+let right_above_temp_prcnt = document.getElementById("right_above_temp_prcnt");
+
+let right_below_temp_qty = document.getElementById("right_below_temp_qty");
+let right_below_temp_prcnt = document.getElementById("right_below_temp_prcnt");
+
+let total_left_qty = document.getElementById("total_left_qty");
+let total_right_qty = document.getElementById("total_right_qty");
+
+function calculateOverallTemps() {
+    let total = parseInt(quantity.value) || 0;
+    let aboveQty = parseInt(above_temp_qty.value) || 0;
+
+    if (aboveQty > total) {
+        aboveQty = total;
+        above_temp_qty.value = total;
+    } else if (aboveQty < 0) {
+        aboveQty = 0;
+        above_temp_qty.value = 0;
+    }
+
+    let abovePrcnt = Math.round((aboveQty / total) * 100);
+    let belowQty = total - aboveQty;
+    let belowPrcnt = 100 - abovePrcnt;
+
+    above_temp_prcnt.value = abovePrcnt;
+    below_temp_qty.value = belowQty;
+    below_temp_prcnt.value = belowPrcnt;
+
+    calculateLeftRightTemps(aboveQty, belowQty);
+}
+
+function calculateLeftRightTemps(aboveQty, belowQty) {
+    let leftAbove = parseInt(left_above_temp_qty.value) || 0;
+    let leftBelow = parseInt(left_below_temp_qty.value) || 0;
+
+    // Clamp left inputs
+    if (leftAbove > aboveQty) {
+        leftAbove = aboveQty;
+        left_above_temp_qty.value = aboveQty;
+    }
+    if (leftBelow > belowQty) {
+        leftBelow = belowQty;
+        left_below_temp_qty.value = belowQty;
+    }
+
+    let leftTotal = leftAbove + leftBelow;
+    let rightAbove = aboveQty - leftAbove;
+    let rightBelow = belowQty - leftBelow;
+    let rightTotal = rightAbove + rightBelow;
+
+    // Percentages
+    let leftAbovePercent = leftTotal > 0 ? Math.round((leftAbove / leftTotal) * 100) : 0;
+    let leftBelowPercent = leftTotal > 0 ? 100 - leftAbovePercent : 0;
+
+    let rightAbovePercent = rightTotal > 0 ? Math.round((rightAbove / rightTotal) * 100) : 0;
+    let rightBelowPercent = rightTotal > 0 ? 100 - rightAbovePercent : 0;
+
+    // Set values
+    left_above_temp_prcnt.value = leftAbovePercent;
+    left_below_temp_prcnt.value = leftBelowPercent;
+
+    right_above_temp_qty.value = rightAbove;
+    right_above_temp_prcnt.value = rightAbovePercent;
+
+    right_below_temp_qty.value = rightBelow;
+    right_below_temp_prcnt.value = rightBelowPercent;
+
+    total_left_qty.value = leftTotal;
+    total_right_qty.value = rightTotal;
+}
+
+above_temp_qty.addEventListener("input", calculateOverallTemps);
+left_above_temp_qty.addEventListener("input", () => {
+    let aboveQty = parseInt(above_temp_qty.value) || 0;
+    let belowQty = parseInt(below_temp_qty.value) || 0;
+    calculateLeftRightTemps(aboveQty, belowQty);
+});
+left_below_temp_qty.addEventListener("input", () => {
+    let aboveQty = parseInt(above_temp_qty.value) || 0;
+    let belowQty = parseInt(below_temp_qty.value) || 0;
+    calculateLeftRightTemps(aboveQty, belowQty);
+});
