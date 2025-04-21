@@ -132,25 +132,29 @@
                     <div class="form-container">
                         <table>
                             <thead>
-                                <th>LOCATION</th>
-                                <th>37.8 ABOVE</th>
-                                <th>37.7 BELOW</th>
+                                <th>Location</th>
+                                <th><i class="fa-solid fa-arrow-up arrowup"></i> Temperature 100.5 °F</th>
+                                <th><i class="fa-solid fa-arrow-down arrowdown"></i> Temperature 100.4 °F QTY</th>
+                                <th>Total</th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Top</td>
-                                    <td>200</td>
-                                    <td>200</td>
+                                    <td>LEFT</td>
+                                    <td>1000 (56%)</td>
+                                    <td>800 (44%)</td>
+                                    <td>1800 (100%)</td>
                                 </tr>
                                 <tr>
-                                    <td>Middle</td>
-                                    <td>200</td>
-                                    <td>200</td>
+                                    <td>RIGHT</td>
+                                    <td>1000 (31%)</td>
+                                    <td>2200 (69%)</td>
+                                    <td>3200 (100%)</td>
                                 </tr>
                                 <tr>
-                                    <td>Bottom</td>
-                                    <td>200</td>
-                                    <td>200</td>
+                                    <td></td>
+                                    <td>2000 (40%)</td>
+                                    <td>3000 (60%)</td>
+                                    <td>5000 (100%)</td>
                                 </tr>
                             </tbody>
                         </table>

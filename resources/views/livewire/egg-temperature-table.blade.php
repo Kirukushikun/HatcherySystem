@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>PS No.</th>
             <th>Temp Check Date</th>
             <th>Setting Date</th>
             <th>Hatch Date</th>
@@ -31,7 +30,6 @@
     <tbody id="table-body">
         <tr>
             <td>1</td>
-            <td>94</td>
             <td>22/04/2025</td>
             <td>22/04/2025</td>
             <td>22/04/2025</td>
