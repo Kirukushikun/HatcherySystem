@@ -15,9 +15,16 @@ class Dropdown extends Component
     {
         $this->data_category = $dataCategory;
         $this->data_value = $dataValue;
-        $this->data_values = MaintenanceValues::where('data_category', $dataCategory)
-                                              ->pluck('data_value')
-                                              ->toArray();
+
+        // Normalize category if it's left_ps_no or right_ps_no
+        $dbCategory = match($dataCategory) {
+            'left_ps_no', 'right_ps_no' => 'ps_no',
+            default => $dataCategory,
+        };
+
+        $this->data_values = MaintenanceValues::where('data_category', $dbCategory)
+                                            ->pluck('data_value')
+                                            ->toArray();
         sort($this->data_values);
     }
 

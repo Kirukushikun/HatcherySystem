@@ -76,7 +76,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date"];
+    const requiredFields = ["ps_no", "set_eggs_qty", "incubator_no", "hatcher_no", "production_date_from", "production_date_to", "hatch_date", "qc_date"];
     
     requiredFields.forEach(id => {
         let field = document.getElementById(id);

@@ -68,7 +68,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "setting_date", "incubator_no", "location", "temp_check_date", "temperature", "quantity"];
+    const requiredFields = ["temp_check_date", "setting_date" , "hatch_date", "temp_check_qty", "ovrl_above_temp_qty", "left_ps_no", "right_ps_no"];
     
     requiredFields.forEach(id => {
         let field = document.getElementById(id);
@@ -194,13 +194,29 @@ function storeRecord(){
             "X-CSRF-TOKEN": csrfToken
         },
         body: JSON.stringify({
-            ps_no: document.getElementById("ps_no").value,
-            setting_date: document.getElementById("setting_date").value,
-            incubator_no: document.getElementById("incubator_no").value,
-            location: document.getElementById("location").value,
             temp_check_date: document.getElementById("temp_check_date").value,
-            temperature: document.getElementById("temperature").value,
-            quantity: document.getElementById("quantity").value
+            setting_date: document.getElementById("setting_date").value,
+            hatch_date: document.getElementById("hatch_date").value,
+
+            temp_check_qty: document.getElementById("temp_check_qty").value,
+            ovrl_above_temp_qty: document.getElementById("ovrl_above_temp_qty").value,
+            ovrl_above_temp_prcnt: document.getElementById("ovrl_above_temp_prcnt").value,
+            ovrl_below_temp_qty: document.getElementById("ovrl_below_temp_qty").value,
+            ovrl_below_temp_prcnt: document.getElementById("ovrl_below_temp_prcnt").value,
+
+            left_ps_no: document.getElementById("left_ps_no").value,
+            left_above_temp_qty: document.getElementById("left_above_temp_qty").value,
+            left_above_temp_prcnt: document.getElementById("left_above_temp_prcnt").value,
+            left_below_temp_qty: document.getElementById("left_below_temp_qty").value,
+            left_below_temp_prcnt: document.getElementById("left_below_temp_prcnt").value,
+
+            right_ps_no: document.getElementById("right_ps_no").value,
+            right_above_temp_qty: document.getElementById("right_above_temp_qty").value,
+            right_above_temp_prcnt: document.getElementById("right_above_temp_prcnt").value,
+            right_below_temp_qty: document.getElementById("right_below_temp_qty").value,
+            right_below_temp_prcnt: document.getElementById("right_below_temp_prcnt").value,
+
+            total_right_qty: document.getElementById("total_right_qty").value,
         })
     })
     .then(response => response.json())
@@ -208,9 +224,10 @@ function storeRecord(){
         if (data.success) {
             document.getElementById("modal").classList.remove("active");
 
-            document.getElementById("location").value = "";
-            document.getElementById("temperature").value = "";
-            document.getElementById("quantity").value = "";
+            // document.getElementById("location").value = "";
+            // document.getElementById("temperature").value = "";
+            // document.getElementById("quantity").value = "";
+            
             document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 
             updatePagination(); // Update pagination
@@ -289,13 +306,13 @@ document.addEventListener("click", function (event) {
 
 
 
-let quantity = document.getElementById("quantity");
+let temp_check_qty = document.getElementById("temp_check_qty");
 
-let above_temp_qty = document.getElementById("above_temp_qty");
-let above_temp_prcnt = document.getElementById("above_temp_prcnt");
+let ovrl_above_temp_qty = document.getElementById("ovrl_above_temp_qty");
+let ovrl_above_temp_prcnt = document.getElementById("ovrl_above_temp_prcnt");
 
-let below_temp_qty = document.getElementById("below_temp_qty");
-let below_temp_prcnt = document.getElementById("below_temp_prcnt");
+let ovrl_below_temp_qty = document.getElementById("ovrl_below_temp_qty");
+let ovrl_below_temp_prcnt = document.getElementById("ovrl_below_temp_prcnt");
 
 let left_above_temp_qty = document.getElementById("left_above_temp_qty");
 let left_above_temp_prcnt = document.getElementById("left_above_temp_prcnt");
@@ -313,24 +330,24 @@ let total_left_qty = document.getElementById("total_left_qty");
 let total_right_qty = document.getElementById("total_right_qty");
 
 function calculateOverallTemps() {
-    let total = parseInt(quantity.value) || 0;
-    let aboveQty = parseInt(above_temp_qty.value) || 0;
+    let total = parseInt(temp_check_qty.value) || 0;
+    let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
 
     if (aboveQty > total) {
         aboveQty = total;
-        above_temp_qty.value = total;
+        ovrl_above_temp_qty.value = total;
     } else if (aboveQty < 0) {
         aboveQty = 0;
-        above_temp_qty.value = 0;
+        ovrl_above_temp_qty.value = 0;
     }
 
     let abovePrcnt = Math.round((aboveQty / total) * 100);
     let belowQty = total - aboveQty;
     let belowPrcnt = 100 - abovePrcnt;
 
-    above_temp_prcnt.value = abovePrcnt;
-    below_temp_qty.value = belowQty;
-    below_temp_prcnt.value = belowPrcnt;
+    ovrl_above_temp_prcnt.value = abovePrcnt;
+    ovrl_below_temp_qty.value = belowQty;
+    ovrl_below_temp_prcnt.value = belowPrcnt;
 
     calculateLeftRightTemps(aboveQty, belowQty);
 }
@@ -375,14 +392,15 @@ function calculateLeftRightTemps(aboveQty, belowQty) {
     total_right_qty.value = rightTotal;
 }
 
-above_temp_qty.addEventListener("input", calculateOverallTemps);
+ovrl_above_temp_qty.addEventListener("input", calculateOverallTemps);
 left_above_temp_qty.addEventListener("input", () => {
-    let aboveQty = parseInt(above_temp_qty.value) || 0;
-    let belowQty = parseInt(below_temp_qty.value) || 0;
+    let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
+    let belowQty = parseInt(ovrl_below_temp_qty.value) || 0;
     calculateLeftRightTemps(aboveQty, belowQty);
 });
+
 left_below_temp_qty.addEventListener("input", () => {
-    let aboveQty = parseInt(above_temp_qty.value) || 0;
-    let belowQty = parseInt(below_temp_qty.value) || 0;
+    let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
+    let belowQty = parseInt(ovrl_below_temp_qty.value) || 0;
     calculateLeftRightTemps(aboveQty, belowQty);
 });
