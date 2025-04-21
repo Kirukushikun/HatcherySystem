@@ -34,27 +34,30 @@
             <h4>Entry Form</h4>
         </div>
 
+        
+
         <div class="form-input col-4">
 
             <div class="input-container column">
                 <label for="ps_no">PS no. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'ps_no'" />
             </div>
-            <!-- <div class="input-container column">
-                <label for="production_date">Production Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input type="date" id="production_date" name="production_date">
-            </div> -->
+
             <div class="input-container column">
                 <label for="set_eggs_qty">Set Egg Qty <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="number" id="set_eggs_qty" name="set_eggs_qty" placeholder="0">
             </div>
             <div class="input-container column">
                 <label for="incubator_no">Incubator No.  <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'incubator_no'" />
+                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true">
+                    <x-multiselect-dropdown :data-category="'incubator_no'" />
+                </select>
             </div>
             <div class="input-container column">
                 <label for="hatcher_no">Hatcher No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'hatcher_no'" />
+                <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true">
+                    <x-multiselect-dropdown :data-category="'hatcher_no'" />
+                </select>
             </div>
 
             <div class="input-container row">
@@ -120,7 +123,7 @@
             
         </div>
 
-        <div class="form-input col-4">
+        <div class="form-input col-5">
             <!-- <div class="input-container column">
                 <label for="pullout_date">Pull-out Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="pullout_date" name="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}">
@@ -137,6 +140,10 @@
                 <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="hatch_date" name="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">
             </div>
+            <div class="input-container column">
+                <label for="qc_date">QC Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input type="date" id="qc_date" name="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}">
+            </div>
             <div class="input-container row">
                 <div class="input-group">
                     <label for="rejected_total">Rejected Total</label>
@@ -148,6 +155,8 @@
                 </div>
             </div>
         </div>
+
+        <br>
 
         <div class="form-action">
             <button class="save-btn">Save</button>
@@ -192,7 +201,7 @@
     </div>
 
     <script src="{{asset('js/rejected-hatch.js')}}" defer></script>
-
+    <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
     <script src="{{asset('js/push-notification.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
 </body>

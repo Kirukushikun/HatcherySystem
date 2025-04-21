@@ -6,7 +6,7 @@ style.innerHTML = `
     background-color: #F6F4F1;
     border: solid 2px #e2e2e2;
     border-radius: 5px;
-    padding: 7px 12px;
+    padding: 6px 12px;
 
     font-size: 15px;
     font-weight: 300;

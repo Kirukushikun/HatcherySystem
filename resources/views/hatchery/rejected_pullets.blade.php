@@ -49,13 +49,17 @@
             </div>
 
             <div class="input-container column">
-                <label for="incubator_no">Incubator No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'incubator_no'" />
+                <label for="incubator_no">Incubator No.  <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true">
+                    <x-multiselect-dropdown :data-category="'incubator_no'" />
+                </select>
             </div>
-
+            
             <div class="input-container column">
                 <label for="hatcher_no">Hatcher No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <x-dropdown :data-category="'hatcher_no'" />
+                <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true">
+                    <x-multiselect-dropdown :data-category="'hatcher_no'" />
+                </select>
             </div>
 
             <div class="input-container row">
@@ -193,7 +197,7 @@
             </div>
         </div>
 
-        <div class="form-input col-4">
+        <div class="form-input col-5">
             <div class="input-container column">
                 <label for="production_date_from">Production Date (From)<i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="production_date_from" name="production_date_from">
@@ -202,18 +206,14 @@
                 <label for="production_date_to">Production Date (To)<i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="production_date_to" name="production_date_to">
             </div>
-            <!-- <div class="input-container column">
-                <label for="pullout_date"> Pull-out Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
-                <input type="date" name="pullout_date" id="pullout_date" value="{{ session('form_data.pullout_date', date('Y-m-d')) }}" />
-            </div> -->
             <div class="input-container column">
                 <label for="hatch_date"> Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="hatch_date" id="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}" />
             </div>
-            <!-- <div class="input-container column">
+            <div class="input-container column">
                 <label for="qc_date"> QC Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
                 <input type="date" name="qc_date" id="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}" />
-            </div> -->
+            </div>
             <div class="input-container row">
                 <div class="input-group">
                     <label for="rejected_total">Rejected Total </label>
@@ -226,9 +226,11 @@
             </div>
         </div>
 
+        <br>
+
         <div class="form-action">
-        <button class="save-btn" type="submit">Save</button>
-        <button class="reset-btn" type="reset">Reset</button>
+            <button class="save-btn" type="submit">Save</button>
+            <button class="reset-btn" type="reset">Reset</button>
         </div>
 
     </form>
@@ -271,6 +273,7 @@
         </div>
     </div>
 
+    <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
     <script src="{{asset('js/rejected-pullets.js')}}" defer></script>
     <script src="{{asset('js/push-notification.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>

@@ -35,10 +35,25 @@
             <h4>Entry Form</h4>
         </div>
 
-        <!-- <div class="form-header chamber">
+        <div class="form-input col-3">
+            <div class="input-container column">
+                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
+            </div>
+            <div class="input-container column">
+                <label for="setting_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="setting_date" id="setting_date" type="date" value="{{ session('form_data.setting_date', date('Y-m-d')) }}">
+            </div>
+            <div class="input-container column">
+                <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="hatch_date" id="hatch_date" type="date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">
+            </div>
+        </div>
+
+        <div class="form-header chamber">
             <h4>OVERALL</h4>
             <div class="line"></div>
-        </div> -->
+        </div>
 
         <div class="form-input col-4">
             <div class="input-container column">
@@ -48,7 +63,7 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="above_temp_qty">Above Temp QTY<span></span></label>
+                    <label for="above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
                     <input type="number" id="above_temp_qty" name="above_temp_qty" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -59,18 +74,13 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="below_temp_qty">Below Temp QTY<span></span></label>
+                    <label for="below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
                     <input type="number" id="below_temp_qty" name="below_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">
                     <label for="below_temp_prcnt">%</label>
                     <input type="number" id="below_temp_prcnt" name="below_temp_prcnt" placeholder="0" readonly>
                 </div>
-            </div>
-            
-            <div class="input-container column">
-                <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
             </div>
         </div>
 
@@ -87,7 +97,7 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="left_above_temp_qty">Above Temp QTY<span></span></label>
+                    <label for="left_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
                     <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -98,7 +108,7 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="left_below_temp_qty">Below Temp QTY<span></span></label>
+                    <label for="left_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
                     <input type="number" id="left_below_temp_qty" name="left_below_temp_qty" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -126,7 +136,7 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="right_above_temp_qty">Above Temp QTY<span></span></label>
+                    <label for="right_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
                     <input type="number" id="right_above_temp_qty" name="right_above_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">
@@ -137,7 +147,7 @@
 
             <div class="input-container row">
                 <div class="input-group">
-                    <label for="right_below_temp_qty">Below Temp QTY<span></span></label>
+                    <label for="right_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
                     <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0" readonly>
                 </div>
                 <div class="input-group prcnt">

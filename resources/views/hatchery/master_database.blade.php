@@ -288,7 +288,7 @@
             <form class="card c3" id="card3">
 
                 <div class="card-label">
-                    <span>3</span>
+                    <span>2</span>
                     <p>Storage Pullout Process</p>
                 </div>
 
@@ -355,8 +355,8 @@
             <form class="card c4" id="card4">
 
                 <div class="card-label">
-                    <span>4</span>
-                    <p>10 Day Candling Process</p>
+                    <span>3</span>
+                    <p>10th Day Candling Process</p>
                 </div>
 
                 <div class="card-form col-2">
@@ -402,31 +402,32 @@
             <form class="card c5" id="card5">
 
                 <div class="card-label">
-                    <span>5</span>
-                    <p>18.5 Candling Process</p>
+                    <span>4</span>
+                    <p>18th Day Candling Process</p>
                 </div>
 
                 <div class="card-form">
-
                     <div class="input-group">
-                        <label for="d18_candling_date">Day 18.5 Candling Date 
+                        <label for="d18_candling_date">Day 18.5 Candling Date  
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
+                        <input type="date" name="d18_candling_date" id="d18_candling_date">
                     </div>
                     <br>
-                    <div class="input-group">
-                        <label for="infertiles_qty">Infertiles Quantity 
-                            <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
-                            <span></span>
-                        </label>
-                        <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0">
-                    </div>
-                    <br>    
-                    <div class="input-group">
-                        <label for="embryonic_eggs_qty">Embryonic Eggs Quantity </label>
-                        <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
+                    <div class="input-container">
+                        <div class="input-group">
+                            <label for="infertiles_qty">Infertiles Quantity 
+                                <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
+                                <span></span>
+                            </label>
+                            <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="embryonic_eggs_qty">Embryonic Eggs Quantity <span></span></label>
+                            <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
+                        </div>
                     </div>
 
                 </div>
@@ -527,7 +528,7 @@
 
             <form class="card c7" id="card7">
                 <div class="card-label">
-                    <span>6</span>
+                    <span>5</span>
                     <p>Hatcher Pullout Process</p>
                 </div>
 
@@ -567,7 +568,7 @@
 
             <form class="card c8" id="card8">
                 <div class="card-label">
-                    <span>7</span>
+                    <span>6</span>
                     <p>Sexing</p>
                 </div>
 
@@ -594,7 +595,7 @@
 
             <form class="card c9" id="card9">
                 <div class="card-label">
-                    <span>8</span>
+                    <span>7</span>
                     <p>QC/QA Process Entry</p>
                 </div>
 
@@ -727,7 +728,7 @@
 
             <form class="card c11" id="card11">
                 <div class="card-label">
-                    <span>9</span>
+                    <span>8</span>
                     <p>Dispath Process Entry</p>
                 </div>
 

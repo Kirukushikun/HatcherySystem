@@ -378,6 +378,10 @@ input[type=checkbox] {
     white-space: nowrap;
 }
 
+.table-body table th b{
+    color: #AB9E91;
+}
+
 thead th:first-child {
     position: sticky;
     left: 0;
@@ -441,6 +445,14 @@ tbody td:last-child {
     font-size: 20px;
     margin-right: 7px;
     cursor: pointer;
+}
+
+.arrowup{
+    color: #00796bbd;
+}
+
+.arrowdown{
+    color: #ea4435b6;
 }
 
 #edit-action:hover{
