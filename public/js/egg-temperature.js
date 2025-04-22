@@ -210,6 +210,8 @@ function storeRecord(){
             left_below_temp_qty: document.getElementById("left_below_temp_qty").value,
             left_below_temp_prcnt: document.getElementById("left_below_temp_prcnt").value,
 
+            total_left_qty: document.getElementById("total_left_qty").value,
+
             right_ps_no: document.getElementById("right_ps_no").value,
             right_above_temp_qty: document.getElementById("right_above_temp_qty").value,
             right_above_temp_prcnt: document.getElementById("right_above_temp_prcnt").value,
@@ -224,9 +226,19 @@ function storeRecord(){
         if (data.success) {
             document.getElementById("modal").classList.remove("active");
 
-            // document.getElementById("location").value = "";
-            // document.getElementById("temperature").value = "";
-            // document.getElementById("quantity").value = "";
+            const inputIds = [
+                "temp_check_qty", "ovrl_above_temp_qty", "ovrl_above_temp_prcnt",
+                "ovrl_below_temp_qty", "ovrl_below_temp_prcnt",
+                "left_ps_no", "left_above_temp_qty", "left_above_temp_prcnt",
+                "left_below_temp_qty", "left_below_temp_prcnt", "total_left_qty",
+                "right_ps_no", "right_above_temp_qty", "right_above_temp_prcnt",
+                "right_below_temp_qty", "right_below_temp_prcnt", "total_right_qty"
+            ];
+              
+            inputIds.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) input.value = "";
+            });
             
             document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 

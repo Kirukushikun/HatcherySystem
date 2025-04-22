@@ -68,11 +68,11 @@
 
     document.addEventListener("DOMContentLoaded", function () {
 
-        // skeletonLoader();
+        skeletonLoader();
 
-        // setTimeout(() => {
-        //     loadData();
-        // }, 1000);
+        setTimeout(() => {
+            loadData();
+        }, 1000);
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("input", function (e) {
@@ -108,20 +108,60 @@
 
                 tableBody.innerHTML = '';
                 data.data.forEach(row => {
+                    let temp_check_date = new Date(row.temp_check_date).toLocaleDateString();
                     let setting_date = new Date(row.setting_date).toLocaleDateString();
-                    let temperature_check_date = new Date(row.temperature_check_date).toLocaleDateString();
+                    let hatch_date = new Date(row.hatch_date).toLocaleDateString();
+
+                    let eggTemperatureData = {
+                        left: {
+                            ps_no: 0,
+                            above_temp_qty: 0,
+                            above_temp_prcnt: 0,
+                            below_temp_qty: 0,
+                            below_temp_prcnt: 0,
+                            total_qty: 0,
+                        },
+                        right: {
+                            ps_no: 0,
+                            above_temp_qty: 0,
+                            above_temp_prcnt: 0,
+                            below_temp_qty: 0,
+                            below_temp_prcnt: 0,
+                            total_qty: 0,
+                        }
+                    }
+
+                    try {
+                        let parsedData = JSON.parse(row.egg_temperature_data);
+                        eggTemperatureData = { ...eggTemperatureData, ...parsedData }; // Merge with defaults
+                    } catch (error) {
+                        console.error("Error parsing egg_temperature_data:", error);
+                    }
 
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
                             <td>${row.id}</td>
-                            <td>${row.ps_no}</td>
+                            <td>${temp_check_date}</td>
                             <td>${setting_date}</td>
-                            <td>${row.incubator_no}</td>
-                            <td>${row.location}</td>
-                            <td>${temperature_check_date}</td>
-                            <td>${row.temperature}</td>
-                            <td>${row.quantity}</td>
-                            <td>${row.encoded_by}</td>
+                            <td>${hatch_date}</td>
+
+                            <td></td>
+                            <td>${row.temp_check_qty}</td>
+                            <td>${row.ovrl_above_temp_qty} (${Math.round(row.ovrl_above_temp_prcnt)}%)</td>
+                            <td>${row.ovrl_below_temp_qty} (${Math.round(row.ovrl_below_temp_prcnt)}%)</td>
+
+                            <td></td>
+                            <td>${eggTemperatureData.left.ps_no}</td>
+                            <td>${eggTemperatureData.left.above_temp_qty} (${eggTemperatureData.left.above_temp_prcnt}%)</td>
+                            <td>${eggTemperatureData.left.below_temp_qty} (${eggTemperatureData.left.below_temp_prcnt}%)</td>
+                            <td>${eggTemperatureData.left.total_qty} (100%)</td>
+
+                            <td></td>
+                            <td>${eggTemperatureData.right.ps_no}</td>
+                            <td>${eggTemperatureData.right.above_temp_qty} (${eggTemperatureData.right.above_temp_prcnt}%)</td>
+                            <td>${eggTemperatureData.right.below_temp_qty} (${eggTemperatureData.right.below_temp_prcnt}%)</td>
+                            <td>${eggTemperatureData.right.total_qty} (100%)</td>
+
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
                                 <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.id})"></i>

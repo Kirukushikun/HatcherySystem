@@ -21,41 +21,83 @@ class EggTemperatureController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'ps_no' => 'required|string|max:255',
-                'setting_date' => 'required|date',
-                'incubator_no' => 'required|string|max:255',
-                'location' => 'required|string|max:255',
                 'temp_check_date' => 'required|date',
-                'temperature' => 'required|string|max:255',
-                'quantity' => 'required|integer',
+                'setting_date' => 'required|date',
+                'hatch_date' => 'required|date',
+
+                'temp_check_qty' => 'required|integer',
+
+                'ovrl_above_temp_qty' => 'required|integer',
+                'ovrl_above_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'ovrl_below_temp_qty' => 'nullable|integer',
+                'ovrl_below_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+
+                'left_ps_no' => 'required|string|max:255',
+                'left_above_temp_qty' => 'nullable|integer',
+                'left_above_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'left_below_temp_qty' => 'nullable|integer',
+                'left_below_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'total_left_qty' => 'nullable|integer',
+
+                'right_ps_no' => 'required|string|max:255',
+                'right_above_temp_qty' => 'nullable|integer',
+                'right_above_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'right_below_temp_qty' => 'nullable|integer',
+                'right_below_temp_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'total_right_qty' => 'nullable|integer',
             ]);
     
     
             if ($validator->fails()) {
                 $errorMessages = $validator->errors();
-                session()->flash('form_data', $request->only(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity']));
+                session()->flash('form_data', $request->only(['temp_check_date', 'setting_date', 'hatch_date', 'temp_check_qty', 'ovrl_above_temp_qty', 'left_ps_no', 'right_ps_no']));
     
-                if ($errorMessages->hasAny(['ps_no', 'setting_date', 'incubator_no', 'location', 'temp_check_date', 'temperature', 'quantity'])) {
+                if ($errorMessages->hasAny(['temp_check_date', 'setting_date', 'hatch_date', 'temp_check_qty', 'ovrl_above_temp_qty', 'left_ps_no', 'right_ps_no'])) {
                     return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
                 }   
-                if ($errorMessages->has('quantity')) {
+                if ($errorMessages->hasAny(['quantity', 'ovrl_above_temp_qty', 'ovrl_below_temp_qty', 'left_above_temp_qty', 'left_below_temp_qty', 'right_above_temp_qty', 'right_below_temp_qty', 'total_left_qty', 'total_right_qty'])) {
                     return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a valid integer.');
                 }        
-                if ($errorMessages->hasAny(['setting_date', 'temp_check_date'])) {
+                if ($errorMessages->hasAny(['temp_check_date', 'setting_date', 'hatch_date'])) {
                     return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
                 }            
             }
     
             $validatedData = $validator->validated();
+
+            // Encode rejected hatch data as JSON
+            $egg_temperature_data = json_encode([
+                'left' => [
+                    'ps_no' => (string) ($validatedData['left_ps_no'] ?? ''),
+                    'above_temp_qty' => (int) ($validatedData['left_above_temp_qty'] ?? 0),
+                    'above_temp_prcnt' => (float) ($validatedData['left_above_temp_prcnt'] ?? 0.0),
+                    'below_temp_qty' => (int) ($validatedData['left_below_temp_qty'] ?? 0),
+                    'below_temp_prcnt' => (float) ($validatedData['left_below_temp_prcnt'] ?? 0.0),
+                    'total_qty' => (int) ($validatedData['total_left_qty'] ?? 0)
+                ],
+                'right' => [
+                    'ps_no' => (string) ($validatedData['right_ps_no'] ?? ''),
+                    'above_temp_qty' => (int) ($validatedData['right_above_temp_qty'] ?? 0),
+                    'above_temp_prcnt' => (float) ($validatedData['right_above_temp_prcnt'] ?? 0.0),
+                    'below_temp_qty' => (int) ($validatedData['right_below_temp_qty'] ?? 0),
+                    'below_temp_prcnt' => (float) ($validatedData['right_below_temp_prcnt'] ?? 0.0),
+                    'total_qty' => (int) ($validatedData['total_right_qty'] ?? 0)
+                ],
+            ], JSON_NUMERIC_CHECK);
     
             $eggTemperature = new EggTemperature();
-            $eggTemperature->ps_no = $validatedData['ps_no'];
-            $eggTemperature->setting_date = $validatedData['setting_date']; 
-            $eggTemperature->incubator_no = $validatedData['incubator_no'];
-            $eggTemperature->location = $validatedData['location'];
-            $eggTemperature->temperature = $validatedData['temperature'];
-            $eggTemperature->temperature_check_date = $validatedData['temp_check_date'];
-            $eggTemperature->quantity = $validatedData['quantity'];
+            $eggTemperature->temp_check_date = $validatedData['temp_check_date']; 
+            $eggTemperature->setting_date = $validatedData['setting_date'];
+            $eggTemperature->hatch_date = $validatedData['hatch_date'];
+
+            $eggTemperature->temp_check_qty = $validatedData['temp_check_qty']; 
+            $eggTemperature->ovrl_above_temp_qty = $validatedData['ovrl_above_temp_qty'];
+            $eggTemperature->ovrl_above_temp_prcnt = $validatedData['ovrl_above_temp_prcnt'];
+            $eggTemperature->ovrl_below_temp_qty = $validatedData['ovrl_below_temp_qty'];
+            $eggTemperature->ovrl_below_temp_prcnt = $validatedData['ovrl_below_temp_prcnt'];
+
+            $eggTemperature->egg_temperature_data = $egg_temperature_data;
+
             $eggTemperature->save();
     
             //Audit Trails
