@@ -20,51 +20,51 @@ class RejectedPulletsController extends Controller
     function rejected_pullets_store(Request $request){
         try{
             $validator = Validator::make($request->all(), [
-            'ps_no' => 'required|string|max:255',
-            'production_date' => 'required|date',
-            'set_eggs_qty' => 'required|integer',
-            'incubator_no' => 'required|string|max:255',
-            'hatcher_no' => 'required|string|max:255',
-        
-            'singkit_mata' => 'nullable|integer',
-            'singkit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-        
-            'wala_mata' => 'nullable|integer',
-            'wala_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-        
-            'maliit_mata' => 'nullable|integer',
-            'maliit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-        
-            'malaki_mata' => 'nullable|integer',
-            'malaki_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-        
-            'unhealed_navel' => 'nullable|integer',
-            'unhealed_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'ps_no' => 'required|string|max:255',
+                'set_eggs_qty' => 'required|integer',
+                'incubator_no' => 'required|array',
+                'hatcher_no' => 'required|array',
+            
+                'singkit_mata' => 'nullable|integer',
+                'singkit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'wala_mata' => 'nullable|integer',
+                'wala_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'maliit_mata' => 'nullable|integer',
+                'maliit_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'malaki_mata' => 'nullable|integer',
+                'malaki_mata_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'unhealed_navel' => 'nullable|integer',
+                'unhealed_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'cross_beak' => 'nullable|integer',
-            'cross_beak_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'cross_beak' => 'nullable|integer',
+                'cross_beak_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'small_chick' => 'nullable|integer',
-            'small_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'small_chick' => 'nullable|integer',
+                'small_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'weak_chick' => 'nullable|integer',
-            'weak_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'weak_chick' => 'nullable|integer',
+                'weak_chick_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'black_bottons' => 'nullable|integer',
-            'black_bottons_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'black_bottons' => 'nullable|integer',
+                'black_bottons_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'string_navel' => 'nullable|integer',
-            'string_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'string_navel' => 'nullable|integer',
+                'string_navel_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
 
-            'bloated' => 'nullable|integer',
-            'bloated_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-        
-            'pullout_date' => 'required|date',
-            'hatch_date' => 'required|date',
-            'qc_date' => 'required|date',
-        
-            'rejected_total' => 'required|integer',
-            'rejected_total_prcnt' => 'required|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+                'bloated' => 'nullable|integer',
+                'bloated_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
+            
+                'production_date_from' => 'required|date',
+                'production_date_to' => 'required|date',
+                'hatch_date' => 'required|date',
+                'qc_date' => 'required|date',
+            
+                'rejected_total' => 'required|integer',
+                'rejected_total_prcnt' => 'required|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
             ]);
 
             if($validator->fails()){
@@ -142,16 +142,17 @@ class RejectedPulletsController extends Controller
             // Create a new RejectedPullets record
             $rejectedPullets = new RejectedPullets();
             $rejectedPullets->ps_no = $validatedData['ps_no'];
-            $rejectedPullets->production_date = $validatedData['production_date'];
             $rejectedPullets->set_eggs_qty = $validatedData['set_eggs_qty'];
             $rejectedPullets->incubator_no = $validatedData['incubator_no'];
             $rejectedPullets->hatcher_no = $validatedData['hatcher_no'];
 
             $rejectedPullets->rejected_pullets_data = $rejected_pullets_data;
 
-            $rejectedPullets->pullout_date = $validatedData['pullout_date'];
+            $rejectedPullets->production_date_from = $validatedData['production_date_from'];
+            $rejectedPullets->production_date_to = $validatedData['production_date_to'];
             $rejectedPullets->hatch_date = $validatedData['hatch_date'];
             $rejectedPullets->qc_date = $validatedData['qc_date'];
+
             $rejectedPullets->rejected_total = $validatedData['rejected_total'];
             $rejectedPullets->rejected_total_percentage = $validatedData['rejected_total_prcnt'];
             

@@ -241,6 +241,13 @@ document.addEventListener("click", function (event) {
 });
 
 function storeRecord(){
+
+    let incubatornoValues = Array.from(document.getElementById('incubator_no').selectedOptions)
+    .map(option => option.value);
+
+    let hatchernoValues = Array.from(document.getElementById('hatcher_no').selectedOptions)
+    .map(option => option.value);
+
     fetch("/rejected-pullets/store", {
         method: "POST",
         headers: {
@@ -250,10 +257,9 @@ function storeRecord(){
         body: JSON.stringify({
 
             ps_no: document.getElementById("ps_no").value,
-            production_date: document.getElementById("production_date").value,
             set_eggs_qty: document.getElementById("set_eggs_qty").value,
-            incubator_no: document.getElementById("incubator_no").value,
-            hatcher_no: document.getElementById("hatcher_no").value,
+            incubator_no: incubatornoValues,
+            hatcher_no: hatchernoValues,
 
             singkit_mata: document.getElementById("singkit_mata").value,
             singkit_mata_prcnt: document.getElementById("singkit_mata_prcnt").value,
@@ -288,10 +294,9 @@ function storeRecord(){
             bloated: document.getElementById("bloated").value,
             bloated_prcnt: document.getElementById("bloated_prcnt").value,
 
-            pullout_date: document.getElementById("pullout_date").value,
-
+            production_date_from: document.getElementById("production_date_from").value,
+            production_date_to: document.getElementById("production_date_to").value,
             hatch_date: document.getElementById("hatch_date").value,
-
             qc_date: document.getElementById("qc_date").value,
 
             rejected_total: document.getElementById("rejected_total").value,

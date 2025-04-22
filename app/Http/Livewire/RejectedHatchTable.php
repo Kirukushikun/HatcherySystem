@@ -49,6 +49,22 @@ class RejectedHatchTable extends Component
         //Pagination Handling
         $data = $query->paginate(10);
 
+        // Decode incubator_no for each record if it's JSON
+        $data->getCollection()->transform(function ($item) {
+            if (is_string($item->incubator_no) && str_starts_with($item->incubator_no, '[')) {
+                $item->incubator_no = json_decode($item->incubator_no);
+            }
+            return $item;
+        });
+
+        // Decode hatcher_no for each record if it's JSON
+        $data->getCollection()->transform(function ($item) {
+            if (is_string($item->hatcher_no) && str_starts_with($item->hatcher_no, '[')) {
+                $item->hatcher_no = json_decode($item->hatcher_no);
+            }
+            return $item;
+        });
+
         return response()->json([
             'data' => $data->items(),
             'current_page' => $data->currentPage(),

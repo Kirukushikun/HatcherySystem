@@ -30,15 +30,18 @@ class RejectedPullets extends Model
     ];
 
     protected $casts = [
-        'rejected_pullets_data' => 'array',
-        
         'is_deleted' => 'boolean',
-        'production_date' => 'date',
-        'pullout_date' => 'date',
-        'hatch_date' => 'date',
-        'qc_date' => 'date',
-
         'set_eggs_qty' => 'integer',
+        'incubator_no' => 'array',
+        'hatcher_no' => 'array',
+
+        'rejected_pullets_data' => 'array',
+
+        'production_date_from' => 'date',
+        'production_date_to' => 'date',
+        'hatch_date' => 'date',        
+        'qc_date' => 'date',
+        
         'rejected_total' => 'integer',
         'rejected_total_percentage' => 'decimal:1',
     ];

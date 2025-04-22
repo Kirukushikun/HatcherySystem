@@ -16,15 +16,17 @@ return new class extends Migration
             $table->boolean('is_deleted')->default(false);
 
             $table->string('ps_no');
-            $table->date('production_date');
             $table->integer('set_eggs_qty');
-            $table->string("incubator_no");
-            $table->string("hatcher_no");
+            $table->json("incubator_no");
+            $table->json("hatcher_no");
 
             $table->json("rejected_hatch_data");
 
-            $table->date("pullout_date");
+            $table->date("production_date_from");
+            $table->date("production_date_to");
             $table->date("hatch_date");
+            $table->date("qc_date");
+            
             $table->integer("rejected_total");
             $table->decimal('rejected_total_percentage', 4, 1);
             // $table->decimal('rejected_total_percentage', 6, 2);

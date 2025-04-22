@@ -17,10 +17,9 @@ class RejectedHatchController extends Controller
         try{
             $validator = Validator::make($request->all(), [
                 'ps_no' => 'required|string|max:255',
-                'production_date' => 'required|date',
                 'set_eggs_qty' => 'required|integer',
-                'incubator_no' => 'required|string|max:255',
-                'hatcher_no' => 'required|string|max:255',
+                'incubator_no' => 'required|array',
+                'hatcher_no' => 'required|array',
             
                 'unhatched' => 'nullable|integer',
                 'unhatched_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
@@ -36,9 +35,11 @@ class RejectedHatchController extends Controller
             
                 'rotten' => 'nullable|integer',
                 'rotten_prcnt' => 'nullable|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
-            
-                'pullout_date' => 'required|date',
+
+                'production_date_from' => 'required|date',
+                'production_date_to' => 'required|date',
                 'hatch_date' => 'required|date',
+                'qc_date' => 'required|date',
             
                 'rejected_total' => 'required|integer',
                 'rejected_total_prcnt' => 'required|numeric|min:0|max:100|regex:/^\d{1,3}(\.\d{1})?$/',
@@ -95,15 +96,17 @@ class RejectedHatchController extends Controller
             // Create a new RejectedHatch record
             $rejectedHatch = new RejectedHatch();
             $rejectedHatch->ps_no = $validatedData['ps_no'];
-            $rejectedHatch->production_date = $validatedData['production_date'];
             $rejectedHatch->set_eggs_qty = $validatedData['set_eggs_qty'];
             $rejectedHatch->incubator_no = $validatedData['incubator_no'];
             $rejectedHatch->hatcher_no = $validatedData['hatcher_no'];
     
             $rejectedHatch->rejected_hatch_data = $rejected_hatch_data;
-    
-            $rejectedHatch->pullout_date = $validatedData['pullout_date'];
+            
+            $rejectedHatch->production_date_from = $validatedData['production_date_from'];
+            $rejectedHatch->production_date_to = $validatedData['production_date_to'];
             $rejectedHatch->hatch_date = $validatedData['hatch_date'];
+            $rejectedHatch->qc_date = $validatedData['qc_date'];
+            
             $rejectedHatch->rejected_total = $validatedData['rejected_total'];
             $rejectedHatch->rejected_total_percentage = $validatedData['rejected_total_prcnt'];
             

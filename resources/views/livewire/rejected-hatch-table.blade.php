@@ -3,11 +3,8 @@
         <tr>
             <th>No.</th>
             <th>PS No.</th>
-            <th>Production Date</th>
             <th>Incubator No.</th>
             <th>Hatcher No.</th>
-            <th>Pullout Date</th>
-            <th>Hatch Date</th>
             <th>Set Egg QTY</th>
 
             <th>Unhatched</th>
@@ -23,6 +20,11 @@
 
             <th>Total</th>
             <th>Total Rejects %</th>
+
+            <th>Production Date (From)</th>
+            <th>Production Date (To)</th>
+            <th>Hatch Date</th>
+            <th>QC Date</th>
 
             <!-- <th>Encoded/Modified By</th>
             <th>Date Encoded/Modified</th>
@@ -82,9 +84,10 @@
 
                 tableBody.innerHTML = '';
                 data.data.forEach(row => {
-                    let production_date = new Date(row.production_date).toLocaleDateString();
-                    let pullout_date = new Date(row.pullout_date).toLocaleDateString();
+                    let production_date_from = new Date(row.production_date_from).toLocaleDateString();
+                    let production_date_to = new Date(row.production_date_to).toLocaleDateString();
                     let hatch_date = new Date(row.hatch_date).toLocaleDateString();
+                    let qc_date = new Date(row.qc_date).toLocaleDateString();
 
                     // Parse rejected_hatch_data JSON
                     let rejectedHatchData = {
@@ -106,11 +109,18 @@
                         <tr id="row-${row.id}">
                             <td>${row.id}</td>
                             <td>${row.ps_no}</td>
-                            <td>${production_date}</td>
-                            <td>${row.incubator_no}</td>
-                            <td>${row.hatcher_no}</td>
-                            <td>${pullout_date}</td>
-                            <td>${hatch_date}</td>
+                            <td class="tag-container">
+                                ${row.incubator_no.map(h => {
+                                    const width = h < 10 ? '3ch' : '4ch';
+                                    return `<span style="width:${width};">${h}</span>`;
+                                }).join(' ')}
+                            </td>
+                            <td class="tag-container">
+                                ${row.hatcher_no.map(h => {
+                                    const width = h < 10 ? '3ch' : '4ch';
+                                    return `<span style="width:${width};">${h}</span>`;
+                                }).join(' ')}
+                            </td>
                             <td>${row.set_eggs_qty}</td>
 
                             <td>${rejectedHatchData.unhatched.qty}</td>
@@ -127,6 +137,10 @@
                             <td>${row.rejected_total}</td>
                             <td>${row.rejected_total_percentage}%</td>
 
+                            <td>${production_date_from}</td>
+                            <td>${production_date_to}</td>
+                            <td>${hatch_date}</td>
+                            <td>${qc_date}</td>
 
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
