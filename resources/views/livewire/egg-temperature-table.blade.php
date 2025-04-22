@@ -2,11 +2,6 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>Temp Check Date</th>
-            <th>Setting Date</th>
-            <th>Hatch Date</th>
-            
-            <th><b>OVERALL</b></th>
             <th>Temp Check QTY</th>
             <th><i class="fa-solid fa-arrow-up arrowup"></i> Temperature 100.5 °F QTY</th>
             <th><i class="fa-solid fa-arrow-down arrowdown"></i> Temperature 100.4 °F QTY</th>
@@ -23,39 +18,15 @@
             <th><i class="fa-solid fa-arrow-down arrowdown"></i> Temperature 100.4 °F QTY</th>
             <th>Total Right QTY</th>
 
+            <th>Temp Check Date</th>
+            <th>Setting Date</th>
+            <th>Hatch Date</th>
+
             <th>Action</th>
         </tr>
     </thead>
     
     <tbody id="table-body">
-        <tr>
-            <td>1</td>
-            <td>22/04/2025</td>
-            <td>22/04/2025</td>
-            <td>22/04/2025</td>
-
-            <td></td>
-            <td>5000</td>
-            <td>2000 (40%)</td>
-            <td>3000 (60%)</td>
-            
-            <td></td>
-            <td>94</td>
-            <td>1000 (56%)</td>
-            <td>800 (44%)</td>
-            <td>1800 (100%)</td>
-
-            <td></td>
-            <td>94</td>
-            <td>1000 (31%)</td>
-            <td>2200 (69%)</td>
-            <td>3200 (100%)</td>
-
-            <td class="datalist-actions">
-                <i class="fa-regular fa-pen-to-square load" id="edit-action"></i>
-                <i class="fa-regular fa-trash-can" id="delete-action"></i>
-            </td>
-        </tr>
     </tbody>
 </table>
 
@@ -141,11 +112,6 @@
                     tableBody.innerHTML += `
                         <tr id="row-${row.id}">
                             <td>${row.id}</td>
-                            <td>${temp_check_date}</td>
-                            <td>${setting_date}</td>
-                            <td>${hatch_date}</td>
-
-                            <td></td>
                             <td>${row.temp_check_qty}</td>
                             <td>${row.ovrl_above_temp_qty} (${Math.round(row.ovrl_above_temp_prcnt)}%)</td>
                             <td>${row.ovrl_below_temp_qty} (${Math.round(row.ovrl_below_temp_prcnt)}%)</td>
@@ -161,6 +127,10 @@
                             <td>${eggTemperatureData.right.above_temp_qty} (${eggTemperatureData.right.above_temp_prcnt}%)</td>
                             <td>${eggTemperatureData.right.below_temp_qty} (${eggTemperatureData.right.below_temp_prcnt}%)</td>
                             <td>${eggTemperatureData.right.total_qty} (100%)</td>
+
+                            <td>${temp_check_date}</td>
+                            <td>${setting_date}</td>
+                            <td>${hatch_date}</td>
 
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>

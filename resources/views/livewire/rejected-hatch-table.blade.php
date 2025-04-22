@@ -8,15 +8,10 @@
             <th>Set Egg QTY</th>
 
             <th>Unhatched</th>
-            <th>Unhatched %</th>
             <th>Pips</th>
-            <th>Pips %</th>
             <th>Rejected Chicks</th>
-            <th>Rejected Chicks %</th>
             <th>Dead Chicks</th>
-            <th>Dead Chicks %</th>
             <th>Rotten</th>
-            <th>Rotten %</th>
 
             <th>Total</th>
             <th>Total Rejects %</th>
@@ -123,16 +118,11 @@
                             </td>
                             <td>${row.set_eggs_qty}</td>
 
-                            <td>${rejectedHatchData.unhatched.qty}</td>
-                            <td>${rejectedHatchData.unhatched.percentage}%</td>
-                            <td>${rejectedHatchData.pips.qty}</td>
-                            <td>${rejectedHatchData.pips.percentage}%</td>
-                            <td>${rejectedHatchData.rejected_chicks.qty}</td>
-                            <td>${rejectedHatchData.rejected_chicks.percentage}%</td>
-                            <td>${rejectedHatchData.dead_chicks.qty}</td>
-                            <td>${rejectedHatchData.dead_chicks.percentage}%</td>
-                            <td>${rejectedHatchData.rotten.qty}</td>
-                            <td>${rejectedHatchData.rotten.percentage}%</td>
+                            <td>${rejectedHatchData.unhatched.qty} (${rejectedHatchData.unhatched.percentage}%)</td>
+                            <td>${rejectedHatchData.pips.qty} (${rejectedHatchData.pips.percentage}%)</td>
+                            <td>${rejectedHatchData.rejected_chicks.qty} (${rejectedHatchData.rejected_chicks.percentage}%)</td>
+                            <td>${rejectedHatchData.dead_chicks.qty} (${rejectedHatchData.dead_chicks.percentage}%)</td>
+                            <td>${rejectedHatchData.rotten.qty} (${rejectedHatchData.rotten.percentage}%)</td>
                             
                             <td>${row.rejected_total}</td>
                             <td>${row.rejected_total_percentage}%</td>

@@ -432,6 +432,7 @@ tbody td:last-child {
     /* background-color: white; */
     border-top: solid #f3f3f3 2px;
     color: #583925;
+    white-space: nowrap;
 }
 
 
