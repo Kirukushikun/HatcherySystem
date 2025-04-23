@@ -2,17 +2,14 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>1. Egg Collection</th>  
-
-            <th>2. Storage Classification</th>  
-            <th>3. Storage Retrieval</th>  
-            <th>4. Setter Entry</th>  
-            <th>5. Candling Entry</th>  
-            <th>5.1 Eggshell Temperature Check</th>  
-            <th>6. Hatcher Retrieval</th>  
-            <th>7. Chick Sexing</th>  
-            <th>8. QC/QA Inspection</th>  
-            <th>9. Dispatch Entry</th>  
+            <th>1. Egg Collection</th>   
+            <th>2. Storage Retrieval</th>  
+            <th>3. Setter Entry</th>  
+            <th>4. Candling Entry</th>  
+            <th>5. Hatcher Retrieval</th>  
+            <th>6. Chick Sexing</th>  
+            <th>7. QC/QA Inspection</th>  
+            <th>8. Dispatch Entry</th>  
             <th>Hatch Forecasting</th>
 
             <th>Encoded/Modified By</th>
@@ -35,7 +32,7 @@
     let sortOrder = "desc"; // Default to desc
 
     document.addEventListener('DOMContentLoaded', () => {
-        loadData();
+        // loadData();
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("change", function (e) {

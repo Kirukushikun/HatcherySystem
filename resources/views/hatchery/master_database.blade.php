@@ -200,10 +200,9 @@
             <a href="#card3"><div></div><p>3</p></a>
             <a href="#card4"><div></div><p>4</p></a>
             <a href="#card5"><div></div><p>5</p></a>
-            <a href="#card7"><div></div><p>6</p></a>
-            <a href="#card8"><div></div><p>7</p></a>
-            <a href="#card9"><div></div><p>8</p></a>
-            <a href="#card11"><div></div><p>9</p></a>
+            <a href="#card6"><div></div><p>6</p></a>
+            <a href="#card7"><div></div><p>7</p></a>
+            <a href="#card8"><div></div><p>8</p></a>
             <a href="#card10"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
             <a href="#card13"><div></div><i class="fa-solid fa-table"></i></a>
         </div>
@@ -254,38 +253,7 @@
 
             </form>
 
-            <!-- <form class="card c2" id="card2">
-                <div class="card-label">
-                    <span>2</span>
-                    <p>Classification for Storage</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-container row">
-                        <div class="input-group">
-                            <label for="non_settable_eggs">Non-settable Eggs</label>
-                            <input type="number" name="non_settable_eggs" id="non_settable_eggs" value="0">
-                        </div>
-                        <div class="input-group">
-                            <label for="settable_eggs">Settable Eggs</label>
-                            <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" readonly>
-                        </div>
-                    </div>
-                    
-                    <br>
-
-                    <div class="input-group">
-                        <label for="remaining_balance">Remaining Balance</label>
-                        <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" readonly>
-                    </div>
-                </div>
-
-                <div class="form-action">
-                    <button class="save-btn" type="submit">Save</button>
-                </div>
-            </form> -->
-
-            <form class="card c3" id="card3">
+            <form class="card c2" id="card2">
 
                 <div class="card-label">
                     <span>2</span>
@@ -352,7 +320,7 @@
 
             </form>
 
-            <form class="card c4" id="card4">
+            <form class="card c3" id="card3">
 
                 <div class="card-label">
                     <span>3</span>
@@ -399,7 +367,7 @@
 
             </form>
 
-            <form class="card c5" id="card5">
+            <form class="card c4" id="card4">
 
                 <div class="card-label">
                     <span>4</span>
@@ -412,7 +380,7 @@
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="d18_candling_date" id="d18_candling_date">
+                        <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
                     </div>
                     <br>
                     <div class="input-container">
@@ -439,94 +407,7 @@
 
             </form>
 
-            <!-- <form class="card c6" id="card6">
-
-                <div class="card-label">
-                    <span>5.1</span>
-                    <p>Egg Shell Temperature Check</p>
-                </div>
-
-                <div class="card-form">
-                    <div class="input-container">
-                
-                        <label for="">TOP LOCATION </label>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="top_above_temp_qty">37.8 <span></span></label>
-                                <input type="number" name="top_above_temp_qty" id="top_above_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="top_above_temp_prcnt">%</label>
-                                <input type="text" name="top_above_temp_prcnt" id="top_above_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="top_below_temp_qty">37.7 <span></span></label>
-                                <input type="number" name="top_below_temp_qty" id="top_below_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="top_below_temp_prcnt">%</label>
-                                <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                    </div>
-                    <br>
-                    <div class="input-container">
-                        <label for="">MID LOCATION </label>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="mid_above_temp_qty">37.8 <span></span></label>
-                                <input type="number" name="mid_above_temp_qty" id="mid_above_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="mid_above_temp_prcnt">%</label>
-                                <input type="text" name="mid_above_temp_prcnt" id="mid_above_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="mid_below_temp_qty">37.7 <span></span></label>
-                                <input type="number" name="mid_below_temp_qty" id="mid_below_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="mid_below_temp_prcnt">%</label>
-                                <input type="text" name="mid_below_temp_prcnt" id="mid_below_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                    </div>
-                    <br>
-                    <div class="input-container">
-                        <label for="">LOW LOCATION </label>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="low_above_temp_qty">37.8 <span></span></label>
-                                <input type="number" name="low_above_temp_qty" id="low_above_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="low_above_temp_prcnt">%</label>
-                                <input type="text" name="low_above_temp_prcnt" id="low_above_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                        <div class="input-container">
-                            <div class="input-group">
-                                <label for="low_below_temp_qty">37.7 <span></span></label>
-                                <input type="number" name="low_below_temp_qty" id="low_below_temp_qty" placeholder="0">
-                            </div>   
-                            <div class="input-group prcnt">
-                                <label for="low_below_temp_prcnt">%</label>
-                                <input type="text" name="low_below_temp_prcnt" id="low_below_temp_prcnt" placeholder="0" readonly>
-                            </div>                    
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-action">
-                    <button class="save-btn" type="submit">Save</button>
-                </div>
-            </form> -->
-
-            <form class="card c7" id="card7">
+            <form class="card c5" id="card5">
                 <div class="card-label">
                     <span>5</span>
                     <p>Hatcher Pullout Process</p>
@@ -545,7 +426,7 @@
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="hatcher_date" id="hatcher_date">
+                        <input type="date" name="hatcher_date" id="hatcher_date" readonly>
                     </div>
                     <div class="input-group">
                         <label for="rejected_hatch_qty">Rejected Hatch Qty 
@@ -566,7 +447,7 @@
                 </div>
             </form>
 
-            <form class="card c8" id="card8">
+            <form class="card c6" id="card6">
                 <div class="card-label">
                     <span>6</span>
                     <p>Sexing</p>
@@ -593,7 +474,7 @@
                 </div>
             </form>
 
-            <form class="card c9" id="card9">
+            <form class="card c7" id="card7">
                 <div class="card-label">
                     <span>7</span>
                     <p>QC/QA Process Entry</p>
@@ -726,7 +607,7 @@
             
             </form>
 
-            <form class="card c11" id="card11">
+            <form class="card c8" id="card8">
                 <div class="card-label">
                     <span>8</span>
                     <p>Dispath Process Entry</p>
@@ -800,7 +681,7 @@
     <script src="{{asset('js/master_database_form.js')}}" defer></script>
     <script src="{{asset('js/master_database_formula.js')}}" defer></script>
     
-    <script>
+    <!-- <script>
         //GENERATE IN PROGRESS BATCH DATA
         document.addEventListener("DOMContentLoaded", function() {
             let batchData = @json($batchData); // Laravel safely converts PHP to JSON
@@ -811,12 +692,7 @@
                     let processData = record.process_data || {};
 
                     // Example: Accessing "collected_eggs" data if step is 1
-                    if (step === 2 && processData.collected_eggs) {
-                        document.getElementById("ps_no").value = processData.collected_eggs.ps_no;
-                        document.getElementById("collected_qty").value = processData.collected_eggs.collected_qty;
-                        document.getElementById("production_date_to").value = processData.collected_eggs.production_date_to;
-                        document.getElementById("production_date_from").value = processData.collected_eggs.production_date_from;
-                    } else if (step === 3 && processData.classification_for_storage) {
+                    if (step === 3 && processData.classification_for_storage) {
                         document.getElementById("non_settable_eggs").value = processData.classification_for_storage.non_settable_eggs;
                         document.getElementById("settable_eggs").value = processData.classification_for_storage.settable_eggs;
                         document.getElementById("remaining_balance").value = processData.classification_for_storage.remaining_balance;
@@ -842,21 +718,6 @@
                         document.getElementById("d18_candling_date").value = processData.candling_process.d18_candling_date;
                         document.getElementById("infertiles_qty").value = processData.candling_process.infertiles_qty;
                         document.getElementById("embryonic_eggs_qty").value = processData.candling_process.embryonic_eggs_qty;
-                    } else if (step === 7 && processData.egg_temperature_check){
-                        document.getElementById("top_above_temp_qty").value = processData.egg_temperature_check.top_above_temp_qty;
-                        document.getElementById("top_above_temp_prcnt").value = processData.egg_temperature_check.top_above_temp_prcnt;
-                        document.getElementById("top_below_temp_qty").value = processData.egg_temperature_check.top_below_temp_qty;
-                        document.getElementById("top_below_temp_prcnt").value = processData.egg_temperature_check.top_below_temp_prcnt;
-
-                        document.getElementById("mid_above_temp_qty").value = processData.egg_temperature_check.mid_above_temp_qty;
-                        document.getElementById("mid_above_temp_prcnt").value = processData.egg_temperature_check.mid_above_temp_prcnt;
-                        document.getElementById("mid_below_temp_qty").value = processData.egg_temperature_check.mid_below_temp_qty;
-                        document.getElementById("mid_below_temp_prcnt").value = processData.egg_temperature_check.mid_below_temp_prcnt;
-
-                        document.getElementById("low_above_temp_qty").value = processData.egg_temperature_check.low_above_temp_qty;
-                        document.getElementById("low_above_temp_prcnt").value = processData.egg_temperature_check.low_above_temp_prcnt;
-                        document.getElementById("low_below_temp_qty").value = processData.egg_temperature_check.low_below_temp_qty;
-                        document.getElementById("low_below_temp_prcnt").value = processData.egg_temperature_check.low_below_temp_prcnt;
                     } else if (step === 8 && processData.hatcher_pullout){
                         document.getElementById("hatcher_no").value = processData.hatcher_pullout.hatcher_no;
                         document.getElementById("hatcher_date").value = processData.hatcher_pullout.hatcher_date;
@@ -903,12 +764,7 @@
             }
 
             function generateCurrentStepData(){
-                if (currentStep == 2) {
-                    let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
-
-                    classificationStorage.settable_eggs.value = collectedQty;
-                    classificationStorage.remaining_balance.value = collectedQty;
-                } else if (currentStep == 4) {
+                if (currentStep == 4) {
                     let pulloutDate = new Date(pulloutStorage.pullout_date.value); // Get pullout date
     
                     // Calculate Day 10 Candling Date
@@ -934,7 +790,7 @@
             generateCurrentStepData();
             
         });
-    </script>
+    </script> -->
 
 
     <script src="{{asset('js/loading-screen.js')}}" defer></script>

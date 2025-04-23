@@ -170,7 +170,7 @@ function showModal(button, targetID = null) {
                         <i class="fa-solid fa-file-csv csv"></i>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="confirm-button csv-btn" onclick="">
+                        <button type="button" class="confirm-button csv-btn" onclick="window.location.href='/egg-collection/csv'">
                             Generate CSV
                         </button>
                     </div>

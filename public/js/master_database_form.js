@@ -150,7 +150,7 @@ function updateFormListener() {
         });
 
         // Show only if it's the current step or exceptions
-        if (formStep === currentStep || formStep === 6 || formStep === 10) {
+        if (formStep === currentStep || formStep === 10) {
             formAction.style.display = hasValues ? "flex" : "none";
         } else {
             formAction.style.display = "none";
@@ -198,16 +198,14 @@ function validateForm() {
     // Define required fields per form ID
     let requiredFields = {
         "card1": ["ps_no", "collected_qty", "production_date_from", "production_date_to"],
-        "card2": ["non_settable_eggs"],
-        "card3": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
-        "card4": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
-        "card5": ["d18_candling_date", "infertiles_qty"],
-        "card6": ["top_above_temp_qty", "top_below_temp_qty", "mid_above_temp_qty", "mid_below_temp_qty", "low_above_temp_qty", "low_below_temp_qty"],
-        "card7": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
-        "card8": ["cock_qty"],
-        "card9": ["qc_date", "rejected_dop_qty"],
+        "card2": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
+        "card3": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
+        "card4": ["d18_candling_date", "infertiles_qty"],
+        "card5": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
+        "card6": ["cock_qty"],
+        "card7": ["qc_date", "rejected_dop_qty"],
+        "card8": ["dispatch_prime_qty"],
         "card10": ["infertile_prcnt", "frcst_cock_prcnt", "frcst_rejected_hatch_prcnt", "frcst_rejected_dop_prcnt"],
-        "card11": ["dispatch_prime_qty"],
     };
 
     // Get fields for the currently active form
@@ -238,7 +236,7 @@ function validateForm() {
 }
 
 /*** Step Progression ***/
-const skippableCards = ["card6", "card10"];
+const skippableCards = ["card10"];
 const alwaysEnabledCards = ["card10", "card13"];
 const allCards = document.querySelectorAll(".card");
 
@@ -313,12 +311,11 @@ function disableCard(card) {
 }
 
 
-
 function lockCompletedSteps(currentStep) {
     document.querySelectorAll(".card").forEach(card => {
         let stepNumber = parseInt(card.id.replace("card", "")); // Extract step number
 
-        let exemptSteps = [6, 10]; // Skippable but needs its own condition
+        let exemptSteps = [10]; // Skippable but needs its own condition
 
         if (stepNumber < currentStep && !exemptSteps.includes(stepNumber)) {
             // Disable all inputs inside the card
@@ -335,10 +332,10 @@ function lockCompletedSteps(currentStep) {
             card.style.borderColor = "gray";
         }
         
-        // **Handle Card 6 & 10 based on existing data**
-        if (exemptSteps.includes(stepNumber)) {
-            checkIfDataExists(batchNumber, stepNumber, card);
-        }
+        // **Handle 10 based on existing data**
+        // if (exemptSteps.includes(stepNumber)) {
+        //     checkIfDataExists(batchNumber, stepNumber, card);
+        // }
     });
 }
 
@@ -358,40 +355,39 @@ function simulateFormSave() {
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if (stepNumber !== 6 && stepNumber !== 10) {
+    if (stepNumber !== 10) {
         proceedToNextStep();
     } else {
-        // If it's not Card 6 or 10, disable it after saving
+        // If it's not Card 10, disable it after saving
         lockCompletedSteps(currentStep);
     }
 }
 
 
-function checkIfDataExists(batchNumber, stepNumber, card) {
-    let adjustedStep = stepNumber + 1;
-    fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
-        .then(response => response.json())
-        .then(data => {
-            if(card.id == "card6"){ //Only for card 6
-                if (data.exists) {
-                    // Disable Card 6 or 10 if data is already saved
-                    card.querySelectorAll("input, select, textarea").forEach(input => {
-                        input.setAttribute("readonly", true);
-                        input.setAttribute("disabled", true);
-                    });
+// function checkIfDataExists(batchNumber, stepNumber, card) {
+//     let adjustedStep = stepNumber + 1;
+//     fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
+//         .then(response => response.json())
+//         .then(data => {
+//             if(card.id == "card6"){ //Only for card 6
+//                 if (data.exists) {
+//                     // Disable Card 6 or 10 if data is already saved
+//                     card.querySelectorAll("input, select, textarea").forEach(input => {
+//                         input.setAttribute("readonly", true);
+//                         input.setAttribute("disabled", true);
+//                     });
 
-                    // Hide the save button
-                    let saveButton = card.querySelector(".form-action");
-                    if (saveButton) saveButton.style.display = "none";
+//                     // Hide the save button
+//                     let saveButton = card.querySelector(".form-action");
+//                     if (saveButton) saveButton.style.display = "none";
 
-                    // Change border color to gray
-                    card.style.borderColor = "gray";
-                }                
-            }
-
-        })
-        .catch(error => console.error("Error checking data:", error));
-}
+//                     // Change border color to gray
+//                     card.style.borderColor = "gray";
+//                 }                
+//             }
+//         })
+//         .catch(error => console.error("Error checking data:", error));
+// }
 
 function showModal(button, targetID = null) {
     if (button === "save") {
@@ -415,8 +411,8 @@ function showModal(button, targetID = null) {
         `;
 
         document.querySelector('.save-btn').addEventListener('click', () => {
-            storeRecord();
-            // simulateFormSave();
+            // storeRecord();
+            simulateFormSave();
         });
     } else if (button === "delete") {
         modal.classList.add("active");
@@ -449,11 +445,9 @@ function showModal(button, targetID = null) {
 
 const saveFunctions = {
     "card1": saveCollectedEggs,
-    "card2": saveClassificationForStorage,
     "card3": saveStoragePullout,
     "card4": saveSetterProcess,
     "card5": saveCandlingProcess,
-    "card6": saveEggTemperatureCheck,
     "card7": saveHatcherPullout,
     "card8": saveSexing,
     "card9": saveQCProcess,
@@ -473,7 +467,7 @@ function storeRecord(){
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if (stepNumber !== 6 && stepNumber !== 10) {
+    if ( stepNumber !== 10) {
         proceedToNextStep();
     } else {
         // If it's not Card 6 or 10, disable it after saving
@@ -952,9 +946,11 @@ function saveData(url, data, successMessage = null) {
     }
 
     // 🔹 Fix specific step jumps
-    else if (activeForm.id === "card6") {
-        adjustedStep = 7;
-    } else if (activeForm.id === "card10") {
+    // else if (activeForm.id === "card6") {
+    //     adjustedStep = 7;
+    // } 
+
+    else if (activeForm.id === "card10") {
         adjustedStep = 11;
     } 
     // 🔹 First-time save always starts at Step 2
@@ -1008,17 +1004,6 @@ function saveCollectedEggs() {
     saveData("/master-database/store", data, "Collected Eggs Entry Saved Successfully");
 }
 
-function saveClassificationForStorage() {
-    let data = {
-        classification_for_storage: {
-            non_settable_eggs: document.getElementById("non_settable_eggs").value,
-            settable_eggs: document.getElementById("settable_eggs").value,
-            remaining_balance: document.getElementById("remaining_balance").value,
-        }
-    }
-    saveData("/master-database/store", data, "Classification for Storage Entry Saved Successfully");
-}
-
 function saveStoragePullout() {
     let data = {
         storage_pullout: {
@@ -1070,28 +1055,6 @@ function saveCandlingProcess() {
         .then(() => {
             saveForecastedBoxes();
         });
-}
-
-function saveEggTemperatureCheck() {
-    let data = {
-        egg_temperature_check: {
-            top_above_temp_qty: document.getElementById("top_above_temp_qty").value,
-            top_above_temp_prcnt: document.getElementById("top_above_temp_prcnt").value,
-            top_below_temp_qty: document.getElementById("top_below_temp_qty").value,
-            top_below_temp_prcnt: document.getElementById("top_below_temp_prcnt").value,
-
-            mid_above_temp_qty: document.getElementById("mid_above_temp_qty").value,
-            mid_above_temp_prcnt: document.getElementById("mid_above_temp_prcnt").value,
-            mid_below_temp_qty: document.getElementById("mid_below_temp_qty").value,
-            mid_below_temp_prcnt: document.getElementById("mid_below_temp_prcnt").value,
-
-            low_above_temp_qty: document.getElementById("low_above_temp_qty").value,
-            low_above_temp_prcnt: document.getElementById("low_above_temp_prcnt").value,
-            low_below_temp_qty: document.getElementById("low_below_temp_qty").value,
-            low_below_temp_prcnt: document.getElementById("low_below_temp_prcnt").value,
-        }
-    }
-    saveData("/master-database/store", data, "Egg Shell Temperature Check Entry Saved Successfully")
 }
 
 function saveHatcherPullout(){

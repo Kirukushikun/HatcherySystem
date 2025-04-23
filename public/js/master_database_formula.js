@@ -17,12 +17,10 @@ let collectedEggs = {
     production_date_from: document.getElementById('production_date_from'),
     production_date_to: document.getElementById('production_date_to')
 };
-
-let classificationStorage = {
-    non_settable_eggs: document.getElementById('non_settable_eggs'),
-    settable_eggs: document.getElementById('settable_eggs'),
-    remaining_balance: document.getElementById('remaining_balance')
-};
+//     non_settable_eggs: document.getElementById('non_settable_eggs'),
+//     settable_eggs: document.getElementById('settable_eggs'),
+//     remaining_balance: document.getElementById('remaining_balance')
+// };
 
 let pulloutStorage = {
     pullout_date: document.getElementById('pullout_date'),
@@ -49,29 +47,9 @@ const hatcherProcess = {
     accepted_hatch_qty: document.getElementById('accepted_hatch_qty')
 };
 
-
-// Form 1
-collectedEggs.collected_qty.addEventListener('input', () => {
-    let collectedQty = Number(collectedEggs.collected_qty.value) || 0;
-
-    classificationStorage.settable_eggs.value = collectedQty;
-    classificationStorage.remaining_balance.value = collectedQty;
-});
-
-// Form 2
-classificationStorage.non_settable_eggs.addEventListener('input', () => {
-    classificationStorage.non_settable_eggs.value = Math.min(
-        classificationStorage.non_settable_eggs.value, 
-        collectedEggs.collected_qty.value
-    );
-    
-    classificationStorage.settable_eggs.value = collectedEggs.collected_qty.value - classificationStorage.non_settable_eggs.value;
-    classificationStorage.remaining_balance.value = classificationStorage.settable_eggs.value;
-});
-
 // Pullout Quantity function to update remaining balance
 pulloutStorage.settable_eggs_qty.addEventListener('input', () => {
-    let settableEggs = Number(classificationStorage.settable_eggs.value) || 0;
+    let settableEggs = Number(collectedEggs.collected_qty.value) || 0;
     
     // Ensure pulloutQty does not exceed settableEggs
     pulloutStorage.settable_eggs_qty.value = Math.min(
@@ -81,7 +59,7 @@ pulloutStorage.settable_eggs_qty.addEventListener('input', () => {
 
     let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
 
-    classificationStorage.remaining_balance.value = Math.max(0, settableEggs - pulloutQty);
+    // classificationStorage.remaining_balance.value = Math.max(0, settableEggs - pulloutQty);
     setterProcess.d10_inc_qty.value = pulloutQty;
 
     if (pulloutStorage.prime_qty.value && pulloutStorage.jp_qty.value) {
@@ -412,45 +390,6 @@ function calculatePJPBoxes(settableEggs, primeQty, jpQty, additionalDeduction = 
     BaseForecast.frcst_jr_prime.value = Math.max(jpBoxes, 0); // Ensure no negative values
 }
 
-
-let temperatureCheck = {
-    //TOP ABOVE 37.8
-    top_above_temp_qty: document.getElementById('top_above_temp_qty'),
-    top_above_temp_prcnt: document.getElementById('top_above_temp_prcnt'),
-    //TOP BELOW 37.7
-    top_below_temp_qty: document.getElementById('top_below_temp_qty'),
-    top_below_temp_prcnt: document.getElementById('top_below_temp_prcnt'),
-
-    //MID ABOVE 37.8
-    mid_above_temp_qty: document.getElementById('mid_above_temp_qty'),
-    mid_above_temp_prcnt: document.getElementById('mid_above_temp_prcnt'),
-    //MID BELOW 37.7
-    mid_below_temp_qty: document.getElementById('mid_below_temp_qty'),
-    mid_below_temp_prcnt: document.getElementById('mid_below_temp_prcnt'),
-
-    //LOW ABOVE 37.8
-    low_above_temp_qty: document.getElementById('low_above_temp_qty'),
-    low_above_temp_prcnt: document.getElementById('low_above_temp_prcnt'),
-    //LOW BELOW 37.7
-    low_below_temp_qty: document.getElementById('low_below_temp_qty'),
-    low_below_temp_prcnt: document.getElementById('low_below_temp_prcnt')
-}
-
-Object.keys(temperatureCheck).forEach(key => {
-    if (key.includes('_qty')) {
-        temperatureCheck[key].addEventListener('input', updateTemperatureCheck);
-    }
-});
-
-function updateTemperatureCheck(event) {
-    let incQty = Number(setterProcess.d10_inc_qty.value) || 0; // Base quantity
-    let targetQtyField = event.target;
-    let targetPercentField = temperatureCheck[targetQtyField.id.replace('_qty', '_prcnt')]; // Map qty field to % field
-
-    if (targetPercentField) {
-        targetPercentField.value = ((targetQtyField.value / incQty) * 100).toFixed(2);
-    }
-}   
 
 // setTimeout(() => {
 //     calculateBoxes(Number(pulloutStorage.settable_eggs_qty.value) || 0);

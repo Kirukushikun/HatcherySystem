@@ -15,7 +15,13 @@ use App\Http\Controllers\MasterDatabaseController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AdminController;
 
+use App\Http\Controllers\EditController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CSVGenerationController;
 
+use App\Http\Controllers\PDFController;
+
+//Livewire Controllers
 use App\Http\Livewire\EggCollectionTable;
 use App\Http\Livewire\EggTemperatureTable;
 use App\Http\Livewire\RejectedHatchTable;
@@ -23,11 +29,6 @@ use App\Http\Livewire\RejectedPulletsTable;
 use App\Http\Livewire\MaintenanceValueTable;
 use App\Http\Livewire\AuditTrailTable;
 use App\Http\Livewire\MasterDatabaseTable;
-
-
-use App\Http\Controllers\EditController;
-use App\Http\Controllers\PDFController;
-use App\Http\Controllers\ReportController;
 
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
@@ -134,6 +135,17 @@ Route::get('/rejected-pullets', [RejectedPulletsController::class, 'rejected_pul
 Route::post('/rejected-pullets/store', [RejectedPulletsController::class, 'rejected_pullets_store'])->name('rejected.pullets.store'); // Store
 
 Route::patch('/rejected-pullets/delete/{targetID}', [RejectedPulletsController::class, 'rejected_pullets_delete'])->name('rejected.pullets.delete'); // Delete
+
+
+// Master Database -------------------------------------------------------------------------------------------
+
+Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
+Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDatabaseController::class, 'master_database_check'])->name('master.database.check');
+
+Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch'); // Master Database Table Data Fetch
+Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store'); // Store
+Route::patch('/master-database/delete/{targetBatch}', [MasterDatabaseController::class, 'master_database_delete'])->name('master.database.delete'); // Delete
+Route::get('/master-database/view/{targetBatch}', [MasterDatabaseController::class, 'master_database_view'])->name('master.database.view'); // View
   
 
 // Admin Maintenance -------------------------------------------------------------------------------------------
@@ -172,12 +184,10 @@ Route::get('/test', function () {
     return view('hatchery.report_module');
 });
 
-Route::get('/fetch-master-database-data', [MasterDatabaseTable::class, 'fetchData'])->name('master.database.fetch');
+// CSV Generation -------------------------------------------------------------------------------------------\
 
-Route::get('/master-database', [MasterDatabaseController::class, 'master_database_index'])->name('master.database.index');
-Route::get('/master-database/data-check/{batchNumber}/{currentStep}', [MasterDatabaseController::class, 'master_database_check'])->name('master.database.check');
-
-Route::post('/master-database/store', [MasterDatabaseController::class, 'master_database_store'])->name('master.database.store');
-Route::patch('/master-database/delete/{targetBatch}', [MasterDatabaseController::class, 'master_database_delete'])->name('master.database.delete');
-Route::get('/master-database/view/{targetBatch}', [MasterDatabaseController::class, 'master_database_view'])->name('master.database.view');
+Route::get('/egg-collection/csv', [CSVGenerationController::class, 'egg_collection_csv'])->name('egg.collection.csv'); // CSV Generation
+Route::get('/egg-temperature/csv', [CSVGenerationController::class, 'egg_temperature_csv'])->name('egg.temperature.csv'); // CSV Generation
+Route::get('/rejected-hatch/csv', [CSVGenerationController::class, 'rejected_hatch_csv'])->name('rejected.hatch.csv'); // CSV Generation
+Route::get('/rejected-pullets/csv', [CSVGenerationController::class, 'rejected_pullets_csv'])->name('rejected.pullets.csv'); // CSV Generation
 

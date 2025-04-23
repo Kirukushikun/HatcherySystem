@@ -22,7 +22,6 @@ body{
 }
 label{
     white-space:nowrap;
-
 }
 
 .header{
@@ -434,7 +433,6 @@ tbody td:last-child {
     color: #583925;
     white-space: nowrap;
 }
-
 
 
 .table-body table .datalist-actions{
