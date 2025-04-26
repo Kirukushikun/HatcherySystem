@@ -8,29 +8,18 @@
             <th>Set Egg QTY</th>
             
             <th>One Eye closed</th>
-            <th>One Eye closed %</th>
             <th>No Eyes</th>
-            <th>No Eyes %</th>
             <th>Small Eyes</th>
-            <th>Small Eyes %</th>
             <th>Large Eyes</th>
-            <th>Large Eyes %</th>
             <th>Unhealed Navel</th>
-            <th>Unhealed Navel %</th>
             <th>Crossed Beak</th>
-            <th>Crossed Beak %</th>
             <th>Small Chick</th>
-            <th>Small Chick %</th>
             <th>Weak Chick</th>
-            <th>Weak Chick %</th>
             <th>Black Bottons</th>
-            <th>Black Bottons %</th>
             <th>String Navel</th>
-            <th>String Navel %</th>
             <th>Bloated</th>
-            <th>Bloated %</th>
 
-            <th>Total</th>
+            <th>Total Rejects QTY</th>
             <th>Total Rejects %</th>
 
             <th>Production Date (From)</th>
@@ -136,28 +125,17 @@
                             </td>
                             <td>${row.set_eggs_qty}</td>
 
-                            <td>${rejectedPulletsData.singkit_mata.qty}</td>
-                            <td>${rejectedPulletsData.singkit_mata.percentage}</td>
-                            <td>${rejectedPulletsData.wala_mata.qty}</td>
-                            <td>${rejectedPulletsData.wala_mata.percentage}</td>
-                            <td>${rejectedPulletsData.maliit_mata.qty}</td>
-                            <td>${rejectedPulletsData.maliit_mata.percentage}</td>
-                            <td>${rejectedPulletsData.malaki_mata.qty}</td>
-                            <td>${rejectedPulletsData.malaki_mata.percentage}</td>
-                            <td>${rejectedPulletsData.unhealed_navel.qty}</td>
-                            <td>${rejectedPulletsData.unhealed_navel.percentage}</td>
-                            <td>${rejectedPulletsData.cross_beak.qty}</td>
-                            <td>${rejectedPulletsData.cross_beak.percentage}</td>
-                            <td>${rejectedPulletsData.small_chick.qty}</td>
-                            <td>${rejectedPulletsData.small_chick.percentage}</td>
-                            <td>${rejectedPulletsData.weak_chick.qty}</td>
-                            <td>${rejectedPulletsData.weak_chick.percentage}</td>
-                            <td>${rejectedPulletsData.black_bottons.qty}</td>
-                            <td>${rejectedPulletsData.black_bottons.percentage}</td>
-                            <td>${rejectedPulletsData.string_navel.qty}</td>
-                            <td>${rejectedPulletsData.string_navel.percentage}</td>
-                            <td>${rejectedPulletsData.bloated.qty}</td>
-                            <td>${rejectedPulletsData.bloated.percentage}</td>
+                            <td>${rejectedPulletsData.singkit_mata.qty} (${rejectedPulletsData.singkit_mata.percentage}%)</td>
+                            <td>${rejectedPulletsData.wala_mata.qty} (${rejectedPulletsData.wala_mata.percentage}%)</td>
+                            <td>${rejectedPulletsData.maliit_mata.qty} (${rejectedPulletsData.maliit_mata.percentage}%)</td>
+                            <td>${rejectedPulletsData.malaki_mata.qty} (${rejectedPulletsData.malaki_mata.percentage}%)</td>
+                            <td>${rejectedPulletsData.unhealed_navel.qty} (${rejectedPulletsData.unhealed_navel.percentage}%)</td>
+                            <td>${rejectedPulletsData.cross_beak.qty} (${rejectedPulletsData.cross_beak.percentage}%)</td>
+                            <td>${rejectedPulletsData.small_chick.qty} (${rejectedPulletsData.small_chick.percentage}%)</td>
+                            <td>${rejectedPulletsData.weak_chick.qty} (${rejectedPulletsData.weak_chick.percentage}%)</td>
+                            <td>${rejectedPulletsData.black_bottons.qty} (${rejectedPulletsData.black_bottons.percentage}%)</td>
+                            <td>${rejectedPulletsData.string_navel.qty} (${rejectedPulletsData.string_navel.percentage}%)</td>
+                            <td>${rejectedPulletsData.bloated.qty} (${rejectedPulletsData.bloated.percentage}%)</td>
 
                             <td>${row.rejected_total}</td>
                             <td>${row.rejected_total_percentage}%</td>

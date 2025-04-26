@@ -50,14 +50,14 @@
 
             <div class="input-container column">
                 <label for="incubator_no">Incubator No.  <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true">
+                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true" data-multiselect="true">
                     <x-multiselect-dropdown :data-category="'incubator_no'" />
                 </select>
             </div>
             
             <div class="input-container column">
                 <label for="hatcher_no">Hatcher No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true">
+                <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true" data-multiselect="true">
                     <x-multiselect-dropdown :data-category="'hatcher_no'" />
                 </select>
             </div>
@@ -272,7 +272,8 @@
             </div>
         </div>
     </div>
-
+    
+    <script src="{{asset('js/form-functions.js')}}" defer></script>
     <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
     <script src="{{asset('js/rejected-pullets.js')}}" defer></script>
     <script src="{{asset('js/push-notification.js')}}" defer></script>

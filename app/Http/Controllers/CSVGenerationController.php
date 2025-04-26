@@ -84,4 +84,122 @@ class CSVGenerationController extends Controller
             'Content-Disposition' => "attachment; filename=\"$filename\"",
         ]);
     }
+
+    public function rejected_hatch_csv(){
+        $records = RejectedHatch::where('is_deleted', false)->get();
+
+        // Define CSV headers
+        $csv = "PS No,Settable Eggs QTY,Incubator No,Hatcher No,";
+        $csv .= "Unhatched QTY,Unhatched %, Pips QTY,Pips %,Rejected Chicks QTY,Rejected Chicks %,Dead Chicks QTY,Dead Chicks %,Rotten QTY,Rotten %,Rejected Total QTY,Rejected Total %,";
+        $csv .= "Production Date (From),Production Date (To),Hatch Date,QC Date\n";
+
+        foreach ($records as $record){
+
+            $formattedIncubatorNos = is_array($record->incubator_no)
+                ? '"' . implode(', ', $record->incubator_no) . '"'
+                : $record->incubator_no;
+        
+            $formattedHatcherNos = is_array($record->hatcher_no)
+                ? '"' . implode(', ', $record->hatcher_no) . '"'
+                : $record->hatcher_no;
+
+            $jsonData = json_decode($record->rejected_hatch_data, true);
+
+            $unhatched = $jsonData['unhatched'] ?? [];
+            $pips = $jsonData['pips'] ?? [];
+            $rejectedChicks = $jsonData['rejected_chicks'] ?? [];
+            $deadChicks = $jsonData['dead_chicks'] ?? [];
+            $rotten = $jsonData['rotten'] ?? [];
+
+            $unhatchedQty = $unhatched['qty'] ?? '';
+            $unhatchedPrcnt = $unhatched['percentage'] ?? '';
+
+            $pipsQty = $pips['qty'] ?? '';
+            $pipsPrcnt = $pips['percentage'] ?? '';
+
+            $rejectedChicksQty = $rejectedChicks['qty'] ?? '';
+            $rejectedChicksPrcnt = $rejectedChicks['percentage'] ?? '';
+
+            $deadChicksQty = $deadChicks['qty'] ?? '';
+            $deadChicksPrcnt = $deadChicks['percentage'] ?? '';
+
+            $rottenQty = $rotten['qty'] ?? '';
+            $rottenPrcnt = $rotten['percentage'] ?? '';
+
+            $formattedProductionDateFrom = \Carbon\Carbon::parse($record->production_date_from)->format('Y-m-d');
+            $formattedProductionDateTo = \Carbon\Carbon::parse($record->production_date_to)->format('Y-m-d');
+            $formattedHatchDate = \Carbon\Carbon::parse($record->hatch_date)->format('Y-m-d');
+            $formattedQcDate = \Carbon\Carbon::parse($record->qc_date)->format('Y-m-d');
+
+            // Build row
+            $csv .= "{$record->ps_no},{$record->set_eggs_qty},{$formattedIncubatorNos},{$formattedHatcherNos},";
+            $csv .= "{$unhatchedQty},{$unhatchedPrcnt},{$pipsQty},{$pipsPrcnt},{$rejectedChicksQty},{$rejectedChicksPrcnt},{$deadChicksQty},{$deadChicksPrcnt},{$rottenQty},{$rottenPrcnt},{$record->rejected_total},{$record->rejected_total_percentage},";
+            $csv .= "{$formattedProductionDateFrom},{$formattedProductionDateTo},{$formattedHatchDate},{$formattedQcDate}\n";
+        }
+
+        $filename = "rejected_hatch_" . now()->format('Ymd_His') . ".csv";
+    
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ]);
+    }
+
+    public function rejected_pullets_csv()
+    {
+        $records = RejectedPullets::where('is_deleted', false)->get();
+
+        // Define CSV headers
+        $csv = "PS No,Settable Eggs QTY,Incubator No,Hatcher No,";
+        $csv .= "Singkit Mata QTY,Singkit Mata %,Wala Mata QTY,Wala Mata %,Maliit Mata QTY,Maliit Mata %,Malaki Mata QTY,Malaki Mata %,";
+        $csv .= "Unhealed Navel QTY,Unhealed Navel %,Cross Beak QTY,Cross Beak %,Small Chick QTY,Small Chick %,Weak Chick QTY,Weak Chick %,";
+        $csv .= "Black Bottons QTY,Black Bottons %,String Navel QTY,String Navel %,Bloated QTY,Bloated %,";
+        $csv .= "Rejected Total QTY,Rejected Total %,Production Date (From),Production Date (To),Hatch Date,QC Date\n";
+
+        foreach ($records as $record) {
+
+            $formattedIncubatorNos = is_array($record->incubator_no)
+                ? '"' . implode(', ', $record->incubator_no) . '"'
+                : $record->incubator_no;
+
+            $formattedHatcherNos = is_array($record->hatcher_no)
+                ? '"' . implode(', ', $record->hatcher_no) . '"'
+                : $record->hatcher_no;
+
+            $jsonData = json_decode($record->rejected_pullets_data, true); // note the different field
+
+            // Helper to extract values
+            $get = fn($key, $type = 'qty') => $jsonData[$key][$type] ?? '';
+
+            // Dates
+            $formattedProductionDateFrom = \Carbon\Carbon::parse($record->production_date_from)->format('Y-m-d');
+            $formattedProductionDateTo = \Carbon\Carbon::parse($record->production_date_to)->format('Y-m-d');
+            $formattedHatchDate = \Carbon\Carbon::parse($record->hatch_date)->format('Y-m-d');
+            $formattedQcDate = \Carbon\Carbon::parse($record->qc_date)->format('Y-m-d');
+
+            // Build row
+            $csv .= "{$record->ps_no},{$record->set_eggs_qty},{$formattedIncubatorNos},{$formattedHatcherNos},";
+            $csv .= "{$get('singkit_mata')},{$get('singkit_mata', 'percentage')},";
+            $csv .= "{$get('wala_mata')},{$get('wala_mata', 'percentage')},";
+            $csv .= "{$get('maliit_mata')},{$get('maliit_mata', 'percentage')},";
+            $csv .= "{$get('malaki_mata')},{$get('malaki_mata', 'percentage')},";
+            $csv .= "{$get('unhealed_navel')},{$get('unhealed_navel', 'percentage')},";
+            $csv .= "{$get('cross_beak')},{$get('cross_beak', 'percentage')},";
+            $csv .= "{$get('small_chick')},{$get('small_chick', 'percentage')},";
+            $csv .= "{$get('weak_chick')},{$get('weak_chick', 'percentage')},";
+            $csv .= "{$get('black_bottons')},{$get('black_bottons', 'percentage')},";
+            $csv .= "{$get('string_navel')},{$get('string_navel', 'percentage')},";
+            $csv .= "{$get('bloated')},{$get('bloated', 'percentage')},";
+            $csv .= "{$record->rejected_total},{$record->rejected_total_percentage},";
+            $csv .= "{$formattedProductionDateFrom},{$formattedProductionDateTo},{$formattedHatchDate},{$formattedQcDate}\n";
+        }
+
+        $filename = "rejected_pullets_" . now()->format('Ymd_His') . ".csv";
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ]);
+    }
+
 }

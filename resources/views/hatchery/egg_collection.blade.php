@@ -56,7 +56,7 @@
             </div>
             <div class="input-container column">
                 <label for="house_no">House No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="house_no[]" id="house_no" multiple multiselect-select-all="true" multiselect-search="true">
+                <select name="house_no[]" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" data-multiselect="true">
                     <x-multiselect-dropdown :data-category="'house_no'" />
                 </select>
             </div>
@@ -134,6 +134,7 @@
         </div>
     </div>
     
+    <script src="{{asset('js/form-functions.js')}}" defer></script>
     <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
     <script src="{{asset('js/egg-collection.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>

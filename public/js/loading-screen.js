@@ -11,13 +11,13 @@ function loadingScreen(){
             button.disabled = true;
         });
 
-        // Set a timeout to remove the active class after 5 seconds (5000 milliseconds)
-        setTimeout(() => {
-            loadingScreen.classList.remove('active'); // Hide the loading screen
-            buttons.forEach(button => {
-                button.disabled = false; // Re-enable all buttons
-            });
-        }, 5000);
+        // // Set a timeout to remove the active class after 5 seconds (5000 milliseconds)
+        // setTimeout(() => {
+        //     loadingScreen.classList.remove('active'); // Hide the loading screen
+        //     buttons.forEach(button => {
+        //         button.disabled = false; // Re-enable all buttons
+        //     });
+        // }, 5000);
     };
 
     // Attach event listener to each button

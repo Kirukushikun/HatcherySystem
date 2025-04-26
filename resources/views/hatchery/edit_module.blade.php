@@ -201,16 +201,11 @@
                 </div>
             </div>
 
-            <div class="form-input col-5">
+            <div class="form-input col-4">
 
                 <div class="input-container column">
                     <label for="ps_no">PS No. <span></span></label>
                     <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
-                </div>
-
-                <div class="input-container column">
-                    <label for="production_date"> Production Date <span></span> </label>
-                    <input type="date" name="production_date" id="production_date" value="{{ $record->production_date->format('Y-m-d') }}" />
                 </div>
 
                 <div class="input-container column">
@@ -220,12 +215,16 @@
 
                 <div class="input-container column">
                     <label for="incubator_no">Incubator No. <span></span></label>
-                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
+                    <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true">
+                        <x-multiselect-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
+                    </select>
                 </div>
 
                 <div class="input-container column">
-                    <label for="hatcher_no">Hatch No. <span></span></label>
-                    <x-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
+                    <label for="hatcher_no">Hatcher No. <span></span></label>
+                    <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true">
+                        <x-multiselect-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
+                    </select>
                 </div>
 
                 <div class="input-container row">
@@ -348,30 +347,33 @@
                         <input type="number" placeholder="0" name="bloated_prcnt" id="bloated_prcnt" value="{{ $record->rejected_pullets_data['bloated']['percentage'] ?? 0 }}" readonly>
                     </div>
                 </div>
-
             </div>
 
-            <div class="form-result">
+            <div class="form-input col-5">
                 <div class="input-container column">
-                    <label for="pullout_date"> Pull-out Date <span></span> </label>
-                    <input type="date" name="pullout_date" id="pullout_date" value="{{ $record->pullout_date->format('Y-m-d') }}" />
+                    <label for="production_date_from">Production Date <span></span></label>
+                    <input type="date" id="production_date_from" name="production_date_from" value="{{ $record->production_date_from->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="hatch_date"> Hatch Date <span></span> </label>
-                    <input type="date" name="hatch_date" id="hatch_date" value="{{ $record->hatch_date->format('Y-m-d') }}" />
+                    <label for="production_date_to">Production Date <span></span></label>
+                    <input type="date" id="production_date_to" name="production_date_to" value="{{ $record->production_date_to->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="qc_date"> QC Date <span></span> </label>
-                    <input type="date" name="qc_date" id="qc_date" value="{{ $record->qc_date->format('Y-m-d') }}" />
+                    <label for="hatch_date">Hatch Date <span></span></label>
+                    <input type="date" id="hatch_date" name="hatch_date" value="{{ $record->hatch_date->format('Y-m-d') }}">
+                </div>
+                <div class="input-container column">
+                    <label for="qc_date">QC Date <span></span></label>
+                    <input type="date" id="qc_date" name="qc_date" value="{{ $record->qc_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container row">
                     <div class="input-group">
-                        <label for="rejected_total">Rejected Total </label>
-                        <input type="number" name="rejected_total" id="rejected_total" value="{{ $record->rejected_total }}" placeholder="0" readonly />
+                        <label for="rejected_total">Rejected Total</label>
+                        <input type="number" id="rejected_total" name="rejected_total" value="{{ $record->rejected_total }}" placeholder="0" readonly>
                     </div>
                     <div class="input-group prcnt">
-                        <label for="rejected_total_percentage">Rejected Total % </label>
-                        <input type="number" name="rejected_total_percentage" id="rejected_total_percentage" value="{{ $record->rejected_total_percentage }}" placeholder="0" readonly />
+                        <label for="rejected_total_prcnt">%</label>
+                        <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" value="{{ $record->rejected_total_percentage }}" placeholder="0" readonly>
                     </div>
                 </div>
             </div>
@@ -394,15 +396,10 @@
                 </div>
             </div>
 
-            <div class="form-input col-5">
+            <div class="form-input col-4">
                 <div class="input-container column">
                     <label for="ps_no">PS No. <span></span></label>
                     <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
-                </div>
-
-                <div class="input-container column">
-                    <label for="production_date">Production Date <span></span></label>
-                    <input type="date" id="production_date" name="production_date" value="{{ $record->production_date->format('Y-m-d') }}">
                 </div>
 
                 <div class="input-container column">
@@ -411,13 +408,17 @@
                 </div>
 
                 <div class="input-container column">
-                    <label for="incubator_no">Incubator  <span></span></label>
-                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
+                    <label for="incubator_no">Incubator No. <span></span></label>
+                    <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true">
+                        <x-multiselect-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
+                    </select>
                 </div>
 
                 <div class="input-container column">
-                    <label for="hatcher_no">Hatch No. <span></span></label>
-                    <x-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
+                    <label for="hatcher_no">Hatcher No. <span></span></label>
+                    <select name="hatcher_no[]" id="hatcher_no" multiple multiselect-select-all="true" multiselect-search="true">
+                        <x-multiselect-dropdown :data-category="'hatcher_no'" :data-value="$record->hatcher_no" />
+                    </select>
                 </div>
 
                 <div class="input-container row">
@@ -485,16 +486,26 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div class="form-input col-5">
                 <div class="input-container column">
-                    <label for="pullout_date">Pull-out Date <span></span></label>
-                    <input type="date" id="pullout_date" name="pullout_date" value="{{ $record->pullout_date->format('Y-m-d') }}">
+                    <label for="production_date_from">Production Date <span></span></label>
+                    <input type="date" id="production_date_from" name="production_date_from" value="{{ $record->production_date_from->format('Y-m-d') }}">
+                </div>
+                <div class="input-container column">
+                    <label for="production_date_to">Production Date <span></span></label>
+                    <input type="date" id="production_date_to" name="production_date_to" value="{{ $record->production_date_to->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
                     <label for="hatch_date">Hatch Date <span></span></label>
                     <input type="date" id="hatch_date" name="hatch_date" value="{{ $record->hatch_date->format('Y-m-d') }}">
                 </div>
+                <div class="input-container column">
+                    <label for="qc_date">QC Date <span></span></label>
+                    <input type="date" id="qc_date" name="qc_date" value="{{ $record->qc_date->format('Y-m-d') }}">
+                </div>
                 <div class="input-container row">
-
                     <div class="input-group">
                         <label for="rejected_total">Rejected Total</label>
                         <input type="number" id="rejected_total" name="rejected_total" value="{{ $record->rejected_total }}" placeholder="0" readonly>
@@ -503,9 +514,7 @@
                         <label for="rejected_total_prcnt">%</label>
                         <input type="number" id="rejected_total_prcnt" name="rejected_total_prcnt" value="{{ $record->rejected_total_percentage }}" placeholder="0" readonly>
                     </div>
-                    
                 </div>
-
             </div>
 
             <div class="form-action">
@@ -791,7 +800,7 @@
                           document.getElementById(`${field}_prcnt`).value = "0.0";
                       });
                       totalRejectedInput.value = 0;
-                      document.getElementById("rejected_total_percentage").value = "0.0";
+                      document.getElementById("rejected_total_prcnt").value = "0.0";
                   }
 
                   fields.forEach(field => {
@@ -812,11 +821,13 @@
                   // Update Rejected Total and Percentage
                   totalRejectedInput.value = totalRejected;
                   let rejectedPercentage = ((totalRejected / setEggsQty) * 100).toFixed(1);
-                  document.getElementById("rejected_total_percentage").value = rejectedPercentage; // Keep decimal
+                  document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
               }
           });
         }
         
     </script>
+
+    <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>
 </body>
 </html>

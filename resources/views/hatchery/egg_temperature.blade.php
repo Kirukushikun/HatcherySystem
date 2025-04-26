@@ -210,8 +210,8 @@
         </div>
     </div>
 
+    <script src="{{asset('js/form-functions.js')}}" defer></script>
     <script src="{{asset('js/egg-temperature.js')}}" defer></script>
-    
     <script src="{{asset('js/push-notification.js')}}" defer></script>
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
 

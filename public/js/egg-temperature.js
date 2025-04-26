@@ -1,69 +1,3 @@
-const form = document.querySelector(".body"); // Main form container
-const inputs = form.querySelectorAll("input, select"); // All form fields
-
-const formAction = form.querySelector(".form-action"); // Form action buttons
-const resetButton = form.querySelector(".reset-btn"); // Reset button
-
-const modal = document.getElementById("modal"); // Modal
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // CSRF token
-
-//make every input type number prevent user from entering special characters just purely number
-document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.addEventListener('input', function(e) {
-        // Remove any non-numeric characters
-        this.value = this.value.replace(/[^0-9]/g, '');
-
-        // Prevent the input from starting with '00'
-        if (this.value.startsWith('00')) {
-            this.value = '0'; // Reset to a single '0'
-        }
-    });
-});
-
-// Function to check if any input has a value
-function checkFormValues() {
-    let hasValue = false;
-
-    inputs.forEach(input => {
-        if (input.value.trim() !== "") {
-            hasValue = true;
-        }
-    });
-
-    // Show or hide the form-action buttons
-    formAction.style.display = hasValue ? "flex" : "none";
-}
-
-// Event listeners for inputs and selects
-inputs.forEach(input => {
-    input.addEventListener("input", checkFormValues);
-    input.addEventListener("change", checkFormValues); // For select and date/time inputs
-});
-
-// Reset button functionality
-resetButton.addEventListener("click", function () {
-    inputs.forEach(input => {
-        // Find the closest `.input-container` for the current input
-        let inputContainer = input.closest(".input-container");
-
-        if (inputContainer) {
-            let labelSpan = inputContainer.querySelector("label span");
-            let asterisk = inputContainer.querySelector(".asterisk");
-
-            if (labelSpan && asterisk) {
-                labelSpan.textContent = ""; // Clear the label span
-                asterisk.classList.add("active");
-            }
-        }
-
-        input.style.border = "";  // Reset border styling
-    });
-
-    // hide the form-action buttons
-    formAction.style.display = "none";
-});
-
-
 document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
@@ -306,17 +240,6 @@ function editRecord(targetID) {
 
     console.log("editing", targetID);
 }
-
-document.addEventListener("click", function (event) {
-
-    if (!modal.classList.contains("active")) return;
-
-    if (event.target.id === "close-button" || event.target.classList.contains("cancel-button")) {
-        modal.classList.remove("active");
-    }
-});
-
-
 
 let temp_check_qty = document.getElementById("temp_check_qty");
 

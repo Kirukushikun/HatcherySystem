@@ -13,7 +13,7 @@
             <th>Dead Chicks</th>
             <th>Rotten</th>
 
-            <th>Total</th>
+            <th>Total Rejects QTY</th>
             <th>Total Rejects %</th>
 
             <th>Production Date (From)</th>

@@ -47,9 +47,9 @@ class RejectedHatchController extends Controller
     
             if($validator->fails()){
                 $errorMessages = $validator->errors();
-                session()->flash('form_data', $request->only(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatcher_no', 'pullout_date', 'hatch_date', 'rejected_total', 'rejected_total_prcnt']));
+                session()->flash('form_data', $request->only(['ps_no', 'set_eggs_qty', 'incubator_no', 'hatcher_no', 'production_date_from', 'production_date_to', 'hatch_date', 'qc_date', 'rejected_total', 'rejected_total_prcnt']));
     
-                if ($errorMessages->hasAny(['ps_no', 'production_date', 'set_eggs_qty', 'incubator_no', 'hatcher_no', 'pullout_date', 'hatch_date', 'rejected_total', 'rejected_total_prcnt'])) {
+                if ($errorMessages->hasAny(['ps_no', 'set_eggs_qty', 'incubator_no', 'hatcher_no','production_date_from', 'production_date_to', 'qc_date', 'hatch_date', 'rejected_total', 'rejected_total_prcnt'])) {
                     return back()->with('error', 'Saving Failed')->with('error_message', 'Please fill in all the required fields correctly.');
                 } 
                 if($errorMessages->hasAny(['set_eggs_qty', 'unhatched', 'pips', 'rejected_chicks', 'dead_chicks', 'rotten', 'rejected_total'])){
@@ -58,7 +58,7 @@ class RejectedHatchController extends Controller
                 if($errorMessages->hasAny(['unhatched_prcnt', 'pips_prcnt', 'rejected_chicks_prcnt', 'dead_chicks_prcnt', 'rotten_prcnt', 'rejected_total_prcnt'])){
                     return back()->with('error', 'Invalid Decimal Format')->with('error_message', 'Input must be a valid decimal.');
                 }
-                if ($errorMessages->hasAny(['production_date', 'pullout_date', 'hatch_date'])) {
+                if ($errorMessages->hasAny(['production_date_from', 'production_date_to', 'hatch_date', 'qc_date'])) {
                     return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
                 }  
             }        
