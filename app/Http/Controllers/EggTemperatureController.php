@@ -58,6 +58,9 @@ class EggTemperatureController extends Controller
                 if ($errorMessages->hasAny(['quantity', 'ovrl_above_temp_qty', 'ovrl_below_temp_qty', 'left_above_temp_qty', 'left_below_temp_qty', 'right_above_temp_qty', 'right_below_temp_qty', 'total_left_qty', 'total_right_qty'])) {
                     return back()->with('error', 'Invalid Quantity')->with('error_message', 'Quantity must be a valid integer.');
                 }        
+                if($errorMessages->hasAny(['ovrl_above_temp_prcnt', 'ovrl_below_temp_prcnt', 'left_above_temp_prcnt', 'left_below_temp_prcnt', 'right_above_temp_prcnt', 'right_below_temp_prcnt'])){
+                    return back()->with('error', 'Invalid Decimal Format')->with('error_message', 'Input must be a valid decimal.');
+                }
                 if ($errorMessages->hasAny(['temp_check_date', 'setting_date', 'hatch_date'])) {
                     return back()->with('error', 'Invalid Date Format')->with('error_message', 'Please provide a valid date format (YYYY-MM-DD).');
                 }            

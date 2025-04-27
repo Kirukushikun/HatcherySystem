@@ -33,7 +33,7 @@
             align-items: center;
             justify-content: space-between;
 
-            padding: 15px 30px;
+            /* padding: 15px 30px; */
 
             background-color: white;
             border-radius: 10px;
@@ -145,42 +145,128 @@
 
             <div class="form-input col-3">
                 <div class="input-container column">
-                    <label for="ps_no">PS No. <span></span></label>
-                    <x-dropdown :data-category="'ps_no'" :data-value="$record->ps_no" />
-                </div>
-                
-                <div class="input-container column">
-                    <label for="setting_date">Setting Date <span></span></label>
-                    <input type="date" name="setting_date" id="setting_date" value="{{ $record->setting_date->format('Y-m-d') }}">
+                    <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <input name="temp_check_date" id="temp_check_date" type="date" value="{{ $record->temp_check_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="incubator_no">Incubator No. <span></span></label>
-                    <x-dropdown :data-category="'incubator_no'" :data-value="$record->incubator_no" />
+                    <label for="setting_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <input name="setting_date" id="setting_date" type="date" value="{{ $record->setting_date->format('Y-m-d') }}">
                 </div>
                 <div class="input-container column">
-                    <label for="location">Location <span></span></label>
-                    <select name="location" id="location">
-                        <option value=""></option>
-                        <option value="Top" {{ $record->location == 'Top' ? 'selected' : ''}}>Top</option>
-                        <option value="Mid" {{ $record->location == 'Mid' ? 'selected' : ''}}>Mid</option>
-                        <option value="Low" {{ $record->location == 'Low' ? 'selected' : ''}}>Low</option>
-                    </select>
+                    <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <input name="hatch_date" id="hatch_date" type="date" value="{{ $record->hatch_date->format('Y-m-d') }}">
                 </div>
+            </div>
+
+            <div class="form-header chamber">
+                <h4>OVERALL</h4>
+                <div class="line"></div>
+            </div>
+
+            <div class="form-input col-4">
                 <div class="input-container column">
-                    <label for="temp_check_date">Temperature Check Date <span></span></label>
-                    <input name="temp_check_date" id="temp_check_date" type="date" value="{{ $record->temperature_check_date->format('Y-m-d') }}">
+                    <label for="temp_check_qty">Temperature Check QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <input name="temp_check_qty" id="temp_check_qty" type="number" value="{{ $record->temp_check_qty }}" placeholder="0">
                 </div>
-                <div class="input-container column">
-                    <label for="temperature">Temperature <span></span></label>
-                    <select name="temperature" id="temperature">
-                        <option value=""></option>
-                        <option value="37.8 Above" {{ $record->temperature == '37.8 Above' ? 'selected' : ''}}>37.8 Above</option>
-                        <option value="37.7 Below" {{ $record->temperature == '37.7 Below' ? 'selected' : ''}}>37.7 Below</option>
-                    </select>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="ovrl_above_temp_qty">Above <b>100.5 °F</b>  QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                        <input type="number" id="ovrl_above_temp_qty" name="ovrl_above_temp_qty" value="{{ $record->ovrl_above_temp_qty }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="ovrl_above_temp_prcnt">%</label>
+                        <input type="number" id="ovrl_above_temp_prcnt" name="ovrl_above_temp_prcnt" value="{{ (int) $record->ovrl_above_temp_prcnt }}" placeholder="0" readonly>
+                    </div>
                 </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="ovrl_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                        <input type="number" id="ovrl_below_temp_qty" name="ovrl_below_temp_qty" value="{{ $record->ovrl_below_temp_qty }}" placeholder="0" readonly>
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="ovrl_below_temp_prcnt">%</label>
+                        <input type="number" id="ovrl_below_temp_prcnt" name="ovrl_below_temp_prcnt" value="{{ (int) $record->ovrl_below_temp_prcnt }}" placeholder="0" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-header chamber">
+                <h4>LEFT</h4>
+                <div class="line"></div>
+            </div>
+
+            <div class="form-input col-4">
                 <div class="input-container column">
-                    <label for="quantity">Quantity <span></span></label>
-                    <input name="quantity" id="quantity" type="number" value="{{ $record->quantity }}">
+                    <label for="left_ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <x-dropdown :data-category="'left_ps_no'" :data-value="$record->egg_temperature_data['left']['ps_no'] ?? ''" />
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="left_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
+                        <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" value="{{ $record->egg_temperature_data['left']['above_temp_qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="left_above_temp_prcnt">%</label>
+                        <input type="number" id="left_above_temp_prcnt" name="left_above_temp_prcnt" value="{{ $record->egg_temperature_data['left']['above_temp_prcnt'] ?? 0 }}" placeholder="0" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="left_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                        <input type="number" id="left_below_temp_qty" name="left_below_temp_qty" value="{{ $record->egg_temperature_data['left']['below_temp_qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="left_below_temp_prcnt">%</label>
+                        <input type="number" id="left_below_temp_prcnt" name="left_below_temp_prcnt" value="{{ $record->egg_temperature_data['left']['below_temp_prcnt'] ?? 0 }}" placeholder="0" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container column">
+                    <label for="total_left_qty">Total Left QTY</label>
+                    <input name="total_left_qty" id="total_left_qty" type="number" value="{{ $record->egg_temperature_data['left']['total_qty'] ?? 0 }}" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="form-header chamber">
+                <h4>RIGHT</h4>
+                <div class="line"></div>
+            </div>
+
+            <div class="form-input col-4">
+                <div class="input-container column">
+                    <label for="right_ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <x-dropdown :data-category="'right_ps_no'" :data-value="$record->egg_temperature_data['right']['ps_no'] ?? ''" />
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="right_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
+                        <input type="number" id="right_above_temp_qty" name="right_above_temp_qty" value="{{ $record->egg_temperature_data['right']['above_temp_qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="right_above_temp_prcnt">%</label>
+                        <input type="number" id="right_above_temp_prcnt" name="right_above_temp_prcnt" value="{{ $record->egg_temperature_data['right']['above_temp_prcnt'] ?? 0 }}" placeholder="0" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container row">
+                    <div class="input-group">
+                        <label for="right_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                        <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" value="{{ $record->egg_temperature_data['right']['below_temp_qty'] ?? 0 }}" placeholder="0">
+                    </div>
+                    <div class="input-group prcnt">
+                        <label for="right_below_temp_prcnt">%</label>
+                        <input type="number" id="right_below_temp_prcnt" name="right_below_temp_prcnt" value="{{ $record->egg_temperature_data['right']['below_temp_prcnt'] ?? 0 }}" placeholder="0" readonly>
+                    </div>
+                </div>
+
+                <div class="input-container column">
+                    <label for="total_right_qty">Total Left QTY</label>
+                    <input name="total_right_qty" id="total_right_qty" type="number" value="{{ $record->egg_temperature_data['right']['total_qty'] ?? 0 }}" placeholder="0" readonly>
                 </div>
             </div>
 
@@ -634,7 +720,7 @@
             if (targetForm === "egg-collection") {
                 requiredFields = ["ps_no", "house_no", "production_date", "collection_time", "collection_eggs_quantity"];
             } else if (targetForm === "egg-temperature") {
-                requiredFields = ["ps_no", "setting_date", "incubator_no", "location", "temp_check_date", "temperature", "quantity"];
+                requiredFields = ["temp_check_date", "setting_date" , "hatch_date", "temp_check_qty", "ovrl_above_temp_qty", "left_ps_no", "right_ps_no"];
             } else if (targetForm === "rejected-hatch") {
                 requiredFields = ["ps_no", "production_date", "set_eggs_qty", "incubator_no", "hatcher_no", "pullout_date", "hatch_date"];;
             } else if (targetForm === "rejected-pullets") {
@@ -824,7 +910,108 @@
                   document.getElementById("rejected_total_prcnt").value = rejectedPercentage; // Keep decimal
               }
           });
+        } else if (targetForm === "egg-temperature"){
+            let temp_check_qty = document.getElementById("temp_check_qty");
+
+            let ovrl_above_temp_qty = document.getElementById("ovrl_above_temp_qty");
+            let ovrl_above_temp_prcnt = document.getElementById("ovrl_above_temp_prcnt");
+
+            let ovrl_below_temp_qty = document.getElementById("ovrl_below_temp_qty");
+            let ovrl_below_temp_prcnt = document.getElementById("ovrl_below_temp_prcnt");
+
+            let left_above_temp_qty = document.getElementById("left_above_temp_qty");
+            let left_above_temp_prcnt = document.getElementById("left_above_temp_prcnt");
+
+            let left_below_temp_qty = document.getElementById("left_below_temp_qty");
+            let left_below_temp_prcnt = document.getElementById("left_below_temp_prcnt");
+
+            let right_above_temp_qty = document.getElementById("right_above_temp_qty");
+            let right_above_temp_prcnt = document.getElementById("right_above_temp_prcnt");
+
+            let right_below_temp_qty = document.getElementById("right_below_temp_qty");
+            let right_below_temp_prcnt = document.getElementById("right_below_temp_prcnt");
+
+            let total_left_qty = document.getElementById("total_left_qty");
+            let total_right_qty = document.getElementById("total_right_qty");
+
+            function calculateOverallTemps() {
+                let total = parseInt(temp_check_qty.value) || 0;
+                let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
+
+                if (aboveQty > total) {
+                    aboveQty = total;
+                    ovrl_above_temp_qty.value = total;
+                } else if (aboveQty < 0) {
+                    aboveQty = 0;
+                    ovrl_above_temp_qty.value = 0;
+                }
+
+                let abovePrcnt = Math.round((aboveQty / total) * 100);
+                let belowQty = total - aboveQty;
+                let belowPrcnt = 100 - abovePrcnt;
+
+                ovrl_above_temp_prcnt.value = abovePrcnt;
+                ovrl_below_temp_qty.value = belowQty;
+                ovrl_below_temp_prcnt.value = belowPrcnt;
+
+                calculateLeftRightTemps(aboveQty, belowQty);
+            }
+
+            function calculateLeftRightTemps(aboveQty, belowQty) {
+                let leftAbove = parseInt(left_above_temp_qty.value) || 0;
+                let leftBelow = parseInt(left_below_temp_qty.value) || 0;
+
+                // Clamp left inputs
+                if (leftAbove > aboveQty) {
+                    leftAbove = aboveQty;
+                    left_above_temp_qty.value = aboveQty;
+                }
+                if (leftBelow > belowQty) {
+                    leftBelow = belowQty;
+                    left_below_temp_qty.value = belowQty;
+                }
+
+                let leftTotal = leftAbove + leftBelow;
+                let rightAbove = aboveQty - leftAbove;
+                let rightBelow = belowQty - leftBelow;
+                let rightTotal = rightAbove + rightBelow;
+
+                // Percentages
+                let leftAbovePercent = leftTotal > 0 ? Math.round((leftAbove / leftTotal) * 100) : 0;
+                let leftBelowPercent = leftTotal > 0 ? 100 - leftAbovePercent : 0;
+
+                let rightAbovePercent = rightTotal > 0 ? Math.round((rightAbove / rightTotal) * 100) : 0;
+                let rightBelowPercent = rightTotal > 0 ? 100 - rightAbovePercent : 0;
+
+                // Set values
+                left_above_temp_prcnt.value = leftAbovePercent;
+                left_below_temp_prcnt.value = leftBelowPercent;
+
+                right_above_temp_qty.value = rightAbove;
+                right_above_temp_prcnt.value = rightAbovePercent;
+
+                right_below_temp_qty.value = rightBelow;
+                right_below_temp_prcnt.value = rightBelowPercent;
+
+                total_left_qty.value = leftTotal;
+                total_right_qty.value = rightTotal;
+            }
+
+            ovrl_above_temp_qty.addEventListener("input", calculateOverallTemps);
+            left_above_temp_qty.addEventListener("input", () => {
+                let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
+                let belowQty = parseInt(ovrl_below_temp_qty.value) || 0;
+                calculateLeftRightTemps(aboveQty, belowQty);
+            });
+
+            left_below_temp_qty.addEventListener("input", () => {
+                let aboveQty = parseInt(ovrl_above_temp_qty.value) || 0;
+                let belowQty = parseInt(ovrl_below_temp_qty.value) || 0;
+                calculateLeftRightTemps(aboveQty, belowQty);
+            });
         }
+
+
         
     </script>
 
