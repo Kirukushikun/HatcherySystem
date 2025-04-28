@@ -19,7 +19,8 @@ class EggCollectionTable extends Component
                     ->orWhere('house_no', 'like', "%{$searchTerm}%")
                     ->orWhere('production_date', 'like', "%{$searchTerm}%")
                     ->orWhere('collection_time', 'like', "%{$searchTerm}%")
-                    ->orWhere('collected_qty', 'like', "%{$searchTerm}%");  
+                    ->orWhere('collected_qty', 'like', "%{$searchTerm}%")
+                    ->orWhere('driver_name', 'like', "%{$searchTerm}%");  
             });
         }
         // Sorting Handling
