@@ -1,8 +1,16 @@
+let driver_name = document.getElementById("driver_name");
+
 document.querySelector("form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission initially
     let isValid = true;
 
-    const requiredFields = ["ps_no", "production_date", "collection_time", "collection_eggs_quantity", "house_no"];
+    let requiredFields;
+
+    if (driver_name.value){
+        requiredFields = ["ps_no", "production_date", "collection_time", "collection_eggs_quantity", "house_no", "driver_name"];
+    } else{
+        requiredFields = ["ps_no", "production_date", "collection_time", "collection_eggs_quantity", "house_no"];
+    }
 
     requiredFields.forEach(id => {
         const field = document.getElementById(id);
@@ -151,6 +159,7 @@ function storeRecord(){
             production_date: document.getElementById("production_date").value,
             collection_time: document.getElementById("collection_time").value,
             collection_eggs_quantity: document.getElementById("collection_eggs_quantity").value,
+            driver_name: driver_name.value || null
         })
     })
     .then(response => response.json())
@@ -166,8 +175,10 @@ function storeRecord(){
 
             document.querySelectorAll(".asterisk").forEach(item => item.classList.add("active"));
 
-            updatePagination(); // Update pagination
-            loadData(); // Reload data
+            if(!driver_name.value){
+                updatePagination(); // Update pagination
+                loadData(); // Reload datafunction clearMultiSelect() {                
+            }
 
             // Trigger push notification
             createPushNotification("success", "Saved Successfully", "Egg Collection Entry Saved Successfully");
@@ -199,8 +210,10 @@ function deleteRecord(targetID) {
             document.getElementById("modal").classList.remove("active");
             document.getElementById(`row-${targetID}`)?.remove(); // Remove row if exists
 
-            updatePagination();
-            loadData();
+            if(!driver_name.value){
+                updatePagination(); // Update pagination
+                loadData(); // Reload datafunction clearMultiSelect() {                
+            }
 
             // Trigger push notification
             createPushNotification("success", "Deleted Successfully", "Egg Collection Entry Deleted Successfully");

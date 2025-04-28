@@ -645,7 +645,7 @@
                 <p>Forcasted Number of <br> Boxes</p>
             </form>
 
-            <div class="card c13" id="card13">
+            <div class="card c13" id="card11">
                 <div class="table-header">
                     <h4>Data List</h4>
         
@@ -665,6 +665,7 @@
                             <!-- <i class="fa-solid fa-file-circle-plus"></i> -->
                             <!-- <i class="fa-solid fa-print"></i> -->
                             <i class="fa-solid fa-rotate-right" onclick="loadData()"></i>
+                            <i class="fa-solid fa-file-circle-plus" onclick="location.reload();"></i>
                         </div>
                         
                     </div>

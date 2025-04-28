@@ -118,7 +118,7 @@
                     actionTd.innerHTML = `
                         <i class="fa-solid fa-eye" id="edit-action" onclick="showModal('view', ${row.batch_no})"></i>
                         <i class="fa-regular fa-trash-can" id="delete-action" onclick="showModal('delete', ${row.batch_no})"></i>
-                        <i class="fa-solid fa-print" id="print-action"></i>
+                        <i class="fa-solid fa-print" id="print-action" onclick="showModal('', ${row.batch_no})"></i>
                     `;
                     tr.appendChild(actionTd);
 

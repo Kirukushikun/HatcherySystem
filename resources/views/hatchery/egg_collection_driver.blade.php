@@ -86,54 +86,16 @@
                 <label for="collection_eggs_quantity">Collected Eggs Quantity <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="number" name="collection_eggs_quantity" id="collection_eggs_quantity" value="{{ session('form_data.collection_eggs_quantity', '') }}" placeholder="0">
             </div>
-            <input type="hidden" name="driver_name" id="driver_name">
+            <div class="input-container column">
+                <label for="driver_name">Driver Name <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <x-dropdown :data-category="'driver_name'" />
+            </div>
         </div>
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
             <button class="reset-btn" type="reset">Reset</button>
         </div>
     </form>
-
-    <div class="datalist">
-        <div class="table-header">
-            <h4>Data List</h4>
-
-            <div class="table-action">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-
-                <select class="sort-btn" name="sort_by" id="sort_by">
-                    <option value="production_date_desc">Sort By: Date (Newest)</option>
-                    <option value="production_date_asc">Sort By: Date (Oldest)</option>
-                    <option value="ps_no_asc">Sort By: PS No.</option>
-                    <option value="house_no_asc">Sort By: House No.</option>
-                    <option value="collected_qty_asc">Sort By: Quantity (Asc)</option>
-                    <option value="collected_qty_desc">Sort By: Quantity (Desc)</option>
-                </select>
- 
-                <div class="table-icons">
-                    <i class="fa-solid fa-share-from-square" onclick="showModal('print')"></i>
-                    <i class="fa-solid fa-rotate-right" onclick="refreshTable()"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="table-body">
-            <livewire:egg-collection-table />
-        </div>
-
-        <!-- <div class="empty-container">
-            <img src="Images/empty-icon.png" alt="">
-            <p>NO DATA ENTRIES YET</p>
-        </div> -->
-
-        <div class="table-footer">
-            <div class="pagination">
-            </div>
-        </div>
-    </div>
     
     <script src="{{asset('js/form-functions.js')}}" defer></script>
     <script src="{{asset('js/multiselect-dropdown-module.js')}}" defer></script>

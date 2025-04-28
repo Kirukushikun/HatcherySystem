@@ -79,6 +79,29 @@ body{
     padding: 50px;
 }
 
+.report-form.master-database{
+    gap: 10px;
+}
+
+.form-label{
+    display: flex;
+    align-items: center;
+    
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+}.form-label span{
+    color: #EC8B18;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    /* padding: 3px 10px; */
+    margin-right: 10px;
+}.form-label i{
+    color: #EC8B18;
+    margin-right: 10px;
+}
+
 .report-form .col-2{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -91,6 +114,12 @@ body{
     gap: 30px;            
 }
 
+.report-form .col-4{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;            
+}
+
 .report-form .col-5{
     display:grid;
     grid-template-columns: repeat(5, 1fr);
@@ -99,7 +128,7 @@ body{
 
 
 
-.report-form .form-group{
+ .form-group{
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -111,6 +140,12 @@ body{
     padding: 12px 15px;
     background-color: #F3F3F3;
     outline: none;
+
+    width: 100%;
+}
+
+.form-group label{
+    white-space: nowrap;
 }
 .form-group select{
     border: none;
@@ -120,6 +155,15 @@ body{
     outline: none;
 
     border-right: 16px solid transparent
+}
+
+.input-container{
+    display: flex;
+    gap: 20px;
+}
+
+.form-group.prcnt{
+    width: 40%;
 }
 
 .report-footer{

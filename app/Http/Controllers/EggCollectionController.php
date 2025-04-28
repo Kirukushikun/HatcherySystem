@@ -18,6 +18,10 @@ class EggCollectionController extends Controller
         return view('hatchery.egg_collection', ['egg_collections' => $egg_collections]);
     }
 
+    function egg_collection_driver() {
+        return view('hatchery.egg_collection_driver');
+    }
+
     function egg_collection_store(Request $request) {
         try {
             $validator = Validator::make($request->all(), [
@@ -26,6 +30,7 @@ class EggCollectionController extends Controller
                 'production_date' => 'required|date',
                 'collection_time' => 'required|date_format:H:i',
                 'collection_eggs_quantity' => 'required|integer',
+                'driver_name' => 'nullable|string|max:255',
             ]);
             
             if ($validator->fails()) {
@@ -56,6 +61,7 @@ class EggCollectionController extends Controller
                 $eggCollection->production_date = $validatedData['production_date'];
                 $eggCollection->collection_time = $validatedData['collection_time'];
                 $eggCollection->collected_qty = $validatedData['collection_eggs_quantity'];
+                $eggCollection->driver_name = $validatedData['driver_name'] ?? null;
                 $eggCollection->save();
             
                 $createdEntries[] = $eggCollection;

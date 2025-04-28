@@ -54,7 +54,7 @@
                             <input type="time" id="collection_time">
                         </div>    
                         <div class="form-group">
-                            <label for="collected_qty">Collection Quantity:</label>
+                            <label for="collected_qty">Collection QTY:</label>
                             <input type="number" id="collected_qty" readonly>
                         </div>         
                     </div>
@@ -372,6 +372,326 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="report-footer">
+                    Brookside Group of Companies | Brookdale Farms | Poultrypure Farms
+                </div>
+            </form>
+        @elseif ($targetForm == "master-database" && $targetForm == !null)
+            <form class="report-content">
+                <div class="report-header">
+                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
+                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
+                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                </div>
+
+                <div class="report-title">MASTER DATABASE REPORT</div>
+
+                <div class="report-form master-database">
+                    <div class="form-label">
+                        <span>1</span>
+                        <p>Collected Eggs</p>
+                    </div>
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="ps_no">PS no.</label>
+                            <input type="text" name="ps_no" id="ps_no" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="collected_qty">Collected QTY</label>
+                            <input type="number" name="collected_qty" id="collected_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="production_date_from">Production Date (From)</label>
+                            <input type="date" name="production_date_from" id="production_date_from" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="production_date_to">Production Date (To)</label>
+                            <input type="date" name="production_date_to" id="production_date_to" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>2</span>
+                        <p>Storage Pullout Process</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="incubator_no">Incubator No. </label>
+                            <input type="text" name="incubator_no" id="incubator_no" placeholder="0" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="settable_eggs_qty">Set. Egg QTY </label>
+                            <input type="text" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pullout_date">Pullout Date </label>
+                            <input type="date" name="pullout_date" id="pullout_date" readonly>
+                        </div>
+                    </div>
+                    <div class="form-container col-4">
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="prime_qty">Prime QTY </label>
+                                <input type="number" name="prime_qty" id="prime_qty" placeholder="0" readonly>
+                            </div>   
+                            <div class="form-group prcnt">
+                                <label for="prime_prcnt">%</label>
+                                <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" readonly>
+                            </div>                     
+                        </div>
+
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="jp_qty">JP QTY </label>
+                                <input type="number" name="jp_qty" id="jp_qty" placeholder="0" readonly>
+                            </div>   
+                            <div class="form-group prcnt">
+                                <label for="jp_prcnt">% </label>
+                                <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" readonly>
+                            </div>                     
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>3</span>
+                        <p>10th Day Candling Process</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="d10_breakout_qty">Day 10 Breakout QTY </label>
+                            <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0" readonly>
+                        </div>                 
+                        <div class="form-group">
+                            <label for="d10_candling_date">Day 10 Candling Date </label>
+                            <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
+                        </div>
+
+                        <!-- <p></p>
+                        <br> -->
+
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="d10_candling_qty">Day 10 Candling QTY </label>
+                                <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0" readonly>
+                            </div>   
+                            <div class="form-group prcnt">
+                                <label for="d10_breakout_prcnt">%</label>
+                                <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" readonly>
+                            </div>                     
+                        </div>
+
+                        <div class="form-group">
+                            <label for="d10_inc_qty">Day 10  Inc QTY</label>
+                            <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>4</span>
+                        <p>18th Day Candling Process</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="infertiles_qty">Infertiles Quantity</label>
+                            <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0" readonly>
+                        </div> 
+                        <div class="form-group">
+                            <label for="embryonic_eggs_qty">Embryonic Eggs Quantity</label>
+                            <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" readonly>
+                        </div>                    
+                        <div class="form-group">
+                            <label for="d18_candling_date">Day 18.5 Candling Date</label>
+                            <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>5</span>
+                        <p>Hatcher Pullout Process</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="hatcher_no">Hatcher No</label>
+                            <input type="text" id="hatcher_no" name="hatcher_no" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
+                            <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="accepted_hatch_qty">Good Hatch Qty</label>
+                            <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="hatcher_date">Hatcher Date</label>
+                            <input type="date" name="hatcher_date" id="hatcher_date" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>6</span>
+                        <p>Sexing</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="cock_qty">Cockerels Quantity</label>
+                            <input type="number" name="cock_qty" id="cock_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="dop_qty">DOP Quantity</label>
+                            <input type="text" name="dop_qty" id="dop_qty" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>7</span>
+                        <p>QC/QA Process Entry</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="rejected_dop_qty">Rejected DOP Qty</label>
+                            <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="accepted_dop_qty">Good DOP Qty</label>
+                            <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="qc_date">QC Date</label>
+                            <input type="date" name="qc_date" id="qc_date" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span>8</span>
+                        <p>Dispath Process Entry</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="dispatch_prime_qty">Prime Qty</label>
+                            <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="dispatch_jr_prime_qty">Jr Prime Qty</label>
+                            <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_boxes">Total Boxes</label>
+                            <input type="number" name="total_boxes" id="total_boxes" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span><i class="fa-solid fa-clipboard-list"></i></span>
+                        <p>Forcasted Base on Last Hatch</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="infertile_qty">Infertile Qty</label>
+                                <input type="number" name="infertile_qty" id="infertile_qty" placeholder="0" readonly>
+                            </div>
+                            
+                            <div class="form-group prcnt">
+                                <label for="infertile_prcnt">% <span></span></label>
+                                <input type="number" name="infertile_prcnt" id="infertile_prcnt" placeholder="0" readonly>
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="frcst_cock_qty">Cock Qty</label>
+                                <input type="number" name="frcst_cock_qty" id="frcst_cock_qty" placeholder="0" readonly>
+                            </div>
+                            
+                            <div class="form-group prcnt">
+                                <label for="frcst_cock_prcnt">% <span></span></label>
+                                <input type="number" name="frcst_cock_prcnt" id="frcst_cock_prcnt" placeholder="0" readonly>
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
+                                <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" readonly>
+                            </div>
+                            
+                            <div class="form-group prcnt">
+                                <label for="frcst_rejected_hatch_prcnt">% <span></span></label>
+                                <input type="number" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt" placeholder="0" readonly>
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <div class="form-group">
+                                <label for="frcst_rejected_dop_qty">Rejected DOP Qty</label>
+                                <input type="number" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty" placeholder="0" readonly>
+                            </div>
+                            
+                            <div class="form-group prcnt">
+                                <label for="frcst_rejected_dop_prcnt">% <span></span></label>
+                                <input type="number" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt" placeholder="0" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="forecast_total_qty">Total Qty</label>
+                            <input type="number" name="forecast_total_qty" id="forecast_total_qty" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-label">
+                        <span><i class="fa-solid fa-box"></i></span>
+                        <p>Forcasted number of boxes</p>
+                    </div>
+
+                    <div class="form-container col-4">
+                        <div class="form-group">
+                            <label for="frcst_total_boxes">Total</label>
+                            <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="frcst_settable_eggs_prcnt">%</label>
+                            <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="frcst_prime">Prime</label>
+                            <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="frcst_jr_prime">Junior Prime</label>
+                            <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" readonly>
+                        </div>
+                    </div>
+
+
+                    <div class="form-container col-2" style="margin-top: 50px;">
+                        <div class="form-group">
+                            <label for="prepared-by">Prepared By:</label>
+
+                            <!-- Signature Image (Fixed Size) -->
+                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+
+                            <!-- Prepared By Input Field -->
+                            <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date-prepared">Date Prepared:</label>
+                            <input type="text" id="date-prepared" value="{{ date('d/m/Y') }} {{ date('H:i A') }}" readonly>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <div class="report-footer">

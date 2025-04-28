@@ -26,6 +26,10 @@ class ReportController extends Controller
         {    
             return view('hatchery.report_module', ['targetForm' => $targetForm]);
         }
+        elseif($targetForm == 'master-database') 
+        {    
+            return view('hatchery.report_module', ['targetForm' => $targetForm]);
+        }
   
     }
     public function egg_collection_result(Request $request)

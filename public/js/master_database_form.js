@@ -2,7 +2,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 const sidebarLinks = document.querySelectorAll(".sidebar a");
 const cardSections = document.querySelectorAll(".card");
 const cardLabels = document.querySelectorAll(".card-label");
-const datalist = document.getElementById("card13");
+const datalist = document.getElementById("card11");
 let activeForm = null;
 
 
@@ -237,7 +237,7 @@ function validateForm() {
 
 /*** Step Progression ***/
 const skippableCards = ["card9"];
-const alwaysEnabledCards = ["card9"];
+const alwaysEnabledCards = ["card9" , "card11"]; // Always enabled cards (Forecast and Table)
 const allCards = document.querySelectorAll(".card");
 
 function proceedToNextStep() {
@@ -440,6 +440,44 @@ function showModal(button, targetID = null) {
 
     } else if (button === "view") {
         viewRecord(targetID); //Target Batch 
+    } else {
+        modal.classList.add("active");
+        modal.innerHTML = `
+            <div class="modal-content export-options">
+                <i class="fa-solid fa-xmark" id="close-button"></i>
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-csv csv"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button csv-btn" onclick="window.location.href='/master-database/csv'">
+                            Generate CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div id="separator"></div>
+                
+                <div class="option">
+                    <div class="modal-header">
+                        <i class="fa-solid fa-file-invoice report"></i>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="confirm-button report-btn" onclick="window.location.href='/master-database/report'">
+                            Generate Report
+                        </button>
+                    </div>                        
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.csv-btn').addEventListener('click', () => {
+            console.log("csv")
+        });
+
+        document.querySelector('.report-btn').addEventListener('click', () => {
+            console.log("report")
+        });
     }
 }
 

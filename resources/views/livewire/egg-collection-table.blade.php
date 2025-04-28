@@ -7,6 +7,7 @@
             <th>Production Date</th>
             <th>Collection Time (hh:mm)</th>
             <th>Collected Eggs Quantity</th>
+            <th>Driver Name</th>
             <th>Encoded/Modified By</th>
             <th>Actions</th>
             <!-- <th>Date Encoded/Modified</th> -->
@@ -97,6 +98,7 @@
                             <td>${production_date}</td>
                             <td>${collection_time}</td>
                             <td>${row.collected_qty}</td>
+                            <td>${row.driver_name}</td>
                             <td>${row.encoded_by}</td>
                             <td class="datalist-actions">
                                 <i class="fa-regular fa-pen-to-square load" id="edit-action" onclick="showModal('edit', ${row.id})"></i>
