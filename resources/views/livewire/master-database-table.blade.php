@@ -4,8 +4,8 @@
             <th>No.</th>
             <th>1. Egg Collection</th>   
             <th>2. Storage Retrieval</th>  
-            <th>3. Setter Entry</th>  
-            <th>4. Candling Entry</th>  
+            <th>3. 10th Day Candling Entry</th>  
+            <th>4. 18th Day Candling Entry</th>  
             <th>5. Hatcher Retrieval</th>  
             <th>6. Chick Sexing</th>  
             <th>7. QC/QA Inspection</th>  
@@ -32,7 +32,7 @@
     let sortOrder = "desc"; // Default to desc
 
     document.addEventListener('DOMContentLoaded', () => {
-        // loadData();
+        loadData();
 
         // Attach event listeners to search and sort inputs
         document.querySelector(".search-bar input").addEventListener("change", function (e) {
@@ -83,7 +83,7 @@
                     tr.appendChild(batchNoTd);
 
                     // Define the step order manually (Swap 11 and 12)
-                    const stepOrder = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 11]; 
+                    const stepOrder = [2, 3, 4, 5, 6, 7, 8, 9, 10]; 
 
                     // Loop through steps in the specified order
                     stepOrder.forEach(step => {

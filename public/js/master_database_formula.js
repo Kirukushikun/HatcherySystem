@@ -40,7 +40,7 @@ let setterProcess = {
     d10_inc_qty: document.getElementById('d10_inc_qty'),
 };
 
-const hatcherProcess = {
+let hatcherProcess = {
     hatcher_no: document.getElementById('hatcher_no'),
     hatcher_date: document.getElementById('hatcher_date'),
     rejected_hatch_qty: document.getElementById('rejected_hatch_qty'),

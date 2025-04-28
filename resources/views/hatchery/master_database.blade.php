@@ -426,7 +426,7 @@
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="hatcher_date" id="hatcher_date" readonly>
+                        <input type="date" name="hatcher_date" id="hatcher_date" >
                     </div>
                     <div class="input-group">
                         <label for="rejected_hatch_qty">Rejected Hatch Qty 
@@ -512,7 +512,7 @@
                 </div>
             </form>
 
-            <form class="card c10" id="card10">
+            <form class="card c10" id="card9">
                 <div class="card-label">
                     <i class="fa-solid fa-clipboard-list"></i>
                     <p>Forecast Base on Last Hatch</p>
@@ -637,7 +637,7 @@
                 </div>
             </form>
 
-            <form class="card c12" id="card12">
+            <form class="card c12" id="card10">
                 <h1 id="total_boxes">0</h1>
                 <p>Forcasted Number of <br> Boxes</p>
             </form>
@@ -681,7 +681,7 @@
     <script src="{{asset('js/master_database_form.js')}}" defer></script>
     <script src="{{asset('js/master_database_formula.js')}}" defer></script>
     
-    <!-- <script>
+    <script>
         //GENERATE IN PROGRESS BATCH DATA
         document.addEventListener("DOMContentLoaded", function() {
             let batchData = @json($batchData); // Laravel safely converts PHP to JSON
@@ -692,11 +692,13 @@
                     let processData = record.process_data || {};
 
                     // Example: Accessing "collected_eggs" data if step is 1
-                    if (step === 3 && processData.classification_for_storage) {
-                        document.getElementById("non_settable_eggs").value = processData.classification_for_storage.non_settable_eggs;
-                        document.getElementById("settable_eggs").value = processData.classification_for_storage.settable_eggs;
-                        document.getElementById("remaining_balance").value = processData.classification_for_storage.remaining_balance;
-                    } else if (step === 4 && processData.storage_pullout) {
+                    // Example: Accessing "collected_eggs" data if step is 1
+                    if (step === 2 && processData.collected_eggs) {
+                        document.getElementById("ps_no").value = processData.collected_eggs.ps_no;
+                        document.getElementById("collected_qty").value = processData.collected_eggs.collected_qty;
+                        document.getElementById("production_date_to").value = processData.collected_eggs.production_date_to;
+                        document.getElementById("production_date_from").value = processData.collected_eggs.production_date_from;
+                    } else if (step === 3 && processData.storage_pullout) {
                         document.getElementById("pullout_date").value = processData.storage_pullout.pullout_date;
                         document.getElementById("settable_eggs_qty").value = processData.storage_pullout.settable_eggs_qty;
                         document.getElementById("incubator_no").value = processData.storage_pullout.incubator_no;
@@ -707,30 +709,31 @@
 
                         document.getElementById("d10_candling_date").value = processData.storage_pullout.pullout_date_d10;
                         document.getElementById("d18_candling_date").value = processData.storage_pullout.pullout_date_d18;
-                    } else if (step === 5 && processData.setter_process) {
+                        document.getElementById("hatcher_date").value = processData.storage_pullout.pullout_date_d21;
+                    } else if (step === 4 && processData.setter_process) {
                         document.getElementById("d10_candling_date").value = processData.setter_process.d10_candling_date;
                         document.getElementById("d10_candling_qty").value = processData.setter_process.d10_candling_qty;
                         document.getElementById("d10_breakout_qty").value = processData.setter_process.d10_breakout_qty;
                         document.getElementById("d10_breakout_prcnt").value = processData.setter_process.d10_breakout_prcnt;
                         document.getElementById("d10_inc_qty").value = processData.setter_process.d10_inc_qty;
                         
-                    } else if (step === 6 && processData.candling_process) {
+                    } else if (step === 5 && processData.candling_process) {
                         document.getElementById("d18_candling_date").value = processData.candling_process.d18_candling_date;
                         document.getElementById("infertiles_qty").value = processData.candling_process.infertiles_qty;
                         document.getElementById("embryonic_eggs_qty").value = processData.candling_process.embryonic_eggs_qty;
-                    } else if (step === 8 && processData.hatcher_pullout){
+                    } else if (step === 6 && processData.hatcher_pullout){
                         document.getElementById("hatcher_no").value = processData.hatcher_pullout.hatcher_no;
                         document.getElementById("hatcher_date").value = processData.hatcher_pullout.hatcher_date;
                         document.getElementById("rejected_hatch_qty").value = processData.hatcher_pullout.rejected_hatch_qty;
                         document.getElementById("accepted_hatch_qty").value = processData.hatcher_pullout.accepted_hatch_qty;
-                    } else if (step === 9 && processData.sexing){
+                    } else if (step === 7 && processData.sexing){
                         document.getElementById("cock_qty").value = processData.sexing.cock_qty;
                         document.getElementById("dop_qty").value = processData.sexing.dop_qty;
-                    } else if (step === 10 && processData.qc_qa_process){
+                    } else if (step === 8 && processData.qc_qa_process){
                         document.getElementById("qc_date").value = processData.qc_qa_process.qc_date;
                         document.getElementById("rejected_dop_qty").value = processData.qc_qa_process.rejected_dop_qty;
                         document.getElementById("accepted_dop_qty").value = processData.qc_qa_process.accepted_dop_qty;
-                    } else if (step === 11 && processData.forecast){
+                    } else if (step === 10 && processData.forecast){
                         document.getElementById("infertile_qty").value = processData.forecast.infertile_qty;
                         document.getElementById("infertile_prcnt").value = processData.forecast.infertile_prcnt;
 
@@ -754,43 +757,47 @@
                         document.getElementById("frcst_jr_prime").value = processData.forecast.frcst_jr_prime;
 
                     } 
-                    else if (step === 12 && processData.dispath_process){
+                    else if (step === 9 && processData.dispath_process){
                         document.getElementById("dispatch_prime_qty").value = processData.dispath_process.dispatch_prime_qty;
                         document.getElementById("dispatch_jr_prime_qty").value = processData.dispath_process.dispatch_jr_prime_qty;
-                    } else if (step === 13 && processData.frcst_box){
+                    } else if (step === 11 && processData.frcst_box){
                         document.getElementById("total_boxes").innerText = processData.frcst_box.total_boxes;
                     }
                 });
             }
 
-            function generateCurrentStepData(){
-                if (currentStep == 4) {
-                    let pulloutDate = new Date(pulloutStorage.pullout_date.value); // Get pullout date
+            // function generateCurrentStepData(){
+            //     if (currentStep == 3) {
+            //         let pulloutDate = new Date(pulloutStorage.pullout_date.value); // Get pullout date
     
-                    // Calculate Day 10 Candling Date
-                    let pulloutDay10 = new Date(pulloutDate); // Clone date
-                    pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
-                    setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
+            //         // Calculate Day 10 Candling Date
+            //         let pulloutDay10 = new Date(pulloutDate); // Clone date
+            //         pulloutDay10.setDate(pulloutDay10.getDate() + 10); // Add 10 days
+            //         setterProcess.d10_candling_date.value = pulloutDay10.toISOString().split('T')[0]; // Format YYYY-MM-DD
 
-                    // Calculate Day 18.5 Candling Date
-                    let pulloutDay18_5 = new Date(pulloutDate); // Clone date
-                    pulloutDay18_5.setDate(pulloutDay18_5.getDate() + 18); // Add 18 full days
-                    pulloutDay18_5.setHours(pulloutDay18_5.getHours() + 12); // Add 12 hours (0.5 day)
+            //         // Calculate Day 18.5 Candling Date
+            //         let pulloutDay18_5 = new Date(pulloutDate); // Clone date
+            //         pulloutDay18_5.setDate(pulloutDay18_5.getDate() + 18); // Add 18 full days
+            //         pulloutDay18_5.setHours(pulloutDay18_5.getHours() + 12); // Add 12 hours (0.5 day)
 
-                    // Format for input field (only date part)
-                    candlingProcess.d18_candling_date.value = pulloutDay18_5.toISOString().split('T')[0]; 
-                    
+            //         // Format for input field (only date part)
+            //         candlingProcess.d18_candling_date.value = pulloutDay18_5.toISOString().split('T')[0]; 
 
-                    //------------------------
-                    let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
-                    setterProcess.d10_inc_qty.value = pulloutQty;
-                }
-            }
+            //         // Calculate Day 21 Candling Date
+            //         let pulloutDay21 = new Date(pulloutDate); // Clone date
+            //         pulloutDay21.setDate(pulloutDay21.getDate() + 21); // Add 10 days
+            //         hatcherProcess.hatcher_date.value = pulloutDay21.toISOString().split('T')[0]; // Format YYYY-MM-DD
+                
+            //         //------------------------
+            //         let pulloutQty = Number(pulloutStorage.settable_eggs_qty.value) || 0;
+            //         setterProcess.d10_inc_qty.value = pulloutQty;
+            //     }
+            // }
 
-            generateCurrentStepData();
+            // generateCurrentStepData();
             
         });
-    </script> -->
+    </script>
 
 
     <script src="{{asset('js/loading-screen.js')}}" defer></script>
