@@ -150,7 +150,7 @@ function updateFormListener() {
         });
 
         // Show only if it's the current step or exceptions
-        if (formStep === currentStep || formStep === 10) {
+        if (formStep === currentStep || formStep === 9) {
             formAction.style.display = hasValues ? "flex" : "none";
         } else {
             formAction.style.display = "none";
@@ -236,8 +236,8 @@ function validateForm() {
 }
 
 /*** Step Progression ***/
-const skippableCards = ["card10"];
-const alwaysEnabledCards = ["card10", "card13"];
+const skippableCards = ["card9"];
+const alwaysEnabledCards = ["card9"];
 const allCards = document.querySelectorAll(".card");
 
 function proceedToNextStep() {
@@ -315,7 +315,7 @@ function lockCompletedSteps(currentStep) {
     document.querySelectorAll(".card").forEach(card => {
         let stepNumber = parseInt(card.id.replace("card", "")); // Extract step number
 
-        let exemptSteps = [10]; // Skippable but needs its own condition
+        let exemptSteps = [9]; // Skippable but needs its own condition
 
         if (stepNumber < currentStep && !exemptSteps.includes(stepNumber)) {
             // Disable all inputs inside the card
@@ -355,10 +355,10 @@ function simulateFormSave() {
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if (stepNumber !== 10) {
+    if (stepNumber !== 9) {
         proceedToNextStep();
     } else {
-        // If it's not Card 10, disable it after saving
+        // If it's not Card 9, disable it after saving
         lockCompletedSteps(currentStep);
     }
 }
@@ -927,6 +927,10 @@ function saveCollectedEggs() {
 }
 
 function saveStoragePullout() {
+    
+    let incubatornoValues = Array.from(document.getElementById('incubator_no').selectedOptions)
+    .map(option => option.value);
+
     let data = {
         storage_pullout: {
             pullout_date: document.getElementById("pullout_date").value, // Original pullout date from input
@@ -935,7 +939,7 @@ function saveStoragePullout() {
             pullout_date_d21: document.getElementById("hatcher_date").value, // +3 Days
 
             settable_eggs_qty: document.getElementById("settable_eggs_qty").value,
-            incubator_no: document.getElementById("incubator_no").value,
+            incubator_no: incubatornoValues,
             prime_qty: document.getElementById("prime_qty").value,
             prime_prcnt: document.getElementById("prime_prcnt").value,
             jp_qty: document.getElementById("jp_qty").value,
@@ -981,9 +985,12 @@ function saveCandlingProcess() {
 }
 
 function saveHatcherPullout(){
+    let hatchernoValues = Array.from(document.getElementById('hatcher_no').selectedOptions)
+    .map(option => option.value);
+
     let data = {
         hatcher_pullout: {
-            hatcher_no: document.getElementById("hatcher_no").value,
+            hatcher_no: hatchernoValues,
             hatcher_date: document.getElementById("hatcher_date").value,
             rejected_hatch_qty: document.getElementById("rejected_hatch_qty").value,
             accepted_hatch_qty: document.getElementById("accepted_hatch_qty").value,

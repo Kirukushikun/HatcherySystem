@@ -49,7 +49,7 @@
             </div>
             <div class="input-container column">
                 <label for="incubator_no">Incubator No.  <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true" data-multiselect="true">
+                <select name="incubator_no[]" id="incubator_no" multiple multiselect-select-all="true" multiselect-search="true" data-multiselect="true" disabled>
                     <x-multiselect-dropdown :data-category="'incubator_no'" />
                 </select>
             </div>
