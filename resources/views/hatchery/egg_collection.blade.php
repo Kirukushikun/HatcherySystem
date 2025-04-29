@@ -124,11 +124,6 @@
             <livewire:egg-collection-table />
         </div>
 
-        <!-- <div class="empty-container">
-            <img src="Images/empty-icon.png" alt="">
-            <p>NO DATA ENTRIES YET</p>
-        </div> -->
-
         <div class="table-footer">
             <div class="pagination">
             </div>
