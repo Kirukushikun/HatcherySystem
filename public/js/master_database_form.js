@@ -237,15 +237,24 @@ function validateForm() {
 
 /*** Step Progression ***/
 const skippableCards = ["card9"];
-const alwaysEnabledCards = ["card9" , "card11"]; // Always enabled cards (Forecast and Table)
+const alwaysEnabledCards = ["card9" , "card11"];
 const allCards = document.querySelectorAll(".card");
 
-function proceedToNextStep() {
+function proceedToNextStep(savedCardNumber) {
+    if (alwaysEnabledCards.includes(`card${savedCardNumber}`)) {
+        console.log(`Saved always enabled card${savedCardNumber}, no step progression.`);
+        return;
+    }
+
+    if (savedCardNumber !== currentStep) {
+        console.log(`Warning: Saved card${savedCardNumber} but current step is ${currentStep}.`);
+        return;
+    }
+
     currentStep++;
+    console.log("Current Step: ", currentStep);
     autoSkipStep();
     disableFutureForms();
-
-    //Lock Completed Steps
     lockCompletedSteps(currentStep);
 }
 
@@ -340,7 +349,7 @@ function lockCompletedSteps(currentStep) {
 }
 
 /*** Initial Setup ***/
-autoSkipStep();
+// autoSkipStep();
 disableFutureForms();
 lockCompletedSteps(currentStep);
 
@@ -505,8 +514,8 @@ function storeRecord(){
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if ( stepNumber !== 10) {
-        proceedToNextStep();
+    if ( stepNumber !== 9) {
+        proceedToNextStep(currentStep);
     } else {
         // If it's not Card 6 or 10, disable it after saving
         lockCompletedSteps(currentStep);
