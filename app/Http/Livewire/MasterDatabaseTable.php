@@ -55,12 +55,12 @@ class MasterDatabaseTable extends Component
 
             // Retrieve all steps for this batch in one query
             $completedSteps = MasterDB::where('batch_no', $batch_no)
-                ->whereIn('current_step', range(2, 11)) // Exclude Step 10 and 11
+                ->whereIn('current_step', range(2, 12))
                 ->pluck('current_step')
                 ->toArray();
 
             // Loop through steps and check if it's in completedSteps array
-            for ($step = 2; $step <= 11; $step++) {
+            for ($step = 2; $step <= 12; $step++) {
                 $batchEntry[$step] = in_array($step, $completedSteps) ? 'Done' : 'Pending';
             }
 

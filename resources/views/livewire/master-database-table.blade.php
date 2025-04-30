@@ -2,14 +2,17 @@
     <thead>
         <tr>
             <th>No.</th>
-            <th>1. Egg Collection</th>   
-            <th>2. Storage Retrieval</th>  
-            <th>3. 10th Day Candling Entry</th>  
-            <th>4. 18th Day Candling Entry</th>  
-            <th>5. Hatcher Retrieval</th>  
-            <th>6. Chick Sexing</th>  
-            <th>7. QC/QA Inspection</th>  
-            <th>8. Dispatch Entry</th>  
+            <th>1. Egg Collection</th>  
+
+            <th>2. Storage Classification</th>  
+            <th>3. Storage Retrieval</th>  
+            <th>4. Setter Entry</th>  
+            <th>5. Candling Entry</th>  
+            <th>5.1 Eggshell Temperature Check</th>  
+            <th>6. Hatcher Retrieval</th>  
+            <th>7. Chick Sexing</th>  
+            <th>8. QC/QA Inspection</th>  
+            <th>9. Dispatch Entry</th>  
             <th>Hatch Forecasting</th>
 
             <th>Encoded/Modified By</th>
@@ -83,7 +86,7 @@
                     tr.appendChild(batchNoTd);
 
                     // Define the step order manually (Swap 11 and 12)
-                    const stepOrder = [2, 3, 4, 5, 6, 7, 8, 9, 10]; 
+                    const stepOrder = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 11]; 
 
                     // Loop through steps in the specified order
                     stepOrder.forEach(step => {

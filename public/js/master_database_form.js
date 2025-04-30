@@ -2,7 +2,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 const sidebarLinks = document.querySelectorAll(".sidebar a");
 const cardSections = document.querySelectorAll(".card");
 const cardLabels = document.querySelectorAll(".card-label");
-const datalist = document.getElementById("card11");
+const datalist = document.getElementById("card13");
 let activeForm = null;
 
 
@@ -150,7 +150,7 @@ function updateFormListener() {
         });
 
         // Show only if it's the current step or exceptions
-        if (formStep === currentStep || formStep === 9) {
+        if (formStep === currentStep || formStep === 6 || formStep === 10) {
             formAction.style.display = hasValues ? "flex" : "none";
         } else {
             formAction.style.display = "none";
@@ -198,14 +198,16 @@ function validateForm() {
     // Define required fields per form ID
     let requiredFields = {
         "card1": ["ps_no", "collected_qty", "production_date_from", "production_date_to"],
-        "card2": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
-        "card3": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
-        "card4": ["d18_candling_date", "infertiles_qty"],
-        "card5": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
-        "card6": ["cock_qty"],
-        "card7": ["qc_date", "rejected_dop_qty"],
-        "card8": ["dispatch_prime_qty"],
+        "card2": ["non_settable_eggs"],
+        "card3": ["pullout_date", "settable_eggs_qty", "incubator_no", "prime_qty", "jp_qty"],
+        "card4": ["d10_candling_date", "d10_breakout_qty", "d10_candling_qty"],
+        "card5": ["d18_candling_date", "infertiles_qty"],
+        "card6": ["top_above_temp_qty", "top_below_temp_qty", "mid_above_temp_qty", "mid_below_temp_qty", "low_above_temp_qty", "low_below_temp_qty"],
+        "card7": ["hatcher_no", "hatcher_date", "rejected_hatch_qty"],
+        "card8": ["cock_qty"],
+        "card9": ["qc_date", "rejected_dop_qty"],
         "card10": ["infertile_prcnt", "frcst_cock_prcnt", "frcst_rejected_hatch_prcnt", "frcst_rejected_dop_prcnt"],
+        "card11": ["dispatch_prime_qty"],
     };
 
     // Get fields for the currently active form
@@ -236,25 +238,16 @@ function validateForm() {
 }
 
 /*** Step Progression ***/
-const skippableCards = ["card9"];
-const alwaysEnabledCards = ["card9" , "card11"];
+const skippableCards = ["card6", "card10"];
+const alwaysEnabledCards = ["card10", "card13"];
 const allCards = document.querySelectorAll(".card");
 
-function proceedToNextStep(savedCardNumber) {
-    if (alwaysEnabledCards.includes(`card${savedCardNumber}`)) {
-        console.log(`Saved always enabled card${savedCardNumber}, no step progression.`);
-        return;
-    }
-
-    if (savedCardNumber !== currentStep) {
-        console.log(`Warning: Saved card${savedCardNumber} but current step is ${currentStep}.`);
-        return;
-    }
-
+function proceedToNextStep() {
     currentStep++;
-    console.log("Current Step: ", currentStep);
     autoSkipStep();
     disableFutureForms();
+
+    //Lock Completed Steps
     lockCompletedSteps(currentStep);
 }
 
@@ -320,11 +313,12 @@ function disableCard(card) {
 }
 
 
+
 function lockCompletedSteps(currentStep) {
     document.querySelectorAll(".card").forEach(card => {
         let stepNumber = parseInt(card.id.replace("card", "")); // Extract step number
 
-        let exemptSteps = [9]; // Skippable but needs its own condition
+        let exemptSteps = [6, 10]; // Skippable but needs its own condition
 
         if (stepNumber < currentStep && !exemptSteps.includes(stepNumber)) {
             // Disable all inputs inside the card
@@ -341,15 +335,15 @@ function lockCompletedSteps(currentStep) {
             card.style.borderColor = "gray";
         }
         
-        // **Handle 10 based on existing data**
-        // if (exemptSteps.includes(stepNumber)) {
-        //     checkIfDataExists(batchNumber, stepNumber, card);
-        // }
+        // **Handle Card 6 & 10 based on existing data**
+        if (exemptSteps.includes(stepNumber)) {
+            checkIfDataExists(batchNumber, stepNumber, card);
+        }
     });
 }
 
 /*** Initial Setup ***/
-// autoSkipStep();
+autoSkipStep();
 disableFutureForms();
 lockCompletedSteps(currentStep);
 
@@ -364,39 +358,40 @@ function simulateFormSave() {
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if (stepNumber !== 9) {
+    if (stepNumber !== 6 && stepNumber !== 10) {
         proceedToNextStep();
     } else {
-        // If it's not Card 9, disable it after saving
+        // If it's not Card 6 or 10, disable it after saving
         lockCompletedSteps(currentStep);
     }
 }
 
 
-// function checkIfDataExists(batchNumber, stepNumber, card) {
-//     let adjustedStep = stepNumber + 1;
-//     fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
-//         .then(response => response.json())
-//         .then(data => {
-//             if(card.id == "card6"){ //Only for card 6
-//                 if (data.exists) {
-//                     // Disable Card 6 or 10 if data is already saved
-//                     card.querySelectorAll("input, select, textarea").forEach(input => {
-//                         input.setAttribute("readonly", true);
-//                         input.setAttribute("disabled", true);
-//                     });
+function checkIfDataExists(batchNumber, stepNumber, card) {
+    let adjustedStep = stepNumber + 1;
+    fetch(`/master-database/data-check/${batchNumber}/${adjustedStep}`) // Adjust to your backend route
+        .then(response => response.json())
+        .then(data => {
+            if(card.id == "card6"){ //Only for card 6
+                if (data.exists) {
+                    // Disable Card 6 or 10 if data is already saved
+                    card.querySelectorAll("input, select, textarea").forEach(input => {
+                        input.setAttribute("readonly", true);
+                        input.setAttribute("disabled", true);
+                    });
 
-//                     // Hide the save button
-//                     let saveButton = card.querySelector(".form-action");
-//                     if (saveButton) saveButton.style.display = "none";
+                    // Hide the save button
+                    let saveButton = card.querySelector(".form-action");
+                    if (saveButton) saveButton.style.display = "none";
 
-//                     // Change border color to gray
-//                     card.style.borderColor = "gray";
-//                 }                
-//             }
-//         })
-//         .catch(error => console.error("Error checking data:", error));
-// }
+                    // Change border color to gray
+                    card.style.borderColor = "gray";
+                }                
+            }
+
+        })
+        .catch(error => console.error("Error checking data:", error));
+}
 
 function showModal(button, targetID = null) {
     if (button === "save") {
@@ -492,15 +487,17 @@ function showModal(button, targetID = null) {
 
 const saveFunctions = {
     "card1": saveCollectedEggs,
-    "card2": saveStoragePullout,
-    "card3": saveSetterProcess,
-    "card4": saveCandlingProcess,
-    "card5": saveHatcherPullout,
-    "card6": saveSexing,
-    "card7": saveQCProcess,
-    "card9": saveForecast,
-    "card8": saveDispathProcess,
-    "card10": saveForecastedBoxes,
+    "card2": saveClassificationForStorage,
+    "card3": saveStoragePullout,
+    "card4": saveSetterProcess,
+    "card5": saveCandlingProcess,
+    "card6": saveEggTemperatureCheck,
+    "card7": saveHatcherPullout,
+    "card8": saveSexing,
+    "card9": saveQCProcess,
+    "card10": saveForecast,
+    "card11": saveDispathProcess,
+    "card12": saveForecastedBoxes,
 }
 
 function storeRecord(){
@@ -514,8 +511,8 @@ function storeRecord(){
     document.getElementById("modal").classList.remove("active");
 
     // Proceed to the next step **only if its Card 6 or 10**
-    if ( stepNumber !== 9) {
-        proceedToNextStep(currentStep);
+    if (stepNumber !== 6 && stepNumber !== 10) {
+        proceedToNextStep();
     } else {
         // If it's not Card 6 or 10, disable it after saving
         lockCompletedSteps(currentStep);
@@ -597,48 +594,21 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>2</span>
-            <p>Storage Pullout Process</p>
+            <p>Classification for Storage</p>
         </div>
 
         <div class="card-form">
-
             <div class="input-group">
-                <label for="incubator_no">Incubator No. </label>
-                <input type="text" name="incubator_no" id="incubator_no" placeholder="0" value="${data[1] ? data[1].storage_pullout.incubator_no || '' : ''}" readonly>
+                <label for="non_settable_eggs">Non-settable Eggs</label>
+                <input type="number" name="non_settable_eggs" id="non_settable_eggs" placeholder="0" value="${data[1] ? data[1].classification_for_storage.non_settable_eggs || '' : ''}" readonly>
             </div>
-
             <div class="input-group">
-                <label for="settable_eggs_qty">Set. Egg Quantity </label>
-                <input type="text" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0" value="${data[1] ? data[1].storage_pullout.settable_eggs_qty || '' : ''}" readonly>
+                <label for="settable_eggs">Settable Eggs</label>
+                <input type="number" name="settable_eggs" id="settable_eggs" placeholder="0" value="${data[1] ? data[1].classification_for_storage.settable_eggs || '' : ''}" readonly>
             </div>
-
             <div class="input-group">
-                <label for="pullout_date">Pullout Date </label>
-                <input type="date" name="pullout_date" id="pullout_date" value="${data[1] ? data[1].storage_pullout.pullout_date || '' : ''}" readonly>
-            </div>
-            
-            <br> 
-
-            <div class="input-container">
-                <div class="input-group">
-                    <label for="prime_qty">Prime Quantity </label>
-                    <input type="number" name="prime_qty" id="prime_qty" placeholder="0" value="${data[1] ? data[1].storage_pullout.prime_qty || '' : ''}" readonly>
-                </div>   
-                <div class="input-group prcnt">
-                    <label for="prime_prcnt">%</label>
-                    <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" value="${data[1] ? data[1].storage_pullout.prime_prcnt || '' : ''}" readonly>
-                </div>                     
-            </div>
-
-            <div class="input-container">
-                <div class="input-group">
-                    <label for="jp_qty">JP Quantity </label>
-                    <input type="number" name="jp_qty" id="jp_qty" placeholder="0" value="${data[1] ? data[1].storage_pullout.jp_qty || '' : ''}" readonly>
-                </div>   
-                <div class="input-group prcnt">
-                    <label for="jp_prcnt">% </label>
-                    <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" value="${data[1] ? data[1].storage_pullout.jp_prcnt || '' : ''}" readonly>
-                </div>                     
+                <label for="remaining_balance">Remaining Balance</label>
+                <input type="number" name="remaining_balance" id="remaining_balance" placeholder="0" value="${data[1] ? data[1].classification_for_storage.remaining_balance || '' : ''}" readonly>
             </div>
         </div>
     </div>
@@ -646,17 +616,66 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>3</span>
-            <p>10th Day Candling Process</p>
+            <p>Storage Pullout Process</p>
+        </div>
+
+        <div class="card-form">
+
+            <div class="input-group">
+                <label for="incubator_no">Incubator No. </label>
+                <input type="text" name="incubator_no" id="incubator_no" placeholder="0" value="${data[2] ? data[2].storage_pullout.incubator_no || '' : ''}" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="settable_eggs_qty">Set. Egg Quantity </label>
+                <input type="text" name="settable_eggs_qty" id="settable_eggs_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.settable_eggs_qty || '' : ''}" readonly>
+            </div>
+
+            <div class="input-group">
+                <label for="pullout_date">Pullout Date </label>
+                <input type="date" name="pullout_date" id="pullout_date" value="${data[2] ? data[2].storage_pullout.pullout_date || '' : ''}" readonly>
+            </div>
+            
+            <br> 
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="prime_qty">Prime Quantity </label>
+                    <input type="number" name="prime_qty" id="prime_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.prime_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="prime_prcnt">%</label>
+                    <input type="text" name="prime_prcnt" id="prime_prcnt" placeholder="0" value="${data[2] ? data[2].storage_pullout.prime_prcnt || '' : ''}" readonly>
+                </div>                     
+            </div>
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="jp_qty">JP Quantity </label>
+                    <input type="number" name="jp_qty" id="jp_qty" placeholder="0" value="${data[2] ? data[2].storage_pullout.jp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="jp_prcnt">% </label>
+                    <input type="text" name="jp_prcnt" id="jp_prcnt" placeholder="0" value="${data[2] ? data[2].storage_pullout.jp_prcnt || '' : ''}" readonly>
+                </div>                     
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>4</span>
+            <p>Setter Process Entry</p>
         </div>
 
         <div class="card-form">
             <div class="input-group">
                 <label for="d10_breakout_qty">Day 10 Breakout Quantity </label>
-                <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0" value="${data[2] && data[2].setter_process ? data[2].setter_process.d10_breakout_qty || '' : ''}" readonly>
+                <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0" value="${data[3] && data[3].setter_process ? data[3].setter_process.d10_breakout_qty || '' : ''}" readonly>
             </div>                 
             <div class="input-group">
                 <label for="d10_candling_date">Day 10 Candling Date </label>
-                <input type="date" name="d10_candling_date" id="d10_candling_date" value="${data[2] && data[2].setter_process ? data[2].setter_process.d10_candling_date || '' : ''}" readonly>
+                <input type="date" name="d10_candling_date" id="d10_candling_date" value="${data[3] && data[3].setter_process ? data[3].setter_process.d10_candling_date || '' : ''}" readonly>
             </div>
 
             <p></p>
@@ -665,65 +684,116 @@ function displayRecord(data){
             <div class="input-container">
                 <div class="input-group">
                     <label for="d10_candling_qty">Day 10 Candling Quantity </label>
-                    <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0" value="${data[2] && data[2].setter_process ? data[2].setter_process.d10_candling_qty || '' : ''}" readonly>
+                    <input type="number" name="d10_candling_qty" id="d10_candling_qty" placeholder="0" value="${data[3] && data[3].setter_process ? data[3].setter_process.d10_candling_qty || '' : ''}" readonly>
                 </div>   
                 <div class="input-group prcnt">
                     <label for="d10_breakout_prcnt">%</label>
-                    <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" value="${data[2] && data[2].setter_process ? data[2].setter_process.d10_breakout_prcnt || '' : ''}" readonly>
+                    <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" value="${data[3] && data[3].setter_process ? data[3].setter_process.d10_breakout_prcnt || '' : ''}" readonly>
                 </div>                     
             </div>
             <div class="input-group">
                 <label for="d10_inc_qty">Day 10  Inc Quantity</label>
-                <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" value="${data[2] && data[2].setter_process ? data[2].setter_process.d10_inc_qty || '' : ''}" readonly>
+                <input type="text" name="d10_inc_qty" id="d10_inc_qty" placeholder="0" value="${data[3] && data[3].setter_process ? data[3].setter_process.d10_inc_qty || '' : ''}" readonly>
             </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-label">
-            <span>4</span>
-            <p>18th Day Candling Process</p>
-        </div>
-
-        <div class="card-form">
-            <div class="input-group">
-                <label for="infertiles_qty">Infertiles Quantity</label>
-                <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0" value="${data[3] && data[3].candling_process ? data[3].candling_process.infertiles_qty || '' : ''}" readonly>
-            </div> 
-            <div class="input-group">
-                <label for="embryonic_eggs_qty">Embryonic Eggs Quantity</label>
-                <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" value="${data[3] && data[3].candling_process ? data[3].candling_process.embryonic_eggs_qty || '' : ''}" readonly>
-            </div>                    
-            <div class="input-group">
-                <label for="d18_candling_date">Day 18.5 Candling Date</label>
-                <input type="date" name="d18_candling_date" id="d18_candling_date" value="${data[3] && data[3].candling_process ? data[3].candling_process.d18_candling_date || '' : ''}" readonly>
-            </div>
-
         </div>
     </div>
 
     <div class="card">
         <div class="card-label">
             <span>5</span>
-            <p>Hatcher Pullout Process</p>
+            <p>Candling Process Entry</p>
         </div>
 
         <div class="card-form">
             <div class="input-group">
-                <label for="hatcher_no">Hatcher No</label>
-                <input type="text" id="hatcher_no" name="hatcher_no" placeholder="0" value="${data[4] && data[4].hatcher_pullout ? data[4].hatcher_pullout.hatcher_no || '' : ''}" readonly>
-            </div>
+                <label for="infertiles_qty">Infertiles Quantity</label>
+                <input type="number" name="infertiles_qty" id="infertiles_qty" placeholder="0" value="${data[4] && data[4].candling_process ? data[4].candling_process.infertiles_qty || '' : ''}" readonly>
+            </div> 
             <div class="input-group">
-                <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
-                <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0" value="${data[4] && data[4].hatcher_pullout ? data[4].hatcher_pullout.rejected_hatch_qty || '' : ''}" readonly>
-            </div>
+                <label for="embryonic_eggs_qty">Embryonic Eggs Quantity</label>
+                <input type="text" name="embryonic_eggs_qty" id="embryonic_eggs_qty" placeholder="0" value="${data[4] && data[4].candling_process ? data[4].candling_process.embryonic_eggs_qty || '' : ''}" readonly>
+            </div>                    
             <div class="input-group">
-                <label for="accepted_hatch_qty">Good Hatch Qty</label>
-                <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" placeholder="0" value="${data[4] && data[4].hatcher_pullout ? data[4].hatcher_pullout.accepted_hatch_qty || '' : ''}" readonly>
+                <label for="d18_candling_date">Day 18.5 Candling Date</label>
+                <input type="date" name="d18_candling_date" id="d18_candling_date" value="${data[4] && data[4].candling_process ? data[4].candling_process.d18_candling_date || '' : ''}" readonly>
             </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>5.1</span>
+            <p>Egg Shell Temperature Check</p>
+        </div>
+
+        <div class="card-form">
             <div class="input-group">
-                <label for="hatcher_date">Hatcher Date</label>
-                <input type="date" name="hatcher_date" id="hatcher_date" value="${data[4] && data[4].hatcher_pullout ? data[4].hatcher_pullout.hatcher_date || '' : ''}" readonly>
+                <label for="">Location</label>
+                <input type="text" value="TOP" readonly>
+            </div>
+            
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="top_above_temp_qty">37.8 Above<span></span></label>
+                    <input type="number" name="top_above_temp_qty" id="top_above_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.top_above_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="top_above_temp_prcnt">%</label>
+                    <input type="text" name="top_above_temp_prcnt" id="top_above_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.top_above_temp_prcnt || '' : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="top_below_temp_qty">37.7 Lower<span></span></label>
+                    <input type="number" name="top_below_temp_qty" id="top_below_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.top_below_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <label for="top_below_temp_prcnt">%</label>
+                    <input type="text" name="top_below_temp_prcnt" id="top_below_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.top_below_temp_prcnt || '' : ''}" readonly>
+                </div>                    
+            </div>
+            <br>
+
+            <div class="input-group">
+                <input type="text" value="MID" readonly>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="mid_above_temp_qty" id="mid_above_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.mid_above_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="mid_above_temp_prcnt" id="mid_above_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.mid_above_temp_prcnt || '' : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="mid_below_temp_qty" id="mid_below_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.mid_below_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="mid_below_temp_prcnt" id="mid_below_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.mid_below_temp_prcnt || '' : ''}" readonly>
+                </div>                    
+            </div>
+            <br>
+
+            <div class="input-group">
+                <input type="text" value="LOW" readonly>
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="low_above_temp_qty" id="low_above_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.low_above_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="low_above_temp_prcnt" id="low_above_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.low_above_temp_prcnt || '' : ''}" readonly>
+                </div>                    
+            </div>
+            <div class="input-container">
+                <div class="input-group">
+                    <input type="number" name="low_below_temp_qty" id="low_below_temp_qty" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.low_below_temp_qty || '' : ''}" readonly>
+                </div>   
+                <div class="input-group prcnt">
+                    <input type="text" name="low_below_temp_prcnt" id="low_below_temp_prcnt" placeholder="0" value="${data[5] && data[5].egg_temperature_check ? data[5].egg_temperature_check.low_below_temp_prcnt || '' : ''}" readonly>
+                </div>                    
             </div>
         </div>
     </div>
@@ -731,17 +801,25 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>6</span>
-            <p>Sexing</p>
+            <p>Hatcher Pullout Process</p>
         </div>
 
         <div class="card-form">
             <div class="input-group">
-                <label for="cock_qty">Cockerels Quantity</label>
-                <input type="number" name="cock_qty" id="cock_qty" placeholder="0" value="${data[5] && data[5].sexing ? data[5].sexing.cock_qty || '' : ''}" readonly>
+                <label for="hatcher_no">Hatcher No</label>
+                <input type="text" id="hatcher_no" name="hatcher_no" placeholder="0" value="${data[6] && data[6].hatcher_pullout ? data[6].hatcher_pullout.hatcher_no || '' : ''}" readonly>
             </div>
             <div class="input-group">
-                <label for="dop_qty">DOP Quantity</label>
-                <input type="text" name="dop_qty" id="dop_qty" placeholder="0" value="${data[5] && data[5].sexing ? data[5].sexing.dop_qty || '' : ''}" readonly>
+                <label for="rejected_hatch_qty">Rejected Hatch Qty</label>
+                <input type="number" name="rejected_hatch_qty" id="rejected_hatch_qty" placeholder="0" value="${data[6] && data[6].hatcher_pullout ? data[6].hatcher_pullout.rejected_hatch_qty || '' : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="accepted_hatch_qty">Good Hatch Qty</label>
+                <input type="text" name="accepted_hatch_qty" id="accepted_hatch_qty" placeholder="0" value="${data[6] && data[6].hatcher_pullout ? data[6].hatcher_pullout.accepted_hatch_qty || '' : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="hatcher_date">Hatcher Date</label>
+                <input type="date" name="hatcher_date" id="hatcher_date" value="${data[6] && data[6].hatcher_pullout ? data[6].hatcher_pullout.hatcher_date || '' : ''}" readonly>
             </div>
         </div>
     </div>
@@ -749,22 +827,17 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>7</span>
-            <p>QC/QA Process Entry</p>
+            <p>Sexing</p>
         </div>
 
         <div class="card-form">
             <div class="input-group">
-                <label for="rejected_dop_qty">Rejected DOP Qty</label>
-                <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0" value="${data[6] && data[6].qc_qa_process ? data[6].qc_qa_process.rejected_dop_qty || '' : ''}" readonly>
-            </div>
-            
-            <div class="input-group">
-                <label for="accepted_dop_qty">Good DOP Qty</label>
-                <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" placeholder="0" value="${data[6] && data[6].qc_qa_process ? data[6].qc_qa_process.accepted_dop_qty || '' : ''}" readonly>
+                <label for="cock_qty">Cockerels Quantity</label>
+                <input type="number" name="cock_qty" id="cock_qty" placeholder="0" value="${data[7] && data[7].sexing ? data[7].sexing.cock_qty || '' : ''}" readonly>
             </div>
             <div class="input-group">
-                <label for="qc_date">QC Date</label>
-                <input type="date" name="qc_date" id="qc_date" value="${data[6] && data[6].qc_qa_process ? data[6].qc_qa_process.qc_date || '' : ''}" readonly>
+                <label for="dop_qty">DOP Quantity</label>
+                <input type="text" name="dop_qty" id="dop_qty" placeholder="0" value="${data[7] && data[7].sexing ? data[7].sexing.dop_qty || '' : ''}" readonly>
             </div>
         </div>
     </div>
@@ -772,17 +845,40 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>8</span>
+            <p>QC/QA Process Entry</p>
+        </div>
+
+        <div class="card-form">
+            <div class="input-group">
+                <label for="rejected_dop_qty">Rejected DOP Qty</label>
+                <input type="number" name="rejected_dop_qty" id="rejected_dop_qty" placeholder="0" value="${data[8] && data[8].qc_qa_process ? data[8].qc_qa_process.rejected_dop_qty || '' : ''}" readonly>
+            </div>
+            
+            <div class="input-group">
+                <label for="accepted_dop_qty">Good DOP Qty</label>
+                <input type="text" name="accepted_dop_qty" id="accepted_dop_qty" placeholder="0" value="${data[8] && data[8].qc_qa_process ? data[8].qc_qa_process.accepted_dop_qty || '' : ''}" readonly>
+            </div>
+            <div class="input-group">
+                <label for="qc_date">QC Date</label>
+                <input type="date" name="qc_date" id="qc_date" value="${data[8] && data[8].qc_qa_process ? data[8].qc_qa_process.qc_date || '' : ''}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>9</span>
             <p>Dispath Process Entry</p>
         </div>
 
         <div class="card-form">
             <div class="input-group">
                 <label for="dispatch_prime_qty">Prime Qty</label>
-                <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0" value="${data[8] && data[8].dispath_process ? data[8].dispath_process.dispatch_prime_qty || '' : ''}" readonly>
+                <input type="number" name="dispatch_prime_qty" id="dispatch_prime_qty" placeholder="0" value="${data[10] && data[10].dispath_process ? data[10].dispath_process.dispatch_prime_qty || '' : ''}" readonly>
             </div>
             <div class="input-group">
                 <label for="dispatch_jr_prime_qty">Jr Prime Qty</label>
-                <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0" value="${data[8] && data[8].dispath_process ? data[8].dispath_process.dispatch_jr_prime_qty || '' : ''}" readonly>
+                <input type="number" name="dispatch_jr_prime_qty" id="dispatch_jr_prime_qty" placeholder="0" value="${data[10] && data[10].dispath_process ? data[10].dispath_process.dispatch_jr_prime_qty || '' : ''}" readonly>
             </div>
             <div class="input-group">
                 <label for="total_boxes">Total Boxes</label>
@@ -801,51 +897,51 @@ function displayRecord(data){
             <div class="input-container">
                 <div class="input-group">
                     <label for="infertile_qty">Infertile Qty</label>
-                    <input type="number" name="infertile_qty" id="infertile_qty" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.infertile_qty || '' : ''}" readonly>
+                    <input type="number" name="infertile_qty" id="infertile_qty" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.infertile_qty || '' : ''}" readonly>
                 </div>
                 
                 <div class="input-group prcnt">
                     <label for="infertile_prcnt">% <span></span></label>
-                    <input type="number" name="infertile_prcnt" id="infertile_prcnt" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.infertile_prcnt || '' : ''}" readonly>
+                    <input type="number" name="infertile_prcnt" id="infertile_prcnt" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.infertile_prcnt || '' : ''}" readonly>
                 </div>
             </div>
             <div class="input-container">
                 <div class="input-group">
                     <label for="frcst_cock_qty">Cock Qty</label>
-                    <input type="number" name="frcst_cock_qty" id="frcst_cock_qty" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_cock_qty || '' : ''}" readonly>
+                    <input type="number" name="frcst_cock_qty" id="frcst_cock_qty" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_cock_qty || '' : ''}" readonly>
                 </div>
                 
                 <div class="input-group prcnt">
                     <label for="frcst_cock_prcnt">% <span></span></label>
-                    <input type="number" name="frcst_cock_prcnt" id="frcst_cock_prcnt" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_cock_prcnt || '' : ''}" readonly>
+                    <input type="number" name="frcst_cock_prcnt" id="frcst_cock_prcnt" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_cock_prcnt || '' : ''}" readonly>
                 </div>
             </div>
             <div class="input-container">
                 <div class="input-group">
                     <label for="frcst_rejected_hatch_qty">Rejected Hatch Qty</label>
-                    <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_rejected_hatch_qty || '' : ''}" readonly>
+                    <input type="number" name="frcst_rejected_hatch_qty" id="frcst_rejected_hatch_qty" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_rejected_hatch_qty || '' : ''}" readonly>
                 </div>
                 
                 <div class="input-group prcnt">
                     <label for="frcst_rejected_hatch_prcnt">% <span></span></label>
-                    <input type="number" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_rejected_hatch_prcnt || '' : ''}" readonly>
+                    <input type="number" name="frcst_rejected_hatch_prcnt" id="frcst_rejected_hatch_prcnt" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_rejected_hatch_prcnt || '' : ''}" readonly>
                 </div>
             </div>
             <div class="input-container">
                 <div class="input-group">
                     <label for="frcst_rejected_dop_qty">Rejected DOP Qty</label>
-                    <input type="number" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_rejected_dop_qty || '' : ''}" readonly>
+                    <input type="number" name="frcst_rejected_dop_qty" id="frcst_rejected_dop_qty" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_rejected_dop_qty || '' : ''}" readonly>
                 </div>
                 
                 <div class="input-group prcnt">
                     <label for="frcst_rejected_dop_prcnt">% <span></span></label>
-                    <input type="number" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_rejected_dop_prcnt || '' : ''}" readonly>
+                    <input type="number" name="frcst_rejected_dop_prcnt" id="frcst_rejected_dop_prcnt" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_rejected_dop_prcnt || '' : ''}" readonly>
                 </div>
             </div>
 
             <div class="input-group">
                 <label for="forecast_total_qty">Total Qty</label>
-                <input type="number" name="forecast_total_qty" id="forecast_total_qty" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.forecast_total_qty || '' : ''}" readonly>
+                <input type="number" name="forecast_total_qty" id="forecast_total_qty" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.forecast_total_qty || '' : ''}" readonly>
             </div>
         </div>
     </div>
@@ -859,19 +955,19 @@ function displayRecord(data){
         <div class="card-form">
             <div class="input-group">
                 <label for="frcst_total_boxes">Total</label>
-                <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_total_boxes || '' : ''}" readonly>
+                <input type="text" name="frcst_total_boxes" id="frcst_total_boxes" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_total_boxes || '' : ''}" readonly>
             </div>
             <div class="input-group">
                 <label for="frcst_settable_eggs_prcnt">%</label>
-                <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_settable_eggs_prcnt || '' : ''}" readonly>
+                <input type="text" name="frcst_settable_eggs_prcnt" id="frcst_settable_eggs_prcnt" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_settable_eggs_prcnt || '' : ''}" readonly>
             </div>
             <div class="input-group">
                 <label for="frcst_prime">Prime</label>
-                <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_prime || '' : ''}" readonly>
+                <input type="text" name="frcst_prime" id="frcst_prime" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_prime || '' : ''}" readonly>
             </div>
             <div class="input-group">
                 <label for="frcst_jr_prime">Junior Prime</label>
-                <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" value="${data[7] && data[7].forecast ? data[7].forecast.frcst_jr_prime || '' : ''}" readonly>
+                <input type="text" name="frcst_jr_prime" id="frcst_jr_prime" placeholder="0" value="${data[9] && data[9].forecast ? data[9].forecast.frcst_jr_prime || '' : ''}" readonly>
             </div>
         </div>
     </div>`;
@@ -892,7 +988,7 @@ function deleteRecord(targetBatch) {
             loadData();
 
             // Trigger push notification
-            createPushNotification("success", "Deleted Successfully", "Master Database Record Deleted Successfully");
+            createPushNotification("danger", "Deleted Successfully", "Master Database Record Deleted Successfully");
         } else {
             createPushNotification("danger", "Delete Unsuccessful", "Record not found");
         }
@@ -906,21 +1002,21 @@ function deleteRecord(targetBatch) {
 function saveData(url, data, successMessage = null) {
     let adjustedStep = currentStep;
 
-    // 🔹 If forecast exists, force step to 10
-    if (data.hasOwnProperty("forecast")) {
-        adjustedStep = 10;
+    // 🔹 If classification_for_storage exists, force step to 3
+    if (data.hasOwnProperty("classification_for_storage")) {
+        adjustedStep = 3;
+    } else if (data.hasOwnProperty("forecast")) {
+        adjustedStep = 11;
     } 
     else if (data.hasOwnProperty("frcst_box")) {
-        adjustedStep = 11;
+        adjustedStep = 13;
     }
 
     // 🔹 Fix specific step jumps
-    // else if (activeForm.id === "card6") {
-    //     adjustedStep = 7;
-    // } 
-
-    else if (activeForm.id === "card9") {
-        adjustedStep = 10;
+    else if (activeForm.id === "card6") {
+        adjustedStep = 7;
+    } else if (activeForm.id === "card10") {
+        adjustedStep = 11;
     } 
     // 🔹 First-time save always starts at Step 2
     else if (currentStep === 1) {
@@ -973,20 +1069,26 @@ function saveCollectedEggs() {
     saveData("/master-database/store", data, "Collected Eggs Entry Saved Successfully");
 }
 
-function saveStoragePullout() {
-    
-    let incubatornoValues = Array.from(document.getElementById('incubator_no').selectedOptions)
-    .map(option => option.value);
+function saveClassificationForStorage() {
+    let data = {
+        classification_for_storage: {
+            non_settable_eggs: document.getElementById("non_settable_eggs").value,
+            settable_eggs: document.getElementById("settable_eggs").value,
+            remaining_balance: document.getElementById("remaining_balance").value,
+        }
+    }
+    saveData("/master-database/store", data, "Classification for Storage Entry Saved Successfully");
+}
 
+function saveStoragePullout() {
     let data = {
         storage_pullout: {
             pullout_date: document.getElementById("pullout_date").value, // Original pullout date from input
             pullout_date_d10: document.getElementById("d10_candling_date").value, // +10 Days
             pullout_date_d18: document.getElementById("d18_candling_date").value, // +8.5 Days
-            pullout_date_d21: document.getElementById("hatcher_date").value, // +3 Days
 
             settable_eggs_qty: document.getElementById("settable_eggs_qty").value,
-            incubator_no: incubatornoValues,
+            incubator_no: document.getElementById("incubator_no").value,
             prime_qty: document.getElementById("prime_qty").value,
             prime_prcnt: document.getElementById("prime_prcnt").value,
             jp_qty: document.getElementById("jp_qty").value,
@@ -996,7 +1098,7 @@ function saveStoragePullout() {
 
     saveData("/master-database/store", data, "Storage Pullout Process Entry Saved Successfully")
         .then(() => {
-            // If saving Step 3, save Forecast and Forecasted boxes
+            // If saving Step 3, save Forecast, Forecasted boxes and re-save step 2 (Classification for Storage)
             updateExistingFRCST();
         });
 }
@@ -1031,13 +1133,32 @@ function saveCandlingProcess() {
         });
 }
 
-function saveHatcherPullout(){
-    let hatchernoValues = Array.from(document.getElementById('hatcher_no').selectedOptions)
-    .map(option => option.value);
+function saveEggTemperatureCheck() {
+    let data = {
+        egg_temperature_check: {
+            top_above_temp_qty: document.getElementById("top_above_temp_qty").value,
+            top_above_temp_prcnt: document.getElementById("top_above_temp_prcnt").value,
+            top_below_temp_qty: document.getElementById("top_below_temp_qty").value,
+            top_below_temp_prcnt: document.getElementById("top_below_temp_prcnt").value,
 
+            mid_above_temp_qty: document.getElementById("mid_above_temp_qty").value,
+            mid_above_temp_prcnt: document.getElementById("mid_above_temp_prcnt").value,
+            mid_below_temp_qty: document.getElementById("mid_below_temp_qty").value,
+            mid_below_temp_prcnt: document.getElementById("mid_below_temp_prcnt").value,
+
+            low_above_temp_qty: document.getElementById("low_above_temp_qty").value,
+            low_above_temp_prcnt: document.getElementById("low_above_temp_prcnt").value,
+            low_below_temp_qty: document.getElementById("low_below_temp_qty").value,
+            low_below_temp_prcnt: document.getElementById("low_below_temp_prcnt").value,
+        }
+    }
+    saveData("/master-database/store", data, "Egg Shell Temperature Check Entry Saved Successfully")
+}
+
+function saveHatcherPullout(){
     let data = {
         hatcher_pullout: {
-            hatcher_no: hatchernoValues,
+            hatcher_no: document.getElementById("hatcher_no").value,
             hatcher_date: document.getElementById("hatcher_date").value,
             rejected_hatch_qty: document.getElementById("rejected_hatch_qty").value,
             accepted_hatch_qty: document.getElementById("accepted_hatch_qty").value,
@@ -1130,6 +1251,20 @@ function saveForecastedBoxes(){
     saveData("/master-database/store", data);
 }
 
+function updateExistingCFS(){
+    let data = {
+        classification_for_storage: {
+            non_settable_eggs: document.getElementById("non_settable_eggs").value,
+            settable_eggs: document.getElementById("settable_eggs").value,
+            remaining_balance: document.getElementById("remaining_balance").value,
+        }
+    }
+    saveData("/master-database/store", data)
+    .then(() => {
+        saveForecastedBoxes();
+    });
+}
+
 function updateExistingFRCST(){
     let data = {
         forecast: {
@@ -1157,6 +1292,6 @@ function updateExistingFRCST(){
     }
     saveData("/master-database/store", data)
     .then(() => {
-        saveForecastedBoxes();
+        updateExistingCFS();
     });;
 }

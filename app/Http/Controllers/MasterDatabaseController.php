@@ -24,10 +24,10 @@ class MasterDatabaseController extends Controller
             $batchCollection = MasterDB::where('batch_no', $batch_no)
                 ->get();
 
-            // Find the latest step for this batch // Exclude Step 10 from the steps list
+            // Find the latest step for this batch // Exclude Step 13 from the steps list
             $latestStep = MasterDB::where('batch_no', $batch_no)
-                ->where('current_step', '!=', 10) // Ignore Step 10
-                ->where('current_step', '!=', 11) // Ignore Step 11 as well
+                ->where('current_step', '!=', 11)
+                ->where('current_step', '!=', 13) // Ignore Step 13
                 ->orderBy('current_step', 'desc') // Get the latest step
                 ->first();
 
@@ -79,7 +79,7 @@ class MasterDatabaseController extends Controller
         }
     
         // Define steps that must be present
-        $stepsToCheck = range(2, 11);
+        $stepsToCheck = range(2, 13);
     
         // Get the count of recorded steps within the batch
         $existingStepsCount = MasterDB::where('batch_no', $batchNo)
@@ -141,9 +141,11 @@ class MasterDatabaseController extends Controller
         // Define the expected steps in order
         $expectedSteps = [
             "collected_eggs",
+            "classification_for_storage",
             "storage_pullout",
             "setter_process",
             "candling_process",
+            "egg_temperature_check",
             "hatcher_pullout",
             "sexing",
             "qc_qa_process",
