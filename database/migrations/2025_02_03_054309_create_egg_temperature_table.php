@@ -15,15 +15,17 @@ return new class extends Migration
             $table->id();
             $table->boolean("is_deleted")->default(false);
 
-            $table->string("ps_no");
+            $table->date("temp_check_date");
             $table->date("setting_date");
-            $table->string("incubator");
-            $table->string("location");
+            $table->date("hatch_date");
 
+            $table->integer("temp_check_qty");
+            $table->integer("ovrl_above_temp_qty");
+            $table->decimal("ovrl_above_temp_prcnt", 4, 1);
+            $table->integer("ovrl_below_temp_qty");
+            $table->decimal("ovrl_below_temp_prcnt", 4, 1);
 
-            $table->string("temperature");
-            $table->date("temperature_check_date");
-            $table->integer("quantity");
+            $table->json("egg_temperature_data");
 
             $table->unsignedBigInteger("encoded_by")->nullable();
             $table->unsignedBigInteger("modified_by")->nullable();
