@@ -91,6 +91,7 @@
                 <x-dropdown :data-category="'driver_name'" />
             </div>
         </div>
+        <br>
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
             <button class="reset-btn" type="reset">Reset</button>

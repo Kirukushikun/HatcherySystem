@@ -88,6 +88,7 @@
             </div>
             <input type="hidden" name="driver_name" id="driver_name">
         </div>
+        <br>
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
             <button class="reset-btn" type="reset">Reset</button>
