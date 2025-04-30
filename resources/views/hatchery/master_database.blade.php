@@ -204,7 +204,7 @@
             <a href="#card7"><div></div><p>7</p></a>
             <a href="#card8"><div></div><p>8</p></a>
             <a href="#card10"><div></div><i class="fa-solid fa-clipboard-list"></i></a>
-            <a href="#card13"><div></div><i class="fa-solid fa-table"></i></a>
+            <a href="#card11"><div></div><i class="fa-solid fa-table"></i></a>
         </div>
 
         <div class="form-entries">

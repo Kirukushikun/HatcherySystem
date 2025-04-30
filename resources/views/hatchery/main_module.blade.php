@@ -31,17 +31,29 @@
         }
 
         #logo{
-            width: 300px;
+            width: clamp(200px, 20vw, 300px);
         }
 
 
         .row{
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 40px;
         }
 
+        @media(max-width: 1112px){
+            body {
+                padding: 50px 0;
+                height: auto;
+            }
+        }
+
+        
+
         .card{
-            width: 320px;
+            width: calc(100% - 40px);
+            max-width: 320px;
 
             display: flex;
             flex-direction: column;
@@ -58,11 +70,11 @@
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         }
         .card h3{
-            font-size: 17px;
+            font-size: clamp(14px, 3vw, 17px);
             font-weight: 700;
         }
         .card img{
-            width: 100px;
+            width: clamp(70px, 10vw, 100px);
         }
         .card button{
             width: 100%;
@@ -77,6 +89,13 @@
             letter-spacing: 1px;
             margin-top: 15px;
             cursor: pointer;
+        }
+
+        @media(max-width: 679px){
+            .card{
+                width: calc(100% - 80px);
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -98,9 +117,6 @@
             <h3>REJECTED HATCH <br> ENTRY</h3>
             <button onclick="window.location.href='/rejected-hatch'">OPEN</button>
         </div>
-    </div>
-
-    <div class="row">
         <div class="card">
             <img src="/Images/Hatch_Reject.png" alt="">
             <h3>REJECTED PULLETS <br> ENTRY</h3>
