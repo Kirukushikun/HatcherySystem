@@ -12,7 +12,8 @@ class LoginController extends Controller
         if(Auth::check()) {
             return redirect()->route('dash');
         }
-        return view('login');
+        // return view('login');
+        return view('hatchery.main_module');
     }
 
 

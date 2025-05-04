@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hatchery System</title>
-    <link rel="icon" href="/Images/BGC icon.ico">
+    <link rel="icon" href="{{asset('images/BGC icon.ico')}}">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
@@ -100,30 +100,30 @@
     </style>
 </head>
 <body>
-    <img src="/Images/BDL.png" id="logo" alt="">
+    <img src="{{asset('images/BDL.png')}}" id="logo" alt="">
     <div class="row">
         <div class="card">
-            <img src="/Images/Egg_Add.png" alt="">
+            <img src="{{asset('images/Egg_Add.png')}}" alt="">
             <h3>EGG COLLECTION <br> ENTRY</h3>
             <button onclick="window.location.href='/egg-collection'">OPEN</button>
         </div>
         <div class="card">
-            <img src="/Images/Egg_Temp.png" alt="">
+            <img src="{{asset('images/Egg_Temp.png')}}" alt="">
             <h3>EGG TEMPERATURE CHECK <br> ENTRY</h3>
             <button onclick="window.location.href='/egg-temperature'">OPEN</button>
         </div>
         <div class="card">
-            <img src="/Images/Egg_Reject.png" alt="">
+            <img src="{{asset('images/Egg_Reject.png')}}" alt="">
             <h3>REJECTED HATCH <br> ENTRY</h3>
             <button onclick="window.location.href='/rejected-hatch'">OPEN</button>
         </div>
         <div class="card">
-            <img src="/Images/Hatch_Reject.png" alt="">
+            <img src="{{asset('images/Hatch_Reject.png')}}" alt="">
             <h3>REJECTED PULLETS <br> ENTRY</h3>
             <button onclick="window.location.href='/rejected-pullets'">OPEN</button>
         </div>
         <div class="card">
-            <img src="/Images/Master_Database.png" alt="">
+            <img src="{{asset('images/Master_Database.png')}}" alt="">
             <h3>HATCHERY MASTER<br> DATABASE</h3>
             <button onclick="window.location.href='/master-database'">OPEN</button>
         </div>

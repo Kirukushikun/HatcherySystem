@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
     <link rel="stylesheet" href="{{asset('css/styles_master_db.css')}}">
-    <link rel="stylesheet" href="/css/modal-notification-loader.css">
+    <link rel="stylesheet" href="{{asset('css/modal-notification-loader.css')}}">
     <style>
         #frcst-save{
             width: 100%;

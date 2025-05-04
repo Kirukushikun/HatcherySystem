@@ -47,7 +47,7 @@ Route::middleware(['auth', 'cors'])->group(function() {
     // Main Session Check for Authetication
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     // Dash/Dashboard
-    Route::get('/', [DashboardController::class, 'dash'])->name('dash');
+    // Route::get('/', [DashboardController::class, 'dash'])->name('dash');
 
     /**
      * YOUR CODE STARTS HERE
