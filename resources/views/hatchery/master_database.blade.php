@@ -212,7 +212,7 @@
 
                 <div class="card-label active">
                     <span>1</span>
-                    <p>Collected Eggs</p>
+                    <p>Collected Setting Eggs</p>
                 </div>
 
                 <div class="card-form col-2">
@@ -224,7 +224,7 @@
                         <x-dropdown :data-category="'ps_no'" />
                     </div>
                     <div class="input-group">
-                        <label class="label" for="collected_qty">Collected Quantity 
+                        <label class="label" for="collected_qty">Collected Setting QTY
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
@@ -263,7 +263,7 @@
                 <div class="card-form col-2">
 
                     <div class="input-group">
-                        <label class="label" for="pullout_date">Pullout Date 
+                        <label class="label" for="pullout_date">Setting Date
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
@@ -334,10 +334,10 @@
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="d10_candling_date" id="d10_candling_date" readonly>
+                        <input type="date" name="d10_candling_date" id="d10_candling_date">
                     </div>
                     <div class="input-group">
-                        <label class="label" for="d10_candling_qty">Day 10 Breakout Quantity 
+                        <label class="label" for="d10_candling_qty">Day 10 Infertile QTY 
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
@@ -351,7 +351,7 @@
                         <input type="number" name="d10_breakout_qty" id="d10_breakout_qty" placeholder="0">
                     </div>
                     <div class="input-group">
-                        <label class="label" for="d10_breakout_prcnt">Day 10 Breakout %</label>
+                        <label class="label" for="d10_breakout_prcnt">Day 10 Infertile %</label>
                         <input type="text" name="d10_breakout_prcnt" id="d10_breakout_prcnt" placeholder="0" readonly>
                     </div>
                     <br>
@@ -381,12 +381,12 @@
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
-                        <input type="date" name="d18_candling_date" id="d18_candling_date" readonly>
+                        <input type="date" name="d18_candling_date" id="d18_candling_date">
                     </div>
                     <br>
                     <div class="input-container">
                         <div class="input-group">
-                            <label class="label" for="infertiles_qty">Infertiles Quantity 
+                            <label class="label" for="infertiles_qty">Infertile Quantity 
                                 <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                                 <span></span>
                             </label>
@@ -425,7 +425,7 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label class="label" for="hatcher_date">Hatcher Date 
+                        <label class="label" for="hatcher_date">Hatch Date 
                             <!-- <i class="fa-solid fa-asterisk asterisk active"></i> -->
                             <span></span>
                         </label>
@@ -613,7 +613,7 @@
             <form class="card c8" id="card8">
                 <div class="card-label">
                     <span>8</span>
-                    <p>Dispath Process Entry</p>
+                    <p>Actual DOP Quantity</p>
                 </div>
 
                 <div class="card-form">

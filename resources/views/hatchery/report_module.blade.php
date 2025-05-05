@@ -35,17 +35,16 @@
                             <label for="ps_no">PS No:</label>
                             <x-dropdown :data-category="'ps_no'" />
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="house_no">House No:</label>
-                            <!-- <x-dropdown :data-category="'house_no'" /> -->
                             <select name="house_no" id="house_no" multiple multiselect-select-all="true" multiselect-search="true" >
                             </select>
-                        </div>
+                        </div> -->
                         <div class="form-group">
-                            <label for="production_date_from">Production Date (From):</label>
+                            <label for="production_date_from">Production Date:</label>
                             <input type="date" id="production_date_from">
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="production_date_to">Production Date (To):</label>
                             <input type="date" id="production_date_to">
                         </div>
@@ -56,14 +55,21 @@
                         <div class="form-group">
                             <label for="collected_qty">Collection QTY:</label>
                             <input type="number" id="collected_qty" readonly>
-                        </div>         
+                        </div>          -->
                     </div>
 
                     <div class="form-container">
-                        <table id="egg-collection-table">
+                        <!-- <table id="egg-collection-table">
                             <thead>
                             </thead>
                             <tbody>
+                            </tbody>
+                        </table> -->
+                        <table id="egg-collection-table">
+                            <thead><tr><th>PS No.</th><th>HS No. 1</th><th>HS No. 2</th><th>HS No. 3</th><th>Total:</th></tr></thead>
+                            <tbody>
+                                <tr><td>90</td><td>3000</td><td>4000</td><td>4000</td><td>11000</td></tr><tr><td colspan="4">Grand Total:</td><td>11000</td></tr>
+                                <tr><td>91</td><td>3000</td><td>4000</td><td>4000</td><td>11000</td></tr><tr><td colspan="4">Grand Total:</td><td>11000</td></tr>
                             </tbody>
                         </table>
                     </div>

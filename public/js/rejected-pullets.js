@@ -50,7 +50,7 @@ document.querySelector("form").addEventListener("submit", function (event) {
 document.addEventListener("DOMContentLoaded", function () {
     const setEggsQtyInput = document.getElementById("set_eggs_qty"); // Make sure the ID matches in your HTML
     const totalRejectedInput = document.getElementById("rejected_total");
-    const fields = ["singkit_mata", "wala_mata", "maliit_mata", "malaki_mata", "unhealed_navel", "cross_beak", "small_chick", "weak_chick", "black_bottons", "string_navel", "bloated"];
+    const fields = ["singkit_mata", "unhealed_navel", "cross_beak", "small_chick", "weak_chick", "black_bottons", "string_navel", "bloated"];
 
     // Add event listeners for all fields
     fields.forEach(field => {
@@ -321,4 +321,16 @@ function editRecord(targetID) {
     .catch(error => console.error("Error:", error));
 
     console.log("editing", targetID);
+}
+
+let settingdate = document.getElementById("qc_date");
+let hatchdate = document.getElementById("hatch_date");
+
+function add21Day() {
+    let settingDateValue = new Date(settingdate.value); // Get setting date
+
+    // Calculate Day 21 Hatch Date
+    let hatchDay = new Date(settingDateValue); // Clone date
+    hatchDay.setDate(hatchDay.getDate() + 21); // Add 21 days
+    hatchdate.value = hatchDay.toISOString().split('T')[0]; // Format YYYY-MM-DD
 }

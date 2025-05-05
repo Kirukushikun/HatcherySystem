@@ -65,7 +65,7 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="singkit_mata">One Eye closed</label>
+                    <label for="singkit_mata">Eye Issue</label>
                     <input type="number" name="singkit_mata" id="singkit_mata" value="{{ session('form_data.singkit_mata', '') }}" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
@@ -75,7 +75,7 @@
 
             </div>
 
-            <div class="input-container row">
+            <!-- <div class="input-container row">
 
                 <div class="input-group">
                     <label for="wala_mata">No Eyes </label>
@@ -110,7 +110,7 @@
                     <input type="number" placeholder="0" name="malaki_mata_prcnt" id="malaki_mata_prcnt" readonly>
                 </div>
 
-            </div>
+            </div> -->
             <div class="input-container row">
 
                 <div class="input-group">
@@ -162,12 +162,12 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="black_bottons">Black Bottons </label>
-                    <input type="number" name="black_bottons" id="black_bottons" value="{{ session('form_data.black_bottons', '') }}" placeholder="0">
+                    <label for="bloated">Bloated </label>
+                    <input type="number" name="bloated" id="bloated" value="{{ session('form_data.bloated', '') }}" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
-                    <label for="black_bottons_prcnt">%</label>
-                    <input type="number" placeholder="0" name="black_bottons_prcnt" id="black_bottons_prcnt" readonly>
+                    <label for="bloated_prcnt">%</label>
+                    <input type="number" placeholder="0" name="bloated_prcnt" id="bloated_prcnt" readonly>
                 </div>
 
             </div>
@@ -186,12 +186,12 @@
             <div class="input-container row">
 
                 <div class="input-group">
-                    <label for="bloated">Bloated </label>
-                    <input type="number" name="bloated" id="bloated" value="{{ session('form_data.bloated', '') }}" placeholder="0">
+                    <label for="black_bottons">Black Bottons </label>
+                    <input type="number" name="black_bottons" id="black_bottons" value="{{ session('form_data.black_bottons', '') }}" placeholder="0">
                 </div>
                 <div class="input-group prcnt">
-                    <label for="bloated_prcnt">%</label>
-                    <input type="number" placeholder="0" name="bloated_prcnt" id="bloated_prcnt" readonly>
+                    <label for="black_bottons_prcnt">%</label>
+                    <input type="number" placeholder="0" name="black_bottons_prcnt" id="black_bottons_prcnt" readonly>
                 </div>
 
             </div>
@@ -207,12 +207,12 @@
                 <input type="date" id="production_date_to" name="production_date_to">
             </div>
             <div class="input-container column">
-                <label for="hatch_date"> Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
-                <input type="date" name="hatch_date" id="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}" />
+                <label for="qc_date"> Setting Date<i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
+                <input type="date" name="qc_date" id="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}"  onclick="add21Day()" />
             </div>
             <div class="input-container column">
-                <label for="qc_date"> QC Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
-                <input type="date" name="qc_date" id="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}" />
+                <label for="hatch_date"> Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span> </label>
+                <input type="date" name="hatch_date" id="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}" />
             </div>
             <div class="input-container row">
                 <div class="input-group">

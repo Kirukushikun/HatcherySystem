@@ -303,3 +303,15 @@ function editRecord(targetID) {
 
     console.log("editing", targetID);
 }
+
+let settingdate = document.getElementById("qc_date");
+let hatchdate = document.getElementById("hatch_date");
+
+function add21Day() {
+    let settingDateValue = new Date(settingdate.value); // Get setting date
+
+    // Calculate Day 21 Hatch Date
+    let hatchDay = new Date(settingDateValue); // Clone date
+    hatchDay.setDate(hatchDay.getDate() + 21); // Add 21 days
+    hatchdate.value = hatchDay.toISOString().split('T')[0]; // Format YYYY-MM-DD
+}

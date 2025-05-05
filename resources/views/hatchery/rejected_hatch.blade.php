@@ -137,12 +137,13 @@
                 <input type="date" id="production_date_to" name="production_date_to">
             </div>
             <div class="input-container column">
+                <label for="qc_date">Setting Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input type="date" id="qc_date" name="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}" onclick="add21Day()"> 
+            </div>
+            <!-- Plus 21 days -->
+            <div class="input-container column">
                 <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input type="date" id="hatch_date" name="hatch_date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">
-            </div>
-            <div class="input-container column">
-                <label for="qc_date">QC Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input type="date" id="qc_date" name="qc_date" value="{{ session('form_data.qc_date', date('Y-m-d')) }}">
             </div>
             <div class="input-container row">
                 <div class="input-group">

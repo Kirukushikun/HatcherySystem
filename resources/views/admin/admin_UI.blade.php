@@ -211,6 +211,7 @@
                                     <option value="hatcher_no" {{ session('form_data.data_category', '') == 'hatcher_no' ? 'selected' : ''}}>Hatcher No.</option>
                                     <option value="house_no" {{ session('form_data.data_category', '') == 'house_no' ? 'selected' : ''}}>House No.</option>
                                     <option value="incubator_no" {{ session('form_data.data_category', '') == 'incubator_no' ? 'selected' : ''}}>Incubator No.</option>
+                                    <option value="setter_no" {{ session('form_data.data_category', '') == 'setter_no' ? 'selected' : ''}}>Setter No.</option>
                                     <option value="driver_name" {{ session('form_data.data_category', '') == 'driver_name' ? 'selected' : ''}}>Driver Name</option>
                                 </select>
                             </div>

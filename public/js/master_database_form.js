@@ -772,7 +772,7 @@ function displayRecord(data){
     <div class="card">
         <div class="card-label">
             <span>8</span>
-            <p>Dispath Process Entry</p>
+            <p>Actual DOP Quantity</p>
         </div>
 
         <div class="card-form">

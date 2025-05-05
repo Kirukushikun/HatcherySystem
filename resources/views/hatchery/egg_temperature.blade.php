@@ -35,7 +35,11 @@
             <h4>Entry Form</h4>
         </div>
 
-        <div class="form-input col-3">
+        <div class="form-input col-4">
+            <div class="input-container column">
+                <label for="total_right_qty">Setter No.</label>
+                <x-dropdown :data-category="'setter_no'" />
+            </div>
             <div class="input-container column">
                 <label for="temp_check_date">Temperature Check Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input name="temp_check_date" id="temp_check_date" type="date" value="{{ session('form_data.temp_check_date', date('Y-m-d')) }}">
@@ -48,41 +52,10 @@
                 <label for="hatch_date">Hatch Date <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <input name="hatch_date" id="hatch_date" type="date" value="{{ session('form_data.hatch_date', date('Y-m-d')) }}">
             </div>
+
         </div>
 
-        <div class="form-header chamber">
-            <h4>OVERALL</h4>
-            <div class="line"></div>
-        </div>
-
-        <div class="form-input col-4">
-            <div class="input-container column">
-                <label for="temp_check_qty">Temperature Check QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                <input name="temp_check_qty" id="temp_check_qty" type="number" value="{{ session('form_data.temp_check_qty', '') }}" placeholder="0">
-            </div>
-
-            <div class="input-container row">
-                <div class="input-group">
-                    <label for="ovrl_above_temp_qty">Above <b>100.5 °F</b>  QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
-                    <input type="number" id="ovrl_above_temp_qty" name="ovrl_above_temp_qty" placeholder="0">
-                </div>
-                <div class="input-group prcnt">
-                    <label for="ovrl_above_temp_prcnt">%</label>
-                    <input type="number" id="ovrl_above_temp_prcnt" name="ovrl_above_temp_prcnt" placeholder="0" readonly>
-                </div>
-            </div>
-
-            <div class="input-container row">
-                <div class="input-group">
-                    <label for="ovrl_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
-                    <input type="number" id="ovrl_below_temp_qty" name="ovrl_below_temp_qty" placeholder="0" readonly>
-                </div>
-                <div class="input-group prcnt">
-                    <label for="ovrl_below_temp_prcnt">%</label>
-                    <input type="number" id="ovrl_below_temp_prcnt" name="ovrl_below_temp_prcnt" placeholder="0" readonly>
-                </div>
-            </div>
-        </div>
+        
 
         <div class="form-header chamber">
             <h4>LEFT</h4>
@@ -95,15 +68,10 @@
                 <x-dropdown :data-category="'left_ps_no'" />
             </div>
 
-            <div class="input-container row">
-                <div class="input-group">
-                    <label for="left_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
-                    <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" placeholder="0">
-                </div>
-                <div class="input-group prcnt">
-                    <label for="left_above_temp_prcnt">%</label>
-                    <input type="number" id="left_above_temp_prcnt" name="left_above_temp_prcnt" placeholder="0" readonly>
-                </div>
+
+            <div class="input-container column">
+                <label for="total_left_qty">Sample QTY</label>
+                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
             </div>
 
             <div class="input-container row">
@@ -117,10 +85,50 @@
                 </div>
             </div>
 
-            <div class="input-container column">
-                <label for="total_left_qty">Total Left QTY</label>
-                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0" readonly>
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="left_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
+                    <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="left_above_temp_prcnt">%</label>
+                    <input type="number" id="left_above_temp_prcnt" name="left_above_temp_prcnt" placeholder="0" readonly>
+                </div>
             </div>
+
+            <div class="input-container column">
+                <label for="left_ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <x-dropdown :data-category="'left_ps_no'" />
+            </div>
+
+
+            <div class="input-container column">
+                <label for="total_left_qty">Sample QTY</label>
+                <input name="total_left_qty" id="total_left_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="left_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                    <input type="number" id="left_below_temp_qty" name="left_below_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="left_below_temp_prcnt">%</label>
+                    <input type="number" id="left_below_temp_prcnt" name="left_below_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="left_above_temp_qty">Above <b>100.5 °F</b>  QTY<span></span></label>
+                    <input type="number" id="left_above_temp_qty" name="left_above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="left_above_temp_prcnt">%</label>
+                    <input type="number" id="left_above_temp_prcnt" name="left_above_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
         </div>
 
         <div class="form-header chamber">
@@ -132,6 +140,24 @@
             <div class="input-container column">
                 <label for="right_ps_no">PS No. <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
                 <x-dropdown :data-category="'right_ps_no'" />
+            </div>
+                        
+
+            <div class="input-container column">
+                <label for="total_right_qty">Sample QTY</label>
+                <input name="total_right_qty" id="total_right_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0">
+            </div>
+
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="right_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                    <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0" readonly>
+                </div>
+                <div class="input-group prcnt">
+                    <label for="right_below_temp_prcnt">%</label>
+                    <input type="number" id="right_below_temp_prcnt" name="right_below_temp_prcnt" placeholder="0" readonly>
+                </div>
             </div>
 
             <div class="input-container row">
@@ -145,24 +171,49 @@
                 </div>
             </div>
 
-            <div class="input-container row">
-                <div class="input-group">
-                    <label for="right_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
-                    <input type="number" id="right_below_temp_qty" name="right_below_temp_qty" placeholder="0" readonly>
-                </div>
-                <div class="input-group prcnt">
-                    <label for="right_below_temp_prcnt">%</label>
-                    <input type="number" id="right_below_temp_prcnt" name="right_below_temp_prcnt" placeholder="0" readonly>
-                </div>
-            </div>
+        </div>
 
-            <div class="input-container column">
-                <label for="total_right_qty">Total Right QTY</label>
-                <input name="total_right_qty" id="total_right_qty" type="number" value="{{ session('form_data.quantity', '') }}" placeholder="0" readonly>
-            </div>
+        <div class="form-header chamber">
+            <h4>OVERALL</h4>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-input col-4">
+
+            <!-- <p></p> -->
 
             <br>
+
+            <div class="input-container column">
+                <label for="temp_check_qty">Egg Sample QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                <input name="temp_check_qty" id="temp_check_qty" type="number" value="{{ session('form_data.temp_check_qty', '') }}" placeholder="0">
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="ovrl_below_temp_qty">Below <b>100.4 °F</b> QTY<span></span></label>
+                    <input type="number" id="ovrl_below_temp_qty" name="ovrl_below_temp_qty" placeholder="0" readonly>
+                </div>
+                <div class="input-group prcnt">
+                    <label for="ovrl_below_temp_prcnt">%</label>
+                    <input type="number" id="ovrl_below_temp_prcnt" name="ovrl_below_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="input-container row">
+                <div class="input-group">
+                    <label for="ovrl_above_temp_qty">Above <b>100.5 °F</b>  QTY <i class="fa-solid fa-asterisk asterisk active"></i><span></span></label>
+                    <input type="number" id="ovrl_above_temp_qty" name="ovrl_above_temp_qty" placeholder="0">
+                </div>
+                <div class="input-group prcnt">
+                    <label for="ovrl_above_temp_prcnt">%</label>
+                    <input type="number" id="ovrl_above_temp_prcnt" name="ovrl_above_temp_prcnt" placeholder="0" readonly>
+                </div>
+            </div>
         </div>
+
+        <br>
+
 
         <div class="form-action">
             <button class="save-btn" type="submit">Save</button>
