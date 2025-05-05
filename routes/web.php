@@ -47,7 +47,7 @@ Route::middleware(['auth', 'cors'])->group(function() {
     // Main Session Check for Authetication
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     // Dash/Dashboard
-    // Route::get('/', [DashboardController::class, 'dash'])->name('dash');
+    Route::get('/', [DashboardController::class, 'dash'])->name('dash');
 
     /**
      * YOUR CODE STARTS HERE
@@ -191,4 +191,3 @@ Route::get('/egg-collection/csv', [CSVGenerationController::class, 'egg_collecti
 Route::get('/egg-temperature/csv', [CSVGenerationController::class, 'egg_temperature_csv'])->name('egg.temperature.csv'); // CSV Generation
 Route::get('/rejected-hatch/csv', [CSVGenerationController::class, 'rejected_hatch_csv'])->name('rejected.hatch.csv'); // CSV Generation
 Route::get('/rejected-pullets/csv', [CSVGenerationController::class, 'rejected_pullets_csv'])->name('rejected.pullets.csv'); // CSV Generation
-

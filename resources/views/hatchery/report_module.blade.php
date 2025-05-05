@@ -8,10 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Crucial Part on every forms/ -->
     <title>Document</title>
-    <link rel="icon" href="/Images/BGC icon.ico">
+    <link rel="icon" href="{{asset('images/BGC icon.ico')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/modal-notification-loader.css">
-    <link rel="stylesheet" href="/css/report-styles.css">
+    <link rel="stylesheet" href="{{asset('css/modal-notification-loader.css')}}">
+    <link rel="stylesheet" href="{{asset('css/report-styles.css')}}">
 </head>
 <body>
 
@@ -21,9 +21,9 @@
         @if($targetForm == "egg-collection" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
-                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
-                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
-                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                    <img src="{{asset('images/BDL.png')}}" id="BDL" alt="Brookdale Farms">
+                    <img src="{{asset('images/BGC.png')}}" id="BGC" alt="Brookside Group of Companies">
+                    <img src="{{asset('images/PFC.png')}}" id="PFC" alt="Poultrypure Farms">
                 </div>
 
                 <div class="report-title">EGG COLLECTION REPORT</div>
@@ -73,7 +73,7 @@
                             <label for="prepared-by">Prepared By:</label>
 
                             <!-- Signature Image (Fixed Size) -->
-                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+                            <img class="signature" src="{{asset('images/DummySignature.png')}}" alt="Signature">
 
                             <!-- Prepared By Input Field -->
                             <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
@@ -93,9 +93,9 @@
         @elseif ($targetForm == "egg-temperature" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
-                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
-                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
-                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                    <img src="{{asset('images/BDL.png')}}" id="BDL" alt="Brookdale Farms">
+                    <img src="{{asset('images/BGC.png')}}" id="BGC" alt="Brookside Group of Companies">
+                    <img src="{{asset('images/PFC.png')}}" id="PFC" alt="Poultrypure Farms">
                 </div>
 
                 <div class="report-title">EGG SHELL TEMPERATURE CHECK REPORT</div>
@@ -165,7 +165,7 @@
                             <label for="prepared-by">Prepared By:</label>
 
                             <!-- Signature Image (Fixed Size) -->
-                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+                            <img class="signature" src="{{asset('images/DummySignature.png')}}" alt="Signature">
 
                             <!-- Prepared By Input Field -->
                             <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
@@ -185,9 +185,9 @@
         @elseif ($targetForm == "rejected-hatch" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
-                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
-                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
-                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                    <img src="{{asset('images/BDL.png')}}" id="BDL" alt="Brookdale Farms">
+                    <img src="{{asset('images/BGC.png')}}" id="BGC" alt="Brookside Group of Companies">
+                    <img src="{{asset('images/PFC.png')}}" id="PFC" alt="Poultrypure Farms">
                 </div>
 
                 <div class="report-title">REJECTED HATCH REPORT</div>
@@ -260,7 +260,7 @@
                             <label for="prepared-by">Prepared By:</label>
 
                             <!-- Signature Image (Fixed Size) -->
-                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+                            <img class="signature" src="{{asset('images/DummySignature.png')}}" alt="Signature">
 
                             <!-- Prepared By Input Field -->
                             <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
@@ -281,9 +281,9 @@
         @elseif ($targetForm == "rejected-pullets" && $targetForm != null)
             <form class="report-content">
                 <div class="report-header">
-                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
-                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
-                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                    <img src="{{asset('images/BDL.png')}}" id="BDL" alt="Brookdale Farms">
+                    <img src="{{asset('images/BGC.png')}}" id="BGC" alt="Brookside Group of Companies">
+                    <img src="{{asset('images/PFC.png')}}" id="PFC" alt="Poultrypure Farms">
                 </div>
 
                 <div class="report-title">REJECTED PULLETS REPORT</div>
@@ -360,7 +360,7 @@
                             <label for="prepared-by">Prepared By:</label>
 
                             <!-- Signature Image (Fixed Size) -->
-                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+                            <img class="signature" src="{{asset('images/DummySignature.png')}}" alt="Signature">
 
                             <!-- Prepared By Input Field -->
                             <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>
@@ -381,9 +381,9 @@
         @elseif ($targetForm == "master-database" && $targetForm == !null)
             <form class="report-content">
                 <div class="report-header">
-                    <img src="/Images/BDL.png" id="BDL" alt="Brookdale Farms">
-                    <img src="/Images/BGC.png" id="BGC" alt="Brookside Group of Companies">
-                    <img src="/Images/PFC.png" id="PFC" alt="Poultrypure Farms">
+                    <img src="{{asset('images/BDL.png')}}" id="BDL" alt="Brookdale Farms">
+                    <img src="{{asset('images/BGC.png')}}" id="BGC" alt="Brookside Group of Companies">
+                    <img src="{{asset('images/PFC.png')}}" id="PFC" alt="Poultrypure Farms">
                 </div>
 
                 <div class="report-title">MASTER DATABASE REPORT</div>
@@ -680,7 +680,7 @@
                             <label for="prepared-by">Prepared By:</label>
 
                             <!-- Signature Image (Fixed Size) -->
-                            <img class="signature" src="/Images/DummySignature.png" alt="Signature">
+                            <img class="signature" src="{{asset('images/DummySignature.png')}}" alt="Signature">
 
                             <!-- Prepared By Input Field -->
                             <input type="text" id="prepared-by" value="Chris P. Bacon" readonly>

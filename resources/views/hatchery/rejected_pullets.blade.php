@@ -20,10 +20,10 @@
     @yield('modal-notification-loader')
 
     <div class="header">
-        <img class="logo" src="/Images/BDL.png" alt="">
+        <img class="logo" src="{{asset('images/BDL.png')}}" alt="">
         <h2>REJECTED PULLETS ENTRY</h2>
-        <div class="exit-icon">
-            <img src="/Images/Exit-Icon.png" alt="" onclick="window.location.href='/home'">
+        <div class="exit-icon" >
+            <img src="{{asset('images/Exit-Icon.png')}}" alt="" onclick="window.location.href='/home'">
         </div>
     </div>
     <form class="body" action="{{route('rejected.pullets.store')}}" method="POST">
